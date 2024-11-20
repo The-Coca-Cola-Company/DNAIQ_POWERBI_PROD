@@ -1,0 +1,3904 @@
+{
+  "compatibilityLevel": 1567,
+  "model": {
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"Share of Market (Customer)\",\"Product\",\"Customer\",\"Calendar\",\"Database\",\"Server\"]"
+      },
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "1"
+      },
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.131.7322.2 (Main)"
+      },
+      {
+        "name": "__TEdtr",
+        "value": "1"
+      },
+      {
+        "name": "PBI_ProTooling",
+        "value": "[\"WebModelingEdit\"]"
+      }
+    ],
+    "culture": "en-US",
+    "cultures": [
+      {
+        "name": "en-US",
+        "linguisticMetadata": {
+          "content": {
+            "Language": "en-US",
+            "Version": "1.0.0"
+          },
+          "contentType": "json"
+        }
+      }
+    ],
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "expressions": [
+      {
+        "name": "Database",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Text"
+          }
+        ],
+        "expression": "\"DnAIQDb_PreProd\" meta [IsParameterQuery=true, Type=\"Any\", IsParameterQueryRequired=true]",
+        "kind": "m",
+        "lineageTag": "a355552d-9ccd-424a-9555-87c02c405aae"
+      },
+      {
+        "name": "Server",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Text"
+          }
+        ],
+        "expression": "\"syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net\" meta [IsParameterQuery=true, Type=\"Any\", IsParameterQueryRequired=true]",
+        "kind": "m",
+        "lineageTag": "f209b676-bc36-4b2e-b7a8-838ebe4c88fc"
+      }
+    ],
+    "relationships": [
+      {
+        "name": "AutoDetected_2ad11453-c73d-4e96-b07b-a232d24a5d15",
+        "fromColumn": "Customer Key",
+        "fromTable": "Share of Market (Customer)",
+        "toColumn": "Customer Key",
+        "toTable": "Customer"
+      },
+      {
+        "name": "AutoDetected_575511dc-9722-4df7-8111-d51f14712cca",
+        "fromColumn": "Date Key",
+        "fromTable": "Share of Market (Customer)",
+        "toColumn": "Date Key",
+        "toTable": "Calendar"
+      },
+      {
+        "name": "AutoDetected_5f1a4b96-fd80-49d3-a958-5acbdc74dfd9",
+        "fromColumn": "Product Key",
+        "fromTable": "Share of Market (Customer)",
+        "toColumn": "Product Key",
+        "toTable": "Product"
+      }
+    ],
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "DateTableTemplate_fa6fa55e-cfc8-4cd3-981a-f4446ef96579",
+        "annotations": [
+          {
+            "name": "__PBI_TemplateDateTable",
+            "value": "true"
+          },
+          {
+            "name": "DefaultItem",
+            "value": "DateHierarchy"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataCategory": "PaddedDateTableDates",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "isNameInferred": true,
+            "lineageTag": "580d3510-b910-4232-8048-e315cb4f4f3f",
+            "sourceColumn": "[Date]",
+            "summarizeBy": "none",
+            "type": "calculatedTableColumn"
+          },
+          {
+            "name": "Year",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Year"
+              }
+            ],
+            "dataCategory": "Years",
+            "dataType": "int64",
+            "expression": "YEAR([Date])",
+            "isHidden": true,
+            "lineageTag": "35460895-65a5-4c57-b62c-d80c43e3c8f3",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "MonthNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "MonthNumber"
+              }
+            ],
+            "dataCategory": "MonthOfYear",
+            "dataType": "int64",
+            "expression": "MONTH([Date])",
+            "isHidden": true,
+            "lineageTag": "e08013e1-0fa5-44c4-ad19-4881674b889a",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "Month",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Month"
+              }
+            ],
+            "dataCategory": "Months",
+            "dataType": "string",
+            "expression": "FORMAT([Date], \"MMMM\")",
+            "isHidden": true,
+            "lineageTag": "3a23ea5c-48fb-493f-ab2f-ff47e60526d9",
+            "sortByColumn": "MonthNo",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "QuarterNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "QuarterNumber"
+              }
+            ],
+            "dataCategory": "QuarterOfYear",
+            "dataType": "int64",
+            "expression": "INT(([MonthNo] + 2) / 3)",
+            "isHidden": true,
+            "lineageTag": "2d7c8e84-c19a-44bc-8a46-bf6bc22d1ea6",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "Quarter",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Quarter"
+              }
+            ],
+            "dataCategory": "Quarters",
+            "dataType": "string",
+            "expression": "\"Qtr \" & [QuarterNo]",
+            "isHidden": true,
+            "lineageTag": "4932da3e-d265-4dea-b1fa-a2d588aba6dd",
+            "sortByColumn": "QuarterNo",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "Day",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Day"
+              }
+            ],
+            "dataCategory": "DayOfMonth",
+            "dataType": "int64",
+            "expression": "DAY([Date])",
+            "isHidden": true,
+            "lineageTag": "7d3e200c-1cf5-4b4b-bc44-ee4afcf5f691",
+            "summarizeBy": "none",
+            "type": "calculated"
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Date Hierarchy",
+            "annotations": [
+              {
+                "name": "TemplateId",
+                "value": "DateHierarchy"
+              }
+            ],
+            "levels": [
+              {
+                "name": "Year",
+                "column": "Year",
+                "lineageTag": "ba65617e-3060-4875-b21f-ebed1b96fcad",
+                "ordinal": 0
+              },
+              {
+                "name": "Quarter",
+                "column": "Quarter",
+                "lineageTag": "3072447f-1080-4058-bbb4-c5d5153b9ef6",
+                "ordinal": 1
+              },
+              {
+                "name": "Month",
+                "column": "Month",
+                "lineageTag": "48183530-c034-4ef4-8b3f-07faedb03c2d",
+                "ordinal": 2
+              },
+              {
+                "name": "Day",
+                "column": "Day",
+                "lineageTag": "78bce811-ea20-4e6c-b84a-a6d3270b6cba",
+                "ordinal": 3
+              }
+            ],
+            "lineageTag": "a050071a-8e86-4a6d-86be-c683565e952c"
+          }
+        ],
+        "isHidden": true,
+        "isPrivate": true,
+        "lineageTag": "f4e615e7-9c67-48d8-92e6-06e9ebd53e19",
+        "partitions": [
+          {
+            "name": "DateTableTemplate_fa6fa55e-cfc8-4cd3-981a-f4446ef96579",
+            "mode": "import",
+            "source": {
+              "expression": "Calendar(Date(2015,1,1), Date(2015,1,1))",
+              "type": "calculated"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Share of Market (Customer)",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Customer Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "displayFolder": "Hidden Fields",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "5197f95b-144f-4289-a409-9ab650d29090",
+            "sourceColumn": "Customer Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Date Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "displayFolder": "Hidden Fields",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "de2bb52c-8611-481a-9cb3-9bd4bd834199",
+            "sourceColumn": "Date Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Product Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "displayFolder": "Hidden Fields",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "74bf2d48-e580-4d68-977f-2c5af40b903c",
+            "sourceColumn": "Product Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "dollars_",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "7105d0fb-d427-46a0-9e70-96b7c41978c5",
+            "sourceColumn": "dollars_",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "base_dollars",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "ef97b6b0-3d91-42ec-865c-47b8d2351d42",
+            "sourceColumn": "base_dollars",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "incr_dollars",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "823629f2-078b-40e7-bfe1-8722800bb4ce",
+            "sourceColumn": "incr_dollars",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "subsidized_dollars",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "bbf8e4b1-9a39-4c5e-8a45-f686391653ee",
+            "sourceColumn": "subsidized_dollars",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "eq_",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "261a74fe-d8d9-4ffb-a986-4a25961d4d10",
+            "sourceColumn": "eq_",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "base_eq",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "e6e81c07-f35c-4d24-9ff0-61e6487f2dfa",
+            "sourceColumn": "base_eq",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "incr_eq",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "88c0c207-403e-465f-a4f5-53629022beca",
+            "sourceColumn": "incr_eq",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "subsidized_eq",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "d540eff4-bda8-4819-8a0d-5117ed505f1e",
+            "sourceColumn": "subsidized_eq",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "units_",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "3f2b06ac-2064-4c42-ba1b-b4f5e7484a0f",
+            "sourceColumn": "units_",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "any_promo_dollars",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "1e8923b0-c7f8-442b-aee9-cee5f4d1dc4b",
+            "sourceColumn": "any_promo_dollars",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "no_promo_dollars",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "2d98ebbb-a413-4472-a9be-41d3bf20923f",
+            "sourceColumn": "no_promo_dollars",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "any_display_dollars",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "1c4e968d-c8ab-43ca-8e5a-f6e7ffb769c4",
+            "sourceColumn": "any_display_dollars",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "any_feature_dollars",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "67fe209a-50c1-47e8-ab31-82c276844b98",
+            "sourceColumn": "any_feature_dollars",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "feat_and_display_dollars",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "c10c1604-45b3-4c5b-9c28-f532551779c5",
+            "sourceColumn": "feat_and_display_dollars",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "price_decr_only_dollars",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "313d0306-f9d2-4544-a719-98648eb4dba5",
+            "sourceColumn": "price_decr_only_dollars",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "feature_without_display_dollars",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "fe7b0a90-d0fe-4b49-a79a-b0e59fe5ac72",
+            "sourceColumn": "feature_without_display_dollars",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "disp_without_feature_dollars",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "1c67ad35-e8d5-45b7-ab83-e63987af4ad5",
+            "sourceColumn": "disp_without_feature_dollars",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "any_promo_eq",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "8e6d888f-2b7f-45a9-b34a-76cdea6bc3ee",
+            "sourceColumn": "any_promo_eq",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "no_promo_eq",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Hidden Fields",
+            "isHidden": true,
+            "lineageTag": "f907ecee-da5c-4c55-8071-1e53bea50262",
+            "sourceColumn": "no_promo_eq",
+            "summarizeBy": "none"
+          }
+        ],
+        "description": "rms_mdl vw_fact_customerweekly",
+        "lineageTag": "6cb82dd4-93c0-4059-bb90-aeb6258621f4",
+        "measures": [
+          {
+            "name": "Dollars",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ],
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[dollars_])",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "1382b58c-42ed-4851-869f-e9ea27ff92c5"
+          },
+          {
+            "name": "Units",
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[units_])",
+            "formatString": "#,0.00",
+            "lineageTag": "72b63072-7797-4623-b70c-bf93ee7e7c0e"
+          },
+          {
+            "name": "Any Display Dollars",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ],
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[any_display_dollars])",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "43f062e7-7877-4782-9266-50a5a254f803"
+          },
+          {
+            "name": "Any Feature Dollars",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ],
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[any_feature_dollars])",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "29ab7fac-a0ee-475c-81c6-86a2a7508f95"
+          },
+          {
+            "name": "Any Promo Dollars",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ],
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[any_promo_dollars])",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "ac9c1abe-6fd4-4cef-b661-bdd656149031"
+          },
+          {
+            "name": "Any Promo EQ",
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[any_promo_eq])",
+            "formatString": "#,0.00",
+            "lineageTag": "99975506-8c27-4a30-ba4d-ca6cd5bffcc3"
+          },
+          {
+            "name": "Base Dollars",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ],
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[base_dollars]) ",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "690917e1-9dd5-4c10-9980-39ecf0615656"
+          },
+          {
+            "name": "Base EQ",
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[base_eq])",
+            "formatString": "#,0.00",
+            "lineageTag": "c906234a-0875-4f02-be09-35e006c1813a"
+          },
+          {
+            "name": "Feature without Display Dollars",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ],
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[feature_without_display_dollars])",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "a2f740ee-7ca5-4935-9b16-cd0f44b8c8f5"
+          },
+          {
+            "name": "Incremental Dollars",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ],
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[incr_dollars])",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "517abeaa-eba9-4c4a-94e2-5037c7a050ec"
+          },
+          {
+            "name": "Incremental EQ",
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[incr_eq])",
+            "formatString": "#,0.00",
+            "lineageTag": "0e6d96f0-ee6f-4503-91bc-4bf356c51885"
+          },
+          {
+            "name": "No Promo Dollars",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ],
+            "displayFolder": "Base Measures",
+            "expression": "SUM([no_promo_dollars])",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "d2b48001-c142-4f90-a929-20ad0aab19c6"
+          },
+          {
+            "name": "No Promo EQ",
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[no_promo_eq])",
+            "formatString": "0.00",
+            "lineageTag": "914f28ca-26b2-47d2-80c7-45321823748e"
+          },
+          {
+            "name": "Price Decrease Only Dollars",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ],
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[price_decr_only_dollars])",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "1ac157fa-221e-4057-90d1-b53d880d9ca8"
+          },
+          {
+            "name": "Subsidized Dollars",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"currencyCulture\":\"en-US\"}"
+              }
+            ],
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[subsidized_dollars])",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "8ea4971f-91af-4525-8dde-7373aec84874"
+          },
+          {
+            "name": "Subsidized EQ",
+            "displayFolder": "Base Measures",
+            "expression": "sum('Share of Market (Customer)'[subsidized_eq])",
+            "formatString": "0.00",
+            "lineageTag": "c1ced601-25ed-4c53-aebc-9d29412a44fe"
+          },
+          {
+            "name": "EQs",
+            "displayFolder": "Base Measures",
+            "expression": "SUM('Share of Market (Customer)'[eq_])",
+            "formatString": "#,0.00",
+            "lineageTag": "16ba4355-d334-4ec9-848b-5a87ac580849"
+          },
+          {
+            "name": "Share of Dollars",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "description": "Share is calculated against Total Beverage when viewing by 'System Brands' or 'Manufacturer', and is calculated against ELT Category when viewing by 'Trademark' or 'Brand'",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "",
+              "/*",
+              "Share of dollars is using the same DAX as SOVI from iRED Explorer.  The user must select/filter using the Product Hierarchy for the formula to work.  The numerator (1st variable) will always be the total dollars for the selected/filtered product(s).  The denominator changes depending on the filters from the user.  It will be total dollars for All Beverages if the user has selected/filtered against System Brands or Manufacturer (2nd variable).  The denominator will be total dollars for all related categories if the user has selected/fitlered against a Trademark or Brand (3rd variable).  ",
+              "*/",
+              "",
+              "VAR selected_total = 'Share of Market (Customer)'[Dollars]",
+              "",
+              "VAR category_total =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Dollars],",
+              "        VALUES ( 'Product'[ELT Category] ),",
+              "        ALLEXCEPT('Product','Product'[ELT Category])",
+              "    )",
+              "",
+              "VAR total_beverage =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Dollars],",
+              "        ALLEXCEPT('Product','Product'[ELT Category])",
+              "    )",
+              "",
+              "VAR category_share =",
+              "    DIVIDE ( selected_total, category_total )",
+              "    ",
+              "VAR total_beverage_share =",
+              "    DIVIDE ( selected_total, total_beverage )",
+              "",
+              "VAR results =",
+              "    SWITCH (",
+              "        TRUE (),",
+              "        HASONEFILTER ( 'Product'[Brand] ), category_share,",
+              "        HASONEFILTER ( 'Product'[Trademark] ), category_share,",
+              "        HASONEFILTER ( 'Product'[Manufacturer] ), total_beverage_share,",
+              "        HASONEFILTER ( 'Product'[System Brands] ), total_beverage_share,",
+              "        1",
+              "    )",
+              "    ",
+              "RETURN",
+              "    results"
+            ],
+            "lineageTag": "85312950-f855-4079-896c-d6876490573c"
+          },
+          {
+            "name": "Share of Dollars YTD",
+            "description": [
+              "Share for Year-to-Date",
+              ""
+            ],
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//this variable gets the latest year",
+              "VAR ytd_year = MAX('Calendar'[Fiscal Year])",
+              "",
+              "//this variable gets the latest week in the latest year",
+              "VAR ytd_week = MAX('Calendar'[Week Number])",
+              "",
+              "//this variable gets the results",
+              "VAR results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Fiscal Year] = ytd_year,",
+              "        'Calendar'[Week Number] <= ytd_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "80ac4a43-16db-44f4-b09e-58bc647fc82f"
+          },
+          {
+            "name": "Share of Dollars YTD vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//these variables help to filter by the calendar",
+              "VAR ytd_year_cy = max('Calendar'[Fiscal Year])",
+              "VAR ytd_year_py = max('Calendar'[Fiscal Year]) - 1",
+              "VAR ytd_week = ",
+              "    CALCULATE(",
+              "        max('Calendar'[Week Number]),",
+              "        'Calendar'[Fiscal Year] = ytd_year_cy)",
+              "",
+              "//this next variable gets the PY Value",
+              "VAR py_results = ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Fiscal Year] = ytd_year_py, ",
+              "        'Calendar'[Week Number] <= ytd_week",
+              "    )",
+              "",
+              "//this variable gets the existing measure for the CY share",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Dollars YTD]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "e6da986f-5945-421c-9cce-e30adeb41252"
+          },
+          {
+            "name": "Share of Dollars QTD",
+            "description": "Share over Quarter-to-Date",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//get the latest quarter",
+              "VAR qtd_cy = max('Calendar'[Sequential Quarter Number]) ",
+              "",
+              "//get the max week within the latest quarter",
+              "VAR qtd_week = ",
+              "    CALCULATE(",
+              "        max('Calendar'[Fiscal Week in Quarter Number]),",
+              "         'Calendar'[Sequential Quarter Number] = qtd_cy",
+              "    )",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Quarter Number] = qtd_cy, ",
+              "        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "f356f5db-252d-4ec1-9aab-0068e0202fe5"
+          },
+          {
+            "name": "Share of Dollars R4W",
+            "description": "Share over a rolling 4 week period",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 4",
+              "",
+              "//this variable to find the last week, which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to calculate the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "d4f8943a-c2ff-4126-af37-126fccb18e2c"
+          },
+          {
+            "name": "Share of Dollars LW",
+            "description": "Share over the Last Week",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "",
+              "//this variable to find the last week",
+              "VAR lcw = MAX('Calendar'[Sequential Week Number]) ",
+              "",
+              "//this variable calculates the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        'Calendar'[Sequential Week Number] = lcw",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "f813fd44-fc51-49c4-8d72-65ce51fc9e0d"
+          },
+          {
+            "name": "Share of Dollars R4W vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 4",
+              "",
+              "//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] ) - 52",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Dollars R4W]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "5968c73c-150b-40ea-8653-42edcf576624"
+          },
+          {
+            "name": "Share of Dollars LW vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//this variable to identify the same time period of the prior year",
+              "VAR lcw_py = max('Calendar'[Sequential Week Number]) - 52",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results = ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] = lcw_py",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Dollars LW]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "b22cceab-689f-4612-b7b2-3e2c15751cdf"
+          },
+          {
+            "name": "Share of Dollars QTD vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//this variable gets the latest year",
+              "VAR qtd_cy = max('Calendar'[Sequential Quarter Number]) ",
+              "",
+              "//this variable gets the latest year",
+              "VAR qtd_py = qtd_cy - 4",
+              "",
+              "//get the max week within the latest quarter",
+              "VAR qtd_week = ",
+              "    CALCULATE(",
+              "        MAX('Calendar'[Fiscal Week in Quarter Number]),",
+              "         'Calendar'[Sequential Quarter Number] = qtd_cy",
+              "    )",
+              "",
+              "//this variable gets the results",
+              "VAR py_results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Quarter Number] = qtd_py,",
+              "        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Dollars QTD]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "56abc858-589a-42db-91f5-9322b8e37d3f"
+          },
+          {
+            "name": "YoY Share of Dollars (% pts)",
+            "description": "This measure is meant to be used against a calendar hierarchy",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//this variable gets the share calculation for the appropriate time period",
+              "VAR results = ",
+              "    SWITCH(",
+              "        TRUE,",
+              "        OR(ISINSCOPE('Calendar'[Fiscal Week]),ISINSCOPE('Calendar'[Fiscal Week Ending Date])), [Share of Dollars LW vs. PY (% pts)],",
+              "        OR(ISINSCOPE('Calendar'[Fiscal Month]),ISINSCOPE('Calendar'[Fiscal Month Ending Date])), 'Share of Market (Customer)'[Share of Dollars MTD vs. PY (% pts)],",
+              "        OR(ISINSCOPE('Calendar'[Fiscal Quarter]),ISINSCOPE('Calendar'[Fiscal Quarter Ending Date])), 'Share of Market (Customer)'[Share of Dollars QTD vs. PY (% pts)],",
+              "        ISINSCOPE('Calendar'[Fiscal Year]), 'Share of Market (Customer)'[Share of Dollars YTD vs. PY (% pts)]",
+              "    )",
+              "    ",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "2ad14b18-4988-4e1a-a7d3-1cc8d80e4c65"
+          },
+          {
+            "name": "Share of Dollars MTD",
+            "description": "Share over Quarter-to-Date",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//get the latest month",
+              "VAR mtd_cy = max('Calendar'[Sequential Month Number]) ",
+              "",
+              "//get the max week within the latest month",
+              "VAR mtd_week = ",
+              "    CALCULATE(",
+              "        max('Calendar'[Fiscal Week in Month Number]),",
+              "         'Calendar'[Sequential Month Number] = mtd_cy",
+              "    )",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Month Number] = mtd_cy, ",
+              "        'Calendar'[Fiscal Week in Month Number] <= mtd_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "b0cf051a-c6da-436f-a89a-b2c079758e88"
+          },
+          {
+            "name": "Share of Dollars MTD vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//get the latest month",
+              "VAR mtd_cy = max('Calendar'[Sequential Month Number])",
+              "",
+              "//get the latest month for the same time last year",
+              "VAR mtd_py = max('Calendar'[Sequential Month Number]) - 12",
+              "",
+              "//get the max week within the latest month",
+              "VAR mtd_week = ",
+              "    CALCULATE(",
+              "        MAX('Calendar'[Fiscal Week in Month Number]),",
+              "         'Calendar'[Sequential Month Number] = mtd_cy",
+              "    )",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Month Number] = mtd_py, ",
+              "        'Calendar'[Fiscal Week in Month Number] <= mtd_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Dollars MTD]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "bc3bf0af-a560-4355-9108-504d22aa9ce3"
+          },
+          {
+            "name": "Share of Dollars R13W",
+            "description": "Share over a rolling 13 week period",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 13",
+              "",
+              "//this variable to find the last week, which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to calculate the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "652812d8-d0dc-4b2f-9731-c28950ca58c5"
+          },
+          {
+            "name": "Share of Dollars R13W vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 13",
+              "",
+              "//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] ) - 52",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Dollars R13W]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "d5e8b0eb-6ad9-4939-af46-18a93b670f12"
+          },
+          {
+            "name": "Share of Dollars R52W",
+            "description": "Share over a rolling 52 week period",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 52",
+              "",
+              "//this variable to find the last week, which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to calculate the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "d3337644-e879-4f4e-b763-539ea9a7e784"
+          },
+          {
+            "name": "Share of Dollars R52W vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Dollars",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 52",
+              "",
+              "//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] ) - 52",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Dollars],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Dollars R52W]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "6d45fb1d-2746-442f-93b8-88b3bf7987bd"
+          },
+          {
+            "name": "Share of EQs",
+            "description": "Share is calculated against Total Beverage when viewing by 'System Brands' or 'Manufacturer', and is calculated against ELT Category when viewing by 'Trademark' or 'Brand'",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "",
+              "/*",
+              "Share of dollars is using the same DAX as SOVI from iRED Explorer.  The user must select/filter using the Product Hierarchy for the formula to work.  The numerator (1st variable) will always be the total dollars for the selected/filtered product(s).  The denominator changes depending on the filters from the user.  It will be total dollars for All Beverages if the user has selected/filtered against System Brands or Manufacturer (2nd variable).  The denominator will be total dollars for all related categories if the user has selected/fitlered against a Trademark or Brand (3rd variable).  ",
+              "*/",
+              "",
+              "VAR selected_total = 'Share of Market (Customer)'[EQs]",
+              "",
+              "VAR category_total =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[EQs],",
+              "        VALUES ( 'Product'[ELT Category] ),",
+              "        ALLEXCEPT('Product','Product'[ELT Category])",
+              "    )",
+              "",
+              "VAR total_beverage =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[EQs],",
+              "        ALLEXCEPT('Product','Product'[ELT Category])",
+              "    )",
+              "",
+              "VAR category_share =",
+              "    DIVIDE ( selected_total, category_total )",
+              "    ",
+              "VAR total_beverage_share =",
+              "    DIVIDE ( selected_total, total_beverage )",
+              "",
+              "VAR results =",
+              "    SWITCH (",
+              "        TRUE (),",
+              "        HASONEFILTER ( 'Product'[Brand] ), category_share,",
+              "        HASONEFILTER ( 'Product'[Trademark] ), category_share,",
+              "        HASONEFILTER ( 'Product'[Manufacturer] ), total_beverage_share,",
+              "        HASONEFILTER ( 'Product'[System Brands] ), total_beverage_share,",
+              "        1",
+              "    )",
+              "    ",
+              "RETURN",
+              "    results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "985e4cba-9fc5-417f-900e-aa6661138f6f"
+          },
+          {
+            "name": "Share of EQs YTD",
+            "description": [
+              "Share for Year-to-Date",
+              ""
+            ],
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//this variable gets the latest year",
+              "VAR ytd_year = MAX('Calendar'[Fiscal Year])",
+              "",
+              "//this variable gets the latest week in the latest year",
+              "VAR ytd_week = MAX('Calendar'[Week Number])",
+              "",
+              "//this variable gets the results",
+              "VAR results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Fiscal Year] = ytd_year,",
+              "        'Calendar'[Week Number] <= ytd_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "2a070a00-ed31-4eef-b6aa-ce7490c381ac"
+          },
+          {
+            "name": "Share of EQs YTD vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//these variables help to filter by the calendar",
+              "VAR ytd_year_cy = max('Calendar'[Fiscal Year])",
+              "VAR ytd_year_py = max('Calendar'[Fiscal Year]) - 1",
+              "VAR ytd_week = ",
+              "    CALCULATE(",
+              "        max('Calendar'[Week Number]),",
+              "        'Calendar'[Fiscal Year] = ytd_year_cy)",
+              "",
+              "//this next variable gets the PY Value",
+              "VAR py_results = ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Fiscal Year] = ytd_year_py, ",
+              "        'Calendar'[Week Number] <= ytd_week",
+              "    )",
+              "",
+              "//this variable gets the existing measure for the CY share",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of EQs YTD]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "38607acd-0937-4b62-815f-80ec3984034d"
+          },
+          {
+            "name": "Share of EQs QTD",
+            "description": "Share over Quarter-to-Date",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//get the latest quarter",
+              "VAR qtd_cy = max('Calendar'[Sequential Quarter Number]) ",
+              "",
+              "//get the max week within the latest quarter",
+              "VAR qtd_week = ",
+              "    CALCULATE(",
+              "        max('Calendar'[Fiscal Week in Quarter Number]),",
+              "         'Calendar'[Sequential Quarter Number] = qtd_cy",
+              "    )",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Quarter Number] = qtd_cy, ",
+              "        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "f08e4024-ae2d-4969-b831-f54810fea8d7"
+          },
+          {
+            "name": "Share of EQs R4W",
+            "description": "Share over a rolling 4 week period",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 4",
+              "",
+              "//this variable to find the last week, which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to calculate the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "b2b1d728-c52f-43f2-bc08-1dec7cdfdf0d"
+          },
+          {
+            "name": "Share of EQs LW",
+            "description": "Share over the Last Week",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "",
+              "//this variable to find the last week",
+              "VAR lcw = MAX('Calendar'[Sequential Week Number]) ",
+              "",
+              "//this variable calculates the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        'Calendar'[Sequential Week Number] = lcw",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "d5540c20-8158-4edc-89f9-afd7da759367"
+          },
+          {
+            "name": "Share of EQs R4W vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 4",
+              "",
+              "//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] ) - 52",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of EQs R4W]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "c00fa80a-d9df-4e02-b3c5-b240d896edad"
+          },
+          {
+            "name": "Share of EQs LW vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//this variable to identify the same time period of the prior year",
+              "VAR lcw_py = max('Calendar'[Sequential Week Number]) - 52",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results = ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] = lcw_py",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of EQs LW]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "82e3f05d-e869-41db-b4c8-db511453b49b"
+          },
+          {
+            "name": "Share of EQs QTD vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//this variable gets the latest year",
+              "VAR qtd_cy = max('Calendar'[Sequential Quarter Number]) ",
+              "",
+              "//this variable gets the latest year",
+              "VAR qtd_py = qtd_cy - 4",
+              "",
+              "//get the max week within the latest quarter",
+              "VAR qtd_week = ",
+              "    CALCULATE(",
+              "        MAX('Calendar'[Fiscal Week in Quarter Number]),",
+              "         'Calendar'[Sequential Quarter Number] = qtd_cy",
+              "    )",
+              "",
+              "//this variable gets the results",
+              "VAR py_results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Quarter Number] = qtd_py,",
+              "        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of EQs QTD]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "1f1541f8-4aff-4967-9c29-b7a3c2b7df79"
+          },
+          {
+            "name": "YoY Share of EQs (% pts)",
+            "description": "This measure is meant to be used against a calendar hierarchy",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//this variable gets the share calculation for the appropriate time period",
+              "VAR results = ",
+              "    SWITCH(",
+              "        TRUE,",
+              "        OR(ISINSCOPE('Calendar'[Fiscal Week]),ISINSCOPE('Calendar'[Fiscal Week Ending Date])), [Share of EQs LW vs. PY (% pts)],",
+              "        OR(ISINSCOPE('Calendar'[Fiscal Month]),ISINSCOPE('Calendar'[Fiscal Month Ending Date])), 'Share of Market (Customer)'[Share of EQs MTD vs. PY (% pts)],",
+              "        OR(ISINSCOPE('Calendar'[Fiscal Quarter]),ISINSCOPE('Calendar'[Fiscal Quarter Ending Date])), 'Share of Market (Customer)'[Share of EQs QTD vs. PY (% pts)],",
+              "        ISINSCOPE('Calendar'[Fiscal Year]), 'Share of Market (Customer)'[Share of EQs YTD vs. PY (% pts)]",
+              "    )",
+              "    ",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "1ca899d9-8c2c-439b-852c-3e2d0db8ee6c"
+          },
+          {
+            "name": "Share of EQs MTD",
+            "description": "Share over Quarter-to-Date",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//get the latest month",
+              "VAR mtd_cy = max('Calendar'[Sequential Month Number]) ",
+              "",
+              "//get the max week within the latest month",
+              "VAR mtd_week = ",
+              "    CALCULATE(",
+              "        max('Calendar'[Fiscal Week in Month Number]),",
+              "         'Calendar'[Sequential Month Number] = mtd_cy",
+              "    )",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Month Number] = mtd_cy, ",
+              "        'Calendar'[Fiscal Week in Month Number] <= mtd_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "04c1441b-2f81-45cb-9d84-a894fd856979"
+          },
+          {
+            "name": "Share of EQs MTD vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//get the latest month",
+              "VAR mtd_cy = max('Calendar'[Sequential Month Number])",
+              "",
+              "//get the latest month for the same time last year",
+              "VAR mtd_py = max('Calendar'[Sequential Month Number]) - 12",
+              "",
+              "//get the max week within the latest month",
+              "VAR mtd_week = ",
+              "    CALCULATE(",
+              "        MAX('Calendar'[Fiscal Week in Month Number]),",
+              "         'Calendar'[Sequential Month Number] = mtd_cy",
+              "    )",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Month Number] = mtd_py, ",
+              "        'Calendar'[Fiscal Week in Month Number] <= mtd_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of EQs MTD]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "9ec225ae-5851-4316-8957-9a1947041608"
+          },
+          {
+            "name": "Share of EQs R13W",
+            "description": "Share over a rolling 13 week period",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 13",
+              "",
+              "//this variable to find the last week, which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to calculate the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "26a85258-b5b5-4832-9597-fd27f947c457"
+          },
+          {
+            "name": "Share of EQs R13W vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 13",
+              "",
+              "//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] ) - 52",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of EQs R13W]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "07a2477f-ddad-4962-aa7a-6301559a0403"
+          },
+          {
+            "name": "Share of EQs R52W",
+            "description": "Share over a rolling 52 week period",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 52",
+              "",
+              "//this variable to find the last week, which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to calculate the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "8c0481c1-a041-46dd-a0f3-05ca5c52b04c"
+          },
+          {
+            "name": "Share of EQs R52W vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of EQs",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 52",
+              "",
+              "//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] ) - 52",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of EQs],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Dollars R52W]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "224211af-4be6-48d1-965d-5afa18a07c0f"
+          },
+          {
+            "name": "Share of Units",
+            "description": "Share is calculated against Total Beverage when viewing by 'System Brands' or 'Manufacturer', and is calculated against ELT Category when viewing by 'Trademark' or 'Brand'",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "",
+              "/*",
+              "Share of dollars is using the same DAX as SOVI from iRED Explorer.  The user must select/filter using the Product Hierarchy for the formula to work.  The numerator (1st variable) will always be the total dollars for the selected/filtered product(s).  The denominator changes depending on the filters from the user.  It will be total dollars for All Beverages if the user has selected/filtered against System Brands or Manufacturer (2nd variable).  The denominator will be total dollars for all related categories if the user has selected/fitlered against a Trademark or Brand (3rd variable).  ",
+              "*/",
+              "",
+              "VAR selected_total = 'Share of Market (Customer)'[Units]",
+              "",
+              "VAR category_total =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Units],",
+              "        VALUES ( 'Product'[ELT Category] ),",
+              "        ALLEXCEPT('Product','Product'[ELT Category])",
+              "    )",
+              "",
+              "VAR total_beverage =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Units],",
+              "        ALLEXCEPT('Product','Product'[ELT Category])",
+              "    )",
+              "",
+              "VAR category_share =",
+              "    DIVIDE ( selected_total, category_total )",
+              "    ",
+              "VAR total_beverage_share =",
+              "    DIVIDE ( selected_total, total_beverage )",
+              "",
+              "VAR results =",
+              "    SWITCH (",
+              "        TRUE (),",
+              "        HASONEFILTER ( 'Product'[Brand] ), category_share,",
+              "        HASONEFILTER ( 'Product'[Trademark] ), category_share,",
+              "        HASONEFILTER ( 'Product'[Manufacturer] ), total_beverage_share,",
+              "        HASONEFILTER ( 'Product'[System Brands] ), total_beverage_share,",
+              "        1",
+              "    )",
+              "    ",
+              "RETURN",
+              "    results",
+              ""
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "1cd784e2-efd5-4cc5-af5e-76f2afd0bff8"
+          },
+          {
+            "name": "Share of Units YTD",
+            "description": [
+              "Share for Year-to-Date",
+              ""
+            ],
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//this variable gets the latest year",
+              "VAR ytd_year = MAX('Calendar'[Fiscal Year])",
+              "",
+              "//this variable gets the latest week in the latest year",
+              "VAR ytd_week = MAX('Calendar'[Week Number])",
+              "",
+              "//this variable gets the results",
+              "VAR results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Fiscal Year] = ytd_year,",
+              "        'Calendar'[Week Number] <= ytd_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "226d3adc-c0ef-42e9-b00f-b36132d170c1"
+          },
+          {
+            "name": "Share of Units YTD vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//these variables help to filter by the calendar",
+              "VAR ytd_year_cy = max('Calendar'[Fiscal Year])",
+              "VAR ytd_year_py = max('Calendar'[Fiscal Year]) - 1",
+              "VAR ytd_week = ",
+              "    CALCULATE(",
+              "        max('Calendar'[Week Number]),",
+              "        'Calendar'[Fiscal Year] = ytd_year_cy)",
+              "",
+              "//this next variable gets the PY Value",
+              "VAR py_results = ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Fiscal Year] = ytd_year_py, ",
+              "        'Calendar'[Week Number] <= ytd_week",
+              "    )",
+              "",
+              "//this variable gets the existing measure for the CY share",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Units YTD]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "5094037a-5ca4-4340-a8f5-c4fea0fce206"
+          },
+          {
+            "name": "Share of Units QTD",
+            "description": "Share over Quarter-to-Date",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//get the latest quarter",
+              "VAR qtd_cy = max('Calendar'[Sequential Quarter Number]) ",
+              "",
+              "//get the max week within the latest quarter",
+              "VAR qtd_week = ",
+              "    CALCULATE(",
+              "        max('Calendar'[Fiscal Week in Quarter Number]),",
+              "         'Calendar'[Sequential Quarter Number] = qtd_cy",
+              "    )",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Quarter Number] = qtd_cy, ",
+              "        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "9f2e1ec9-5394-41f8-89e6-9793396f8393"
+          },
+          {
+            "name": "Share of Units R4W",
+            "description": "Share over a rolling 4 week period",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 4",
+              "",
+              "//this variable to find the last week, which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to calculate the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "72febe24-7a89-4cb5-9576-89db90240516"
+          },
+          {
+            "name": "Share of Units LW",
+            "description": "Share over the Last Week",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "",
+              "//this variable to find the last week",
+              "VAR lcw = MAX('Calendar'[Sequential Week Number]) ",
+              "",
+              "//this variable calculates the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        'Calendar'[Sequential Week Number] = lcw",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "6f9fe07c-f071-40a0-94ae-59979794fb82"
+          },
+          {
+            "name": "Share of Units R4W vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 4",
+              "",
+              "//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] ) - 52",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Units R4W]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "da5e86ed-cefe-4346-b9b4-76d9052f961f"
+          },
+          {
+            "name": "Share of Units LW vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//this variable to identify the same time period of the prior year",
+              "VAR lcw_py = max('Calendar'[Sequential Week Number]) - 52",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results = ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] = lcw_py",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Units LW]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "2f481d6d-9afc-48d0-8420-c0f8bc53f813"
+          },
+          {
+            "name": "Share of Units QTD vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//this variable gets the latest year",
+              "VAR qtd_cy = max('Calendar'[Sequential Quarter Number]) ",
+              "",
+              "//this variable gets the latest year",
+              "VAR qtd_py = qtd_cy - 4",
+              "",
+              "//get the max week within the latest quarter",
+              "VAR qtd_week = ",
+              "    CALCULATE(",
+              "        MAX('Calendar'[Fiscal Week in Quarter Number]),",
+              "         'Calendar'[Sequential Quarter Number] = qtd_cy",
+              "    )",
+              "",
+              "//this variable gets the results",
+              "VAR py_results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Quarter Number] = qtd_py,",
+              "        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Dollars QTD]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "c1d4ced0-63b1-4711-9feb-04e4a568a759"
+          },
+          {
+            "name": "YoY Share of Units (% pts)",
+            "description": "This measure is meant to be used against a calendar hierarchy",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//this variable gets the share calculation for the appropriate time period",
+              "VAR results = ",
+              "    SWITCH(",
+              "        TRUE,",
+              "        OR(ISINSCOPE('Calendar'[Fiscal Week]),ISINSCOPE('Calendar'[Fiscal Week Ending Date])), [Share of Units LW vs. PY (% pts)],",
+              "        OR(ISINSCOPE('Calendar'[Fiscal Month]),ISINSCOPE('Calendar'[Fiscal Month Ending Date])), 'Share of Market (Customer)'[Share of Units MTD vs. PY (% pts)],",
+              "        OR(ISINSCOPE('Calendar'[Fiscal Quarter]),ISINSCOPE('Calendar'[Fiscal Quarter Ending Date])), 'Share of Market (Customer)'[Share of Units QTD vs. PY (% pts)],",
+              "        ISINSCOPE('Calendar'[Fiscal Year]), 'Share of Market (Customer)'[Share of Units YTD vs. PY (% pts)]",
+              "    )",
+              "    ",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "23064eb8-7420-4e1e-97b1-46f5987e0895"
+          },
+          {
+            "name": "Share of Units MTD",
+            "description": "Share over Quarter-to-Date",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//get the latest month",
+              "VAR mtd_cy = max('Calendar'[Sequential Month Number]) ",
+              "",
+              "//get the max week within the latest month",
+              "VAR mtd_week = ",
+              "    CALCULATE(",
+              "        max('Calendar'[Fiscal Week in Month Number]),",
+              "         'Calendar'[Sequential Month Number] = mtd_cy",
+              "    )",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Month Number] = mtd_cy, ",
+              "        'Calendar'[Fiscal Week in Month Number] <= mtd_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "b0d8d4b1-132f-4c74-8f65-645c02ce5927"
+          },
+          {
+            "name": "Share of Units MTD vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//get the latest month",
+              "VAR mtd_cy = max('Calendar'[Sequential Month Number])",
+              "",
+              "//get the latest month for the same time last year",
+              "VAR mtd_py = max('Calendar'[Sequential Month Number]) - 12",
+              "",
+              "//get the max week within the latest month",
+              "VAR mtd_week = ",
+              "    CALCULATE(",
+              "        MAX('Calendar'[Fiscal Week in Month Number]),",
+              "         'Calendar'[Sequential Month Number] = mtd_cy",
+              "    )",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE(",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Month Number] = mtd_py, ",
+              "        'Calendar'[Fiscal Week in Month Number] <= mtd_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Units MTD]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "71b13144-e989-484f-a0bb-c9837498552c"
+          },
+          {
+            "name": "Share of Units R13W",
+            "description": "Share over a rolling 13 week period",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 13",
+              "",
+              "//this variable to find the last week, which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to calculate the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "cd5ca21a-3798-43d9-899f-958b139ff817"
+          },
+          {
+            "name": "Share of Units R13W vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 13",
+              "",
+              "//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] ) - 52",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Units R13W]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "455b0b08-6825-46c6-877d-e00cd804991f"
+          },
+          {
+            "name": "Share of Units R52W",
+            "description": "Share over a rolling 52 week period",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 52",
+              "",
+              "//this variable to find the last week, which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to calculate the results",
+              "VAR results =",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0%;-0.0%;0.0%",
+            "lineageTag": "53698888-b16d-45d5-b336-6ffabf3f62f9"
+          },
+          {
+            "name": "Share of Units R52W vs. PY (% pts)",
+            "description": "The difference in 'Percentage Points' between the Current Year and the Previous Year over the same weeks",
+            "displayFolder": "Share of Units",
+            "expression": [
+              "",
+              "//this varible will define the number of weeks in the rolling calculation",
+              "VAR number_of_rolling_weeks = 52",
+              "",
+              "//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range",
+              "VAR end_week = MAX ( 'Calendar'[Sequential Week Number] ) - 52",
+              "",
+              "//this variable to find 4 weeks ago, which is the start week of the query range",
+              "VAR start_week = end_week - number_of_rolling_weeks",
+              "",
+              "//this variable to get the share results for the same time period of the prior year",
+              "VAR py_results =  ",
+              "    CALCULATE (",
+              "        'Share of Market (Customer)'[Share of Units],",
+              "        REMOVEFILTERS('Calendar'),",
+              "        'Calendar'[Sequential Week Number] > start_week,",
+              "        'Calendar'[Sequential Week Number] <= end_week",
+              "    )",
+              "",
+              "//this variable gets the share results for the current year ",
+              "VAR cy_results = 'Share of Market (Customer)'[Share of Units R52W]",
+              "",
+              "//this variable calculates the final results",
+              "VAR results = ",
+              "    IF(",
+              "        ISBLANK(py_results),",
+              "        BLANK(),",
+              "        (cy_results - py_results)*100",
+              "    )",
+              "",
+              "//return the results",
+              "RETURN results"
+            ],
+            "formatString": "0.0",
+            "lineageTag": "8592e3ee-e14d-4b34-acaf-dd80c78b0acf"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Share of Market (Customer)",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Database(Server, Database),",
+                "    rms_mdl_vw_fact_customerweekly = Source{[Schema=\"rms_mdl\",Item=\"vw_fact_customerweekly_ss\"]}[Data],",
+                "    #\"Renamed Columns\" = Table.RenameColumns(rms_mdl_vw_fact_customerweekly,{{\"customer_key\", \"Customer Key\"}, {\"date_key\", \"Date Key\"}, {\"product_key\", \"Product Key\"}, {\"dollars\", \"dollars_\"}, {\"eq\", \"eq_\"}, {\"units\", \"units_\"}})",
+                "in",
+                "    #\"Renamed Columns\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Product",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Route-to-Market",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "description": "ko_route_to_market",
+            "lineageTag": "f765ce51-3640-49ad-b52c-504257f1e328",
+            "sourceColumn": "Route-to-Market",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Total Category",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "description": "ko_total_category",
+            "lineageTag": "730c3e2a-837d-4111-b1a9-a87d38a10c98",
+            "sourceColumn": "Total Category",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ELT Category",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "description": "ko_elt_category",
+            "lineageTag": "5c5831d5-538b-4e51-b126-f693d7ff9fc4",
+            "sourceColumn": "ELT Category",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Product Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "acd06473-bf20-47be-a01e-e436b0551e23",
+            "sourceColumn": "Product Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "System Brands",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "2e1986b7-68df-4b91-ab90-6c028f7d4f27",
+            "sourceColumn": "System Brands",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Manufacturer",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "7be48039-7d2f-47fb-82d4-2854a40e81c3",
+            "sourceColumn": "Manufacturer",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Flavor",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "e67bff78-01d3-4693-8fcb-a3a71192dc6c",
+            "sourceColumn": "Flavor",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Trademark",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "5ec991a9-226f-4655-b9ce-54ed8473d488",
+            "sourceColumn": "Trademark",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Brand",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "335e5cdd-5a40-4913-a5c6-546424c183da",
+            "sourceColumn": "Brand",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Consumption Type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "b6dc7711-fd1d-4d09-87c5-69a3ceb1ee28",
+            "sourceColumn": "Consumption Type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sparkling vs. Non-Sparkling",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "941ae642-cea8-46eb-acc3-0b4cb82d0f23",
+            "sourceColumn": "Sparkling vs. Non-Sparkling",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Beverage Type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "d619c8bd-5be1-4499-bf62-f860cba3cf3e",
+            "sourceColumn": "Beverage Type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Container",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "c91ac471-2086-40f8-9c1f-38d2755a4662",
+            "sourceColumn": "Container",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Package",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "76cecd04-fbf4-42d8-8bb1-b7cc151d6f4c",
+            "sourceColumn": "Package",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "CBR Category",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "5a8ba873-f031-44bc-80ef-482ffb5f0d02",
+            "sourceColumn": "CBR Category",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ko_business_review_category_id",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "ab1c0534-2681-4f2f-ab2e-87a6ca17b819",
+            "sourceColumn": "ko_business_review_category_id",
+            "summarizeBy": "none"
+          }
+        ],
+        "description": "rms_mdl vw_Dim_Category",
+        "hierarchies": [
+          {
+            "name": "Product Hierarchy",
+            "levels": [
+              {
+                "name": "System Brands",
+                "column": "System Brands",
+                "lineageTag": "3a341a52-bca2-4554-9a09-18d9efe43d3a",
+                "ordinal": 0
+              },
+              {
+                "name": "Manufacturer",
+                "column": "Manufacturer",
+                "lineageTag": "c131e964-96bd-4259-826e-98469a474235",
+                "ordinal": 1
+              },
+              {
+                "name": "Trademark",
+                "column": "Trademark",
+                "lineageTag": "74e007a2-dd46-484d-b3dc-608230b8eb0b",
+                "ordinal": 2
+              },
+              {
+                "name": "Brand",
+                "column": "Brand",
+                "lineageTag": "8f971706-7f4a-44d6-88be-67f4f28a7cb9",
+                "ordinal": 3
+              }
+            ],
+            "lineageTag": "5125277d-8fe2-473c-be10-4581dd9c9223"
+          }
+        ],
+        "lineageTag": "eca76a9c-6f40-43d2-a69e-bc43b35111b7",
+        "partitions": [
+          {
+            "name": "Product",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Database(Server, Database),",
+                "    rms_mdl_vw_dim_product = Source{[Schema=\"rms_mdl\",Item=\"vw_dim_product\"]}[Data],",
+                "    #\"Removed Columns\" = Table.RemoveColumns(rms_mdl_vw_dim_product,{\"manufacturer_hier_id\", \"ko_system_brands_id\", \"ko_key_manufacturer_id\", \"ko_key_flavor_id\", \"ko_key_trademark_id\", \"ko_key_brand_id\", \"category_hier_id\", \"ko_route_to_market_id\", \"ko_ccna_selected_beverage_category\", \"ko_ccna_selected_beverage_category_id\", \"ko_total_category_id\", \"ko_elt_category_id\", \"package_hier_id\", \"ko_consumption_id\", \"ko_sparkling_non_sparkling_id\", \"ko_beverage_type_id\", \"ko_container_id\", \"ko_key_package_id\", \"updatedtimestamp\"}),",
+                "    #\"Renamed Columns\" = Table.RenameColumns(#\"Removed Columns\",{{\"product_key\", \"Product Key\"}, {\"ko_system_brands\", \"System Brands\"}, {\"ko_key_manufacturer\", \"Manufacturer\"}, {\"ko_key_flavor\", \"Flavor\"}, {\"ko_key_trademark\", \"Trademark\"}, {\"ko_key_brand\", \"Brand\"}, {\"ko_route_to_market\", \"Route-to-Market\"}, {\"ko_total_category\", \"Total Category\"}, {\"ko_elt_category\", \"ELT Category\"}, {\"ko_consumption\", \"Consumption Type\"}, {\"ko_sparkling_non_sparkling\", \"Sparkling vs. Non-Sparkling\"}, {\"ko_beverage_type\", \"Beverage Type\"}, {\"ko_container\", \"Container\"}, {\"ko_key_package\", \"Package\"}}),",
+                "  #\"Renamed Columns 1\" = Table.RenameColumns(#\"Renamed Columns\", {{\"ko_business_review_category\", \"CBR Category\"}})",
+                "in",
+                "    #\"Renamed Columns 1\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Customer",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Customer Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "7875d581-6a72-4edb-9b9a-33545985bd17",
+            "sourceColumn": "Customer Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Market Description",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "description": "market_description",
+            "isHidden": true,
+            "lineageTag": "341b42c2-c976-4db0-a638-1172acfae1cc",
+            "sourceColumn": "Market Description",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Corporation Total",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "description": "corporation_total",
+            "isHidden": true,
+            "lineageTag": "4b34c102-7b86-46d9-9144-04e168ae2e01",
+            "sourceColumn": "Corporation Total",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Channel",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "e47383b2-9f5b-41d0-be5f-470b05ab899e",
+            "sourceColumn": "Channel",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Division",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "16ab98ec-2a85-424b-840d-e1ded1ce5c41",
+            "sourceColumn": "Division",
+            "summarizeBy": "none"
+          }
+        ],
+        "description": "rms_mdl vw_Dim_Customers",
+        "hierarchies": [
+          {
+            "name": "Customer Hierarchy",
+            "levels": [
+              {
+                "name": "Corporation Total",
+                "column": "Corporation Total",
+                "lineageTag": "e418894b-e40d-47bb-bfd7-8b8e11e54435",
+                "ordinal": 0
+              },
+              {
+                "name": "Division",
+                "column": "Division",
+                "lineageTag": "df47009f-4ffe-4aa6-bada-17b5ca37754e",
+                "ordinal": 1
+              },
+              {
+                "name": "Market Description",
+                "column": "Market Description",
+                "lineageTag": "d878bdbb-5e37-4530-bf24-a9a098ed7e56",
+                "ordinal": 2
+              }
+            ],
+            "lineageTag": "e5f57670-8c67-43b1-84fe-cb56d0d4ce6d"
+          }
+        ],
+        "lineageTag": "535b64fa-f058-472f-837d-5a0841f48684",
+        "partitions": [
+          {
+            "name": "Customer",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Database(Server, Database),",
+                "    DnAIQDb_PreProd = Source{[Name=\"DnAIQDb_PreProd\"]}[Data],",
+                "    rms_mdl_vw_Dim_Customers = Source{[Schema=\"rms_mdl\",Item=\"vw_dim_customers\"]}[Data],",
+                "    #\"Renamed Columns\" = Table.RenameColumns(rms_mdl_vw_Dim_Customers,{{\"channel\", \"Channel\"}, {\"corporation_total\", \"Corporation Total\"}, {\"market_description\", \"Market Description\"}, {\"parent_market_description\", \"Parent Market Description\"}, {\"customer_key\", \"Customer Key\"},{\"division\", \"Division\"}}),",
+                "    #\"Removed Columns\" = Table.RemoveColumns(#\"Renamed Columns\",{\"Parent Market Description\", \"updatedtimestamp\"})",
+                "in",
+                "    #\"Removed Columns\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Calendar",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Date Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "ebe186b9-782d-4395-a7c7-e4e397d0d478",
+            "sourceColumn": "Date Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "m/d/yyyy",
+            "isHidden": true,
+            "isKey": true,
+            "lineageTag": "c729fe57-8a0c-4a00-b2db-d63867da7bea",
+            "sourceColumn": "Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Year",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "description": "fiscal_year",
+            "formatString": "0",
+            "lineageTag": "0e57ac97-731b-41bd-8f4b-04b3ab92db4d",
+            "sourceColumn": "Fiscal Year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Quarter",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              },
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "description": "fiscal_quarter",
+            "isHidden": true,
+            "lineageTag": "0b7d41a5-dbe5-4218-8fdd-ae2d225be39e",
+            "sortByColumn": "Quarter Number",
+            "sourceColumn": "Fiscal Quarter",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Month",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              },
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "description": "fiscal_month",
+            "isHidden": true,
+            "lineageTag": "190fad6b-78be-4dda-9cb8-4811a71c4ac5",
+            "sortByColumn": "Month Number",
+            "sourceColumn": "Fiscal Month",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Week",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              },
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "description": "fiscal_week",
+            "isHidden": true,
+            "lineageTag": "c402ed21-2066-45b6-92e3-6af7b643b5a7",
+            "sortByColumn": "Week Number",
+            "sourceColumn": "Fiscal Week",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Year Quarter",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "description": "fiscal_year_quarter",
+            "lineageTag": "ef330159-1373-4d36-a61e-5b2b836c9359",
+            "sortByColumn": "Sequential Quarter Number",
+            "sourceColumn": "Fiscal Year Quarter",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Year Month",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "description": "fiscal_year_month",
+            "lineageTag": "404519bd-d639-4c80-8431-1998d403d382",
+            "sortByColumn": "Sequential Month Number",
+            "sourceColumn": "Fiscal Year Month",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Year Week",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "description": "fiscal_year_week",
+            "lineageTag": "4e839fcd-c091-4893-a868-d8d697ec5a44",
+            "sortByColumn": "Sequential Week Number",
+            "sourceColumn": "Fiscal Year Week",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Quarter Ending Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "description": "fiscal_quarter_ending_date",
+            "formatString": "mm/dd/yy",
+            "isHidden": true,
+            "lineageTag": "5bd75638-6233-4a0c-96d8-5eece4e2b5e2",
+            "sourceColumn": "Fiscal Quarter Ending Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Month Ending Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "description": "fiscal_month_ending_date",
+            "formatString": "mm/dd/yy",
+            "isHidden": true,
+            "lineageTag": "7837fc5a-2143-4bae-bc08-c7ab96501a9a",
+            "sourceColumn": "Fiscal Month Ending Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Week Ending Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "description": "fiscal_week_ending_date",
+            "formatString": "mm/dd/yy",
+            "isHidden": true,
+            "lineageTag": "3c2b353b-8433-4f14-b77d-f7373ec75438",
+            "sourceColumn": "Fiscal Week Ending Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Quarter Number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "description": "quarter_number",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "a15d9580-c371-4ebf-8020-655afa48b670",
+            "sourceColumn": "Quarter Number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Month Number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "description": "month_number",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "c151a0eb-440a-4ef1-befe-b9a62caa9d87",
+            "sourceColumn": "Month Number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Week Number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "description": "week_number",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "c3f30187-a16a-439d-a687-e513c73ba0cc",
+            "sourceColumn": "Week Number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sequential Quarter Number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "description": "sequential_quarter_number",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "e5697b30-4a13-4f81-900b-fc316f9983a8",
+            "sourceColumn": "Sequential Quarter Number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sequential Month Number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "description": "sequential_month_number",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "d653e652-3bc4-4f22-befd-aa48bd503d63",
+            "sourceColumn": "Sequential Month Number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sequential Week Number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "description": "sequential_week_number",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "216ac7e6-f6e2-4042-85ae-1c6f0577c8b9",
+            "sourceColumn": "Sequential Week Number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sequential Day Number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "description": "sequential_day_number",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "052f0daf-51d9-49ba-8e37-d32516b99a2e",
+            "sourceColumn": "Sequential Day Number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Week In Quarter Number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "description": "fiscal_week_in_quarter_number",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "fed31204-4bc5-4875-ba15-5663cf122405",
+            "sourceColumn": "Fiscal Week In Quarter Number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Week In Month Number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "description": "fiscal_week_in_month_number",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "39a8fdeb-fa11-4054-8cd2-e2cb3e13fdf1",
+            "sourceColumn": "Fiscal Week In Month Number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Nielsen Week Ending Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "description": "nielsen_week_ending_date",
+            "formatString": "Short Date",
+            "lineageTag": "9ba9e29f-c373-46f7-97b0-11e2b2d1bd3f",
+            "sourceColumn": "Nielsen Week Ending Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "SOVI Wave",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "description": "sovi_wave",
+            "isHidden": true,
+            "lineageTag": "a90f1c54-5d66-4941-9fa2-e2b20927bbbc",
+            "sourceColumn": "SOVI Wave",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "SOVI Wave Year",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "description": "sovi_wave_year",
+            "isHidden": true,
+            "lineageTag": "c99a884b-11ef-478d-ae37-7d5453092e2e",
+            "sourceColumn": "SOVI Wave Year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "SOVI Wave Number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "description": "sovi_wave_number",
+            "isHidden": true,
+            "lineageTag": "aad521df-3687-4ac4-980e-adfe98890b7c",
+            "sourceColumn": "SOVI Wave Number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "SOVI Sequential Number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "description": "sovi_sequential_number",
+            "isHidden": true,
+            "lineageTag": "7e692abf-568d-416e-866c-5dfc284eda55",
+            "sourceColumn": "SOVI Sequential Number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "SOVI Wave Ending Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "description": "sovi_wave_ending_date",
+            "isHidden": true,
+            "lineageTag": "bdca21be-bb60-4716-ad39-8c0e82bf4995",
+            "sourceColumn": "SOVI Wave Ending Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "current_fiscal_period",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "e805621b-6edc-4086-a514-79874e9f4f40",
+            "sourceColumn": "current_fiscal_period",
+            "summarizeBy": "none"
+          }
+        ],
+        "dataCategory": "Time",
+        "description": "rms_mdl vw_Dim_Period",
+        "hierarchies": [
+          {
+            "name": "Fiscal Hierarchy by Period Name",
+            "levels": [
+              {
+                "name": "Fiscal Year",
+                "column": "Fiscal Year",
+                "lineageTag": "a271f563-a65a-4fa9-8bc2-59988db299af",
+                "ordinal": 0
+              },
+              {
+                "name": "Fiscal Quarter",
+                "column": "Fiscal Quarter",
+                "lineageTag": "3745e07f-6db8-41f5-8433-2393b2a8b1a1",
+                "ordinal": 1
+              },
+              {
+                "name": "Fiscal Month",
+                "column": "Fiscal Month",
+                "lineageTag": "d6e8e507-9626-4721-bf8a-961fb30c5410",
+                "ordinal": 2
+              },
+              {
+                "name": "Fiscal Week",
+                "column": "Fiscal Week",
+                "lineageTag": "f1ec5e04-8aa5-441c-b402-c280068e4862",
+                "ordinal": 3
+              }
+            ],
+            "lineageTag": "7f69d1c0-dd13-423a-9b29-b2a000c3666d"
+          },
+          {
+            "name": "Fiscal Hierarchy by Ending Date",
+            "levels": [
+              {
+                "name": "Fiscal Quarter Ending Date",
+                "column": "Fiscal Quarter Ending Date",
+                "lineageTag": "11894954-0807-4e37-b004-ce4338c2f433",
+                "ordinal": 0
+              },
+              {
+                "name": "Fiscal Month Ending Date",
+                "column": "Fiscal Month Ending Date",
+                "lineageTag": "8172cf10-3dd4-4fe2-9d18-b3d9ed0b5ccb",
+                "ordinal": 1
+              },
+              {
+                "name": "Fiscal Week Ending Date",
+                "column": "Fiscal Week Ending Date",
+                "lineageTag": "bf44aad1-83d6-47bf-88d5-a0dd184cdc11",
+                "ordinal": 2
+              }
+            ],
+            "lineageTag": "01027459-1a3e-4f7a-a5a4-3ae3b8dccc3c"
+          }
+        ],
+        "lineageTag": "bf8ac801-920a-42f6-a059-686f7b0daaa1",
+        "partitions": [
+          {
+            "name": "Calendar",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Database(Server, Database),",
+                "    DnAIQDb_PreProd = Source{[Name=\"DnAIQDb_PreProd\"]}[Data],",
+                "    rms_mdl_vw_Dim_Period = Source{[Schema=\"rms_mdl\",Item=\"vw_dim_period\"]}[Data],",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(rms_mdl_vw_Dim_Period,{{\"date\", type date}, {\"fiscal_quarter_ending_date\", type date}, {\"fiscal_month_ending_date\", type date}, {\"fiscal_week_ending_date\", type date}, {\"nielsen_week_ending_date\", type date}}),",
+                "    #\"Renamed Columns\" = Table.RenameColumns(#\"Changed Type\",{{\"fiscal_month\", \"Fiscal Month\"}, {\"fiscal_month_ending_date\", \"Fiscal Month Ending Date\"}, {\"fiscal_quarter\", \"Fiscal Quarter\"}, {\"fiscal_quarter_ending_date\", \"Fiscal Quarter Ending Date\"}, {\"fiscal_week\", \"Fiscal Week\"}, {\"fiscal_week_ending_date\", \"Fiscal Week Ending Date\"}, {\"fiscal_week_in_month_number\", \"Fiscal Week In Month Number\"}, {\"fiscal_week_in_quarter_number\", \"Fiscal Week In Quarter Number\"}, {\"fiscal_year\", \"Fiscal Year\"}, {\"fiscal_year_month\", \"Fiscal Year Month\"}, {\"fiscal_year_quarter\", \"Fiscal Year Quarter\"}, {\"fiscal_year_week\", \"Fiscal Year Week\"}, {\"month_number\", \"Month Number\"}, {\"nielsen_week_ending_date\", \"Nielsen Week Ending Date\"}, {\"quarter_number\", \"Quarter Number\"}, {\"sequential_day_number\", \"Sequential Day Number\"}, {\"sequential_month_number\", \"Sequential Month Number\"}, {\"sequential_quarter_number\", \"Sequential Quarter Number\"}, {\"sequential_week_number\", \"Sequential Week Number\"}, {\"sovi_sequential_number\", \"SOVI Sequential Number\"}, {\"sovi_wave\", \"SOVI Wave\"}, {\"sovi_wave_ending_date\", \"SOVI Wave Ending Date\"}, {\"sovi_wave_number\", \"SOVI Wave Number\"}, {\"sovi_wave_year\", \"SOVI Wave Year\"}, {\"week_number\", \"Week Number\"}, {\"date\", \"Date\"}}),",
+                "    #\"Changed Type1\" = Table.TransformColumnTypes(#\"Renamed Columns\",{{\"Fiscal Year\", Int64.Type}, {\"Quarter Number\", Int64.Type}, {\"Month Number\", Int64.Type}, {\"Week Number\", Int64.Type}, {\"Sequential Quarter Number\", Int64.Type}, {\"Sequential Month Number\", Int64.Type}, {\"Sequential Week Number\", Int64.Type}, {\"Sequential Day Number\", Int64.Type}, {\"Fiscal Week In Quarter Number\", Int64.Type}, {\"Fiscal Week In Month Number\", Int64.Type}}),",
+                "    #\"Removed Columns\" = Table.RemoveColumns(#\"Changed Type1\",{\"updatedtimestamp\"}),",
+                "    #\"Renamed Columns1\" = Table.RenameColumns(#\"Removed Columns\",{{\"date_key\", \"Date Key\"}})",
+                "in",
+                "    #\"Renamed Columns1\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

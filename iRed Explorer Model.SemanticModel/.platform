@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "iRed Explorer Model"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7078b285-0fdf-4d5e-8701-cc0f9a3d12a6"
+  }
+}

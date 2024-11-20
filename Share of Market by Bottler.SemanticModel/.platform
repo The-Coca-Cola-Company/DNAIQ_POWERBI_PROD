@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Share of Market by Bottler"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8e13577d-ffca-478b-b268-13ff85dd6a71"
+  }
+}

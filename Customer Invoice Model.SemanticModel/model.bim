@@ -1,0 +1,2019 @@
+{
+  "compatibilityLevel": 1567,
+  "model": {
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.128.1177.0 (24.04)"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"Customer Invoice Metrics Agg\",\"Calendar\",\"Credit Report Type\",\"Local Market Program\",\"Outlets\",\"Products\",\"Bottlers & Distributors\"]"
+      }
+    ],
+    "culture": "en-US",
+    "cultures": [
+      {
+        "name": "en-US",
+        "linguisticMetadata": {
+          "content": {
+            "Language": "en-US",
+            "Version": "1.0.0"
+          },
+          "contentType": "json"
+        }
+      }
+    ],
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "relationships": [
+      {
+        "name": "6308b1d2-b316-4375-ba24-130cff4e945b",
+        "fromColumn": "outlet_key",
+        "fromTable": "Customer Invoice Metrics Agg",
+        "toColumn": "outlet_key",
+        "toTable": "Outlets"
+      },
+      {
+        "name": "124513d6-b27f-4ea8-9d08-78c474bfadad",
+        "fromColumn": "credit_report_type_key",
+        "fromTable": "Customer Invoice Metrics Agg",
+        "toColumn": "Credit Report Type Key",
+        "toTable": "Credit Report Type"
+      },
+      {
+        "name": "15b81f90-39c5-4e19-a518-facd76ef2627",
+        "fromColumn": "date_key",
+        "fromTable": "Customer Invoice Metrics Agg",
+        "toColumn": "date_key",
+        "toTable": "Calendar"
+      },
+      {
+        "name": "178e6310-556c-40b5-ac37-ce056b7cfc48",
+        "fromColumn": "product_key",
+        "fromTable": "Customer Invoice Metrics Agg",
+        "toColumn": "ko_product_key",
+        "toTable": "Products"
+      },
+      {
+        "name": "2a21ec71-7663-4650-84b8-99484651eaff",
+        "fromColumn": "sales_branch_key",
+        "fromTable": "Customer Invoice Metrics Agg",
+        "toColumn": "sales_branch_key",
+        "toTable": "Bottlers & Distributors"
+      }
+    ],
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "Customer Invoice Metrics Agg",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Exception"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "outlet_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "54fe714e-7987-42c9-864a-9fe3f3981eb2",
+            "sourceColumn": "outlet_key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "product_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "f9dcfe8a-cd16-492e-88e0-bfd0c1c2e4ad",
+            "sourceColumn": "product_key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "credit_report_type_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "a2b6eb06-693f-4a25-b5dc-c00d52fd4de2",
+            "sourceColumn": "credit_report_type_key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "date_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "6d115c9d-adc2-4037-82ea-c0089100fff8",
+            "sourceColumn": "date_key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "sales_branch_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "8a57b71d-2c22-448e-b59c-9007358b03d1",
+            "sourceColumn": "sales_branch_key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "standard_physical_cases",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "isHidden": true,
+            "lineageTag": "a01bc040-5a2c-48f6-9696-b70ed18690a5",
+            "sourceColumn": "standard_physical_cases",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "unit_cases",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "isHidden": true,
+            "lineageTag": "7dd87a5b-9632-44d0-8033-6c4dcd13282e",
+            "sourceColumn": "unit_cases",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "gallons_",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "isHidden": true,
+            "lineageTag": "f5da60a4-9eeb-4015-bbc7-384e25a99aef",
+            "sourceColumn": "gallons_",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "consumer_transactions",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "isHidden": true,
+            "lineageTag": "6c6bcca0-6f22-4cd9-abdd-0306ad9bba49",
+            "sourceColumn": "consumer_transactions",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "d99bf500-fb0c-4392-bdfa-29ffdacca612",
+        "measures": [
+          {
+            "name": "ACV Chg%",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": "[ACV%] -[ACV PY%]",
+            "isHidden": true,
+            "lineageTag": "2d2a2147-eef2-4424-a333-4cd0cdf0ca06"
+          },
+          {
+            "name": "ACV%",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "",
+              "VAR ACV = ",
+              "\tDIVIDE([Standard Case Outlet],[Total Outlet Standard Case Volume with no Product Filters])",
+              "RETURN ACV"
+            ],
+            "isHidden": true,
+            "lineageTag": "0b13d89d-bbe4-4486-a04e-0299ca7de68b"
+          },
+          {
+            "name": "ACV PY%",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "CALCULATE(",
+              "\t\t\t[ACV%],",
+              "\t\t\tSAMEPERIODLASTYEAR('Calendar'[Calendar Date]))"
+            ],
+            "isHidden": true,
+            "lineageTag": "a712cd55-02b5-43a8-b9e7-9f2907cb0dd2"
+          },
+          {
+            "name": "ACV YoY%",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "",
+              "IF(",
+              "\tISFILTERED('Calendar'[Fiscal Month Ending Date]),",
+              "\tERROR(\"Time intelligence quick measures can only be grouped or filtered by the Power BI-provided date hierarchy or primary date column.\"),",
+              "\tVAR __PREV_YEAR =",
+              "\t\tCALCULATE(",
+              "\t\t\t[ACV%],",
+              "\t\t\tSAMEPERIODLASTYEAR('Calendar'[Calendar Date])",
+              "\t\t)",
+              "\tRETURN",
+              "\t\tDIVIDE([ACV%] - __PREV_YEAR, __PREV_YEAR)",
+              ")"
+            ],
+            "isHidden": true,
+            "lineageTag": "30af0743-2e69-46d3-8e6d-0ce590ac3475"
+          },
+          {
+            "name": "Consumer Transactions",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": "SUM('Customer Invoice Metrics Agg'[consumer_transactions])",
+            "isHidden": true,
+            "lineageTag": "8243c820-112d-41da-bc04-5cdbacb74b00"
+          },
+          {
+            "name": "Distinct Outlet Count",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "",
+              "VAR OutletsFromSales =",
+              "    SUMMARIZE ( 'Customer Invoice Metrics Agg', 'Outlets'[Golden Record])",
+              "VAR Result =",
+              "    SUMX ( OutletsFromSales, 1 )",
+              "RETURN",
+              "    Result"
+            ],
+            "isHidden": true,
+            "lineageTag": "21209b70-9533-4cc5-897f-917603ce2f7a"
+          },
+          {
+            "name": "Distinct Outlet Count PY",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "CALCULATE(",
+              "\t\t\t[Distinct Outlet Count],",
+              "\t\t\tSAMEPERIODLASTYEAR('Calendar'[Calendar Date]))"
+            ],
+            "isHidden": true,
+            "lineageTag": "df5e2494-d470-44f0-9bf9-8a7d40aa9f7b"
+          },
+          {
+            "name": "Distinct Outlet Count R13W LCM",
+            "expression": [
+              "",
+              "//Number of outlets over the last 13 weeks after any filters from the end user",
+              "    CALCULATE(",
+              "        [Distinct Outlet Count],",
+              "        'Calendar'[R13W_LCM_CY]=True()",
+              "    )"
+            ],
+            "lineageTag": "b7af93e7-b0b5-497f-8ef4-2eeecea45ede"
+          },
+          {
+            "name": "Distinct Skus Count",
+            "expression": "DISTINCTCOUNT('Customer Invoice Metrics Agg'[product_key])",
+            "formatString": "0",
+            "lineageTag": "aad47dcb-b70b-4e45-bc13-cd474087136c"
+          },
+          {
+            "name": "Outlet Penetration - R13W LCM",
+            "expression": [
+              "",
+              "",
+              "//Number of outlets over the last 13 weeks, ignores any user filters on the Product Table",
+              "VAR R13W_TotalOutlets = ",
+              "    CALCULATE (",
+              "        [Distinct Outlet Count],",
+              "        ALL (Products),",
+              "        'Calendar'[R13W_LCM_CY]=True()",
+              "    )",
+              "",
+              "VAR Penetration = ",
+              "        DIVIDE([Distinct Outlet Count R13W LCM],R13W_TotalOutlets)",
+              "        ",
+              "RETURN Penetration"
+            ],
+            "lineageTag": "2390e883-c1d7-4d0e-8410-8dd7a1e34c7a"
+          },
+          {
+            "name": "Gallons",
+            "expression": "SUM('Customer Invoice Metrics Agg'[gallons_])",
+            "lineageTag": "01e2d959-b0a0-43b6-a5b7-cd98ce9bd8d5"
+          },
+          {
+            "name": "Gallons Outlet Volume",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "",
+              "VAR OutletsFromGallons =  ",
+              "    SUMMARIZE('Customer Invoice Metrics Agg','Customer Invoice Metrics Agg'[gallons_])",
+              "VAR Result =",
+              "    SUMX(OutletsFromGallons,1)",
+              "RETURN",
+              "    Result"
+            ],
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "508ea65e-43b4-4361-8b3c-68cb3355fbc8"
+          },
+          {
+            "name": "Gallons Outlet Volume PY",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "CALCULATE(",
+              "\t\t\t[Gallons Outlet Volume],",
+              "\t\t\tSAMEPERIODLASTYEAR('Calendar'[Calendar Date]))"
+            ],
+            "isHidden": true,
+            "lineageTag": "5dba83c7-de39-432d-9521-4c36f7b3b5e7"
+          },
+          {
+            "name": "Gallons PY",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "CALCULATE(",
+              "\t\t\t[Gallons],",
+              "\t\t\tDATEADD('Calendar'[Fiscal Month Ending Date], -1, YEAR))"
+            ],
+            "isHidden": true,
+            "lineageTag": "f2bb66dc-bff2-4200-8fa7-c16af57f0a49"
+          },
+          {
+            "name": "Lost Outlet Count",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": "IF([Standard Case Outlet] = 0 && [Standard Case Outlet PY] <> 0,[Distinct Outlet Count], 0)",
+            "isHidden": true,
+            "lineageTag": "64d34a64-4211-4bf0-a156-38bfb56df6c6"
+          },
+          {
+            "name": "New Outlet Count",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": "IF([Standard Cases] <> 0 && [Standard Cases PY] = 0,[Distinct Outlet Count],0)",
+            "isHidden": true,
+            "lineageTag": "e01e3154-e84b-4227-9062-21562af58e0b"
+          },
+          {
+            "name": "Outlet Penetration Chg%",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": "[Outlet Penetration%] - [Outlet Penetration PY%]",
+            "isHidden": true,
+            "lineageTag": "473544a2-47d7-4994-9585-97d11925d4b5"
+          },
+          {
+            "name": "Outlet Penetration PY%",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "CALCULATE(",
+              "\t\t\t[Outlet Penetration%],",
+              "\t\t\tSAMEPERIODLASTYEAR('Calendar'[Calendar Date]))"
+            ],
+            "isHidden": true,
+            "lineageTag": "0a3914a8-8a13-42ad-a5f6-7a18d6c4e577"
+          },
+          {
+            "name": "Outlet Penetration YoY%",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "",
+              "IF(",
+              "\tISFILTERED('Calendar'[Fiscal Month Ending Date]),",
+              "\tERROR(\"Time intelligence quick measures can only be grouped or filtered by the Power BI-provided date hierarchy or primary date column.\"),",
+              "\tVAR __PREV_YEAR =",
+              "\t\tCALCULATE(",
+              "\t\t\t[Outlet Penetration%],",
+              "\t\t\tSAMEPERIODLASTYEAR('Calendar'[Calendar Date])",
+              "\t\t)",
+              "\tRETURN",
+              "\t\tDIVIDE([Outlet Penetration%] - __PREV_YEAR, __PREV_YEAR)",
+              ")"
+            ],
+            "isHidden": true,
+            "lineageTag": "921207f2-a3f3-4bbb-bd18-e0427726be7b"
+          },
+          {
+            "name": "Outlet Penetration%",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "",
+              "VAR Penetration = ",
+              "\tDIVIDE([Distinct Outlet Count],[Total Outlets with no Product Filters])",
+              "RETURN Penetration"
+            ],
+            "isHidden": true,
+            "lineageTag": "fc5f8206-34bb-4b44-9166-6a45d545de77"
+          },
+          {
+            "name": "row count",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": "COUNTROWS('Customer Invoice Metrics Agg')",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "6b71a8bf-9e1e-4ba8-a50a-3d1159c3431c"
+          },
+          {
+            "name": "Standard Case Outlet",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "",
+              "VAR OutletsFromStandardCases =  ",
+              "    SUMMARIZE('Customer Invoice Metrics Agg','Customer Invoice Metrics Agg'[standard_physical_cases])",
+              "VAR Result =",
+              "    SUMX(OutletsFromStandardCases,1)",
+              "RETURN",
+              "    Result"
+            ],
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "8f4fbeb7-837b-473f-a24e-fc794538e0b7"
+          },
+          {
+            "name": "Standard Case Outlet PY",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "CALCULATE(",
+              "\t\t\t[Standard Case Outlet],",
+              "\t\t\tSAMEPERIODLASTYEAR('Calendar'[Calendar Date]))"
+            ],
+            "isHidden": true,
+            "lineageTag": "50554ea4-7055-4e05-9c8d-5eb773f1aea3"
+          },
+          {
+            "name": "Standard Cases",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "expression": "SUM('Customer Invoice Metrics Agg'[standard_physical_cases])+0",
+            "lineageTag": "3f94e9ef-98b1-44ce-bf94-cf3e77b8a715"
+          },
+          {
+            "name": "Standard Cases PY",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "CALCULATE(",
+              "\t\t\t[Standard Cases],",
+              "\t\t\tSAMEPERIODLASTYEAR('Calendar'[Calendar Date]))"
+            ],
+            "isHidden": true,
+            "lineageTag": "0b145f1e-df11-4fae-ad50-83bfac61fb23"
+          },
+          {
+            "name": "Total Outlet Standard Case Volume with no Product Filters",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "",
+              "VAR TotalOutletStandardCaseVol =  ",
+              "    CALCULATE(",
+              "            [Standard Case Outlet],",
+              "            ALL(Products[Trademark],",
+              "            Products[Brand],",
+              "            Products[Product Name],",
+              "            Products[Package]",
+              "            )",
+              "    )",
+              "RETURN",
+              "    TotalOutletStandardCaseVol"
+            ],
+            "isHidden": true,
+            "lineageTag": "d05a9c0d-40dc-472d-b565-3b2d95c17c93"
+          },
+          {
+            "name": "Total Outlets with no Product Filters",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "",
+              "VAR TotalOutlets =",
+              "\tCALCULATE (",
+              "\t\t[Distinct Outlet Count],",
+              "\t\tALL (",
+              "\t\t\tProducts[Trademark],",
+              "\t\t\tProducts[Brand],",
+              "\t\t\tProducts[Beverage Product],",
+              "\t\t\tProducts[Beverage Product Package]",
+              "\t\t)",
+              "\t)",
+              "RETURN",
+              "\tTotalOutlets"
+            ],
+            "isHidden": true,
+            "lineageTag": "c4b8c1ec-f5f9-4c11-9931-ef696a884f67"
+          },
+          {
+            "name": "Unit Case per Outlet",
+            "expression": [
+              "",
+              "VAR OutletsFromUnitCases =  ",
+              "    SUMMARIZE('Customer Invoice Metrics Agg','Customer Invoice Metrics Agg'[unit_cases])",
+              "VAR Result =",
+              "    SUMX(OutletsFromUnitCases,1)",
+              "RETURN",
+              "    Result"
+            ],
+            "formatString": "0",
+            "lineageTag": "82fdf340-701e-4d7e-b1fe-8c17a5c5c31b"
+          },
+          {
+            "name": "Unit Case per Outlet PY",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "CALCULATE(",
+              "\t\t\t[Unit Case per Outlet],",
+              "\t\t\tSAMEPERIODLASTYEAR('Calendar'[Calendar Date]))"
+            ],
+            "isHidden": true,
+            "lineageTag": "0c2414cf-700a-4d35-b661-3c37de0c1ac3"
+          },
+          {
+            "name": "Unit Cases",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "expression": "SUM('Customer Invoice Metrics Agg'[unit_cases])",
+            "lineageTag": "73b2ff2e-0c29-4d54-b82a-37f8fef5550b"
+          },
+          {
+            "name": "Unit Cases PY",
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "expression": [
+              "CALCULATE(",
+              "\t\t\t[Unit Cases],",
+              "\t\t\tDATEADD('Calendar'[Fiscal Month Ending Date], -1, YEAR))"
+            ],
+            "isHidden": true,
+            "lineageTag": "574656df-646a-427c-9fa2-8c44466880a7"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Customer Invoice Metrics Agg",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Database(\"syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net\", \"DnAIqDb\", [Query=\"SELECT * FROM invoice_mdl.vw_Fact_Invoice_Weekly#(lf)\"]),",
+                "    #\"Renamed Columns\" = Table.RenameColumns(Source,{{\"gallons\", \"gallons_\"}})",
+                "in",
+                "    #\"Renamed Columns\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Calendar",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Exception"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "date_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "e1941ab3-6fb8-4710-ad7e-683ecbc4d4b0",
+            "sourceColumn": "date_key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "year",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "3a30a380-4c7f-4db1-98e4-43e156865129",
+            "sourceColumn": "year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "quarter",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "c4251437-d257-4441-a6cd-c520b0d705d5",
+            "sourceColumn": "quarter",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "month",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              },
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "545045cf-9748-4d35-9a0e-c1313866c508",
+            "sortByColumn": "month_sort_number",
+            "sourceColumn": "month",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Calendar Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "m/d/yyyy",
+            "isKey": true,
+            "lineageTag": "ad344e61-50a7-4e78-bf6a-a85a1995d084",
+            "sourceColumn": "Calendar Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Month Ending Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Short Date",
+            "lineageTag": "8be46ac7-401d-4348-9249-7a2ae2a44f63",
+            "sourceColumn": "Fiscal Month Ending Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "week_of_month",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "922e5274-ff18-48b3-baf2-10aec9d65c68",
+            "sourceColumn": "week_of_month",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Fiscal Week Ending Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "0db41208-84f7-483c-ac6c-1e99b91a4e3d",
+            "sourceColumn": "Fiscal Week Ending Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "R13W_LCM_CY",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "isHidden": true,
+            "lineageTag": "edf67f80-c631-45ea-9de7-c6eb9f5f9a2a",
+            "sourceColumn": "R13W_LCM_CY",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "R13W_LCM_PY",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "isHidden": true,
+            "lineageTag": "78a6d663-1c36-4aa7-97fd-c811a2637cfb",
+            "sourceColumn": "R13W_LCM_PY",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "year_month_number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "559080d8-760a-4b7d-baa9-45de63057ab6",
+            "sourceColumn": "year_month_number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "month_sort_number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "c34f3cc5-077a-4b9a-972e-4c023942c086",
+            "sourceColumn": "month_sort_number",
+            "summarizeBy": "none"
+          }
+        ],
+        "dataCategory": "Time",
+        "hierarchies": [
+          {
+            "name": "Year Hierarchy",
+            "levels": [
+              {
+                "name": "year",
+                "column": "year",
+                "lineageTag": "c9a480da-7244-4930-a946-5c0bb904ccdd",
+                "ordinal": 0
+              },
+              {
+                "name": "Fiscal Quarter",
+                "column": "quarter",
+                "lineageTag": "16ef0bd9-1508-48f8-9fe4-637838f1a3f1",
+                "ordinal": 1
+              },
+              {
+                "name": "Fiscal Month",
+                "column": "month",
+                "lineageTag": "8f3d954e-6f9a-4951-9926-1c64d8180af8",
+                "ordinal": 2
+              },
+              {
+                "name": "Fiscal Week",
+                "column": "week_of_month",
+                "lineageTag": "e084ff1a-1313-4466-8961-b11f098f5f90",
+                "ordinal": 3
+              }
+            ],
+            "lineageTag": "c5149fe5-3e11-413a-9b32-322da12b0ba7"
+          }
+        ],
+        "lineageTag": "125a55a7-f38d-48af-9576-3434a2be4778",
+        "partitions": [
+          {
+            "name": "Calendar",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Databases(\"syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net\"),",
+                "    DnAIqDb = Source{[Name=\"DnAIqDb\"]}[Data],",
+                "    invoice_mdl_vw_Dim_Calendar = DnAIqDb{[Schema=\"invoice_mdl\",Item=\"vw_Dim_Calendar\"]}[Data],",
+                "    #\"Renamed Columns\" = Table.RenameColumns(invoice_mdl_vw_Dim_Calendar,{{\"month_ending_date\", \"Fiscal Month Ending Date\"}, {\"week_ending_date\", \"Fiscal Week Ending Date\"}, {\"calendar_date\", \"Calendar Date\"}})",
+                "in",
+                "    #\"Renamed Columns\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Credit Report Type",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "changedProperties": [
+          {
+            "property": "Name"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Credit Report Type Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "6e76cbfa-4057-4592-86ba-673cc2b4cd8a",
+            "sourceColumn": "Credit Report Type Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Credit Report Type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "c3dc8d3a-fe54-41ba-a641-4bd6ba2e72cd",
+            "sourceColumn": "Credit Report Type",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "9250890c-63e3-4834-9cdd-1c3092e0e447",
+        "partitions": [
+          {
+            "name": "Credit Report Type",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Databases(\"syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net\"),",
+                "    DnAIqDb = Source{[Name=\"DnAIqDb\"]}[Data],",
+                "    invoice_mdl_vw_Dim_KO_Credit_Report_Type = DnAIqDb{[Schema=\"invoice_mdl\",Item=\"vw_Dim_KO_Credit_Report_Type\"]}[Data],",
+                "    #\"Renamed Columns\" = Table.RenameColumns(invoice_mdl_vw_Dim_KO_Credit_Report_Type,{{\"credit_report_type_key\", \"Credit Report Type Key\"}, {\"credit_report_type_name\", \"Credit Report Type\"}})",
+                "in",
+                "    #\"Renamed Columns\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Local Market Program",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "changedProperties": [
+          {
+            "property": "Name"
+          },
+          {
+            "property": "IsHidden"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Local Market Program Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "780f5f47-21d3-44d7-af78-7062781cfc60",
+            "sourceColumn": "Local Market Program Key",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "LMP Indicator",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "a1cfd8e1-8efb-48f6-9cf7-40726c7fb049",
+            "sourceColumn": "LMP Indicator",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "LMP Eligibility Indicator",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "bf3095d4-1305-4615-a60d-92e7e3b1f3d0",
+            "sourceColumn": "LMP Eligibility Indicator",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "LMP Growth Indicator",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "27b94617-6c2a-4763-b23e-19cbda3059d3",
+            "sourceColumn": "LMP Growth Indicator",
+            "summarizeBy": "none"
+          }
+        ],
+        "isHidden": true,
+        "lineageTag": "2325b5cb-6c4f-4fa4-9400-c0163c6ad1fd",
+        "partitions": [
+          {
+            "name": "Local Market Program",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Databases(\"syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net\"),",
+                "    DnAIqDb = Source{[Name=\"DnAIqDb\"]}[Data],",
+                "    invoice_mdl_vw_Dim_Local_Market_Program = DnAIqDb{[Schema=\"invoice_mdl\",Item=\"vw_Dim_Local_Market_Program\"]}[Data],",
+                "    #\"Renamed Columns\" = Table.RenameColumns(invoice_mdl_vw_Dim_Local_Market_Program,{{\"lmp_growth\", \"LMP Growth Indicator\"}, {\"lmp_indicator\", \"LMP Indicator\"}, {\"lmp_key\", \"Local Market Program Key\"}, {\"lmp_elgibility\", \"LMP Eligibility Indicator\"}})",
+                "in",
+                "    #\"Renamed Columns\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Outlets",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "outlet_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "5bbe9e6f-9930-4dbd-aa3e-8c8155d21b47",
+            "sourceColumn": "outlet_key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Channel Organization",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "17327285-9180-447e-952a-85ead0f88559",
+            "sourceColumn": "Channel Organization",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Activity Cluster",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "c6da9680-8823-44d6-8d7d-add7f773a80e",
+            "sourceColumn": "Activity Cluster",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "FSOP Chain Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "cf94b553-2dee-4717-949b-ed1baa874522",
+            "sourceColumn": "FSOP Chain Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Trade Channel Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "45ad8991-7514-4b95-8327-6787ed9edaa5",
+            "sourceColumn": "Trade Channel Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sub Trade Channel",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "bc3a56cb-6f7c-437a-a6ab-c8d2da821aaa",
+            "sourceColumn": "Sub Trade Channel",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "FSOP Sale Organization",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "f4384b07-aa1b-424e-9a6a-da1dff842679",
+            "sourceColumn": "FSOP Sale Organization",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Trade Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "20d29355-edce-4bd9-9d18-8db664627db1",
+            "sourceColumn": "Trade Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Golden Record",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "24905c02-1c43-48ed-af54-5dcd16afdcbb",
+            "sourceColumn": "Golden Record",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Outlet Type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "9f7b5c45-d144-4ca3-b8eb-f57fc7585316",
+            "sourceColumn": "Outlet Type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "transactions",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "isHidden": true,
+            "lineageTag": "bf40947b-d8af-4cde-9e25-f9f33657e59a",
+            "sourceColumn": "transactions",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "CBS Managed By",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "ef724c28-d103-4bb2-961f-4c9aa53afef2",
+            "sourceColumn": "CBS Managed By",
+            "summarizeBy": "none"
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Channel Hierarchy",
+            "levels": [
+              {
+                "name": "Channel Organization",
+                "column": "Channel Organization",
+                "lineageTag": "fd9a2756-f711-4ab6-a03e-e9b8d05fa4d7",
+                "ordinal": 0
+              },
+              {
+                "name": "Activity Cluster",
+                "column": "Activity Cluster",
+                "lineageTag": "8aeafc4b-eba5-4293-98ca-9b8d7b77cf84",
+                "ordinal": 1
+              },
+              {
+                "name": "Trade Channel ",
+                "column": "Trade Channel Name",
+                "lineageTag": "b9d96a4d-135b-4d67-bfb0-6aac8cead0c8",
+                "ordinal": 2
+              },
+              {
+                "name": "Sub Trade Channel",
+                "column": "Sub Trade Channel",
+                "lineageTag": "cf07668d-0e0e-4085-a52d-30c2997483de",
+                "ordinal": 3
+              }
+            ],
+            "lineageTag": "2c0fbc5e-b14d-4675-a6ad-f15b27e4604b"
+          }
+        ],
+        "lineageTag": "dcfb96ce-a3c7-4849-b6cc-ea9722282d21",
+        "partitions": [
+          {
+            "name": "Outlets",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Databases(\"syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net\"),",
+                "    DnAIqDb = Source{[Name=\"DnAIqDb\"]}[Data],",
+                "    invoice_mdl_vw_Dim_Outlet = DnAIqDb{[Schema=\"invoice_mdl\",Item=\"vw_Dim_Outlet\"]}[Data],",
+                "    #\"Renamed Columns\" = Table.RenameColumns(invoice_mdl_vw_Dim_Outlet,{{\"cbs_outlet_type_name\", \"Outlet Type\"}, {\"sub_trade_channel_name\", \"Sub Trade Channel\"}, {\"trade_channel_name\", \"Trade Channel Name\"}, {\"trade_name\", \"Trade Name\"}, {\"organization_channel_name\", \"Channel Organization\"}, {\"activity_cluster_name\", \"Activity Cluster\"}, {\"foodservice_chain_name\", \"FSOP Chain Name\"}, {\"fsop_customer_team\", \"FSOP Sale Organization\"}, {\"golden_record_identifier\", \"Golden Record\"}, {\"cbs_managed_account_customer_name\", \"CBS Managed By\"}})",
+                "in",
+                "    #\"Renamed Columns\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Products",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "changedProperties": [
+          {
+            "property": "Name"
+          }
+        ],
+        "columns": [
+          {
+            "name": "ko_product_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "af36ea4c-a45c-4123-b9c2-bb8549e92b0c",
+            "sourceColumn": "ko_product_key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "material_number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "e932f494-b108-4098-841a-1fe052d491c9",
+            "sourceColumn": "material_number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Trademark",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "0469fc15-7c81-49d0-b09a-22653d86a825",
+            "sourceColumn": "Trademark",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Brand",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "74fec225-e8d1-474a-8d14-b1d2c6bafbde",
+            "sourceColumn": "Brand",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Beverage Product",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "5d729655-b845-4c11-b07a-50c2f26864b6",
+            "sourceColumn": "Beverage Product",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Beverage Product Package",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "a0565cfb-2d1a-4431-ae86-84a67af493a0",
+            "sourceColumn": "Beverage Product Package",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Product Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "f2622a64-a6d7-45a5-89a7-3de2b8df96cb",
+            "sourceColumn": "Product Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Package",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "3ee29b06-88af-4310-b7ed-80da6d011927",
+            "sourceColumn": "Package",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Calorie Type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "6cf03369-c2f9-4d98-8187-3ee8f944dae3",
+            "sourceColumn": "Calorie Type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Consumption Type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "79fb8bc6-893f-4c61-b3e3-00fb3b0bcec5",
+            "sourceColumn": "Consumption Type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Product Type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "e1baca9f-523b-47e1-b4ce-923c0c9e249a",
+            "sourceColumn": "Product Type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Category Business Unit",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "5b9e2eda-4e90-4c9b-9b96-08190f5f0576",
+            "sourceColumn": "Category Business Unit",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Beverage Category",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "8014a591-cb17-4024-ae95-3ca65c17fd0f",
+            "sourceColumn": "Beverage Category",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Foodservice Product Category",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "05d13a3b-10a0-4ac1-bdab-06db04e47f3b",
+            "sourceColumn": "Foodservice Product Category",
+            "summarizeBy": "none"
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Category Hierarchy",
+            "levels": [
+              {
+                "name": "Category Business Unit",
+                "column": "Category Business Unit",
+                "lineageTag": "1b8ed29c-d9dc-47d5-b572-f03fcc7c3967",
+                "ordinal": 0
+              },
+              {
+                "name": "Beverage Category",
+                "column": "Beverage Category",
+                "lineageTag": "8a1c8f0d-3f00-4106-b064-92032dab3813",
+                "ordinal": 1
+              }
+            ],
+            "lineageTag": "617a1c19-e27d-441f-a54d-98e93d454fdf"
+          },
+          {
+            "name": "Trademark Hierarchy",
+            "levels": [
+              {
+                "name": "Trademark",
+                "column": "Trademark",
+                "lineageTag": "d3628867-4f26-427b-be69-5de3a539e7b4",
+                "ordinal": 0
+              },
+              {
+                "name": "Brand",
+                "column": "Brand",
+                "lineageTag": "83d67813-400d-4d63-9702-94761e876f29",
+                "ordinal": 1
+              },
+              {
+                "name": "Beverage Product",
+                "column": "Beverage Product",
+                "lineageTag": "a076c69d-4080-4485-8d6b-f2439c6b9b02",
+                "ordinal": 2
+              },
+              {
+                "name": "Beverage Product Package",
+                "column": "Beverage Product Package",
+                "lineageTag": "975acce0-db32-4929-8e88-fa0ab9089164",
+                "ordinal": 3
+              }
+            ],
+            "lineageTag": "0c253918-8f99-489d-b99e-cc056462479e"
+          }
+        ],
+        "lineageTag": "1edfeced-1547-4905-8879-1cbea47cdd25",
+        "partitions": [
+          {
+            "name": "Products",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Databases(\"syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net\"),",
+                "    DnAIqDb = Source{[Name=\"DnAIqDb\"]}[Data],",
+                "    invoice_mdl_vw_Dim_Product = DnAIqDb{[Schema=\"invoice_mdl\",Item=\"vw_Dim_Product\"]}[Data],",
+                "    #\"Renamed Columns\" = Table.RenameColumns(invoice_mdl_vw_Dim_Product,{{\"calorie_name\", \"Calorie Type\"}, {\"consumption_type\", \"Consumption Type\"}, {\"foodservice_product_category_description\", \"Foodservice Product Category\"}, {\"package_name\", \"Package\"}, {\"product_name\", \"Product Name\"}, {\"product_type_description\", \"Product Type\"}, {\"brand_name\", \"Brand\"}, {\"trademark_name\", \"Trademark\"}, {\"beverage_category_description\", \"Category Business Unit\"}, {\"beverage_category_name\", \"Beverage Category\"}, {\"beverage_product_name\", \"Beverage Product\"}, {\"beverage_product_package_description\", \"Beverage Product Package\"}})",
+                "in",
+                "    #\"Renamed Columns\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Bottlers & Distributors",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "sales_branch_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "e57fea5f-48b7-49f3-b43b-9b6238dbd15d",
+            "sourceColumn": "sales_branch_key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sales Branch",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "2c27e089-6ef8-4529-bc0c-2570d18ebbe8",
+            "sourceColumn": "Sales Branch",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Market Unit",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "f23f380c-2077-47d4-8927-bbad535a41a3",
+            "sourceColumn": "Market Unit",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Bottler Distributor Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "90d79fe8-1a92-4892-bd8f-fa5ddb6441bb",
+            "sourceColumn": "Bottler Distributor Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Bottler Distributor Type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "a89376b5-0d65-4ff7-a910-80eb5195ad0a",
+            "sourceColumn": "Bottler Distributor Type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Cona Indicator",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "d11a8dd3-d764-42ea-9233-d5ff41e0ce50",
+            "sourceColumn": "Cona Indicator",
+            "summarizeBy": "none"
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Bottler Distributor Name Hierarchy",
+            "levels": [
+              {
+                "name": "Bottler Distributor Name",
+                "column": "Bottler Distributor Name",
+                "lineageTag": "e4dd4154-8e8d-4ce7-bc8a-7842adfe5388",
+                "ordinal": 0
+              },
+              {
+                "name": "Market Unit",
+                "column": "Market Unit",
+                "lineageTag": "491712ef-3c95-4f17-b5bb-e93b49b28c4d",
+                "ordinal": 1
+              },
+              {
+                "name": "Sales Branch",
+                "column": "Sales Branch",
+                "lineageTag": "05bdc03a-009c-47b1-9a9f-720f97797331",
+                "ordinal": 2
+              }
+            ],
+            "lineageTag": "d6cf7f85-a290-4789-8a14-96a2ea989f08"
+          }
+        ],
+        "lineageTag": "0005b3af-1dc2-4ea4-b3a5-e9555f1afc21",
+        "partitions": [
+          {
+            "name": "Bottlers & Distributors",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Databases(\"syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net\"),",
+                "    DnAIqDb = Source{[Name=\"DnAIqDb\"]}[Data],",
+                "    invoice_mdl_vw_Dim_Sales_Branch = DnAIqDb{[Schema=\"invoice_mdl\",Item=\"vw_Dim_Sales_Branch\"]}[Data],",
+                "    #\"Renamed Columns\" = Table.RenameColumns(invoice_mdl_vw_Dim_Sales_Branch,{{\"sending_entity_name\", \"Bottler Distributor Name\"}, {\"market_unit_description\", \"Market Unit\"}, {\"distributor_type_name\", \"Bottler Distributor Type\"}, {\"cona_indicator\", \"Cona Indicator\"}, {\"bottler_branch_name\", \"Sales Branch\"}})",
+                "in",
+                "    #\"Renamed Columns\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

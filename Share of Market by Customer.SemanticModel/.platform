@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Share of Market by Customer"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "19d38b31-ef37-4979-a30f-cf4c3c88a420"
+  }
+}
