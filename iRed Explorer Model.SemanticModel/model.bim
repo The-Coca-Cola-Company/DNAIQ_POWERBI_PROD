@@ -8,7 +8,7 @@
       },
       {
         "name": "PBIDesktopVersion",
-        "value": "2.139.7496.1 (Main)+061188de2d27b556d0c15d8f70c4426f68783390"
+        "value": "2.138.1203.0 (24.11)"
       },
       {
         "name": "PBI_QueryOrder",
@@ -10202,7 +10202,7 @@
             "value": "Navigation"
           }
         ],
-        "expression": "\"DnAIQDb\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]",
+        "expression": "\"DnAIQDb\" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = \"Text\"]",
         "kind": "m",
         "lineageTag": "31fbafaf-7558-4b65-a894-b0194db0262f"
       }
@@ -10250,7 +10250,7 @@
         "tablePermissions": [
           {
             "name": "Calendar",
-            "filterExpression": "'Calendar'[wave_ending_date] <= (TODAY() - 4)"
+            "filterExpression": "'Calendar'[wave_ending_date] <(TODAY()-7)"
           }
         ]
       },
