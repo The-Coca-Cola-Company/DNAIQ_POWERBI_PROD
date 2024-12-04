@@ -8,7 +8,7 @@
       },
       {
         "name": "PBIDesktopVersion",
-        "value": "2.136.1202.0 (24.09)"
+        "value": "2.139.7496.1 (Main)+061188de2d27b556d0c15d8f70c4426f68783390"
       },
       {
         "name": "PBI_QueryOrder",
@@ -10250,7 +10250,7 @@
         "tablePermissions": [
           {
             "name": "Calendar",
-            "filterExpression": "'Calendar'[wave_ending_date] <= NOW()"
+            "filterExpression": "'Calendar'[wave_ending_date] <= (TODAY() - 4)"
           }
         ]
       },
@@ -10266,7 +10266,7 @@
         "tablePermissions": [
           {
             "name": "Calendar",
-            "filterExpression": "'Calendar'[wave_ending_date] >= dt\"2022-01-01\""
+            "filterExpression": "[wave_ending_date] >= dt\"2022-01-01\""
           }
         ]
       }
