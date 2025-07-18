@@ -1,0 +1,251 @@
+table 'Territory Bottlers'
+	lineageTag: 7816b425-02d7-44a4-8d54-bdd7219b1a24
+	sourceLineageTag: 0005b3af-1dc2-4ea4-b3a5-e9555f1afc21
+
+	column 'Territory Bottler'
+		dataType: string
+		lineageTag: a2018fb7-4c79-46c3-9ca2-778ac5d43d97
+		sourceLineageTag: 76a05011-48b4-4bc2-b18b-45a7712ba7d8
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Bottler Distributor Name
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Territory Bottler Market Unit'
+		dataType: string
+		lineageTag: e0724463-f0fc-4052-b75c-2982783d4b29
+		sourceLineageTag: c8d2f492-2ec8-4908-9d8a-6e5b311f7eab
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Market Unit
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Territory Bottler Sales Branch'
+		dataType: string
+		lineageTag: 785935a6-7d18-40da-8547-d07a730cac39
+		sourceLineageTag: f5448ed9-de2e-49d1-aee9-52048559b348
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Sales Branch
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Bottler/Distributor Type'
+		dataType: string
+		isHidden
+		lineageTag: cbe404e3-77ac-4553-aa84-e8374ad8f0d0
+		sourceLineageTag: c7f93cfa-5fdf-4a5a-bd21-0ae6d173d66e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Bottler/Distributor Type
+
+		annotation SummarizationSetBy = User
+
+	column 'Territory Bottler CONA Indicator'
+		dataType: string
+		lineageTag: 52c74260-2285-463d-8b98-b9d9f8ff99e9
+		sourceLineageTag: ecdd4f66-8b87-40c9-aed8-d63d2a1ebdd3
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_cona_indicator
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Territory Bottler Tier'
+		dataType: string
+		lineageTag: a02c171c-119d-4fc4-a406-012a73bacde3
+		sourceLineageTag: 58be8b5d-ade5-48e4-a295-60c5f6dd57ff
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_bottler_tier
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_territory_bottler_key
+		dataType: int64
+		isHidden
+		isNullable: false
+		formatString: 0
+		lineageTag: ef59ceb8-fa3d-40c3-a57b-7aab3b25b2ca
+		sourceLineageTag: e8efc783-08cd-4a3f-b029-e0b3f11052b4
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_territory_bottler_key
+
+		annotation SummarizationSetBy = User
+
+	column src_btlr_branch_no
+		dataType: string
+		isHidden
+		lineageTag: 61f9042f-9c35-4a0e-81f1-7f260a5c18cc
+		sourceLineageTag: a3ee0d7b-1219-448b-97a0-5397ca8de5c9
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_btlr_branch_no
+
+		annotation SummarizationSetBy = User
+
+	column dim_source_key
+		dataType: string
+		isHidden
+		lineageTag: 68461cce-3928-42e0-943e-25e7d6416e16
+		sourceLineageTag: a814b62c-075b-48f6-9354-7900a7ad5c70
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		annotation SummarizationSetBy = User
+
+	column src_ownrshp_id
+		dataType: string
+		isHidden
+		lineageTag: 4d57848f-f1f5-44ff-9812-9d4c42b88bf1
+		sourceLineageTag: 012db28e-09d4-4d00-b59f-c10fb37fbcdc
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_ownrshp_id
+
+		annotation SummarizationSetBy = User
+
+	column src_btlr_org_lvl_b_id
+		dataType: string
+		isHidden
+		lineageTag: 905ef477-8683-4c84-bff6-b93515494cc3
+		sourceLineageTag: 24ea1bd9-12be-4c66-8072-7546e587ec0e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_btlr_org_lvl_b_id
+
+		annotation SummarizationSetBy = User
+
+	column src_market_description
+		dataType: string
+		isHidden
+		lineageTag: 975854b0-8650-42ca-8084-0dc60d11ee10
+		sourceLineageTag: 3cfcaad0-edce-4c47-9fc1-32fd66ee1fda
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_market_description
+
+		annotation SummarizationSetBy = User
+
+	column dim_conformed_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6ed15e49-7864-4b4b-a3be-e0bdb778758f
+		sourceLineageTag: ded6e966-8115-4e80-9d45-eb332b02251d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_conformed_bottler_key
+
+		annotation SummarizationSetBy = User
+
+	column display_bottler_name_tier1
+		dataType: string
+		isHidden
+		lineageTag: a5394de3-b0a9-4460-82cb-ef9aa21d8d9d
+		sourceLineageTag: 9321e277-cf8e-4282-84d0-d56e65df6fee
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_bottler_name_tier1
+
+		annotation SummarizationSetBy = User
+
+	column display_bottler_name_tier2
+		dataType: string
+		isHidden
+		lineageTag: bf2e6445-7804-43a9-976f-bf4513f60cbe
+		sourceLineageTag: f4230ea8-057c-43a4-a0b7-b8752dcfdea9
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_bottler_name_tier2
+
+		annotation SummarizationSetBy = User
+
+	column display_bottler_name_all
+		dataType: string
+		isHidden
+		lineageTag: 3f50d3c7-ebf2-4a16-b483-71b2c9fef5ed
+		sourceLineageTag: 1fd3ddca-8cb1-4601-8215-3243eb654033
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_bottler_name_all
+
+		annotation SummarizationSetBy = User
+
+	column display_market_unit
+		dataType: string
+		isHidden
+		lineageTag: 03b58e17-e1ea-487a-bbc7-e8b13c02068a
+		sourceLineageTag: c913231f-7026-4ae2-a24f-5f33c392391e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_market_unit
+
+		annotation SummarizationSetBy = User
+
+	column created_date
+		dataType: dateTime
+		isHidden
+		formatString: General Number
+		lineageTag: a44b56e4-afe2-4308-82ab-e6a6e815a159
+		sourceLineageTag: 7f4d5c8b-6845-4595-ac9f-65cd1aaeacf2
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: created_date
+
+		annotation SummarizationSetBy = User
+
+	column updated_date
+		dataType: dateTime
+		isHidden
+		formatString: General Number
+		lineageTag: e3bb9604-ae10-47ff-ac08-70618b33eeae
+		sourceLineageTag: 06910d46-9894-48d9-b105-fd98b0e0da81
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: updated_date
+
+		annotation SummarizationSetBy = User
+
+	hierarchy 'Bottler/Distributor Hierarchy'
+		isHidden
+		lineageTag: 6974d6f4-48d0-4077-8e5f-941b453980cf
+		sourceLineageTag: 345191a5-0849-4878-9500-abcfa2990edd
+
+		level Bottler/Distributor
+			lineageTag: b3e89283-fc93-4ea8-b4e1-7356a1657f2a
+			sourceLineageTag: f6d3fd25-a444-4881-b3c8-219806b4a35e
+			column: 'Territory Bottler'
+
+		level 'Territory Bottler Market Unit'
+			lineageTag: 00cdb913-bcae-439d-bea3-31cf778db390
+			sourceLineageTag: 0c4e1078-b63c-408d-9884-8585b8fb9355
+			column: 'Territory Bottler Market Unit'
+
+		level 'Territory Bottler Sales Branch'
+			lineageTag: ce1700ec-aa3b-40f8-b3ca-8c246137759b
+			sourceLineageTag: 76cc0557-9268-49aa-9539-4a0d02374270
+			column: 'Territory Bottler Sales Branch'
+
+	partition 'Territory Bottlers' = entity
+		mode: directQuery
+		source
+			entityName: Territory Bottlers
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

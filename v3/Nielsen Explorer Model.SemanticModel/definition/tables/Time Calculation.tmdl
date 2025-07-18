@@ -1,0 +1,1096 @@
+table 'Time Calculation'
+	lineageTag: 6b7e46e0-7e73-4930-a784-397641777324
+
+	calculationGroup
+
+		calculationItem LCW = ```
+				
+				
+				//this variable to find the last week
+				VAR lcw = MAX('Calendar'[Sequential Week Number]) 
+				
+				//this variable calculates the results
+				VAR results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        'Calendar'[Sequential Week Number] = lcw
+				    )
+				
+				//return the results
+				RETURN results
+				```
+
+		calculationItem 'LCW PY' = ```
+				
+				
+				//this variable to find the last week
+				VAR lcw_cy = MAX('Calendar'[Sequential Week Number]) 
+				
+				//this variable to identify the same time period of the prior year
+				VAR lcw_py = lcw_cy - 52
+				    
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results = 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] = lcw_py
+				    )
+				
+				RETURN py_results
+				
+				```
+
+		calculationItem 'LCW vs. PY (Actual)' = ```
+				
+				
+				//this variable to find the last week
+				VAR lcw_cy = MAX('Calendar'[Sequential Week Number]) 
+				
+				//this variable to identify the same time period of the prior year
+				VAR lcw_py = lcw_cy - 52
+				
+				//this variable calculates the results
+				VAR cy_results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        'Calendar'[Sequential Week Number] = lcw_cy
+				    )
+				    
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results = 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] = lcw_py
+				    )
+				
+				//this variable calculates the final results
+				VAR results_int = 
+				    IF(
+				        ISBLANK(py_results),
+				        cy_results,
+				        (cy_results - py_results)
+				    )
+				
+				//return the results
+				VAR results = 
+				    if (
+				        LEFT(SELECTEDMEASURENAME(),5) = "Share",
+				        results_int * 100, results_int)
+				
+				RETURN results
+				
+				```
+
+			formatStringDefinition = if (LEFT(SELECTEDMEASURENAME(),5) = "Share", "##0.00;-##0.00",SELECTEDMEASUREFORMATSTRING ())
+
+		calculationItem 'LCW vs. PY (Percent)' = ```
+				
+				
+				//this variable to find the last week
+				VAR lcw_cy = MAX('Calendar'[Sequential Week Number]) 
+				
+				//this variable to identify the same time period of the prior year
+				VAR lcw_py = lcw_cy - 52
+				
+				//this variable calculates the results
+				VAR cy_results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        'Calendar'[Sequential Week Number] = lcw_cy
+				    )
+				    
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results = 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] = lcw_py
+				    )
+				
+				//this variable calculates the final results
+				VAR results = 
+				    IF(
+				        (ISBLANK(py_results) || LEFT(SELECTEDMEASURENAME(),5) = "Share" || isblank(cy_results) || py_results = 0),
+				        BLANK(),
+				        (cy_results - py_results)/(py_results)
+				        )        
+				
+				//VAR formatted_results = FORMAT(results, "##,###.00%")
+				
+				//return the results
+				RETURN results
+				
+				```
+
+			formatStringDefinition = "#,##0.00%"
+
+		calculationItem MTD = ```
+				
+				
+				
+				//get the latest month
+				VAR mtd_cy = max('Calendar'[Sequential Month Number]) 
+				
+				//get the max week within the latest month
+				VAR mtd_week = 
+				    CALCULATE(
+				        max('Calendar'[Fiscal Week in Month Number]),
+				         'Calendar'[Sequential Month Number] = mtd_cy
+				    )
+				
+				//this variable to get the share results for the current year
+				VAR results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Month Number] = mtd_cy, 
+				        'Calendar'[Fiscal Week in Month Number] <= mtd_week
+				    )
+				
+				//return the results
+				RETURN results
+				
+				```
+
+		calculationItem 'MTD PY' = ```
+				
+				//get the latest month
+				VAR mtd_cy = max('Calendar'[Sequential Month Number])
+				
+				//get the latest month for the same time last year
+				VAR mtd_py = max('Calendar'[Sequential Month Number]) - 12
+				
+				//get the max week within the latest month
+				VAR mtd_week = 
+				    CALCULATE(
+				        MAX('Calendar'[Fiscal Week in Month Number]),
+				         'Calendar'[Sequential Month Number] = mtd_cy
+				    )
+				
+				        
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Month Number] = mtd_py, 
+				        'Calendar'[Fiscal Week in Month Number] <= mtd_week
+				    )
+				
+				RETURN py_results
+				
+				```
+
+		calculationItem 'MTD vs. PY (Actual)' = ```
+				//get the latest month
+				VAR mtd_cy = max('Calendar'[Sequential Month Number])
+				
+				//get the latest month for the same time last year
+				VAR mtd_py = max('Calendar'[Sequential Month Number]) - 12
+				
+				//get the max week within the latest month
+				VAR mtd_week = 
+				    CALCULATE(
+				        MAX('Calendar'[Fiscal Week in Month Number]),
+				         'Calendar'[Sequential Month Number] = mtd_cy
+				    )
+				
+				//this variable to get the share results for the current year
+				VAR cy_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Month Number] = mtd_cy, 
+				        'Calendar'[Fiscal Week in Month Number] <= mtd_week
+				    )
+				        
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Month Number] = mtd_py, 
+				        'Calendar'[Fiscal Week in Month Number] <= mtd_week
+				    )
+				
+				//this variable calculates the final results
+				VAR results_int = 
+				    IF(
+				        ISBLANK(py_results),
+				        cy_results,
+				        (cy_results - py_results)
+				    )
+				
+				//return the results
+				VAR results = 
+				    if (
+				        LEFT(SELECTEDMEASURENAME(),5) = "Share",
+				        results_int * 100, results_int)
+				
+				RETURN results
+				
+				```
+
+			formatStringDefinition = if (LEFT(SELECTEDMEASURENAME(),5) = "Share", "##0.00;-##0.00",SELECTEDMEASUREFORMATSTRING ())
+
+		calculationItem 'MTD vs. PY (Percent)' = ```
+				
+				//get the latest month
+				VAR mtd_cy = max('Calendar'[Sequential Month Number])
+				
+				//get the latest month for the same time last year
+				VAR mtd_py = max('Calendar'[Sequential Month Number]) - 12
+				
+				//get the max week within the latest month
+				VAR mtd_week = 
+				    CALCULATE(
+				        MAX('Calendar'[Fiscal Week in Month Number]),
+				         'Calendar'[Sequential Month Number] = mtd_cy
+				    )
+				
+				//this variable to get the share results for the current year
+				VAR cy_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Month Number] = mtd_cy, 
+				        'Calendar'[Fiscal Week in Month Number] <= mtd_week
+				    )
+				
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Month Number] = mtd_py, 
+				        'Calendar'[Fiscal Week in Month Number] <= mtd_week
+				    )
+				
+				//this variable calculates the final results
+				VAR results = 
+				    IF(
+				        (ISBLANK(py_results) || LEFT(SELECTEDMEASURENAME(),5) = "Share" || isblank(cy_results) || py_results = 0),
+				        BLANK(),
+				        (cy_results - py_results)/(py_results)
+				        )        
+				
+				//VAR formatted_results = FORMAT(results, "##,###.00%")
+				
+				//return the results
+				RETURN results
+				
+				```
+
+			formatStringDefinition = "#,##0.00%"
+
+		calculationItem QTD = ```
+				
+				
+				//get the latest quarter
+				VAR qtd_cy = max('Calendar'[Sequential Quarter Number]) 
+				
+				//get the max week within the latest quarter
+				VAR qtd_week = 
+				    CALCULATE(
+				        max('Calendar'[Fiscal Week in Quarter Number]),
+				         'Calendar'[Sequential Quarter Number] = qtd_cy
+				    )
+				
+				//this variable to get the share results for the current year
+				VAR results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Quarter Number] = qtd_cy, 
+				        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week
+				    )
+				
+				//return the results
+				RETURN results
+				```
+
+		calculationItem 'QTD PY' = ```
+				
+				//this variable gets the latest year
+				VAR qtd_cy = max('Calendar'[Sequential Quarter Number]) 
+				
+				//this variable gets the latest year
+				VAR qtd_py = qtd_cy - 4
+				
+				//get the max week within the latest quarter
+				VAR qtd_week = 
+				    CALCULATE(
+				        MAX('Calendar'[Fiscal Week in Quarter Number]),
+				         'Calendar'[Sequential Quarter Number] = qtd_cy
+				    )
+				    
+				//this variable gets the results for the prior year
+				VAR py_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Quarter Number] = qtd_py,
+				        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week
+				    )
+				
+				RETURN py_results
+				
+				```
+
+		calculationItem 'QTD vs. PY (Actual)' = ```
+				
+				//this variable gets the latest year
+				VAR qtd_cy = max('Calendar'[Sequential Quarter Number]) 
+				
+				//this variable gets the latest year
+				VAR qtd_py = qtd_cy - 4
+				
+				//get the max week within the latest quarter
+				VAR qtd_week = 
+				    CALCULATE(
+				        MAX('Calendar'[Fiscal Week in Quarter Number]),
+				         'Calendar'[Sequential Quarter Number] = qtd_cy
+				    )
+				    
+				//this variable to get the results for the current year
+				VAR cy_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Quarter Number] = qtd_cy, 
+				        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week
+				    )
+				
+				//this variable gets the results for the prior year
+				VAR py_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Quarter Number] = qtd_py,
+				        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week
+				    )
+				
+				//this variable calculates the final results
+				VAR results_int = 
+				    IF(
+				        ISBLANK(py_results),
+				        cy_results,
+				        (cy_results - py_results)
+				    )
+				
+				//return the results
+				
+				VAR results = 
+				    if (
+				        LEFT(SELECTEDMEASURENAME(),5) = "Share",
+				        results_int * 100, results_int)
+				
+				RETURN results
+				```
+
+			formatStringDefinition = if (LEFT(SELECTEDMEASURENAME(),5) = "Share", "##0.00;-##0.00",SELECTEDMEASUREFORMATSTRING ())
+
+		calculationItem 'QTD vs. PY (Percent)' = ```
+				
+				//this variable gets the latest year
+				VAR qtd_cy = max('Calendar'[Sequential Quarter Number]) 
+				
+				//this variable gets the latest year
+				VAR qtd_py = qtd_cy - 4
+				
+				//get the max week within the latest quarter
+				VAR qtd_week = 
+				    CALCULATE(
+				        MAX('Calendar'[Fiscal Week in Quarter Number]),
+				         'Calendar'[Sequential Quarter Number] = qtd_cy
+				    )
+				    
+				//this variable to get the results for the current year
+				VAR cy_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Quarter Number] = qtd_cy, 
+				        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week
+				    )
+				
+				//this variable gets the results for the prior year
+				VAR py_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Quarter Number] = qtd_py,
+				        'Calendar'[Fiscal Week in Quarter Number] <= qtd_week
+				    )
+				
+				VAR results = 
+				    IF(
+				        (ISBLANK(py_results) || LEFT(SELECTEDMEASURENAME(),5) = "Share" || isblank(cy_results) || py_results = 0),
+				        BLANK(),
+				        (cy_results - py_results)/(py_results)
+				        )        
+				
+				//VAR formatted_results = FORMAT(results, "##,###.00%")
+				
+				//return the results
+				RETURN results
+				
+				```
+
+			formatStringDefinition = "#,##0.00%"
+
+		calculationItem R13W = ```
+				
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 13
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to calculate the results
+				VAR cy_results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > cy_start_week,
+				        'Calendar'[Sequential Week Number] <= cy_end_week
+				    )
+				
+				//return the results
+				RETURN cy_results
+				
+				```
+
+		calculationItem 'R13W PY' = ```
+				
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 13
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR py_end_week = cy_end_week - 52
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR py_start_week = py_end_week - number_of_rolling_weeks
+				
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > py_start_week,
+				        'Calendar'[Sequential Week Number] <= py_end_week
+				    )
+				
+				RETURN py_results
+				```
+
+		calculationItem 'R13W vs. PY (Actual)' = ```
+				
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 13
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR py_end_week = cy_end_week - 52
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR py_start_week = py_end_week - number_of_rolling_weeks
+				
+				//this variable to calculate the results
+				VAR cy_results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > cy_start_week,
+				        'Calendar'[Sequential Week Number] <= cy_end_week
+				    )
+				
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > py_start_week,
+				        'Calendar'[Sequential Week Number] <= py_end_week
+				    )
+				
+				//this variable calculates the final results
+				VAR results_int = 
+				    IF(
+				        ISBLANK(py_results),
+				        cy_results,
+				        (cy_results - py_results)
+				    )
+				
+				//return the results
+				VAR results = 
+				    if (
+				        LEFT(SELECTEDMEASURENAME(),5) = "Share",
+				        results_int * 100, results_int)
+				
+				RETURN results
+				```
+
+			formatStringDefinition = if (LEFT(SELECTEDMEASURENAME(),5) = "Share", "##0.00;-##0.00",SELECTEDMEASUREFORMATSTRING ())
+
+		calculationItem 'R13W vs. PY (Percent)' = ```
+				
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 13
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR py_end_week = cy_end_week - 52
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR py_start_week = py_end_week - number_of_rolling_weeks
+				
+				//this variable to calculate the results
+				VAR cy_results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > cy_start_week,
+				        'Calendar'[Sequential Week Number] <= cy_end_week
+				    )
+				
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > py_start_week,
+				        'Calendar'[Sequential Week Number] <= py_end_week
+				    )
+				
+				//this variable calculates the final results
+				VAR results = 
+				    IF(
+				        (ISBLANK(py_results) || LEFT(SELECTEDMEASURENAME(),5) = "Share" || isblank(cy_results) || py_results = 0),
+				        BLANK(),
+				        (cy_results - py_results)/(py_results)
+				        )        
+				
+				//VAR formatted_results = FORMAT(results, "##,###.00%")
+				
+				//return the results
+				RETURN results
+				```
+
+			formatStringDefinition = "#,##0.00%"
+
+		calculationItem R4W =
+				
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 4
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to calculate the results
+				VAR cy_results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > cy_start_week,
+				        'Calendar'[Sequential Week Number] <= cy_end_week
+				    )
+				
+				//return the results
+				
+				RETURN cy_results
+
+		calculationItem 'R4W PY' = ```
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 4
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range
+				VAR py_end_week = cy_end_week - 52
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR py_start_week = py_end_week - number_of_rolling_weeks
+				
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > py_start_week,
+				        'Calendar'[Sequential Week Number] <= py_end_week
+				    )
+				
+				RETURN py_results
+				
+				```
+
+		calculationItem 'R4W vs. PY (Actual)' = ```
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 4
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range
+				VAR py_end_week = cy_end_week - 52
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR py_start_week = py_end_week - number_of_rolling_weeks
+				
+				VAR cy_results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > cy_start_week,
+				        'Calendar'[Sequential Week Number] <= cy_end_week
+				    )
+				
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > py_start_week,
+				        'Calendar'[Sequential Week Number] <= py_end_week
+				    )
+				
+				//this variable calculates the final results
+				VAR results_int = 
+				    IF(
+				        ISBLANK(py_results),
+				        cy_results,
+				        (cy_results - py_results)
+				    )
+				
+				//return the results
+				VAR results = 
+				    if (
+				        LEFT(SELECTEDMEASURENAME(),5) = "Share",
+				        results_int * 100, results_int)
+				
+				RETURN results
+				
+				```
+
+			formatStringDefinition = if (LEFT(SELECTEDMEASURENAME(),5) = "Share", "##0.00;-##0.00",SELECTEDMEASUREFORMATSTRING ())
+
+		calculationItem 'R4W vs. PY (Percent)' = ```
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 4
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range
+				VAR py_end_week = cy_end_week - 52
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR py_start_week = py_end_week - number_of_rolling_weeks
+				
+				VAR cy_results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > cy_start_week,
+				        'Calendar'[Sequential Week Number] <= cy_end_week
+				    )
+				
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > py_start_week,
+				        'Calendar'[Sequential Week Number] <= py_end_week
+				    )
+				
+				//this variable calculates the final results
+				VAR results = 
+				    IF(
+				        (ISBLANK(py_results) || LEFT(SELECTEDMEASURENAME(),5) = "Share" || isblank(cy_results) || py_results = 0),
+				        BLANK(),
+				        (cy_results - py_results)/(py_results)
+				        )        
+				
+				//VAR formatted_results = FORMAT(results, "##,###.00%")
+				
+				//return the results
+				RETURN results
+				
+				```
+
+			formatStringDefinition = "#,##0.00%"
+
+		calculationItem R52W = ```
+				
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 52
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to calculate the results
+				VAR cy_results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > cy_start_week,
+				        'Calendar'[Sequential Week Number] <= cy_end_week
+				    )
+				
+				//return the results
+				RETURN cy_results
+				
+				```
+
+		calculationItem 'R52W PY' = ```
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 52
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range
+				VAR py_end_week = cy_end_week - 52
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR py_start_week = py_end_week - number_of_rolling_weeks
+				
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > py_start_week,
+				        'Calendar'[Sequential Week Number] <= py_end_week
+				    )
+				
+				RETURN py_results
+				```
+
+		calculationItem 'R52W vs. PY (Actual)' = ```
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 52
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range
+				VAR py_end_week = cy_end_week - 52
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR py_start_week = py_end_week - number_of_rolling_weeks
+				
+				//this variable to calculate the results
+				VAR cy_results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > cy_start_week,
+				        'Calendar'[Sequential Week Number] <= cy_end_week
+				    )
+				    
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > py_start_week,
+				        'Calendar'[Sequential Week Number] <= py_end_week
+				    )
+				
+				//this variable calculates the final results
+				VAR results_int = 
+				    IF(
+				        ISBLANK(py_results),
+				        cy_results,
+				        (cy_results - py_results)
+				    )
+				
+				//return the results
+				VAR results = 
+				    if (
+				        LEFT(SELECTEDMEASURENAME(),5) = "Share",
+				        results_int * 100, results_int)
+				
+				RETURN results
+				```
+
+			formatStringDefinition = if (LEFT(SELECTEDMEASURENAME(),5) = "Share", "##0.00;-##0.00",SELECTEDMEASUREFORMATSTRING ())
+
+		calculationItem 'R52W vs. PY (Percent)' = ```
+				
+				//this varible will define the number of weeks in the rolling calculation
+				VAR number_of_rolling_weeks = 52
+				
+				//this variable to find the last week, which is the end week of the query range
+				VAR cy_end_week = MAX ( 'Calendar'[Sequential Week Number] )
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR cy_start_week = cy_end_week - number_of_rolling_weeks
+				
+				//this variable to find the last week from 1 year ago (aka 52 weeks), which is the end week of the query range
+				VAR py_end_week = cy_end_week - 52
+				
+				//this variable to find 4 weeks ago, which is the start week of the query range
+				VAR py_start_week = py_end_week - number_of_rolling_weeks
+				
+				//this variable to calculate the results
+				VAR cy_results =
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > cy_start_week,
+				        'Calendar'[Sequential Week Number] <= cy_end_week
+				    )
+				    
+				//this variable to get the share results for the same time period of the prior year
+				VAR py_results =  
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Sequential Week Number] > py_start_week,
+				        'Calendar'[Sequential Week Number] <= py_end_week
+				    )
+				
+				//this variable calculates the final results
+				VAR results = 
+				    IF(
+				        (ISBLANK(py_results) || LEFT(SELECTEDMEASURENAME(),5) = "Share" || isblank(cy_results) || py_results = 0),
+				        BLANK(),
+				        (cy_results - py_results)/(py_results)
+				        )        
+				//VAR formatted_results = FORMAT(results, "##,###.00%")
+				
+				//return the results
+				RETURN results
+				```
+
+			formatStringDefinition = "#,##0.00%"
+
+		calculationItem YTD = ```
+				
+				
+				//this variable gets the latest year
+				VAR ytd_year = MAX('Calendar'[Fiscal Year])
+				
+				//this variable gets the latest week in the latest year
+				VAR ytd_week = MAX('Calendar'[Week Number])
+				
+				//this variable gets the results
+				VAR results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Fiscal Year] = ytd_year,
+				        'Calendar'[Week Number] <= ytd_week
+				    )
+				
+				//return the results
+				RETURN results
+				
+				
+				
+				```
+
+		calculationItem 'YTD PY' = ```
+				
+				
+				//these variables help to filter by the calendar
+				VAR ytd_year_cy = max('Calendar'[Fiscal Year])
+				VAR ytd_year_py = max('Calendar'[Fiscal Year]) - 1
+				VAR ytd_week = 
+				    CALCULATE(
+				        max('Calendar'[Week Number]),
+				        'Calendar'[Fiscal Year] = ytd_year_cy)
+				
+				
+				//this variable gets the results for the current year
+				VAR cy_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Fiscal Year] = ytd_year_cy,
+				        'Calendar'[Week Number] <= ytd_week
+				    )
+				
+				//this next variable gets the prior year
+				VAR py_results = 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Fiscal Year] = ytd_year_py, 
+				        'Calendar'[Week Number] <= ytd_week
+				    )
+				
+				RETURN py_results
+				```
+
+		calculationItem 'YTD vs. PY (Actual)' = ```
+				
+				VAR ytd_year_cy = max('Calendar'[Fiscal Year])
+				
+				VAR ytd_year_py = max('Calendar'[Fiscal Year]) - 1
+				
+				VAR ytd_week = 
+				    CALCULATE(
+				        max('Calendar'[Week Number]),
+				        'Calendar'[Fiscal Year] = ytd_year_cy)
+				
+				
+				//this variable gets the results for the current year
+				VAR cy_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Fiscal Year] = ytd_year_cy,
+				        'Calendar'[Week Number] <= ytd_week
+				    )
+				
+				//this next variable gets the prior year
+				VAR py_results = 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Fiscal Year] = ytd_year_py, 
+				        'Calendar'[Week Number] <= ytd_week
+				    )
+				
+				//this variable calculates the final results
+				VAR results_int = 
+				    IF(
+				        ISBLANK(py_results),
+				        cy_results,
+				        (cy_results - py_results)
+				    )
+				
+				//return the results
+				VAR results = 
+				    if (
+				        LEFT(SELECTEDMEASURENAME(),5) = "Share",
+				        --FORMAT(results_int * 100, "Standard"), results_int
+				        results_int * 100, results_int
+				        )
+				
+				RETURN results
+				```
+
+			formatStringDefinition = if (LEFT(SELECTEDMEASURENAME(),5) = "Share", "##0.00;-##0.00",SELECTEDMEASUREFORMATSTRING ())
+
+		calculationItem 'YTD vs. PY (Percent)' = ```
+				
+				
+				//these variables help to filter by the calendar
+				VAR ytd_year_cy = max('Calendar'[Fiscal Year])
+				VAR ytd_year_py = max('Calendar'[Fiscal Year]) - 1
+				VAR ytd_week = 
+				    CALCULATE(
+				        max('Calendar'[Week Number]),
+				        'Calendar'[Fiscal Year] = ytd_year_cy)
+				
+				
+				//this variable gets the results for the current year
+				VAR cy_results =  
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Fiscal Year] = ytd_year_cy,
+				        'Calendar'[Week Number] <= ytd_week
+				    )
+				
+				//this next variable gets the results for the prior year
+				VAR py_results = 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        REMOVEFILTERS('Calendar'),
+				        'Calendar'[Fiscal Year] = ytd_year_py, 
+				        'Calendar'[Week Number] <= ytd_week
+				    )
+				
+				VAR results = 
+				    IF(
+				        (ISBLANK(py_results) || LEFT(SELECTEDMEASURENAME(),5) = "Share" || isblank(cy_results) || py_results = 0),
+				        BLANK(),
+				        (cy_results - py_results)/(py_results)
+				        )        
+				
+				//VAR formatted_results = FORMAT(results, "##,###.00%")
+				
+				//return the results
+				RETURN results
+				
+				```
+
+			formatStringDefinition = "0.00%;-0.00%;0.00%"
+
+	column 'Time Calculation'
+		dataType: string
+		lineageTag: 1afb213c-ceca-41e5-a745-6fa54f62bd92
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		isHidden
+		lineageTag: 7c001cba-2380-415e-808e-44089d474122
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+

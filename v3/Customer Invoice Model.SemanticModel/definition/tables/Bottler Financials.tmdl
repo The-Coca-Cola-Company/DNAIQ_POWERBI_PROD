@@ -1,0 +1,25 @@
+table 'Bottler Financials'
+	lineageTag: 0ca21b68-81eb-492c-8298-33348c3a07d8
+
+	measure 'Dead Net Net Sales Income' = CALCULATE(SUM('Customer Invoice Measures'[bottler_dead_net_net_sales_income]))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: ce018cac-5860-4e81-a32e-5bbce05ea400
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: 9ceb7cee-39fc-4734-9dfc-5341afc2ed5f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Bottler Financials' = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = c5362e31b9ed4103b74881a017968069
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

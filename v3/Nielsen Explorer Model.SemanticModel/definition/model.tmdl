@@ -1,0 +1,29 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Share of Market","Product","Market","Calendar","Database","Server","CBR Category","_Measures","DateKey","RangeStart","RangeEnd"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.143.1204.0 (25.05)+23c84aace645781dd62b8a26eb0418c7e6a84b72
+
+annotation __TEdtr = 1
+
+annotation PBI_ProTooling = ["WebModelingEdit","DevMode"]
+
+ref table 'Share of Market'
+ref table Product
+ref table Market
+ref table Calendar
+ref table 'Time Calculation'
+ref table 'CBR Category'
+ref table _Measures
+
+ref cultureInfo en-US
+

@@ -1,0 +1,1900 @@
+table 'Customer Invoice Measures'
+	lineageTag: d99bf500-fb0c-4392-bdfa-29ffdacca612
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 2
+		incrementalGranularity: month
+		incrementalPeriods: 24
+		sourceExpression =
+			let
+			    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+			    invoice_vw_Fact_Invoice_Weekly = Source{[Schema="Invoice",Item="vw_Fact_Invoice_Weekly"]}[Data],
+			    #"Filtered Rows" = Table.SelectRows(invoice_vw_Fact_Invoice_Weekly, each [ymdid] > DateKey(RangeStart) and [ymdid] <= DateKey(RangeEnd)),
+			    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"gallons", "gallons_"}, {"lmp_flag", "LMP Flag"}}),
+			    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"LMP Flag"})
+			in
+			    #"Removed Columns"
+
+	measure 'ACV Chg%' = [ACV%] -[ACV PY%]
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 2d2a2147-eef2-4424-a333-4cd0cdf0ca06
+
+		changedProperty = IsHidden
+
+	measure ACV% = ```
+			
+			VAR ACV = 
+				DIVIDE([Standard Cases per Outlet],[Total Outlet Standard Case Volume with no Product Filters])
+			RETURN ACV
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 0b13d89d-bbe4-4486-a04e-0299ca7de68b
+
+		changedProperty = IsHidden
+
+	measure 'ACV PY%' =
+			CALCULATE(
+						[ACV%],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a712cd55-02b5-43a8-b9e7-9f2907cb0dd2
+
+		changedProperty = IsHidden
+
+	measure 'ACV YoY%' =
+			
+			IF(
+				ISFILTERED('Calendar'[Fiscal Month Ending Date]),
+				ERROR("Time intelligence quick measures can only be grouped or filtered by the Power BI-provided date hierarchy or primary date column."),
+				VAR __PREV_YEAR =
+					CALCULATE(
+						[ACV%],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date])
+					)
+				RETURN
+					DIVIDE([ACV%] - __PREV_YEAR, __PREV_YEAR)
+			)
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 30af0743-2e69-46d3-8e6d-0ce590ac3475
+
+		changedProperty = IsHidden
+
+	measure 'Consumption Transactions' = SUM('Customer Invoice Measures'[consumption_transactions])
+		formatString: #,0.0
+		displayFolder: Volume
+		lineageTag: 8243c820-112d-41da-bc04-5cdbacb74b00
+
+		changedProperty = IsHidden
+
+	measure 'Distinct Outlet Count' = ```
+			
+			VAR OutletsFromSales =
+			    SUMMARIZE ( 'Customer Invoice Measures', 'Customer Invoice Measures'[ko_golden_record_identifier])
+			VAR Result =
+			    SUMX ( OutletsFromSales, 1 )
+			RETURN 
+			    Result 
+			```
+		formatString: 0
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 21209b70-9533-4cc5-897f-917603ce2f7a
+
+		changedProperty = IsHidden
+
+	measure 'Distinct Outlet Count PY' =
+			CALCULATE(
+						[Distinct Outlet Count],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		isHidden
+		displayFolder: Hidden
+		lineageTag: df5e2494-d470-44f0-9bf9-8a7d40aa9f7b
+
+		changedProperty = IsHidden
+
+	measure 'Distinct Skus Count' = DISTINCTCOUNT('Customer Invoice Measures'[dim_ko_product_key])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: aad47dcb-b70b-4e45-bc13-cd474087136c
+
+	measure Gallons = SUM('Customer Invoice Measures'[gallons_])
+		formatString: #,0.0
+		displayFolder: Volume
+		lineageTag: 01e2d959-b0a0-43b6-a5b7-cd98ce9bd8d5
+
+	measure 'Gallons Outlet Volume' = ```
+			
+			VAR OutletsFromGallons =  
+			    SUMMARIZE('Customer Invoice Measures','Customer Invoice Measures'[gallons_])
+			VAR Result =
+			    SUMX(OutletsFromGallons,1)
+			RETURN
+			    Result
+			```
+		formatString: 0
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 508ea65e-43b4-4361-8b3c-68cb3355fbc8
+
+		changedProperty = IsHidden
+
+	measure 'Gallons Outlet Volume PY' =
+			CALCULATE(
+						[Gallons Outlet Volume],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 5dba83c7-de39-432d-9521-4c36f7b3b5e7
+
+		changedProperty = IsHidden
+
+	measure 'Gallons PY' =
+			CALCULATE(
+						[Gallons],
+						DATEADD('Calendar'[Fiscal Month Ending Date], -1, YEAR))
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f2bb66dc-bff2-4200-8fa7-c16af57f0a49
+
+		changedProperty = IsHidden
+
+	measure 'Lost Outlet Count' = IF([Standard Cases per Outlet] = 0 && [Standard Cases per Outlet PY] <> 0,[Distinct Outlet Count], 0)
+		formatString: 0
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 64d34a64-4211-4bf0-a156-38bfb56df6c6
+
+		changedProperty = IsHidden
+
+	measure 'New Outlet Count' = IF([Standard Cases] <> 0 && [Standard Cases PY] = 0,[Distinct Outlet Count],0)
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e01e3154-e84b-4227-9062-21562af58e0b
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration Chg%' = [Outlet Penetration%] - [Outlet Penetration PY%]
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 473544a2-47d7-4994-9585-97d11925d4b5
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration PY%' =
+			CALCULATE(
+						[Outlet Penetration%],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 0a3914a8-8a13-42ad-a5f6-7a18d6c4e577
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration YoY%' =
+			
+			IF(
+				ISFILTERED('Calendar'[Fiscal Month Ending Date]),
+				ERROR("Time intelligence quick measures can only be grouped or filtered by the Power BI-provided date hierarchy or primary date column."),
+				VAR __PREV_YEAR =
+					CALCULATE(
+						[Outlet Penetration%],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date])
+					)
+				RETURN
+					DIVIDE([Outlet Penetration%] - __PREV_YEAR, __PREV_YEAR)
+			)
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 921207f2-a3f3-4bbb-bd18-e0427726be7b
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration%' = ```
+			
+			VAR Penetration = 
+				DIVIDE([Distinct Outlet Count],[Total Outlets with no Product Filters])
+			RETURN Penetration
+			```
+		isHidden
+		displayFolder: Hidden
+		lineageTag: fc5f8206-34bb-4b44-9166-6a45d545de77
+
+		changedProperty = IsHidden
+
+	measure 'row count' = COUNTROWS('Customer Invoice Measures')
+		formatString: 0
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 6b71a8bf-9e1e-4ba8-a50a-3d1159c3431c
+
+		changedProperty = IsHidden
+
+	measure 'Standard Cases per Outlet' = ```
+			[Standard Cases]/[Number of Outlets]
+			/**
+			VAR OutletsFromStandardCases =  
+			    SUMMARIZE('Customer Invoice Metrics Agg','Customer Invoice Metrics Agg'[standard_physical_cases])
+			VAR Result =
+			    SUMX(OutletsFromStandardCases,1)
+			RETURN
+			    Result  **/
+			```
+		formatString: 0.0
+		displayFolder: Volume per Outlet
+		lineageTag: 8f4fbeb7-837b-473f-a24e-fc794538e0b7
+
+		changedProperty = IsHidden
+
+	measure 'Standard Cases per Outlet PY' =
+			CALCULATE(
+						[Standard Cases per Outlet],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		formatString: 0.0
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 50554ea4-7055-4e05-9c8d-5eb773f1aea3
+
+		changedProperty = IsHidden
+
+	measure 'Standard Cases' = SUM('Customer Invoice Measures'[standard_physical_cases])
+		formatString: #,0.0
+		displayFolder: Volume
+		lineageTag: 3f94e9ef-98b1-44ce-bf94-cf3e77b8a715
+
+	measure 'Standard Cases PY' =
+			CALCULATE(
+						[Standard Cases],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 0b145f1e-df11-4fae-ad50-83bfac61fb23
+
+		changedProperty = IsHidden
+
+	measure 'Total Outlet Standard Case Volume with no Product Filters' = ```
+			
+			VAR TotalOutletStandardCaseVol =  
+			    CALCULATE(
+			            [Standard Cases per Outlet],
+			            ALL(Products[Trademark],
+			            Products[Brand],
+			            Products[Product Name],
+			            Products[Package]
+			            )
+			    )
+			RETURN
+			    TotalOutletStandardCaseVol
+			```
+		isHidden
+		displayFolder: Hidden
+		lineageTag: d05a9c0d-40dc-472d-b565-3b2d95c17c93
+
+		changedProperty = IsHidden
+
+	measure 'Total Outlets with no Product Filters' =
+			
+			VAR TotalOutlets =
+				CALCULATE (
+					[Distinct Outlet Count],
+					ALL (
+						Products[Trademark],
+						Products[Brand],
+						Products[Beverage Product],
+						Products[Beverage Product Package]
+					)
+				)
+			RETURN
+				TotalOutlets
+		isHidden
+		displayFolder: Hidden
+		lineageTag: c4b8c1ec-f5f9-4c11-9931-ef696a884f67
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases per Outlet' = ```
+			[EQ Unit Cases]/[Number of Outlets]
+			/**VAR OutletsFromUnitCases =  
+			    SUMMARIZE('Customer Invoice Metrics Agg','Customer Invoice Metrics Agg'[unit_cases])
+			VAR Result =
+			    SUMX(OutletsFromUnitCases,1)
+			RETURN
+			    Result**/
+			```
+		formatString: 0.0
+		displayFolder: Volume per Outlet
+		lineageTag: 82fdf340-701e-4d7e-b1fe-8c17a5c5c31b
+
+	measure 'Unit Cases per Outlet PY' =
+			CALCULATE(
+						[Unit Cases per Outlet],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 0c2414cf-700a-4d35-b661-3c37de0c1ac3
+
+		changedProperty = IsHidden
+
+	measure 'EQ Unit Cases' = SUM('Customer Invoice Measures'[unit_cases])
+		formatString: #,0.0
+		displayFolder: Volume
+		lineageTag: 73b2ff2e-0c29-4d54-b82a-37f8fef5550b
+
+	measure 'Unit Cases PY' =
+			CALCULATE(
+						[EQ Unit Cases],
+						DATEADD('Calendar'[Fiscal Month Ending Date], -1, YEAR))
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 574656df-646a-427c-9fa2-8c44466880a7
+
+		changedProperty = IsHidden
+
+	measure 'Purchase Transactions' = SUM('Customer Invoice Measures'[purchase_transactions])
+		formatString: #,0.0
+		displayFolder: Volume
+		lineageTag: ce87571c-84f4-4dd0-b779-050ca89166bb
+
+	measure 'Raw Cases' = SUM('Customer Invoice Measures'[physical_cases])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: e9426836-7d35-4e6e-8a91-802507bcae64
+
+	measure 'Physical Cases Per Outlet' = ```
+			[Raw Cases]/[Number of Outlets] 
+			```
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 62b10172-1364-44a7-914c-995d6aa5465c
+
+	measure 'Number of Outlets' = DISTINCTCOUNT('Customer Invoice Measures'[ko_golden_record_identifier])
+		formatString: #,0
+		displayFolder: Outlet
+		lineageTag: b2edcad5-abd3-4a2f-a937-df2efb138ade
+
+	measure 'Purchase Transactions per Outlet' = [Purchase Transactions]/[Number of Outlets]
+		formatString: 0.0
+		displayFolder: Volume per Outlet
+		lineageTag: bed7cdec-ea77-4e85-b0f4-7ed37c4f7897
+
+	measure 'SSD IC MIX' =
+			
+			VAR Numerator = CALCULATE([EQ Unit Cases],Products[Beverage Category] = "Sparkling Soft Drinks")
+			VAR Denominator = CALCULATE(
+			            [EQ Unit Cases],
+			            ALL(Products[Beverage Category]
+			            )
+			    )
+			RETURN DIVIDE(Numerator, Denominator)
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		displayFolder: Volume
+		lineageTag: 3c35f8fa-9288-4980-95d3-41b67523a01a
+
+	measure 'Outlet Penetration' = ```
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			//VAR number_of_rolling_weeks = IF(ISBLANK(SELECTEDVALUE('Week Parameter'[Rolling Weeks])), 13, SELECTEDVALUE('Week Parameter'[Rolling Weeks]))
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - 13
+			
+			//VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			/**CALCULATETABLE('Calendar', 'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week)**/
+			
+			//this variable to calculate the numerator
+			VAR numerator =
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlets[Golden Record]),
+			        date_range
+			    )
+			
+			//this variable to calculate the denominator
+			VAR denominator =
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlets[Golden Record]),
+			        date_range,
+				    ALL ('Products')
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(numerator, denominator)
+			
+			//return the results
+			RETURN results
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Outlet Penetration
+		lineageTag: dbfc884e-93ac-44b5-9c06-5d24db174793
+
+	measure 'Unit Cases Per Outlet R52W' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 52
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases per Outlet],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+		formatString: 0.0
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 2efa22c4-96a7-44f2-b893-3a2294a7a8cf
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases Per Outlet R52-104W' =
+			//CALCULATE([Unit Cases Per Outlet R52W], SAMEPERIODLASTYEAR('Invoice Date'[Calendar Date]))
+			//this variable will define the number of weeks in the rolling calculation
+			VAR  number_of_rolling_weeks = 52
+			
+			//this variable to find the end of the query range
+			VAR last_year = MAX('Calendar'[Fiscal Year]) - 1
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), 'Calendar'[Fiscal Year] = last_year)
+			
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases per Outlet],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Fiscal Year] = last_year,
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+		formatString: 0.0
+		isHidden
+		displayFolder: Hidden
+		lineageTag: de2980c7-de9c-4459-9758-a1fc584ec2eb
+
+		changedProperty = IsHidden
+
+	measure 'Lost Outlets' = SUM(Outlets[Lost Outlet])
+		formatString: #,0
+		isHidden
+		displayFolder: Net Outlets
+		lineageTag: c7a28565-4ff6-44ef-a603-145407297612
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases Per Outlet R13W' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases per Outlet],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+		formatString: 0.0
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 47482d40-e968-474f-933e-b13b42a70107
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases Per Outlet R14-26W' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR upper_number_of_rolling_weeks = 14
+			VAR lower_number_of_rolling_weeks = 26
+			
+			//this variable to find the end of the query range
+			VAR max_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = max_week - lower_number_of_rolling_weeks
+			VAR end_week = max_week - upper_number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases per Outlet],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+		formatString: 0.0
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b5e25c5b-3542-4bf1-a668-05427e551648
+
+		changedProperty = IsHidden
+
+	measure 'At Risk Outlets' = SUM(Outlets[At Risk Outlet])
+		formatString: #,0
+		isHidden
+		displayFolder: Net Outlets
+		lineageTag: 51642cb4-764a-4c4f-8340-556a9d236e78
+
+		changedProperty = IsHidden
+
+	measure 'New Outlets' = SUM(Outlets[New Outlet])
+		formatString: #,0
+		isHidden
+		displayFolder: Net Outlets
+		lineageTag: 19dd933d-c814-4dc0-a405-980a786272ec
+
+		changedProperty = IsHidden
+
+	measure 'Net Outlets' = [New Outlets] - [Lost Outlets]
+		formatString: #,0
+		isHidden
+		displayFolder: Net Outlets
+		lineageTag: dc7fe91c-5fe4-4980-84f5-b852cc7bc5a7
+
+		changedProperty = IsHidden
+
+	measure 'Consumption Transactions Per Outlet' = [Consumption Transactions]/[Number of Outlets]
+		displayFolder: Volume per Outlet
+		lineageTag: 4b325137-bd79-4522-abdc-d5334e5b085a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration weighted by Unit Cases (%ACV)' = ```
+			
+			//this variable will define the number of weeks in the rolling calculation
+			//VAR number_of_rolling_weeks = IF(ISBLANK(SELECTEDVALUE('Week Parameter'[Rolling Weeks])), 13, SELECTEDVALUE('Week Parameter'[Rolling Weeks]))
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - 13
+			
+			//VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			VAR SelectedProductID = VALUES('Products'[dim_product_key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT(Outlets[Golden Record]),
+			        'Customer Invoice Measures'[dim_ko_product_key] IN SelectedProductID,
+			        date_range
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        OutletsWithProduct,
+			        ALL('Products'),
+			        date_range
+			    )
+			
+			VAR TotalSalesInOutlets = 
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        ALL('Products'),
+			        date_range
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(TotalSalesInOutletsWithProduct, TotalSalesInOutlets)
+			
+			//return the results
+			RETURN results
+			```
+		displayFolder: Outlet Penetration
+		lineageTag: bbb38a26-1c8c-4c8b-88c2-7351e3799a51
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gallons per Outlet' = [Gallons]/[Number of Outlets]
+		formatString: 0.0
+		displayFolder: Volume per Outlet
+		lineageTag: c55cc5d4-e31e-4609-bf09-8ab5a0a82e56
+
+	measure 'Total Products' = CALCULATE(DISTINCTCOUNT('Customer Invoice Measures'[dim_ko_product_key]), ALLSELECTED('Customer Invoice Measures'))
+		isHidden
+		displayFolder: Hidden
+		lineageTag: dd384bde-415a-4160-9bcf-4ca5cea8ec79
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Number of Products' = DISTINCTCOUNT('Customer Invoice Measures'[dim_ko_product_key])
+		isHidden
+		displayFolder: Hidden
+		lineageTag: d4e2c805-a98f-4ff8-b114-9a137e45c4d7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration Denominator' = ```
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - 13
+			
+			//VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			//this variable to calculate the denominator
+			RETURN
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlets[Golden Record]),
+			        date_range,
+				    ALL ('Products')
+			    )
+			```
+		displayFolder: Outlet Penetration
+		lineageTag: ddff16a6-b658-4c04-aa32-90055f87025f
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Unit Cases R52W' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 52
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [EQ Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        ALL(Products)
+			    )
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 37a3d426-2d7d-402e-943a-cf5365fc4463
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Unit Cases PR52W' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 52
+			
+			
+			//this variable to find the end of the query range
+			VAR last_year = MAX('Calendar'[Fiscal Year]) - 1
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]),'Calendar'[Fiscal Year] = last_year)
+			
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [EQ Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        'Calendar'[Fiscal Year] = last_year,
+			        ALL(Products)
+			    )
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 4860df42-d899-4b9e-bcd1-8f956856e89d
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _SUMX_Distinct_Outlets = SUMX(DISTINCT('Customer Invoice Measures'[ko_golden_record_identifier]), 1)
+		formatString: 0
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 0a34b1ee-bb2e-4eda-a524-a515af1b2f7d
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration Numerator' = ```
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			//VAR number_of_rolling_weeks = IF(ISBLANK(SELECTEDVALUE('Week Parameter'[Rolling Weeks])), 13, SELECTEDVALUE('Week Parameter'[Rolling Weeks]))
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - 13
+			
+			//VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			/**CALCULATETABLE('Calendar', 'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week)**/
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlets[Golden Record]),
+			        date_range
+			    )
+			```
+		displayFolder: Outlet Penetration
+		lineageTag: f82a8d3c-73bf-44a0-af6f-200b37516e16
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration Old' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR date_range = CALCULATETABLE('Calendar', 'Calendar'[Sequential Week Number] > start_week && 'Calendar'[Sequential Week Number] <= end_week)
+			
+			//this variable to calculate the numerator
+			VAR numerator =
+			    CALCULATE (
+			        DISTINCTCOUNT('Customer Invoice Measures'[ko_golden_record_identifier]),
+			        date_range
+			    )
+			
+			//this variable to calculate the denominator
+			VAR denominator =
+			    CALCULATE (
+			        DISTINCTCOUNT('Customer Invoice Measures'[ko_golden_record_identifier]),
+			        date_range,
+				    ALL (Products)
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(numerator, denominator)
+			
+			//return the results
+			RETURN results
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 48c5f3cd-02f0-49fc-a7ad-fe372a41b6fc
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration SUMX' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			/**CALCULATETABLE('Calendar', 'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week)**/
+			
+			//this variable to calculate the numerator
+			VAR numerator =
+			    CALCULATE('Customer Invoice Measures'[_SUMX_Distinct_Outlets],
+			        date_range,
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			//this variable to calculate the denominator
+			VAR denominator =
+			    CALCULATE (
+			        'Customer Invoice Measures'[_SUMX_Distinct_Outlets],
+			        date_range,
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week,
+				    ALL (Products)
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(numerator, denominator)
+			
+			//return the results
+			RETURN results
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 1bb014b9-6cde-4831-bf2a-4e696ad40d0c
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure UCPN =
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			RETURN
+			    CALCULATE(
+			       [EQ Unit Cases],
+			        date_range,
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        REMOVEFILTERS(Products)
+			    )
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 965c6234-f299-4b74-bac5-d8dce1c3dfbf
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure UCPD =
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			RETURN
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        date_range,
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+				    ALL(Products),
+			        ALL(Outlets),
+			        ALL('Bottlers & Distributors'),
+			        ALL('Invoice')
+			    )
+		formatString: #,0
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 363d59b7-9c4c-41d7-ade5-bae25fe1d56b
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases R13W' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [EQ Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 29f87f1d-e828-4536-8db8-4ea9e09516dd
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Unit Cases R13W All Outlets' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [EQ Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        ALL(Outlets)
+			    )
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 2a563ed7-d7e1-498c-af4c-7aac771fea80
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Unit Cases R13W CC' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [EQ Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        Products[Trademark] = "Coca-Cola"
+			    )
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 29f95c44-20bf-46a7-b227-bce4e0b744f0
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Qualified Volume' = ```
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			 
+			VAR SelectedProductID = VALUES(Products[dim_product_key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[ko_golden_record_identifier]),
+			        'Customer Invoice Measures'[dim_ko_product_key] IN SelectedProductID
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        OutletsWithProduct,
+			        ALL(Products),
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			 
+			return TotalSalesInOutletsWithProduct
+			```
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: 489736a4-675e-4838-8cdd-9f3763d878bb
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected Product Volume' =
+			
+			CALCULATE(
+			        [EQ Unit Cases],
+			        ALL(Products),
+			        'Time Calculation'[Time Calculation] = "R13W"
+			    )
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 961642db-29f6-41cb-9b61-28e53454a722
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Qualified Volume 2' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			//this variable to calculate the numerator
+			VAR numerator =
+			SWITCH(
+			    TRUE(),
+			    ISINSCOPE(Outlets[Channel Organization]) ||
+			    ISINSCOPE(Outlets[Activity Cluster]) ||
+			    ISINSCOPE(Outlets[Trade Channel Name]) ||
+			    ISINSCOPE(Outlets[Sub Trade Channel]) ||
+			    ISINSCOPE(Outlets[CBS Managed By Account Name]) ||
+			    ISINSCOPE(Outlets[CBS Managed By Level 3]) ||
+			    ISINSCOPE(Outlets[LMP Flag]) ||
+			    ISINSCOPE('Bottlers & Distributors'[Bottler Distributor Name]) ||
+			    ISINSCOPE('Bottlers & Distributors'[Market Unit]) ||
+			    ISINSCOPE('Bottlers & Distributors'[Sales Branch]) ||
+			    ISINSCOPE('Bottlers & Distributors'[Bottler/Distributor Type]) ||
+			    ISINSCOPE(Invoice[Credit Report Type]),
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        ALLSELECTED(Products)
+			    ),
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        ALLSELECTED(Outlets),
+			        ALLSELECTED('Bottlers & Distributors'),
+			        ALLSELECTED(Invoice)
+			    )
+			)
+			
+			RETURN numerator
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 864b9efa-4777-4cb3-b844-76158312732a
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Unit Cases Coca-Cola Trademark' =
+			
+			CALCULATE(
+			        [EQ Unit Cases],
+			        Products[Trademark] = "Coca-Cola"
+			    )
+		isHidden
+		displayFolder: Hidden
+		lineageTag: cc3f22f8-164c-4576-a9cf-00bf2c410efc
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Pen Norm' =
+			
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			VAR start_week = end_week - 13
+			
+			VAR date_range = CALCULATETABLE(TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key]), 'Calendar'[Sequential Week Number] > start_week && 'Calendar'[Sequential Week Number] <= end_week)
+			
+			//RETURN CALCULATE([Outlet Penetration], date_range)
+			
+			RETURN CALCULATE (
+			        [Outlet Pen],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: 58b0bd9a-7ec7-4832-9371-ae8c7d172135
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Unit Cases YTD' =
+			
+			CALCULATE([EQ Unit Cases], 'Time Calculation'[Time Calculation] = "YTD")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9bef0318-254f-4d7b-acfb-88d967b0f1b5
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration Weighted by Unit Cases 2' = ```
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = IF(ISBLANK(SELECTEDVALUE('Week Parameter'[Rolling Weeks])), 13, SELECTEDVALUE('Week Parameter'[Rolling Weeks]))
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR SelectedProductID = VALUES(Products[dim_product_key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[ko_golden_record_identifier]),
+			        'Customer Invoice Measures'[dim_ko_product_key] IN SelectedProductID,
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        OutletsWithProduct,
+			        ALL(Products),
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			VAR TotalSalesInOutlets = 
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        ALL(Products),
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(TotalSalesInOutletsWithProduct, TotalSalesInOutlets)
+			
+			//return the results
+			RETURN results
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: 5b69efde-a8bd-4d26-a78c-047996c3d0f4
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Pen' =
+			
+			VAR numerator =
+			    CALCULATE (
+			        DISTINCTCOUNT('Customer Invoice Measures'[ko_golden_record_identifier])
+			    )
+			
+			//this variable to calculate the denominator
+			VAR denominator =
+			    CALCULATE (
+			        DISTINCTCOUNT('Customer Invoice Measures'[ko_golden_record_identifier]),
+				    ALL (Products)
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(numerator, denominator)
+			
+			//return the results
+			RETURN results
+		formatString: 0.00%;-0.00%;0.00%
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f5bbbf7a-edb1-4bf1-8e18-8ea11c8d975c
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases All Products' = ```
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			
+			RETURN
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        ALL(Products),
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			
+			```
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 409f073e-99b4-4463-83a6-d238a87296c7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration weighted by Standard Cases (%ACV)' = ```
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = IF(ISBLANK(SELECTEDVALUE('Week Parameter'[Rolling Weeks])), 13, SELECTEDVALUE('Week Parameter'[Rolling Weeks]))
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			VAR SelectedProductID = VALUES(Products[dim_product_key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[ko_golden_record_identifier]),
+			        'Customer Invoice Measures'[dim_ko_product_key] IN SelectedProductID,
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        [Standard Cases],
+			        OutletsWithProduct,
+			        ALL(Products),
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			VAR TotalSalesInOutlets = 
+			    CALCULATE(
+			        [Standard Cases],
+			        ALL(Products),
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(TotalSalesInOutletsWithProduct, TotalSalesInOutlets)
+			
+			//return the results
+			RETURN results
+			```
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: 4c9e1ed6-0a52-479f-8113-8cfbdd607c20
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Qualified Volume Standard Cases' = ```
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			 
+			VAR SelectedProductID = VALUES(Products[dim_product_key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[ko_golden_record_identifier]),
+			        'Customer Invoice Measures'[dim_ko_product_key] IN SelectedProductID
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        [Standard Cases],
+			        OutletsWithProduct,
+			        ALL(Products),
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			 
+			return TotalSalesInOutletsWithProduct
+			```
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: 4a09507a-6ec7-4e1c-a8e0-001de038cf00
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration Mix Unit Cases' = ```
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - 13
+			
+			//VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			VAR SelectedProductID = VALUES(Products[dim_product_key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[ko_golden_record_identifier]),
+			        'Customer Invoice Measures'[dim_ko_product_key] IN SelectedProductID,
+			        date_range
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        OutletsWithProduct,
+			        date_range
+			    )
+			
+			VAR TotalSalesInOutlets = 
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        OutletsWithProduct,
+			        ALL(Products),
+			        date_range
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(TotalSalesInOutletsWithProduct, TotalSalesInOutlets)
+			
+			//return the results
+			RETURN results
+			```
+		displayFolder: Outlet Penetration
+		lineageTag: 46ef9a33-ac58-43bf-95bc-d142a4bc5214
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Qualified Volume Standard Cases Mix' = ```
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			 
+			VAR SelectedProductID = VALUES(Products[dim_product_key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[ko_golden_record_identifier]),
+			        'Customer Invoice Measures'[dim_ko_product_key] IN SelectedProductID
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        [Standard Cases],
+			        OutletsWithProduct,
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			 
+			return TotalSalesInOutletsWithProduct
+			```
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: c7522038-7088-4f46-9cc1-d00f8fc830f5
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration Mix Unit Cases Denominator' = ```
+			
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - 13
+			
+			//VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			VAR SelectedProductID = VALUES(Products[dim_product_key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[ko_golden_record_identifier]),
+			        'Customer Invoice Measures'[dim_ko_product_key] IN SelectedProductID,
+			        date_range
+			)
+			 
+			RETURN 
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        OutletsWithProduct,
+			        ALL(Products),
+			        date_range
+			    )
+			
+			```
+		displayFolder: Outlet Penetration
+		lineageTag: 921d0c22-d8fd-41d0-b6b9-34f98155af8f
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration Mix Unit Cases Numerator' = ```
+			
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - 13
+			
+			//VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			VAR SelectedProductID = VALUES(Products[dim_product_key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[ko_golden_record_identifier]),
+			        'Customer Invoice Measures'[dim_ko_product_key] IN SelectedProductID,
+			        date_range
+			)
+			 
+			RETURN
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        OutletsWithProduct,
+			        date_range
+			    )
+			
+			```
+		displayFolder: Outlet Penetration
+		lineageTag: ea24bc51-59da-4f78-9904-6ff8b58bca22
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration weighted by Unit Cases (%ACV) Numerator' = ```
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - 13
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			VAR SelectedProductID = VALUES('Products'[dim_product_key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT(Outlets[Golden Record]),
+			        'Customer Invoice Measures'[dim_ko_product_key] IN SelectedProductID,
+			        date_range
+			)
+			 
+			RETURN
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        OutletsWithProduct,
+			        ALL('Products'),
+			        date_range
+			    )
+			```
+		displayFolder: Outlet Penetration
+		lineageTag: 2230b4a0-bd93-4a4a-9e8f-eec9863c4e22
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration weighted by Unit Cases (%ACV) Denominator' = ```
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - 13
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			RETURN
+			    CALCULATE(
+			        [EQ Unit Cases],
+			        ALL('Products'),
+			        date_range
+			    )
+			```
+		displayFolder: Outlet Penetration
+		lineageTag: b22d3cb6-ca7d-41d6-bd2a-34cdf10810e3
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outlet Penetration TA' = ```
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - 13
+			
+			VAR date_range = TREATAS(
+			                      SUMMARIZE(
+			                              FILTER(ALL('Calendar'), 
+			                              'Calendar'[Sequential Week Number] > start_week &&
+			                              'Calendar'[Sequential Week Number] <= end_week), 'Calendar'[dim_date_key]),
+			                              'Customer Invoice Measures'[dim_date_key])
+			
+			//this variable to calculate the numerator
+			VAR numerator =
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlets[Golden Record]),
+			        date_range
+			    )
+			
+			//this variable to calculate the denominator
+			VAR denominator =
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlets[Golden Record]),
+			        date_range,
+				    ALL ('Products')
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(numerator, denominator)
+			
+			//return the results
+			RETURN results
+			```
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: 60518d14-d97a-4670-8a99-78303bb5f1b7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column standard_physical_cases
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a01bc040-5a2c-48f6-9696-b70ed18690a5
+		summarizeBy: sum
+		sourceColumn: standard_physical_cases
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_cases
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 7dd87a5b-9632-44d0-8033-6c4dcd13282e
+		summarizeBy: sum
+		sourceColumn: unit_cases
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gallons_
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f5da60a4-9eeb-4015-bbc7-384e25a99aef
+		summarizeBy: sum
+		sourceColumn: gallons_
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_ko_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: b4346111-7a23-4a29-b53c-3eb776a23818
+		summarizeBy: none
+		sourceColumn: dim_ko_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_outlet_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 9cf021e6-cd88-4b3a-9471-3baad4a4ba30
+		summarizeBy: none
+		sourceColumn: dim_outlet_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_sales_branch_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: cc3060c0-a5e8-443b-848d-f830c7f1151d
+		summarizeBy: none
+		sourceColumn: dim_sales_branch_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_invoice_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 8e683593-991b-430b-b95d-bae7e53ebc62
+		summarizeBy: none
+		sourceColumn: dim_invoice_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 963eb71c-78ec-4763-abff-bcf333833810
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column purchase_transactions
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 25811937-edbc-4494-aae3-645d5fa59780
+		summarizeBy: sum
+		sourceColumn: purchase_transactions
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column physical_cases
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 3a8d2bed-73a9-4470-a109-48e28c131479
+		summarizeBy: sum
+		sourceColumn: physical_cases
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column consumption_transactions
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b95da7f3-7d66-4a62-b593-d9086fc4befc
+		summarizeBy: sum
+		sourceColumn: consumption_transactions
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column bottler_dead_net_net_sales_income
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 57bb2099-44d7-42f7-b665-bb880fc7b72a
+		summarizeBy: sum
+		sourceColumn: bottler_dead_net_net_sales_income
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ko_golden_record_identifier
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e8352a4b-b0ec-4b12-8524-75154fe60d88
+		summarizeBy: none
+		sourceColumn: ko_golden_record_identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column credit_report_type
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: c0de7f42-6223-476d-8e46-70bf3bd3d3f0
+		summarizeBy: none
+		sourceColumn: credit_report_type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ymdid
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ca3412a9-7d4b-4dcc-8923-a73c70790e9a
+		summarizeBy: sum
+		sourceColumn: ymdid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Customer Invoice Measures' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    invoice_vw_Fact_Invoice_Weekly = Source{[Schema="Invoice",Item="vw_Fact_Invoice_Weekly"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(invoice_vw_Fact_Invoice_Weekly, each [ymdid] > DateKey(RangeStart) and [ymdid] <= DateKey(RangeEnd)),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"gallons", "gallons_"}, {"lmp_flag", "LMP Flag"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"LMP Flag"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_IsMQueryFoldable = True
+
+	annotation PBI_NavigationStepName = Navigation
+

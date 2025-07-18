@@ -1,0 +1,7 @@
+role 'Glendive Coca-Cola Bottling Company'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Glendive Coca-Cola Bottling Company"
+
+	annotation PBI_Id = 0914ef786182447aa47682d807662c7e
+

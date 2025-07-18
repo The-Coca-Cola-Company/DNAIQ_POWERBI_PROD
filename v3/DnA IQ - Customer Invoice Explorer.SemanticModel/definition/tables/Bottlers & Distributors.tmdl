@@ -1,0 +1,308 @@
+table 'Bottlers & Distributors'
+	lineageTag: 04cf7332-f5c3-44a7-a869-1433a612dfd2
+	sourceLineageTag: 2960343b-b201-4a26-8238-b382c8a8ea02
+
+	column dim_source_key
+		dataType: string
+		isHidden
+		lineageTag: 01d06f8a-a0b7-414b-ad4d-95bdbc64f417
+		sourceLineageTag: 77c842a8-c751-450b-bf79-9008ee571f8f
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Ownership ID'
+		dataType: string
+		lineageTag: c509390a-54b3-42a7-aaaa-1bb1e9d7ab3a
+		sourceLineageTag: fa05b4ed-fedb-4591-8f2e-db915c7b4e5c
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_ownrshp_id
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Market Unit'
+		dataType: string
+		lineageTag: 5995d858-4907-410f-bfcd-1711eac9e9e4
+		sourceLineageTag: 1509c1b8-2d3d-4a8c-8e98-dad12053d142
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_market_description
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Cona Indicator'
+		dataType: string
+		lineageTag: ad181116-560c-4812-9a54-14169cd73437
+		sourceLineageTag: da29e763-6597-4839-a149-0c425709e781
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_cona_indicator
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Bottler Tier'
+		dataType: string
+		isHidden
+		lineageTag: 8e96914c-f8cb-48cb-881b-7145cdcd438b
+		sourceLineageTag: 39ccecec-7a4a-44af-a0ca-aef99118d3e5
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_bottler_tier
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Bottler/Distributor
+		dataType: string
+		lineageTag: 93168854-1d95-4c1c-b2db-c69354e97f44
+		sourceLineageTag: 85ac2a66-069e-48f6-848e-9d9c4ce52a9b
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_sending_entity_nm
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Sales Branch'
+		dataType: string
+		lineageTag: 2caf4676-783a-4daf-afb5-83806d19d626
+		sourceLineageTag: 54b14127-9336-4f92-8b59-7b6ccb0b6374
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_btlr_branch_nm
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Bottler/Distributor Type'
+		dataType: string
+		lineageTag: 851e0e7b-de94-4ed4-a081-5a23d14bd9e4
+		sourceLineageTag: b773fe6d-09d5-4136-8821-7455c3e8942a
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_distributor_type_name
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		isNullable: false
+		formatString: 0
+		lineageTag: 71e02228-dec5-47ed-b4ec-c543ee54ba61
+		sourceLineageTag: 1d9ec748-9913-4f81-a879-68418d8adb30
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column src_btlr_org_lvl_b_id
+		dataType: string
+		isHidden
+		lineageTag: db5441d6-dcea-432f-a1cb-b41d50718f98
+		sourceLineageTag: 35090e2f-c7df-4637-9611-b6d74ad41bea
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_btlr_org_lvl_b_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column src_btlr_org_lvl_b_desc
+		dataType: string
+		isHidden
+		lineageTag: 323c7055-2889-456a-8904-55b0482e7b94
+		sourceLineageTag: 7f2f17d1-65d1-4afc-bc5f-efd90fa3b556
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_btlr_org_lvl_b_desc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column src_btlr_branch_no
+		dataType: string
+		isHidden
+		lineageTag: a6027dd1-478e-4166-ad4e-b9bf3da2f3ed
+		sourceLineageTag: bc1ec26b-69a6-444e-a8d5-e6feebe8fd4d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_btlr_branch_no
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_conformed_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b1762b0b-59f4-42ec-90b9-a2c71b138ae9
+		sourceLineageTag: b3d76efa-9ea5-4557-b207-d621aa675137
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: dim_conformed_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column display_bottler_name_tier1
+		dataType: string
+		isHidden
+		lineageTag: 80de8ff3-15da-4205-8cab-0e8c9e20a28e
+		sourceLineageTag: 4bff6466-94e3-4c7a-ab33-15bc613a2ff5
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_bottler_name_tier1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column display_bottler_name_tier2
+		dataType: string
+		isHidden
+		lineageTag: c6004917-01aa-47df-9dc9-4f277afb7498
+		sourceLineageTag: 8930a857-22b6-46d9-929e-5cf1b2659525
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_bottler_name_tier2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column display_bottler_name_all
+		dataType: string
+		isHidden
+		lineageTag: 63891daf-cc5b-4960-b55b-5f9cb3235e16
+		sourceLineageTag: 6a77f182-f6ec-4595-874d-eb8448868975
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_bottler_name_all
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column display_market_unit
+		dataType: string
+		isHidden
+		lineageTag: eed6045e-c3e8-4cd1-bb48-b60ae44c0048
+		sourceLineageTag: 2402fba9-8a2e-4bb3-b558-818cc200b949
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_market_unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column created_date
+		dataType: dateTime
+		isHidden
+		formatString: General Number
+		lineageTag: ca2bbeca-b268-4449-8495-923021bcda9a
+		sourceLineageTag: 665e9d7f-5aa9-4b0f-ba49-31dcc2033724
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: created_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column updated_date
+		dataType: dateTime
+		isHidden
+		formatString: General Number
+		lineageTag: af17855b-7192-41a9-a3a2-d38004f7b13f
+		sourceLineageTag: 561e4632-4730-400a-a8c0-86d7800f7790
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: updated_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Bottler Classification'
+		dataType: string
+		isHidden
+		lineageTag: 8fdf71ef-05c8-4e7f-9399-e648a3ce4f85
+		sourceLineageTag: 87133a7b-a1ab-4332-b0be-aefde14ae3d3
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Bottler Classification
+		sortByColumn: 'Bottler Classification Sort'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Bottler Classification Sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d5b08503-968d-4116-84c9-c3629c0f6481
+		sourceLineageTag: ebe2f5d3-877c-4fa1-be07-313c3b73b5ab
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Bottler Classification Sort
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	hierarchy 'Bottler/Distributor Hierarchy'
+		isHidden
+		lineageTag: 05a4808a-c38b-485c-a8ce-cc1f898cd920
+		sourceLineageTag: 9628ace4-1bd0-4787-a849-ce493a567ebf
+
+		level Bottler/Distributor
+			lineageTag: 8c15fdf1-14cc-4b91-8e38-95593321c9cf
+			sourceLineageTag: ebdf0105-89e0-45d7-a064-20ac4a796161
+			column: Bottler/Distributor
+
+		level 'Market Unit'
+			lineageTag: 7eb66cb2-03de-4bda-8fd8-51b23320ed1f
+			sourceLineageTag: 0b0a0a57-f12c-456f-9052-bbeda0f54cf5
+			column: src_btlr_org_lvl_b_desc
+
+		level 'Sales Branch'
+			lineageTag: 1a7c6298-c60b-4710-a090-14f49636a02b
+			sourceLineageTag: cb3118b1-a0c9-4433-b99e-8f299a10050c
+			column: 'Sales Branch'
+
+		changedProperty = IsHidden
+
+	partition 'Bottlers & Distributors' = entity
+		mode: directQuery
+		source
+			entityName: Bottlers & Distributors
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

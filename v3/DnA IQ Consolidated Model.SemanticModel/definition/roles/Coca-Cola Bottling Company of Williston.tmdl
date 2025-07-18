@@ -1,0 +1,49 @@
+role 'Coca-Cola Bottling Company of Williston'
+	modelPermission: read
+
+	tablePermission 'Territory Bottlers' = [Bottler Distributor Name] == "Coca-Cola Bottling Company of Williston"
+
+	tablePermission 'Week Parameter'
+		metadataPermission: none
+
+	tablePermission 'Share of Market'
+		metadataPermission: none
+
+	tablePermission 'PRx Key Metrics'
+		metadataPermission: none
+
+	tablePermission 'Performance Other'
+		metadataPermission: none
+
+	tablePermission 'Measures Slicer'
+		metadataPermission: none
+
+	tablePermission Market
+		metadataPermission: none
+
+	tablePermission 'iRED Measures'
+		metadataPermission: none
+
+	tablePermission Forecast
+		metadataPermission: none
+
+	tablePermission 'Dim Slicer'
+		metadataPermission: none
+
+	tablePermission 'Business Drivers'
+		metadataPermission: none
+
+	tablePermission CBR_Category_Groupings
+		metadataPermission: none
+
+	tablePermission Beach
+		metadataPermission: none
+
+	tablePermission 'ACV TDP'
+		metadataPermission: none
+
+	tablePermission 'Store Area'
+		metadataPermission: none
+
+	annotation PBI_Id = b7cffa0dbcc8430e948f75c29b8621ca
+

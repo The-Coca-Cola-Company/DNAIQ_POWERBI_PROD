@@ -1,0 +1,35 @@
+expression Server = "syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net" meta [IsParameterQuery=true, List={"syn-tccc-udp-dnao-us2-dev-01-ondemand.sql.azuresynapse.net", "syn-tccc-udp-dnao-us2-uat-01-ondemand.sql.azuresynapse.net", "syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net"}, DefaultValue="syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 9b1365c1-6512-49f2-80fd-8f84c52d9af6
+
+	annotation PBI_ResultType = Text
+
+expression Database = "DnAIqDb" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text", List = {"DnAIQDb", "DnAIQDb_PreProd"}, DefaultValue = "DnAIQDb_PreProd"]
+	lineageTag: 076d9182-e68e-4dfb-93ce-cb2c759ede61
+
+	annotation PBI_ResultType = Text
+
+expression RangeStart = #datetime(2025, 3, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 3a78e2e7-3dbd-48eb-bcd6-f96b9e8c6ffa
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = DateTime
+
+expression RangeEnd = #datetime(2025, 3, 2, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 5598bad7-71b7-4637-8bbd-dcca33239be6
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = DateTime
+
+expression DateKey =
+		let
+		    Source = (x as datetime) => Date.Year(x)*10000 + Date.Month(x)*100 + Date.Day(x)
+		in
+		    Source
+	lineageTag: e58ad88c-6df0-4da9-a9bf-aafe0b394f97
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+

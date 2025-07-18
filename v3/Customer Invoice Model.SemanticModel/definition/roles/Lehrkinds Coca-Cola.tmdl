@@ -1,0 +1,7 @@
+role 'Lehrkinds Coca-Cola'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Lehrkinds Coca-Cola"
+
+	annotation PBI_Id = 9279c5f82e184ae799ba7c2ee679e292
+

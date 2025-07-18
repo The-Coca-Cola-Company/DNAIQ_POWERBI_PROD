@@ -1,0 +1,192 @@
+table Invoice
+	lineageTag: a11e1064-f2bc-4709-a291-479c24e1feeb
+	sourceLineageTag: 90e760ff-d131-41b7-bef6-a6119756345b
+
+	column 'Category Type'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: c3e1feed-a5a7-4fac-80eb-7e31b9bd7003
+		sourceLineageTag: 9fdd78d9-0891-4184-ae27-5e07b783703b
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Category Type
+
+		annotation SummarizationSetBy = User
+
+	column 'Category Type Name'
+		dataType: string
+		isHidden
+		lineageTag: 1d1d1e92-83b8-441e-9d78-b28a94abd867
+		sourceLineageTag: 97bb6c0d-ecfd-425f-b7de-d6545293074d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Category Type Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Distributor Type'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 846458df-4fb9-4991-85d4-b4ed8d0097a1
+		sourceLineageTag: 820b7bbd-66c1-484b-b4c3-d0852b990e36
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Distributor Type
+
+		annotation SummarizationSetBy = User
+
+	column 'Distributor Type Name'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 8b03e258-9e0c-4b21-8867-a31f09dd7f0c
+		sourceLineageTag: 12feccfa-39e5-41ab-9d6c-68c4a5e3ff70
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Distributor Type Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'CDC RPT'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 1ca9599d-77b6-44ce-b29a-8d7f21e5b80d
+		sourceLineageTag: 3fdd1d21-193f-44e1-afb9-26b4bd2bb4a6
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: CDC RPT
+
+		annotation SummarizationSetBy = User
+
+	column 'Wholesale Retail Type'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 147ecd67-4564-452c-83ec-24941265862d
+		sourceLineageTag: 16fc5030-c743-487d-afa8-32a3ffe11b7d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Wholesale Retail Type
+
+		annotation SummarizationSetBy = User
+
+	column 'Wholesale Retail Name'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 6658d29e-a492-4416-ba95-3bb6a4ded897
+		sourceLineageTag: 9db0844b-18ba-446a-931d-800069fd81c5
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Wholesale Retail Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Line Category Type'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 031bfcf2-c31c-479f-8199-98d6b1d57ac7
+		sourceLineageTag: 97e7dc57-083e-4b60-a5d7-2214c8a4f32b
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Line Category Type
+
+		annotation SummarizationSetBy = User
+
+	column 'Credit Report Type'
+		dataType: string
+		lineageTag: bbee7a27-8a69-4ae7-a7b4-3ba34efad200
+		sourceLineageTag: 3aebd203-d804-4d61-9143-e7f01db24a73
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Credit Report Type
+
+		annotation SummarizationSetBy = User
+
+	column LMP
+		dataType: string
+		lineageTag: 462493c4-6803-48cb-8a61-fa064f6f6b84
+		sourceLineageTag: 9021b8be-6c65-4816-ae30-b2721fc95d70
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: lmp_indicator
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column eB2B
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 893283f8-0495-41b9-ae60-14eff59d24fe
+		sourceLineageTag: 3cb18b6a-b24c-4c22-9ac6-9b55aa41e3f7
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: eB2B
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_invoice_key
+		dataType: int64
+		isHidden
+		isNullable: false
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 5eac7d79-e8a9-405f-9e9e-3d163746b2a5
+		sourceLineageTag: 94a8031f-4482-45de-97c8-9429011bcb57
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_invoice_key
+
+		annotation SummarizationSetBy = User
+
+	column cust_po_type_code
+		dataType: string
+		isHidden
+		lineageTag: da2586a8-e0f8-4457-a5bb-e2a0660aacf0
+		sourceLineageTag: 12a30288-e258-42f7-9aa1-a0bbabbd64cb
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cust_po_type_code
+
+		annotation SummarizationSetBy = User
+
+	column created_date
+		dataType: dateTime
+		isHidden
+		formatString: General Number
+		lineageTag: 1ea9230b-365b-421e-aeea-3402d58a2f87
+		sourceLineageTag: 9f7519f6-a19f-4b45-8df0-394b03b076b0
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: created_date
+
+		annotation SummarizationSetBy = User
+
+	column updated_date
+		dataType: dateTime
+		isHidden
+		formatString: General Number
+		lineageTag: 6973fce2-e7fb-44d5-bb2a-d8a8a7b56ddc
+		sourceLineageTag: eba8a959-c9b8-40f7-b00e-651e2c817061
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: updated_date
+
+		annotation SummarizationSetBy = User
+
+	partition Invoice = entity
+		mode: directQuery
+		source
+			entityName: Invoice
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

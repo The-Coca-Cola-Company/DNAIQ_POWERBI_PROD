@@ -1,0 +1,87 @@
+{
+  "config": "{\"version\":\"5.59\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU10\",\"version\":\"5.64\",\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":0,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY24SU10",
+            "path": "BaseThemes/CY24SU10.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "Page 1",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "5bfb40550306ee7f45ee",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"3df7dcd75089bcdc056f\",\"layouts\":[{\"id\":0,\"position\":{\"x\":984.9552567839999,\"y\":0,\"z\":3000,\"width\":294.6548898461182,\"height\":62.97060145904945,\"tabOrder\":3000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Fiscal Year\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Fiscal Year\"},\"Name\":\"Calendar.Fiscal Year\",\"NativeReferenceName\":\"Fiscal Year\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Fiscal Year\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2025L\"}}]]}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 62.97,
+          "width": 294.65,
+          "x": 984.96,
+          "y": 0.00,
+          "z": 3000.00
+        },
+        {
+          "config": "{\"name\":\"5ae92e32c3da72e0722c\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":402.7742244267502,\"z\":5000,\"width\":988.5196304514932,\"height\":291.0905161786248,\"tabOrder\":5000}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Rows\":[{\"queryRef\":\"Product.CBR Category\",\"active\":true},{\"queryRef\":\"Product.System Brands\"},{\"queryRef\":\"Product.Trademark\"},{\"queryRef\":\"Product.Brand\"}],\"Values\":[{\"queryRef\":\"Share of Market.Share of Dollars\"},{\"queryRef\":\"Share of Market.Share of EQs\"},{\"queryRef\":\"Share of Market.Share of Units\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"p\",\"Entity\":\"Product\",\"Type\":0},{\"Name\":\"s\",\"Entity\":\"Share of Market\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"System Brands\"},\"Name\":\"Product.System Brands\",\"NativeReferenceName\":\"System Brands\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Trademark\"},\"Name\":\"Product.Trademark\",\"NativeReferenceName\":\"Trademark\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Brand\"},\"Name\":\"Product.Brand\",\"NativeReferenceName\":\"Brand\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Share of Dollars\"},\"Name\":\"Share of Market.Share of Dollars\",\"NativeReferenceName\":\"Share of Dollars\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Share of EQs\"},\"Name\":\"Share of Market.Share of EQs\",\"NativeReferenceName\":\"Share of EQs\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Share of Units\"},\"Name\":\"Share of Market.Share of Units\",\"NativeReferenceName\":\"Share of Units\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"CBR Category\"},\"Name\":\"Product.CBR Category\",\"NativeReferenceName\":\"CBR Category\"}]},\"expansionStates\":[{\"roles\":[\"Rows\"],\"levels\":[{\"queryRefs\":[\"Product.CBR Category\"],\"isCollapsed\":true,\"isPinned\":true},{\"queryRefs\":[\"Product.System Brands\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"System Brands\"}}],\"isPinned\":true},{\"queryRefs\":[\"Product.Trademark\"],\"isCollapsed\":true,\"isPinned\":true},{\"queryRefs\":[\"Product.Brand\"],\"isCollapsed\":true}],\"root\":{\"identityValues\":null}}],\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 291.09,
+          "width": 988.52,
+          "x": 0.00,
+          "y": 402.77,
+          "z": 5000.00
+        },
+        {
+          "config": "{\"name\":\"8884d753ebfcdde4ade2\",\"layouts\":[{\"id\":0,\"position\":{\"x\":9.504996446648972,\"y\":0,\"z\":0,\"width\":294.6548898461182,\"height\":62.97060145904945,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Product.System Brands\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"p\",\"Entity\":\"Product\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"System Brands\"},\"Name\":\"Product.System Brands\",\"NativeReferenceName\":\"System Brands\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"p\",\"Entity\":\"Product\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"System Brands\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'CCNA SYSTEM BRANDS'\"}}]]}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 62.97,
+          "width": 294.65,
+          "x": 9.50,
+          "y": 0.00,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"94e96d2e5aaca94ef7b9\",\"layouts\":[{\"id\":0,\"position\":{\"x\":345.7442457468564,\"y\":0,\"z\":1000,\"width\":294.6548898461182,\"height\":62.97060145904945,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Product.KO CCNA Selected Beverage Category\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"p\",\"Entity\":\"Product\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"KO CCNA Selected Beverage Category\"},\"Name\":\"Product.KO CCNA Selected Beverage Category\",\"NativeReferenceName\":\"KO CCNA Selected Beverage Category\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"p\",\"Entity\":\"Product\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"KO CCNA Selected Beverage Category\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'CCNA COMP SET'\"}}]]}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 62.97,
+          "width": 294.65,
+          "x": 345.74,
+          "y": 0.00,
+          "z": 1000.00
+        },
+        {
+          "config": "{\"name\":\"c78ab518923193f70f76\",\"layouts\":[{\"id\":0,\"position\":{\"x\":660.5972530421036,\"y\":0,\"z\":2000,\"width\":294.6548898461182,\"height\":62.97060145904945,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Market.Market Set\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"Market\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Market Set\"},\"Name\":\"Market.Market Set\",\"NativeReferenceName\":\"Market Set\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"Market\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Market Set\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Bottler'\"}}]]}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 62.97,
+          "width": 294.65,
+          "x": 660.60,
+          "y": 0.00,
+          "z": 2000.00
+        },
+        {
+          "config": "{\"name\":\"c8257c6a7ce72ddf711d\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":81.9805943523474,\"z\":4000,\"width\":988.5196304514932,\"height\":291.0905161786248,\"tabOrder\":4000}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Rows\":[{\"queryRef\":\"Product.System Brands Groups\",\"active\":true},{\"queryRef\":\"Product.System Brands Sub-Groups\",\"active\":true},{\"queryRef\":\"Product.System Brands\",\"active\":true},{\"queryRef\":\"Product.Trademark\",\"active\":true},{\"queryRef\":\"Product.Brand\"}],\"Values\":[{\"queryRef\":\"Share of Market.Share of Dollars\"},{\"queryRef\":\"Share of Market.Share of EQs\"},{\"queryRef\":\"Share of Market.Share of Units\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"p\",\"Entity\":\"Product\",\"Type\":0},{\"Name\":\"s\",\"Entity\":\"Share of Market\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"System Brands Groups\"},\"Name\":\"Product.System Brands Groups\",\"NativeReferenceName\":\"System Brands Groups\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"System Brands\"},\"Name\":\"Product.System Brands\",\"NativeReferenceName\":\"System Brands\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Trademark\"},\"Name\":\"Product.Trademark\",\"NativeReferenceName\":\"Trademark\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Brand\"},\"Name\":\"Product.Brand\",\"NativeReferenceName\":\"Brand\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"System Brands Sub-Groups\"},\"Name\":\"Product.System Brands Sub-Groups\",\"NativeReferenceName\":\"System Brands Sub-Groups\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Share of Dollars\"},\"Name\":\"Share of Market.Share of Dollars\",\"NativeReferenceName\":\"Share of Dollars\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Share of EQs\"},\"Name\":\"Share of Market.Share of EQs\",\"NativeReferenceName\":\"Share of EQs\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Share of Units\"},\"Name\":\"Share of Market.Share of Units\",\"NativeReferenceName\":\"Share of Units\"}]},\"expansionStates\":[{\"roles\":[\"Rows\"],\"levels\":[{\"queryRefs\":[\"Product.System Brands Groups\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"System Brands Groups\"}}],\"isPinned\":true},{\"queryRefs\":[\"Product.System Brands Sub-Groups\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"System Brands Sub-Groups\"}}],\"isPinned\":true},{\"queryRefs\":[\"Product.System Brands\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"System Brands\"}}],\"isPinned\":true},{\"queryRefs\":[\"Product.Trademark\"],\"isCollapsed\":true,\"isPinned\":true},{\"queryRefs\":[\"Product.Brand\"],\"isCollapsed\":true}],\"root\":{\"identityValues\":null,\"children\":[{\"identityValues\":[{\"Literal\":{\"Value\":\"'CCNA SYSTEM BRANDS'\"}}],\"isToggled\":true,\"children\":[{\"identityValues\":[{\"Literal\":{\"Value\":\"'CCNA SYSTEM BRANDS'\"}}],\"isToggled\":true,\"children\":[{\"identityValues\":[{\"Literal\":{\"Value\":\"'CCNA SYSTEM BRANDS'\"}}],\"isToggled\":true}]}]}]}}],\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 291.09,
+          "width": 988.52,
+          "x": 0.00,
+          "y": 81.98,
+          "z": 4000.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

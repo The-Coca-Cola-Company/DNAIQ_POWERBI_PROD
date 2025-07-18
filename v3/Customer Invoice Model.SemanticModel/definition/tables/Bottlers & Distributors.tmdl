@@ -1,0 +1,112 @@
+table 'Bottlers & Distributors'
+	lineageTag: 0005b3af-1dc2-4ea4-b3a5-e9555f1afc21
+
+	column 'Sales Branch'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 2c27e089-6ef8-4529-bc0c-2570d18ebbe8
+		summarizeBy: none
+		sourceColumn: Sales Branch
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Market Unit'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f23f380c-2077-47d4-8927-bbad535a41a3
+		summarizeBy: none
+		sourceColumn: Market Unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bottler Distributor Name'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 90d79fe8-1a92-4892-bd8f-fa5ddb6441bb
+		summarizeBy: none
+		sourceColumn: Bottler Distributor Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bottler/Distributor Type'
+		dataType: string
+		lineageTag: a89376b5-0d65-4ff7-a910-80eb5195ad0a
+		summarizeBy: none
+		sourceColumn: Bottler/Distributor Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CONA Indicator'
+		dataType: string
+		lineageTag: d11a8dd3-d764-42ea-9233-d5ff41e0ce50
+		summarizeBy: none
+		sourceColumn: CONA Indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_branch_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 2f7fa1f3-2611-4889-ad9a-40fc307dbc10
+		summarizeBy: none
+		sourceColumn: sales_branch_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column bottler_branch_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 22788e3f-7c76-4462-8d4c-71459b5851e9
+		summarizeBy: none
+		sourceColumn: bottler_branch_number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Bottler Distributor Name Hierarchy'
+		lineageTag: d6cf7f85-a290-4789-8a14-96a2ea989f08
+
+		level Bottler/Distributor
+			lineageTag: e4dd4154-8e8d-4ce7-bc8a-7842adfe5388
+			column: 'Bottler Distributor Name'
+
+		level 'Market Unit'
+			lineageTag: 491712ef-3c95-4f17-b5bb-e93b49b28c4d
+			column: 'Market Unit'
+
+		level 'Sales Branch'
+			lineageTag: 05bdc03a-009c-47b1-9a9f-720f97797331
+			column: 'Sales Branch'
+
+		changedProperty = IsHidden
+
+	partition 'Bottlers & Distributors' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    invoice_mdl_vw_Dim_Sales_Branch = Source{[Schema="Invoice",Item="vw_Dim_Sales_Branch"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(invoice_mdl_vw_Dim_Sales_Branch,{"dim_sales_branch_key", "bottler_branch_number", "bottler_branch_name", "market_unit_description", "sending_entity_name", "distributor_type_name", "cona_indicator"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"sending_entity_name", "Bottler Distributor Name"}, {"market_unit_description", "Market Unit"}, {"distributor_type_name", "Bottler/Distributor Type"}, {"cona_indicator", "CONA Indicator"}, {"bottler_branch_name", "Sales Branch"}, {"dim_sales_branch_key", "sales_branch_key"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

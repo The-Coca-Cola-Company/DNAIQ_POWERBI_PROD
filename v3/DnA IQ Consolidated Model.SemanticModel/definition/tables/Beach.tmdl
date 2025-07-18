@@ -1,0 +1,492 @@
+table Beach
+	lineageTag: 3e5a6201-af0d-4838-a572-e2dc557fba21
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 2
+		incrementalGranularity: month
+		incrementalPeriods: 24
+		sourceExpression = ```
+			let
+			    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+			    vw_Fact_Overall_Performance_Beach = Source{[Schema="dbov3",Item="vw_Fact_Overall_Performance_Beach"]}[Data],
+			    #"Filtered Rows" = Table.SelectRows(vw_Fact_Overall_Performance_Beach, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+			    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"source_name", "dim_source_key", "dim_product_key", "dim_date_key", "dim_bottler_key", "beach_brand_affinity_absolute_3MMT", "beach_brand_affinity_absolute_12MMT", "weighted_respondents_3MMT", "weighted_respondents_12MMT", "beach_total_awareness_absolute_3MMT", "beach_total_awareness_absolute_12MMT", "beach_spontaneous_awareness_absolute_3MMT", "beach_spontaneous_awareness_absolute_12MMT", "beach_trial_absolute_3MMT", "beach_trial_absolute_12MMT", "beach_aware_base_3MMT", "beach_aware_base_12MMT", "beach_active_weekly_plus_absolute_3MMT", "beach_Weekly_plus_absolute_12MMT", "beach_population_3MMT", "beach_population_12MMT", "dim_territory_bottler_key"})
+			    
+			in
+			    #"Removed Other Columns"
+			```
+
+	/// The % of Category drinerks who report "+3 I love it" on a 7 point scale when asked "how do you feel about this brand"
+	measure 'Brand Affinity' = ```
+			
+			
+			VAR results =
+			    SWITCH (
+			            TRUE(),
+			          max('Time Calculation'[Time Calculation]) = "R13W",
+			          DIVIDE(SUM(Beach[beach_brand_affinity_absolute_3MMT]),SUM(Beach[weighted_respondents_3MMT])),
+			 
+			          max('Time Calculation'[Time Calculation]) = "R52W",
+			          DIVIDE(SUM(Beach[beach_brand_affinity_absolute_3MMT]),SUM(Beach[weighted_respondents_12MMT]))
+			           )
+			    RETURN
+			    results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 33812814-10f0-48b1-956c-6bced95cd078
+
+	/// % of consumers that are aware of the brand (Key Considerations: Always use the equity hierarchy with this metric. This is not measured for total population, only for category drinkers.)
+	measure 'Total Awareness' = ```
+			
+			VAR results =
+			    SWITCH (
+			            TRUE(),
+			          max('Time Calculation'[Time Calculation]) = "R13W",
+			          DIVIDE(SUM(Beach[beach_total_awareness_absolute_3MMT]),SUM(Beach[weighted_respondents_3MMT])),
+			 
+			          max('Time Calculation'[Time Calculation]) = "R52W",
+			          DIVIDE(SUM(Beach[beach_total_awareness_absolute_12MMT]),SUM(Beach[weighted_respondents_3MMT]))
+			           )
+			    RETURN
+			results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 177b9a5c-17ae-4971-80cc-3758f648b9cb
+
+	/// % of consumers that have tried the product (Key Considerations: This % is computed among past 3-month category drinkers and may overestimate the actual % of population who has tried the brand)
+	measure Trial = ```
+			
+			VAR results =
+			    SWITCH (
+			            TRUE(),
+			          max('Time Calculation'[Time Calculation]) = "R13W",
+			          DIVIDE(SUM(Beach[beach_trial_absolute_3MMT]),SUM(Beach[weighted_respondents_3MMT])),
+			 
+			          max('Time Calculation'[Time Calculation]) = "R52W",
+			          DIVIDE(SUM(Beach[beach_trial_absolute_12MMT]),SUM(Beach[weighted_respondents_3MMT]))
+			           )
+			    RETURN
+			results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: d6862ae8-b153-4c84-97af-bd7ccb217e51
+
+	measure 'Weekly + Consumption' = ```
+			
+			VAR results =
+			    SWITCH (
+			            TRUE(),
+			          max('Time Calculation'[Time Calculation]) = "R13W",
+			          DIVIDE(SUM(Beach[beach_active_weekly_plus_absolute_3MMT]),SUM(Beach[weighted_respondents_3MMT])),
+			 
+			          max('Time Calculation'[Time Calculation]) = "R52W",
+			          DIVIDE(SUM(Beach[beach_Weekly_plus_absolute_12MMT]),SUM(Beach[weighted_respondents_3MMT]))
+			           )
+			    RETURN
+			results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 53020f4c-bfe8-4fde-87fb-5e1c373e6de1
+
+	/// The % of Category drinerks who report "+3 I love it" on a 7 point scale when asked "how do you feel about this brand"
+	measure 'Brand Affinity Change' =
+			
+			
+			Var CY = [Brand Affinity]
+			Var PY = CALCULATE([Brand Affinity], SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+			
+			RETURN
+			    (CY - PY)
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: d47ed9cb-49db-4a2a-b3c8-a2f9514959c4
+
+	/// Absolute growth vs PY in % of consumers that are aware of the brand
+	measure 'Total Awareness Change' =
+			
+			
+			Var CY = [Total Awareness]
+			Var PY = CALCULATE([Total Awareness], SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+			
+			RETURN
+			    (CY - PY)
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 814b9129-b7f4-4696-8129-062a19c03e2d
+
+	/// Absolute growth vs PY in % of consumers that have tried the product
+	measure 'Trial Change' =
+			
+			
+			Var CY = [Trial]
+			Var PY = CALCULATE([Trial], SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+			
+			RETURN
+			    (CY - PY)
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 6dacd4e6-f138-4a45-b2a7-da09f8d7cd66
+
+	/// % growth vs PY % of consumers drinking X product at least once per week (population)
+	measure 'Weekly + Consumption Change' =
+			
+			
+			Var CY = [Weekly + Consumption]
+			Var PY = CALCULATE([Weekly + Consumption], SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+			
+			RETURN
+			    (CY - PY)
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 4f23fbfa-48ce-4fa0-a88c-98e90469dbf0
+
+	measure 'Spontaneous Awareness' = ```
+			
+			VAR results =
+			    SWITCH (
+			            TRUE(),
+			          max('Time Calculation'[Time Calculation]) = "R13W",
+			          DIVIDE(MAX(Beach[beach_brand_affinity_absolute_3MMT]),MAX(Beach[beach_spontaneous_awareness_absolute_3MMT])),
+			 
+			          max('Time Calculation'[Time Calculation]) = "R52W",
+			          DIVIDE(MAX(Beach[beach_brand_affinity_absolute_3MMT]),MAX(Beach[beach_spontaneous_awareness_absolute_12MMT]))
+			           )
+			    RETURN
+			    results
+			```
+		formatString: #,0
+		lineageTag: 84eed6fc-23db-4dae-a8f4-ca22897b1e20
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Active/Observed Weekly+ %' = ```
+			
+			
+			VAR results =
+			    SWITCH (
+			        TRUE(),
+			        max('Time Calculation'[Time Calculation]) = "R13W",MAX(Beach[weighted_respondents_3MMT]),
+			        max('Time Calculation'[Time Calculation]) = "R52W",MAX(Beach[weighted_respondents_12MMT])
+			    )
+			    
+			RETURN
+			    results
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 80d082ce-dd7a-4489-a781-dbe759c27713
+
+	measure 'Weekly+ %' = ```
+			
+			
+			VAR results =
+			    SWITCH (
+			        TRUE(),
+			        max('Time Calculation'[Time Calculation]) = "R13W",
+			        
+			        DIVIDE(MAX(Beach[beach_active_weekly_plus_absolute_3MMT]),MAX(Beach[beach_population_3MMT])),
+			
+			        max('Time Calculation'[Time Calculation]) = "R52W",
+			        
+			        DIVIDE(MAX(Beach[beach_Weekly_plus_absolute_12MMT]),MAX(Beach[beach_population_12MMT]))
+			    )
+			RETURN
+			    results
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: aff68660-0f0f-49d8-88db-0a6c2da49b97
+
+	column source_name
+		dataType: string
+		isHidden
+		lineageTag: 56c0f60e-8968-466a-a648-7c43da28b147
+		summarizeBy: none
+		sourceColumn: source_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_source_key
+		dataType: string
+		isHidden
+		lineageTag: 987d5985-eb80-4cfa-9221-050bce14663e
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b73cadfa-f03c-49f4-892f-a8a85cbf2d4c
+		summarizeBy: none
+		sourceColumn: dim_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3942291e-fc70-434b-8f93-10275a57ea60
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a8900c40-582e-4365-b0cb-bb63e5efd412
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column beach_brand_affinity_absolute_3MMT
+		dataType: decimal
+		isHidden
+		lineageTag: 4ce247a0-80e0-4a9f-aee2-39978c3bc5e8
+		summarizeBy: sum
+		sourceColumn: beach_brand_affinity_absolute_3MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_brand_affinity_absolute_12MMT
+		dataType: decimal
+		isHidden
+		lineageTag: c462a306-287e-46a0-b4fe-08bcccf47633
+		summarizeBy: sum
+		sourceColumn: beach_brand_affinity_absolute_12MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column weighted_respondents_3MMT
+		dataType: decimal
+		isHidden
+		lineageTag: 92b0cf02-be27-4fb1-b513-040af4f500f4
+		summarizeBy: sum
+		sourceColumn: weighted_respondents_3MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column weighted_respondents_12MMT
+		dataType: decimal
+		isHidden
+		lineageTag: 9ba0b0af-28d8-44f3-af65-50957b01a60d
+		summarizeBy: sum
+		sourceColumn: weighted_respondents_12MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_total_awareness_absolute_3MMT
+		dataType: decimal
+		isHidden
+		lineageTag: 54932101-cba6-469d-aa94-0488cee62ce2
+		summarizeBy: sum
+		sourceColumn: beach_total_awareness_absolute_3MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_total_awareness_absolute_12MMT
+		dataType: decimal
+		isHidden
+		lineageTag: eb24fff6-939a-4d72-a15e-70d770811696
+		summarizeBy: sum
+		sourceColumn: beach_total_awareness_absolute_12MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_spontaneous_awareness_absolute_3MMT
+		dataType: decimal
+		isHidden
+		lineageTag: e4936bcd-388d-4dca-9491-f1fe992c73df
+		summarizeBy: sum
+		sourceColumn: beach_spontaneous_awareness_absolute_3MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_spontaneous_awareness_absolute_12MMT
+		dataType: decimal
+		isHidden
+		lineageTag: 1728b56c-50df-4913-bd1d-65d59bbb53ca
+		summarizeBy: sum
+		sourceColumn: beach_spontaneous_awareness_absolute_12MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_trial_absolute_3MMT
+		dataType: decimal
+		isHidden
+		lineageTag: a3558535-0f04-4646-989c-88b1873d487c
+		summarizeBy: sum
+		sourceColumn: beach_trial_absolute_3MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_trial_absolute_12MMT
+		dataType: decimal
+		isHidden
+		lineageTag: 7f5ad206-fd41-43b4-837e-fca8e55cfe80
+		summarizeBy: sum
+		sourceColumn: beach_trial_absolute_12MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_aware_base_3MMT
+		dataType: decimal
+		isHidden
+		lineageTag: a2b94a30-415c-4205-a5c0-6f10b7e75a99
+		summarizeBy: sum
+		sourceColumn: beach_aware_base_3MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_aware_base_12MMT
+		dataType: decimal
+		isHidden
+		lineageTag: 60f57568-59ba-437e-8875-d24fa0290713
+		summarizeBy: sum
+		sourceColumn: beach_aware_base_12MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_active_weekly_plus_absolute_3MMT
+		dataType: decimal
+		isHidden
+		lineageTag: 6fc9d153-0201-440d-9939-df29e075be47
+		summarizeBy: sum
+		sourceColumn: beach_active_weekly_plus_absolute_3MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_Weekly_plus_absolute_12MMT
+		dataType: decimal
+		isHidden
+		lineageTag: b21476c7-7b57-444a-b189-a8601d9299ec
+		summarizeBy: sum
+		sourceColumn: beach_Weekly_plus_absolute_12MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_population_3MMT
+		dataType: decimal
+		isHidden
+		lineageTag: 915121f7-9200-449e-bb96-93ef62f2eee5
+		summarizeBy: sum
+		sourceColumn: beach_population_3MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beach_population_12MMT
+		dataType: decimal
+		isHidden
+		lineageTag: 5c0086e1-54a5-49c7-94d2-5813a2308084
+		summarizeBy: sum
+		sourceColumn: beach_population_12MMT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_territory_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5fd9afc3-77c7-4c6e-b69b-51709479e14c
+		summarizeBy: none
+		sourceColumn: dim_territory_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Beach = m
+		mode: import
+		source = ```
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    vw_Fact_Overall_Performance_Beach = Source{[Schema="dbov3",Item="vw_Fact_Overall_Performance_Beach"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(vw_Fact_Overall_Performance_Beach, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"source_name", "dim_source_key", "dim_product_key", "dim_date_key", "dim_bottler_key", "beach_brand_affinity_absolute_3MMT", "beach_brand_affinity_absolute_12MMT", "weighted_respondents_3MMT", "weighted_respondents_12MMT", "beach_total_awareness_absolute_3MMT", "beach_total_awareness_absolute_12MMT", "beach_spontaneous_awareness_absolute_3MMT", "beach_spontaneous_awareness_absolute_12MMT", "beach_trial_absolute_3MMT", "beach_trial_absolute_12MMT", "beach_aware_base_3MMT", "beach_aware_base_12MMT", "beach_active_weekly_plus_absolute_3MMT", "beach_Weekly_plus_absolute_12MMT", "beach_population_3MMT", "beach_population_12MMT", "dim_territory_bottler_key"})
+				    
+				in
+				    #"Removed Other Columns"
+				```
+
+	annotation PBI_IsMQueryFoldable = True
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

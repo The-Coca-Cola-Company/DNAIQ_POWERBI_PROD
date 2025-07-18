@@ -1,0 +1,7 @@
+role 'Coca-Cola Bottling Company of Williston'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Coca-Cola Bottling Company of Williston"
+
+	annotation PBI_Id = b7cffa0dbcc8430e948f75c29b8621ca
+

@@ -1,0 +1,7 @@
+role 'Reyes Beverage Group'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Reyes Coca-Cola Bottling"
+
+	annotation PBI_Id = d484ed198a5846f5a971df69f57b2574
+

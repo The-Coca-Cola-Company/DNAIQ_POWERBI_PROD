@@ -1,0 +1,131 @@
+table Innovations
+	isHidden
+	lineageTag: e9b1b38f-c7ea-4499-9483-f65bc902bf74
+
+	column project_name
+		dataType: string
+		isHidden
+		lineageTag: 3c5cd94a-8f33-4fae-97ba-603e6c29089f
+		summarizeBy: none
+		sourceColumn: project_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column brand
+		dataType: string
+		isHidden
+		lineageTag: cec828e0-f723-482f-b4e9-861046cad74d
+		summarizeBy: none
+		sourceColumn: brand
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column package
+		dataType: string
+		isHidden
+		lineageTag: 1f5ef5d3-bd8f-483b-b1f3-4c93332fb8ec
+		summarizeBy: none
+		sourceColumn: package
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_brand_package_flavor
+		dataType: string
+		isHidden
+		lineageTag: 04a606ec-383a-4a52-9f4a-3fc3b1b53924
+		summarizeBy: none
+		sourceColumn: created_brand_package_flavor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column in_market_date
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 809437f1-3f40-410b-bfd6-c670bbbde97a
+		summarizeBy: none
+		sourceColumn: in_market_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 13f0f8c3-07c3-403d-848f-897dceb457b2
+		summarizeBy: none
+		sourceColumn: Year
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Universal Product Code'
+		dataType: string
+		isHidden
+		lineageTag: 0e85907e-481f-4262-b38d-7aea72a84d3a
+		summarizeBy: none
+		sourceColumn: Universal Product Code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column innovation_key
+		dataType: string
+		isHidden
+		lineageTag: 1d854d81-b2c8-4880-9cf2-297942e08486
+		summarizeBy: none
+		sourceColumn: innovation_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duplicate
+		dataType: string
+		isHidden
+		lineageTag: 9de7f275-ad2b-4ac5-b35e-9478e2580b55
+		summarizeBy: none
+		sourceColumn: Duplicate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Innovations = m
+		mode: import
+		source =
+				let
+				
+				Source = Excel.Workbook(Web.Contents("https://groups.coca-cola.com/sites/DnAIQ/Shared%20Documents/General/Power%20BI%20Manual%20Files/Customer%20Invoice%20Model/2023-2024%20Innovation%20Master%20List.xlsx"), null, true),
+				    data_Sheet = Source{[Item="data",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(data_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Scope", type text}, {"project_name", type text}, {"brand", type text}, {"package", type text}, {"created_brand_package_flavor", type text}, {"category", type text}, {"upc", Int64.Type}, {"in_market_date", type date}, {"comm_lead", type text}, {"target_close_date", type any}, {"Innovation vs Base", type text}, {"Primary Channel", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "new_upc", each Number.ToText([upc], "d12")),
+				    #"Inserted Year" = Table.AddColumn(#"Added Custom", "Year", each Date.Year([in_market_date]), Int64.Type),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Inserted Year", "in_market_date", "in_market_date - Copy"),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Duplicated Column",{{"in_market_date - Copy", Int64.Type}}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Changed Type3",{{"in_market_date - Copy", type text}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type4", "innovation_key", each [new_upc]&[#"in_market_date - Copy"]),
+				    #"Filtered Rows" = Table.SelectRows(#"Added Custom1", each true),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"new_upc", "Universal Product Code"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"project_name", "brand", "package", "created_brand_package_flavor", "in_market_date", "Duplicate", "Universal Product Code", "Year", "innovation_key"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Removed Other Columns", each [Universal Product Code] <> null)
+				in
+				    #"Filtered Rows1"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

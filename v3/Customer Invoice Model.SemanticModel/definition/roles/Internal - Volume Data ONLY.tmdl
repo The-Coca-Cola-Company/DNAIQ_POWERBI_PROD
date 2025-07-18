@@ -1,0 +1,10 @@
+role 'Internal - Volume Data ONLY'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors'
+
+	tablePermission 'Bottler Financials'
+		metadataPermission: none
+
+	annotation PBI_Id = 934f944356d64b5a8a5b8d5cda505fa2
+

@@ -1,0 +1,62 @@
+/// ired_mdl vw_Dim_Location
+table 'Store Area'
+	lineageTag: 210e0b7f-2814-4214-a128-132b3d12e2e4
+
+	column Location
+		dataType: string
+		isHidden
+		lineageTag: db0a659d-8a3a-4b81-a802-e5f13c527bfa
+		summarizeBy: none
+		sourceColumn: Location
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_location_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4b5d546c-3c6a-4189-86c3-c75aa7f99ab7
+		summarizeBy: none
+		sourceColumn: dim_location_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sub Location'
+		dataType: string
+		isHidden
+		lineageTag: 6d9de271-54c7-4c97-bd79-a721dfe9d430
+		summarizeBy: none
+		sourceColumn: Sub Location
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Location Hierarchy'
+		lineageTag: b3b1f6c1-1980-4598-a74a-1c00a73b5145
+
+		level Location
+			lineageTag: 1159c527-45e3-4bea-9816-d900051cc6f0
+			column: Location
+
+		level 'Sub Location'
+			lineageTag: f3f814d7-8a41-4424-8e3e-73fb23807ae8
+			column: 'Sub Location'
+
+	partition 'Store Area' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database),
+				    ired_mdl_vw_dim_location = Source{[Schema="iredv3",Item="vw_Dim_Location"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(ired_mdl_vw_dim_location,{{"location", "Location"}, {"sub_location", "Sub Location"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"created_date", "updated_date"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,5 @@
+role 'Internal - All Data'
+	modelPermission: read
+
+	annotation PBI_Id = 817a9c3628a34d79abde951f44bd4941
+

@@ -1,0 +1,224 @@
+table Calendar
+	lineageTag: 5ff03b22-3162-4326-b6f2-42b10594a5e4
+	dataCategory: Time
+
+	column 'Year Wave'
+		dataType: string
+		lineageTag: 6aca328a-9948-4812-8cd3-e9c83fcc1531
+		summarizeBy: none
+		sourceColumn: Year Wave
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_wave_sort
+		dataType: string
+		isHidden
+		lineageTag: e720cf9a-c2ac-48ca-93a0-469125fb5303
+		summarizeBy: none
+		sourceColumn: year_wave_sort
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Completed Wave' = IF('Calendar'[sovi_wave_ending_date] <= NOW(),1,0)
+		isHidden
+		formatString: 0
+		lineageTag: 97666e0e-23c3-4ca3-93a5-953628732dd0
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a98f787a-96c3-475a-9ec0-2e5155c04d13
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ymdid
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 56445be3-a090-44b7-8d6e-a452d94beff6
+		summarizeBy: none
+		sourceColumn: ymdid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		isHidden
+		isKey
+		formatString: Long Date
+		lineageTag: a3b1868c-7d7b-49fd-95ba-2f766c4fae75
+		summarizeBy: none
+		sourceColumn: date
+
+		changedProperty = DataType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column fiscal_year
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 818cd0b3-c377-4b02-8a50-5462c124b7c3
+		summarizeBy: none
+		sourceColumn: fiscal_year
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_quarter
+		dataType: string
+		isHidden
+		lineageTag: 2340ad85-f068-42ee-bb30-012750567e60
+		summarizeBy: none
+		sourceColumn: fiscal_quarter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_month
+		dataType: string
+		isHidden
+		lineageTag: be71be7c-4af2-4784-998d-939143cd572e
+		summarizeBy: none
+		sourceColumn: fiscal_month
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_month_ending_date
+		dataType: string
+		isHidden
+		lineageTag: 9801fdf9-abc4-4a80-aa2f-beaf72ee0320
+		summarizeBy: none
+		sourceColumn: fiscal_month_ending_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_week_ending_date
+		dataType: string
+		isHidden
+		lineageTag: 2d86af3d-d0eb-4170-9f97-12856e6105c4
+		summarizeBy: none
+		sourceColumn: fiscal_week_ending_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_number
+		dataType: string
+		isHidden
+		lineageTag: f6474e40-4666-463b-ae91-abea057b22ac
+		summarizeBy: none
+		sourceColumn: week_number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sovi_wave
+		dataType: int64
+		isHidden
+		lineageTag: 7645987f-98b3-43c9-ab44-a4d118cd38de
+		summarizeBy: none
+		sourceColumn: sovi_wave
+
+		changedProperty = IsHidden
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sovi_prior_wave
+		dataType: string
+		isHidden
+		lineageTag: 78deb7ce-5037-4adb-b23d-4a904497eca4
+		summarizeBy: none
+		sourceColumn: sovi_prior_wave
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sovi_wave_prior_year
+		dataType: string
+		isHidden
+		lineageTag: 2e0a374c-8b6a-4c3e-a32c-66d1b7d3f052
+		summarizeBy: none
+		sourceColumn: sovi_wave_prior_year
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sovi_wave_ending_date
+		dataType: dateTime
+		isHidden
+		formatString: m/d/yyyy
+		lineageTag: 91a455a6-6369-4690-89d9-0d1b89bc810c
+		summarizeBy: none
+		sourceColumn: sovi_wave_ending_date
+
+		changedProperty = IsHidden
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	hierarchy 'Wave Hierarchy'
+		lineageTag: dfab1522-dacf-4aac-9fcb-30d47d1fe3de
+
+		level Year
+			lineageTag: 2d8f01b1-529e-4287-a887-ec10aa6fcb18
+			column: fiscal_year
+
+		level Wave
+			lineageTag: 2c9822d5-dc3e-4b6f-b865-da8daff84aa5
+			column: sovi_wave
+
+	partition Calendar = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, DataBase,[CommandTimeout=#duration(0,0,180,0)]),
+				     ired_mdl_vw_dim_calendar = Source{[Schema="dbo",Item="vw_Dim_Calendar"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(ired_mdl_vw_dim_calendar,{{"sovi_wave_year", "Year Wave"}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns", each [ymdid] >= 20220101),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each [dim_date_key] <> -1),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows1",{"fiscal_week", "fiscal_year_quarter", "fiscal_year_month", "fiscal_year_month_week", "fiscal_quarter_ending_date", "quarter_number", "month_number", "ko_holiday", "ko_R13W_LCM_PY", "sequential_quarter_number", "sequential_month_number", "sequential_week_number", "sequential_day_number", "fiscal_week_in_quarter_number", "fiscal_week_in_month_number", "rms_nielsen_week_ending_date", "ko_R12M", "ko_pryr1_year_month_number", "ko_pryr1_year_month_week_number", "ko_R13W_LCM_CY", "ko_R24M_LCM_CY", "ko_R24M_LCM_PY", "rms_period_key", "rms_period_description"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

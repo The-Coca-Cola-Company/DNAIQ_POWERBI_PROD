@@ -1,0 +1,12 @@
+role 'End Users'
+	modelPermission: read
+
+	tablePermission Calendar =
+			'Calendar'[Wave Ending Date] <= TODAY() - 6
+			    && 'Calendar'[Wave Ending Date] <= CALCULATE(
+			        MAX('Calendar'[Wave Ending Date]),
+			        REMOVEFILTERS('Calendar')
+			    ) - 1
+
+	annotation PBI_Id = ecafa1ae3b3e477e92c5535a991c062f
+

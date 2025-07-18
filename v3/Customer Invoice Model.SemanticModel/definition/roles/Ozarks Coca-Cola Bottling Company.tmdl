@@ -1,0 +1,7 @@
+role 'Ozarks Coca-Cola Bottling Company'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Ozarks Coca-Cola Bottling Company"
+
+	annotation PBI_Id = 9d35ca416e154d2f934eee4b458fff28
+

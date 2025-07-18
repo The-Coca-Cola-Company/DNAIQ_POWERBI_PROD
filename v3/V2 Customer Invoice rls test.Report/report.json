@@ -1,0 +1,69 @@
+{
+  "config": "{\"version\":\"5.59\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU10\",\"version\":\"5.59\",\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY24SU10",
+            "path": "BaseThemes/CY24SU10.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "V2 Cusomer RLS",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "8d2f60277082c3ddbbdd",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"03bd8fc3d8044258050a\",\"layouts\":[{\"id\":0,\"position\":{\"x\":453.2089165370658,\"y\":0,\"z\":1,\"width\":435.2928978745464,\"height\":230.2540176257128,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Rows\":[{\"queryRef\":\"Bottlers & Distributors.Bottler Distributor Name Hierarchy.Bottler/Distributor\",\"active\":true}],\"Values\":[{\"queryRef\":\"Customer Invoice Measures.EQ Unit Cases\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"b\",\"Entity\":\"Bottlers & Distributors\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Customer Invoice Measures\",\"Type\":0}],\"Select\":[{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Hierarchy\":\"Bottler Distributor Name Hierarchy\"}},\"Level\":\"Bottler/Distributor\"},\"Name\":\"Bottlers & Distributors.Bottler Distributor Name Hierarchy.Bottler/Distributor\",\"NativeReferenceName\":\"Bottler Distributor Name Hierarchy Bottler/Distributor\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"EQ Unit Cases\"},\"Name\":\"Customer Invoice Measures.EQ Unit Cases\",\"NativeReferenceName\":\"EQ Unit Cases\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Hierarchy\":\"Bottler Distributor Name Hierarchy\"}},\"Level\":\"Bottler/Distributor\"}}}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 230.25,
+          "width": 435.29,
+          "x": 453.21,
+          "y": 0.00,
+          "z": 1.00
+        },
+        {
+          "config": "{\"name\":\"2aae56df9a7e2d0aa52c\",\"layouts\":[{\"id\":0,\"position\":{\"x\":7.299118714359771,\"y\":254.80559875583202,\"z\":2,\"width\":257.45982374287195,\"height\":79.62674961119751,\"tabOrder\":2}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Year Hierarchy.Fiscal Year\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Hierarchy\":\"Year Hierarchy\"}},\"Level\":\"Fiscal Year\"},\"Name\":\"Calendar.Year Hierarchy.Fiscal Year\",\"NativeReferenceName\":\"Year Hierarchy Fiscal Year\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Fiscal Year\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2023L\"}}]]}}}]}}}}]},\"cachedFilterDisplayItems\":[{\"id\":{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Fiscal Year\"}},\"Right\":{\"Literal\":{\"Value\":\"2023L\"}}}}},\"displayName\":\"2023\"}]}}",
+          "filters": "[]",
+          "height": 79.63,
+          "width": 257.46,
+          "x": 7.30,
+          "y": 254.81,
+          "z": 2.00
+        },
+        {
+          "config": "{\"name\":\"372f713ec427a02d5c52\",\"layouts\":[{\"id\":0,\"position\":{\"x\":6.635562467599793,\"y\":0,\"z\":0,\"width\":398.79730430274753,\"height\":230.2540176257128,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Rows\":[{\"queryRef\":\"Bottlers & Distributors.Bottler Distributor Name Hierarchy.Bottler/Distributor\",\"active\":true}],\"Values\":[{\"queryRef\":\"Customer Invoice Measures.EQ Unit Cases\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"b\",\"Entity\":\"Bottlers & Distributors\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Customer Invoice Measures\",\"Type\":0}],\"Select\":[{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Hierarchy\":\"Bottler Distributor Name Hierarchy\"}},\"Level\":\"Bottler/Distributor\"},\"Name\":\"Bottlers & Distributors.Bottler Distributor Name Hierarchy.Bottler/Distributor\",\"NativeReferenceName\":\"Bottler Distributor Name Hierarchy Bottler/Distributor\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"EQ Unit Cases\"},\"Name\":\"Customer Invoice Measures.EQ Unit Cases\",\"NativeReferenceName\":\"EQ Unit Cases\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 230.25,
+          "width": 398.80,
+          "x": 6.64,
+          "y": 0.00,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"75d99c15b468b65053e1\",\"layouts\":[{\"id\":0,\"position\":{\"x\":356.32970451010885,\"y\":261.44116122343183,\"z\":3,\"width\":257.45982374287195,\"height\":79.62674961119751,\"tabOrder\":3}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Bottlers & Distributors.CONA Indicator\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"b\",\"Entity\":\"Bottlers & Distributors\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Property\":\"CONA Indicator\"},\"Name\":\"Bottlers & Distributors.CONA Indicator\",\"NativeReferenceName\":\"CONA Indicator\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"b\",\"Entity\":\"Bottlers & Distributors\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Property\":\"CONA Indicator\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'CONA'\"}}]]}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 79.63,
+          "width": 257.46,
+          "x": 356.33,
+          "y": 261.44,
+          "z": 3.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

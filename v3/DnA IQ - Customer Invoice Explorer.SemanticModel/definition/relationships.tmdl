@@ -1,0 +1,56 @@
+relationship e7174882-c4ec-48d6-b845-2357e56ebb77
+	fromColumn: 'Customer Invoice Measures'.dim_outlet_key
+	toColumn: Outlet.dim_outlet_key
+
+relationship a9dde473-05b7-4388-bb97-539292edb33a
+	fromColumn: 'Customer Invoice Measures'.dim_invoice_key
+	toColumn: Invoice.dim_invoice_key
+
+relationship 3642fa89-fbbc-44b7-a18d-47f010a48d32
+	fromColumn: 'Customer Invoice Measures'.dim_date_key
+	toColumn: Calendar.dim_date_key
+
+relationship b55c4e33-4e5e-48e0-ac51-20c60678b1af
+	fromColumn: 'Customer Invoice Measures'.dim_territory_bottler_key
+	toColumn: 'Territory Bottlers'.dim_territory_bottler_key
+
+relationship ff1995da-2337-439f-ba1b-10249ab48927
+	fromColumn: 'Customer Invoice Measures'.dim_bottler_key
+	toColumn: 'Bottlers & Distributors'.dim_bottler_key
+
+relationship cb116ec4-8ec4-4b61-b9dc-747ab3f37692
+	fromColumn: 'Customer Invoice Measures'.dim_channel_key
+	toColumn: Channel.dim_channel_key
+
+relationship 7b42f52a-9a88-487f-a6b7-18583038f918
+	fromColumn: 'Customer Invoice Measures'.dim_customer_key
+	toColumn: Customer.dim_customer_key
+
+relationship e4aadd26-6cef-443f-8722-2e62a9fdaa0d
+	fromColumn: 'Customer Invoice Measures'.dim_product_key
+	toColumn: Product.'Product Key'
+
+relationship 1f23c8aa-e8ef-45b3-ab39-c01b5134f3f1
+	fromColumn: 'Overall Performance Plan'.'Dim Channel Key'
+	toColumn: Channel.dim_channel_key
+
+relationship 80220f8d-2dca-4746-a446-89c296376657
+	fromColumn: 'Overall Performance Plan'.'Dim Date Key'
+	toColumn: Calendar.dim_date_key
+
+relationship 05be8002-0bcc-4207-a4cd-63790a1fb9c5
+	fromColumn: 'Overall Performance Plan'.'Dim Bottler Key'
+	toColumn: 'Bottlers & Distributors'.dim_bottler_key
+
+relationship fd1ef777-02d2-4e89-8110-4c207ca536e1
+	fromColumn: 'Overall Performance Plan'.'Dim Product Key'
+	toColumn: Product.'Product Key'
+
+relationship 05fedd83-582c-4979-9cf0-96f6f70c8b09
+	fromColumn: 'Overall Performance Plan'.'Dim Customer Key'
+	toColumn: Customer.dim_customer_key
+
+relationship 98df7d94-aca8-4ee4-94e6-2b1ea9b5201f
+	fromColumn: 'Overall Performance Plan'.dim_outlet_key
+	toColumn: Outlet.dim_outlet_key
+

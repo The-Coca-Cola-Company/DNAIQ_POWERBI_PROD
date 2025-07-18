@@ -1,0 +1,14 @@
+expression Server = "syn-tccc-udp-dnao-us2-prd-01-ondemand.sql.azuresynapse.net" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text"]
+	lineageTag: 1e2cde0b-937a-4fa2-81ae-826bb58064e3
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression DataBase = "DnAIQDb" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text"]
+	lineageTag: 31fbafaf-7558-4b65-a894-b0194db0262f
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+

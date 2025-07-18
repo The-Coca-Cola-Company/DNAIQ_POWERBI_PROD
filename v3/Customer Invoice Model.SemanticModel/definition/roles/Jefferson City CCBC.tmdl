@@ -1,0 +1,7 @@
+role 'Jefferson City CCBC'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Jefferson City CCBC"
+
+	annotation PBI_Id = 0502e4d1320f4d588938eb02a244c73f
+

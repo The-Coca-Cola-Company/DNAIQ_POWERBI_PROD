@@ -1,0 +1,252 @@
+table 'Bottlers & Distributors'
+	lineageTag: 2960343b-b201-4a26-8238-b382c8a8ea02
+
+	column dim_bottler_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d9ec748-9913-4f81-a879-68418d8adb30
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_source_key
+		dataType: string
+		lineageTag: 77c842a8-c751-450b-bf79-9008ee571f8f
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_ownrshp_id
+		dataType: string
+		lineageTag: fa05b4ed-fedb-4591-8f2e-db915c7b4e5c
+		summarizeBy: none
+		sourceColumn: src_ownrshp_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_sending_entity_nm
+		dataType: string
+		lineageTag: 85ac2a66-069e-48f6-848e-9d9c4ce52a9b
+		summarizeBy: none
+		sourceColumn: src_sending_entity_nm
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_btlr_org_lvl_b_id
+		dataType: string
+		lineageTag: 35090e2f-c7df-4637-9611-b6d74ad41bea
+		summarizeBy: none
+		sourceColumn: src_btlr_org_lvl_b_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_btlr_org_lvl_b_desc
+		dataType: string
+		lineageTag: 7f2f17d1-65d1-4afc-bc5f-efd90fa3b556
+		summarizeBy: none
+		sourceColumn: src_btlr_org_lvl_b_desc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_btlr_branch_no
+		dataType: string
+		lineageTag: bc1ec26b-69a6-444e-a8d5-e6feebe8fd4d
+		summarizeBy: none
+		sourceColumn: src_btlr_branch_no
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_btlr_branch_nm
+		dataType: string
+		lineageTag: 54b14127-9336-4f92-8b59-7b6ccb0b6374
+		summarizeBy: none
+		sourceColumn: src_btlr_branch_nm
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_market_description
+		dataType: string
+		lineageTag: 1509c1b8-2d3d-4a8c-8e98-dad12053d142
+		summarizeBy: none
+		sourceColumn: src_market_description
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_conformed_bottler_key
+		dataType: int64
+		formatString: 0
+		lineageTag: b3d76efa-9ea5-4557-b207-d621aa675137
+		summarizeBy: sum
+		sourceColumn: dim_conformed_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_bottler_tier
+		dataType: string
+		lineageTag: 39ccecec-7a4a-44af-a0ca-aef99118d3e5
+		summarizeBy: none
+		sourceColumn: display_bottler_tier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_bottler_name_tier1
+		dataType: string
+		lineageTag: 4bff6466-94e3-4c7a-ab33-15bc613a2ff5
+		summarizeBy: none
+		sourceColumn: display_bottler_name_tier1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_bottler_name_tier2
+		dataType: string
+		lineageTag: 8930a857-22b6-46d9-929e-5cf1b2659525
+		summarizeBy: none
+		sourceColumn: display_bottler_name_tier2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_bottler_name_all
+		dataType: string
+		lineageTag: 6a77f182-f6ec-4595-874d-eb8448868975
+		summarizeBy: none
+		sourceColumn: display_bottler_name_all
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_market_unit
+		dataType: string
+		lineageTag: 2402fba9-8a2e-4bb3-b558-818cc200b949
+		summarizeBy: none
+		sourceColumn: display_market_unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_distributor_type_name
+		dataType: string
+		lineageTag: b773fe6d-09d5-4136-8821-7455c3e8942a
+		summarizeBy: none
+		sourceColumn: display_distributor_type_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_cona_indicator
+		dataType: string
+		lineageTag: da29e763-6597-4839-a149-0c425709e781
+		summarizeBy: none
+		sourceColumn: display_cona_indicator
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bottler Classification'
+		dataType: string
+		lineageTag: 87133a7b-a1ab-4332-b0be-aefde14ae3d3
+		summarizeBy: none
+		sourceColumn: Bottler Classification
+		sortByColumn: 'Bottler Classification Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bottler Classification Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: ebe2f5d3-877c-4fa1-be07-313c3b73b5ab
+		summarizeBy: sum
+		sourceColumn: Bottler Classification Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column ired_active_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 44464f93-a5b8-4c1d-81c6-af3fb69d38ac
+		summarizeBy: sum
+		sourceColumn: ired_active_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_active_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: f291e967-9d34-4b3b-ab3e-43da1da1b767
+		summarizeBy: sum
+		sourceColumn: invoice_active_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column som_active_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 844abf0e-61b4-4707-acdd-ff8bba13cbb1
+		summarizeBy: sum
+		sourceColumn: som_active_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Bottler/Distributor Hierarchy'
+		lineageTag: 9628ace4-1bd0-4787-a849-ce493a567ebf
+
+		level Bottler/Distributor
+			lineageTag: ebdf0105-89e0-45d7-a064-20ac4a796161
+			column: src_sending_entity_nm
+
+		level 'Market Unit'
+			lineageTag: 0b0a0a57-f12c-456f-9052-bbeda0f54cf5
+			column: src_btlr_org_lvl_b_desc
+
+		level 'Sales Branch'
+			lineageTag: cb3118b1-a0c9-4433-b99e-8f299a10050c
+			column: src_btlr_branch_nm
+
+	partition 'Bottlers & Distributors' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database),
+				    vw_Dim_Bottler = Source{[Schema="dbov3",Item="vw_Dim_Bottler"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(vw_Dim_Bottler,{{"display_bottler_classification", "Bottler Classification"}, {"display_bottler_classification_sort", "Bottler Classification Sort"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"created_date", "updated_date"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

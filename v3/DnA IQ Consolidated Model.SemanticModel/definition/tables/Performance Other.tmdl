@@ -1,0 +1,369 @@
+/// dbov3.vw_Fact_Performance_Other
+/// Group By: Calendar, Channel, Customer, Product, Territory Bottlers
+table 'Performance Other'
+	lineageTag: 06c21bc3-8c26-4f5b-8a86-cbfce457095a
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 2
+		incrementalGranularity: month
+		incrementalPeriods: 24
+		sourceExpression =
+			let
+			    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+			    vw_Fact_Performance_Other = Source{[Schema="dbov3",Item="vw_Fact_Performance_Other"]}[Data],
+			    #"Filtered Rows" = Table.SelectRows(vw_Fact_Performance_Other, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+			    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"created_date"}),
+			    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns",{"dim_date_key", "dim_source_key", "dim_customer_key", "dim_product_key", "dim_bottler_key", "dim_channel_key", "cde_total_orders", "cde_coolers_per_10k", "cde_net_cooler_placement", "wmt_pre_sub_rate_numerator", "wmt_pre_sub_rate_denominator", "wmt_nil_pick_qty", "wmt_cust_order_qty", "wmt_in_stock_numerator", "wmt_in_stock_denominator", "true_rate_dnnsi_py_act_mnth", "dim_territory_bottler_key"})
+			in
+			    #"Removed Other Columns"
+
+	measure 'WMT Nil Pick Qty' = SUM('Performance Other'[wmt_nil_pick_qty])
+		formatString: #,0
+		displayFolder: PRX Measures
+		lineageTag: 62515ea9-1730-4bef-b1b7-d6c93f56303a
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'WMT Cust Order Qty' = SUM('Performance Other'[wmt_cust_order_qty])
+		formatString: #,0
+		displayFolder: PRX Measures
+		lineageTag: b7bb57d0-8ebf-454b-a1a2-b632df558552
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Walmart metric that indicates the % of online orders where the customer got the exact product (not substituted) ordered to be delivered or picked up at store.
+	measure 'WMT % Nil Pick' = DIVIDE([WMT Nil Pick Qty], [WMT Cust Order Qty])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Measures
+		lineageTag: dd8762dd-01ae-4773-a204-5280b1c1afca
+
+		changedProperty = IsHidden
+
+	/// Abs growth vs PY in Walmart metric that indicates the % of online orders where the customer got the exact product (not substituted) ordered to be delivered or picked up at store.
+	measure 'WMT % Nil Pick Change' =
+			
+			VAR CY = CALCULATE([WMT % Nil Pick], 'Time Calculation'[Time Calculation] = "YTD")
+			VAR PY = CALCULATE([WMT % Nil Pick], 'Time Calculation'[Time Calculation] = "YTD PY")
+			RETURN CY - PY
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Measures
+		lineageTag: 7a5cf883-f66e-4125-b9a7-db6c0bc4b4c9
+
+		changedProperty = IsHidden
+
+	measure 'Coolers Per 10k' = SUM('Performance Other'[cde_coolers_per_10k])
+		formatString: #,0
+		displayFolder: NAOU Scorecard
+		lineageTag: 8307c855-ef6a-47ce-88c0-cd1119af086e
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Net Cooler Placement' = SUM('Performance Other'[cde_net_cooler_placement])
+		formatString: #,0
+		displayFolder: NAOU Scorecard
+		lineageTag: 2dd8b7fd-ec63-4d0d-8292-e7ba1bc93bf2
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total CDE' =
+			
+			var maxDate = MAX('Calendar'[Calendar Date])
+			RETURN
+			    CALCULATE(
+			        SUM('Performance Other'[cde_total_orders]),
+			        'Calendar'[Calendar Date] = maxDate)
+		formatString: #,0
+		displayFolder: NAOU Scorecard
+		lineageTag: b50cb031-fe7d-4889-8465-0f6d0aaa9bd0
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Walmart In-Stock' =
+			
+			VAR numerator = SUM('Performance Other'[wmt_in_stock_numerator])
+			VAR denominator = SUM('Performance Other'[wmt_in_stock_denominator])
+			RETURN DIVIDE(numerator, denominator)
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: NAOU Scorecard
+		lineageTag: 34abca07-3169-4bdc-8688-3dadf93e9cdf
+
+		changedProperty = IsHidden
+
+	measure 'Pre Sub %' =
+			
+			VAR numerator = SUM('Performance Other'[wmt_pre_sub_rate_numerator])
+			VAR denominator = SUM('Performance Other'[wmt_pre_sub_rate_denominator])
+			RETURN DIVIDE(numerator, denominator)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: NAOU Scorecard
+		lineageTag: d785a4c5-9cc3-4a13-9e63-9bdc785f94cb
+
+		changedProperty = IsHidden
+
+	/// % of outlets where NAOU approved product is out of stock. (100% minus In-Stock %)
+	measure 'Void %' =
+			
+			VAR numerator = SUM('Performance Other'[wmt_in_stock_numerator])
+			VAR denominator = SUM('Performance Other'[wmt_in_stock_denominator])
+			RETURN 1 - DIVIDE(numerator, denominator)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: NAOU Scorecard
+		lineageTag: 450e09ab-931e-47d4-a44e-f0a28e31dcfa
+
+		changedProperty = IsHidden
+
+	/// Absolute growth vs PY in % of outlets where NAOU approved product is out of stock. (100% minus In-Stock %)
+	measure 'Void % Change' =
+			
+			VAR CY = CALCULATE([Void %], 'Time Calculation'[Time Calculation] = "YTD")
+			VAR PY = CALCULATE([Void %], 'Time Calculation'[Time Calculation] = "YTD PY")
+			RETURN CY - PY
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: NAOU Scorecard
+		lineageTag: 1d58ef6e-2e89-4b89-a5c7-c8a99e59c1ab
+
+		changedProperty = IsHidden
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 36cb2a80-af78-4fc7-bd05-8fc5e23ab9da
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_source_key
+		dataType: string
+		isHidden
+		lineageTag: 94721003-9d5a-4aa3-8334-e4658a374ef2
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ba6133d3-164b-422a-8791-b0cc7985b3a5
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bad1e3bc-c98f-4fdc-9b87-a9ab64d13ffc
+		summarizeBy: none
+		sourceColumn: dim_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d8b36aa0-f9f9-4cbd-b3e4-94edc40a194d
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_channel_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 623666e5-fadd-4c65-9bc3-19832085a60a
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cde_total_orders
+		dataType: decimal
+		isHidden
+		lineageTag: 73c79ab8-ee1a-4b90-9a40-a0eabea1125b
+		summarizeBy: sum
+		sourceColumn: cde_total_orders
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cde_coolers_per_10k
+		dataType: decimal
+		isHidden
+		lineageTag: f4c813e9-8a55-495f-bb1d-20b73c5bbe46
+		summarizeBy: sum
+		sourceColumn: cde_coolers_per_10k
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cde_net_cooler_placement
+		dataType: decimal
+		isHidden
+		lineageTag: 5ee5f854-8599-460e-a68b-7050c021afbd
+		summarizeBy: sum
+		sourceColumn: cde_net_cooler_placement
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wmt_pre_sub_rate_numerator
+		dataType: decimal
+		isHidden
+		lineageTag: 05c46080-b086-4bb4-b3fe-35aec4e02c6b
+		summarizeBy: sum
+		sourceColumn: wmt_pre_sub_rate_numerator
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wmt_pre_sub_rate_denominator
+		dataType: decimal
+		isHidden
+		lineageTag: bc03b8d7-a877-4abf-9ec9-7f9411848aeb
+		summarizeBy: sum
+		sourceColumn: wmt_pre_sub_rate_denominator
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wmt_nil_pick_qty
+		dataType: decimal
+		isHidden
+		lineageTag: 41d89995-4541-4ab1-89f9-df2b8deb8cd5
+		summarizeBy: sum
+		sourceColumn: wmt_nil_pick_qty
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wmt_cust_order_qty
+		dataType: decimal
+		isHidden
+		lineageTag: acfe54db-e9fa-4c7a-a9cc-2de4462f3406
+		summarizeBy: sum
+		sourceColumn: wmt_cust_order_qty
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wmt_in_stock_numerator
+		dataType: decimal
+		isHidden
+		lineageTag: ac3e5270-5554-4c6a-9754-d7db873d519e
+		summarizeBy: sum
+		sourceColumn: wmt_in_stock_numerator
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wmt_in_stock_denominator
+		dataType: decimal
+		isHidden
+		lineageTag: db797cf5-dc6d-4248-bb6a-2faafae5f16f
+		summarizeBy: sum
+		sourceColumn: wmt_in_stock_denominator
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_py_act_mnth
+		dataType: decimal
+		isHidden
+		lineageTag: 7f7940db-cfa8-4edc-a217-46e2c814dbd9
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_py_act_mnth
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_territory_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4e3ba1e5-d1c8-4503-ac18-39de360d6649
+		summarizeBy: none
+		sourceColumn: dim_territory_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Performance Other' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    vw_Fact_Performance_Other = Source{[Schema="dbov3",Item="vw_Fact_Performance_Other"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(vw_Fact_Performance_Other, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"created_date"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns",{"dim_date_key", "dim_source_key", "dim_customer_key", "dim_product_key", "dim_bottler_key", "dim_channel_key", "cde_total_orders", "cde_coolers_per_10k", "cde_net_cooler_placement", "wmt_pre_sub_rate_numerator", "wmt_pre_sub_rate_denominator", "wmt_nil_pick_qty", "wmt_cust_order_qty", "wmt_in_stock_numerator", "wmt_in_stock_denominator", "true_rate_dnnsi_py_act_mnth", "dim_territory_bottler_key"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_IsMQueryFoldable = True
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

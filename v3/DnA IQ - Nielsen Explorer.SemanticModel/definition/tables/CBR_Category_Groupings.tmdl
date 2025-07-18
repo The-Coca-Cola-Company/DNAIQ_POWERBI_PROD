@@ -1,0 +1,54 @@
+table CBR_Category_Groupings
+	isHidden
+	lineageTag: c45c69a8-ef54-4752-9542-8c00f71373e9
+	sourceLineageTag: 1d0171f7-b186-44f5-ae32-e98dbf6bf343
+
+	column cbr_sub_category
+		dataType: string
+		isHidden
+		isNullable: false
+		lineageTag: 83cc653e-590f-4a46-b855-5b1868e0a4ef
+		sourceLineageTag: b8585b81-5bc3-4fe2-8d97-7190fe5e7a91
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cbr_sub_category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column cbr_category_group
+		dataType: string
+		isHidden
+		lineageTag: 4a7a5565-4eb2-4a4d-a674-b586b7b66106
+		sourceLineageTag: 2b44abd9-3a23-4d62-9050-acc22efc508c
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cbr_category_group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column cbr_category_group_sort
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4ad31d83-b5d2-4765-a500-1b670632618c
+		sourceLineageTag: 9cf201ef-09fc-4d96-88ce-27d1c215459f
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cbr_category_group_sort
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition CBR_Category_Groupings = entity
+		mode: directQuery
+		source
+			entityName: CBR_Category_Groupings
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+
+	changedProperty = IsHidden
+

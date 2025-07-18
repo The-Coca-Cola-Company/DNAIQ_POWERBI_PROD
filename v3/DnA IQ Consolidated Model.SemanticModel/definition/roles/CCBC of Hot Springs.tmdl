@@ -1,0 +1,49 @@
+role 'CCBC of Hot Springs'
+	modelPermission: read
+
+	tablePermission 'Territory Bottlers' = [Bottler Distributor Name] == "CCBC of Hot Springs"
+
+	tablePermission 'ACV TDP'
+		metadataPermission: none
+
+	tablePermission Beach
+		metadataPermission: none
+
+	tablePermission CBR_Category_Groupings
+		metadataPermission: none
+
+	tablePermission 'Business Drivers'
+		metadataPermission: none
+
+	tablePermission 'Dim Slicer'
+		metadataPermission: none
+
+	tablePermission Forecast
+		metadataPermission: none
+
+	tablePermission 'iRED Measures'
+		metadataPermission: none
+
+	tablePermission Market
+		metadataPermission: none
+
+	tablePermission 'Measures Slicer'
+		metadataPermission: none
+
+	tablePermission 'Performance Other'
+		metadataPermission: none
+
+	tablePermission 'PRx Key Metrics'
+		metadataPermission: none
+
+	tablePermission 'Share of Market'
+		metadataPermission: none
+
+	tablePermission 'Store Area'
+		metadataPermission: none
+
+	tablePermission 'Week Parameter'
+		metadataPermission: none
+
+	annotation PBI_Id = c8caa1f723b14edbac0a3152ae1fbe17
+

@@ -1,0 +1,166 @@
+table Invoice
+	lineageTag: 90e760ff-d131-41b7-bef6-a6119756345b
+
+	column dim_invoice_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		displayFolder: Hidden
+		lineageTag: 94a8031f-4482-45de-97c8-9429011bcb57
+		summarizeBy: none
+		sourceColumn: dim_invoice_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Category Type'
+		dataType: string
+		sourceProviderType: varchar(255)
+		displayFolder: Hidden
+		lineageTag: 9fdd78d9-0891-4184-ae27-5e07b783703b
+		summarizeBy: none
+		sourceColumn: Category Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Category Type Name'
+		dataType: string
+		sourceProviderType: varchar(255)
+		lineageTag: 97bb6c0d-ecfd-425f-b7de-d6545293074d
+		summarizeBy: none
+		sourceColumn: Category Type Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Distributor Type'
+		dataType: string
+		sourceProviderType: varchar(255)
+		displayFolder: Hidden
+		lineageTag: 820b7bbd-66c1-484b-b4c3-d0852b990e36
+		summarizeBy: none
+		sourceColumn: Distributor Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Distributor Type Name'
+		dataType: string
+		sourceProviderType: varchar(255)
+		displayFolder: Hidden
+		lineageTag: 12feccfa-39e5-41ab-9d6c-68c4a5e3ff70
+		summarizeBy: none
+		sourceColumn: Distributor Type Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CDC RPT'
+		dataType: string
+		sourceProviderType: varchar(255)
+		displayFolder: Hidden
+		lineageTag: 3fdd1d21-193f-44e1-afb9-26b4bd2bb4a6
+		summarizeBy: none
+		sourceColumn: CDC RPT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wholesale Retail Type'
+		dataType: string
+		sourceProviderType: varchar(255)
+		displayFolder: Hidden
+		lineageTag: 16fc5030-c743-487d-afa8-32a3ffe11b7d
+		summarizeBy: none
+		sourceColumn: Wholesale Retail Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wholesale Retail Name'
+		dataType: string
+		sourceProviderType: varchar(255)
+		displayFolder: Hidden
+		lineageTag: 9db0844b-18ba-446a-931d-800069fd81c5
+		summarizeBy: none
+		sourceColumn: Wholesale Retail Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Line Category Type'
+		dataType: string
+		sourceProviderType: varchar(255)
+		displayFolder: Hidden
+		lineageTag: 97e7dc57-083e-4b60-a5d7-2214c8a4f32b
+		summarizeBy: none
+		sourceColumn: Line Category Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Credit Report Type'
+		dataType: string
+		lineageTag: 3aebd203-d804-4d61-9143-e7f01db24a73
+		summarizeBy: none
+		sourceColumn: Credit Report Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column lmp_indicator
+		dataType: string
+		lineageTag: 9021b8be-6c65-4816-ae30-b2721fc95d70
+		summarizeBy: none
+		sourceColumn: lmp_indicator
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column eB2B
+		dataType: string
+		lineageTag: 3cb18b6a-b24c-4c22-9ac6-9b55aa41e3f7
+		summarizeBy: none
+		sourceColumn: eB2B
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cust_po_type_code
+		dataType: string
+		lineageTag: 12a30288-e258-42f7-9aa1-a0bbabbd64cb
+		summarizeBy: none
+		sourceColumn: cust_po_type_code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Invoice = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database),
+				    invoice_dim_invoice = Source{[Schema="invoicev3",Item="vw_Dim_Invoice"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(invoice_dim_invoice,{{"invoice_category_type_code", "Category Type"}, {"invoice_category_type_name", "Category Type Name"}, {"invoice_distributor_type_code", "Distributor Type"}, {"invoice_distributor_type_name", "Distributor Type Name"}, {"cdc_rpt_indicator", "CDC RPT"}, {"customer_wholesale_retail_code", "Wholesale Retail Type"}, {"customer_wholesale_retail_name", "Wholesale Retail Name"}, {"invoice_line_category_type_code", "Line Category Type"}, {"credit_report_type_cd", "Credit Report Type"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"created_date", "updated_date"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

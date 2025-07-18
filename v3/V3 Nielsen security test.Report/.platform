@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "V3 Nielsen security test"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7f7b0b92-68c5-ba01-4e9e-0449ff075b12"
+  }
+}

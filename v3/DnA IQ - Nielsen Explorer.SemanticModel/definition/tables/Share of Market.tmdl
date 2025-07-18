@@ -1,0 +1,773 @@
+/// rms_mdl vw_fact_customerweekly
+table 'Share of Market'
+	lineageTag: 55aecba6-9fbf-4cfa-9cea-c54ceb48b322
+	sourceLineageTag: a9692d19-fc76-4008-b20c-15d0e3865b1d
+
+	measure 'Any Display Dollars' = EXTERNALMEASURE("Any Display Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: d555916a-ddb0-44d9-a633-baa6655bf045
+		sourceLineageTag: 737beb6c-ccdd-4da0-88d8-1f15979d1ba3
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Any Display Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Any Feature Dollars' = EXTERNALMEASURE("Any Feature Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 2d7a7321-6e2e-4ac2-827d-90d7b5c82b08
+		sourceLineageTag: 4b008533-3422-404e-9b78-f30965247023
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Any Feature Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Any Promo Dollars' = EXTERNALMEASURE("Any Promo Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 4c093c3e-70bd-4d50-a465-99945bcf34f3
+		sourceLineageTag: 89b1e382-7536-467d-a7d3-28f129570103
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Any Promo Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Any Promo EQs' = EXTERNALMEASURE("Any Promo EQs", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 1ba76e8a-11f8-4f1d-a528-ef57f57f9e44
+		sourceLineageTag: f8da2ec0-f43e-46bc-8a78-d4bcf6ed4acb
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Any Promo EQs FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Avg EQ Price' = EXTERNALMEASURE("Avg EQ Price", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: e7e709f8-ef0e-4364-ad4b-84d9280bee80
+		sourceLineageTag: 83428654-91e4-4b59-bd45-50bb1de508c3
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Avg EQ Price FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Base Dollars' = EXTERNALMEASURE("Base Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: c53a6cb2-1021-43f8-aee4-581420569b12
+		sourceLineageTag: dbea2408-c687-47f2-bcb5-81bbc8890362
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Base Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Base EQs' = EXTERNALMEASURE("Base EQs", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 76d946a7-7160-4882-b030-84596553beb3
+		sourceLineageTag: 74602d83-3e15-4b4c-9f20-0b7e0b9dfecf
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Base EQs FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Contribution %' = EXTERNALMEASURE("Contribution %", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: d3c32acf-3481-4be2-9532-7bc22edc87e8
+		sourceLineageTag: 2e4d9e5a-2764-47b4-a67d-8342f7b08428
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Contribution % FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure Dollars = EXTERNALMEASURE("Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 4512140f-5cb5-4677-a402-0aed12ff86c2
+		sourceLineageTag: 1382b58c-42ed-4851-869f-e9ea27ff92c5
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure EQs = EXTERNALMEASURE("EQs", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 6e3290e2-1780-4191-bf05-d4f5407174a2
+		sourceLineageTag: 16ba4355-d334-4ec9-848b-5a87ac580849
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_EQs FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Feature Without Display Dollars' = EXTERNALMEASURE("Feature Without Display Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 42acef00-b55f-49f4-9cf6-d09f459bd387
+		sourceLineageTag: ce609fc5-e8ca-4763-8d6c-40f453633a0c
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Feature Without Display Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Incremental Dollars' = EXTERNALMEASURE("Incremental Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 43c6c38a-c65d-42a3-bac9-a96305031a5f
+		sourceLineageTag: 8f622068-79e8-48ad-a40a-761ab60ae060
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Incremental Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Incremental EQs' = EXTERNALMEASURE("Incremental EQs", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: f812fa77-c83b-4c3e-a6eb-f2cd568b43f9
+		sourceLineageTag: ed0b5d10-dfc4-425d-b629-c4e6529976c9
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Incremental EQs FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'LCE Price Index Tier' = EXTERNALMEASURE("LCE Price Index Tier", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: a8773fd6-9d1b-44ae-8d0c-a2c2d9245839
+		sourceLineageTag: 5899eb01-a21e-4932-8503-251fa8c70b81
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_LCE Price Index Tier FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'No Promo Dollars' = EXTERNALMEASURE("No Promo Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 26664fa1-fcf8-4b22-b679-d7da703c9551
+		sourceLineageTag: 53d91d3b-2093-4f14-8dae-672bb5d54cb2
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_No Promo Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'No Promo Eqs' = EXTERNALMEASURE("No Promo Eqs", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: a19ff914-80ba-4e0e-95f4-0e4f8b71b5c8
+		sourceLineageTag: 9f42a792-cd90-4264-81b2-e7eabf6fd261
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_No Promo Eqs FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Price Decrease Only Dollars' = EXTERNALMEASURE("Price Decrease Only Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 1b6a0deb-679c-41df-ad8e-144804b1efdf
+		sourceLineageTag: c2a66a92-cf0b-469a-9d74-bc9cb2af772e
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Price Decrease Only Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Promo Mix' = EXTERNALMEASURE("Promo Mix", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: c221cdc8-7e41-40d8-955b-23a1963de3ea
+		sourceLineageTag: dc8bab3e-8ccf-429e-a9ba-1db1e1ed93f8
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Promo Mix FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	/// Share is calculated against Total Beverage when viewing by 'System Brands' or 'Manufacturer', and is calculated against ELT Category when viewing by 'Trademark' or 'Brand'
+	measure 'Share of Dollars' = EXTERNALMEASURE("Share of Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: e3700282-1b0c-4398-ab07-98881ac2d37e
+		sourceLineageTag: 85312950-f855-4079-896c-d6876490573c
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Share of Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	/// Share is calculated against Total Beverage when viewing by 'System Brands' or 'Manufacturer', and is calculated against ELT Category when viewing by 'Trademark' or 'Brand'
+	measure 'Share of EQs' = EXTERNALMEASURE("Share of EQs", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 9eac67b1-d8d6-400e-9565-349db105c33a
+		sourceLineageTag: 985e4cba-9fc5-417f-900e-aa6661138f6f
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Share of EQs FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	/// Share is calculated against Total Beverage when viewing by 'System Brands' or 'Manufacturer', and is calculated against ELT Category when viewing by 'Trademark' or 'Brand'
+	measure 'Share of Units' = EXTERNALMEASURE("Share of Units", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: f211a8e5-d8d8-4017-850a-640e6a3653b2
+		sourceLineageTag: 1cd784e2-efd5-4cc5-af5e-76f2afd0bff8
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Share of Units FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Subsidized Dollars' = EXTERNALMEASURE("Subsidized Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 285491ba-9ed7-4857-9fee-f1a384bf7754
+		sourceLineageTag: 4765d38b-2c58-49b5-adf5-9d187c75c17b
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Subsidized Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Subsidized EQs' = EXTERNALMEASURE("Subsidized EQs", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 256026ef-4c87-4c49-8baa-d2f949343510
+		sourceLineageTag: df793018-0986-4790-83ad-295ec611dc7e
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Subsidized EQs FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure Units = EXTERNALMEASURE("Units", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: d9f55135-b786-418c-9635-0fa42c21e483
+		sourceLineageTag: 72b63072-7797-4623-b70c-bf93ee7e7c0e
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Units FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure '% Dollars Any Display' = EXTERNALMEASURE("% Dollars Any Display", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: c1bbc0d3-2480-4e66-b1c0-63abd652c7ff
+		sourceLineageTag: 6de3bd34-1fae-425e-bf96-80ecd872c5ae
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_% Dollars Any Display FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure '% Dollars Any Promo' = EXTERNALMEASURE("% Dollars Any Promo", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 16f02f81-54ad-4897-a9bb-04a8d1d02dab
+		sourceLineageTag: c7761929-905d-4498-a6e2-3954a90cbe49
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_% Dollars Any Promo FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure '% Dollars Feature & Display' = EXTERNALMEASURE("% Dollars Feature & Display", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 51f11db9-8e67-49e4-b759-d8c9f0ad3422
+		sourceLineageTag: 6a1694a2-5e15-487c-a904-f39bea4ddc60
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_% Dollars Feature & Display FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure '% Dollars Feature Only' = EXTERNALMEASURE("% Dollars Feature Only", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 841f0a1d-660c-4266-b05e-c6c7656f2c90
+		sourceLineageTag: 1dc9477e-f2e0-49b8-9ad0-531fe6636e5f
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_% Dollars Feature Only FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure '% Dollars Price Reduction Only' = EXTERNALMEASURE("% Dollars Price Reduction Only", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 5d821c91-066b-4bed-a311-c0b48e5581d8
+		sourceLineageTag: c790c97e-ba07-494c-bac2-cf7c138699e7
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_% Dollars Price Reduction Only FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure '% EQ Any Promo' = EXTERNALMEASURE("% EQ Any Promo", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: f0f12107-2b2e-46b8-b30c-d443e03f0be5
+		sourceLineageTag: d3165c81-3f45-49cd-92e0-42dee4cc5b27
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_% EQ Any Promo FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'EQ Price Elasticity' = EXTERNALMEASURE("EQ Price Elasticity", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: d026b77f-1bb1-4b4e-8bb6-64a8722657ca
+		sourceLineageTag: 700e81ef-f14c-4df5-8c39-eeffec996a8c
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_EQ Price Elasticity FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'EQ Share' = EXTERNALMEASURE("EQ Share", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: c89aa43f-1d20-437e-acc4-67e15d5531c5
+		sourceLineageTag: 056dc605-11b6-4924-8e3c-c4e2d7deca6b
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_EQ Share FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'EQ Volume % Chg vs PY' = EXTERNALMEASURE("EQ Volume % Chg vs PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9e8ff1e1-163e-406a-acc9-4574dd978579
+		sourceLineageTag: 0681ba73-b974-44e7-9f9c-76c5e6b3b1e7
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_EQ Volume % Chg vs PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Transaction Share' = EXTERNALMEASURE("Transaction Share", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 2ffc5789-c3a8-4b3f-9bc2-cc402e5a1207
+		sourceLineageTag: aa7ccb48-bd4f-48ef-ab3d-c1f6680b05e1
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Transaction Share FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'EQ Volume Chg vs PY' = EXTERNALMEASURE("EQ Volume Chg vs PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 261062ee-5eec-4faa-99e2-b45442fd70a8
+		sourceLineageTag: 0f776cd3-19bc-43a8-a330-3568f59344f4
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_EQ Volume Chg vs PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'SOVI:SOM Ratio' = EXTERNALMEASURE("SOVI:SOM Ratio", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f7047efc-9cba-4fdd-a2bb-2f9ae728c99e
+		sourceLineageTag: 17a52129-d097-42f2-848a-00478fdb5ff2
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_SOVI:SOM Ratio FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Share of Dollars Drains vs PY' = EXTERNALMEASURE("Share of Dollars Drains vs PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 94198781-d2f6-4542-9ef3-ff2329b3d44d
+		sourceLineageTag: 0f6304e9-1ec6-4760-a2de-bb4d0cb656eb
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Share of Dollars Drains vs PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Share of Dollars Gains vs PY' = EXTERNALMEASURE("Share of Dollars Gains vs PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 901880c9-b702-4d34-a4db-413ddc5c825f
+		sourceLineageTag: 71330309-89bc-46d2-b795-64ce82713d13
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Share of Dollars Gains vs PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Feature and Display Dollars' = EXTERNALMEASURE("Feature and Display Dollars", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 95769c37-1c1b-4b70-89f0-de2a5f6623f6
+		sourceLineageTag: 039f4f22-7b74-46c1-9ca5-d0e8f2487bb0
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Feature and Display Dollars FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Share of Dollars - ELT' = EXTERNALMEASURE("Share of Dollars - ELT", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 33a50643-12d8-4fdc-80fa-20d47de4d0ca
+		sourceLineageTag: e8439b08-0ead-4a7c-89d8-1b1cfa704bee
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Share of Dollars - ELT FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Share of EQs - ELT' = EXTERNALMEASURE("Share of EQs - ELT", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 7ac24261-8c67-4aa9-bcd7-8fa2155538d5
+		sourceLineageTag: 1b4816a2-7047-415d-a491-a609a194706e
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Share of EQs - ELT FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Share of Units - ELT' = EXTERNALMEASURE("Share of Units - ELT", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 21dbdcad-80c0-442f-9e2a-198b9549cecc
+		sourceLineageTag: 38ab67bf-e55c-495c-a86c-bb066eb97db2
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Share of Units - ELT FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Avg EQ Price % Chg PY' = EXTERNALMEASURE("Avg EQ Price % Chg PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: dcb0c0df-a191-4a93-974a-78c86070f2b8
+		sourceLineageTag: cd9fc3b4-7f77-47aa-82e4-d1e495f64215
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Avg EQ Price % Chg PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Share of EQs PRX TTL' = EXTERNALMEASURE("Share of EQs PRX TTL", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: c1f08e80-402d-48de-86f2-57d8c3c0301d
+		sourceLineageTag: 2e08d4fc-3a70-426d-abce-7f1b8286ba57
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Share of EQs PRX TTL FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Share of Dollars PRX TTL' = EXTERNALMEASURE("Share of Dollars PRX TTL", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f2df68c8-d67c-46f5-bbc5-cd88d14332ea
+		sourceLineageTag: 81bb3889-eeaf-4a83-8838-19de531b2987
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Share of Dollars PRX TTL FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Share of Units PRX TTL' = EXTERNALMEASURE("Share of Units PRX TTL", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: aef82a70-1ab5-46d9-8435-a6c6ba36fe1f
+		sourceLineageTag: 5bf0c4bd-0d60-44bf-9d10-f3931368727a
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Share of Units PRX TTL FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	column 'Market Key'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b43d5cf1-6feb-45a6-b269-1d0a9eec4492
+		sourceLineageTag: d8179cf7-d27c-4fc8-8bd2-9e51402c4253
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Market Key
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Date Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 0ec97929-adf3-4beb-8a4b-56f7856f45e1
+		sourceLineageTag: 5bd35a73-c066-4484-8d12-68c7fba96f1a
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Date Key
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Product Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: a57e4924-121d-44a7-b365-84c3cd82170f
+		sourceLineageTag: 8738579b-20db-4e75-bb53-93d1344e3c9b
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Product Key
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column dollars_
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 2753c4dd-cd80-4155-b8b0-7715f43c1b4f
+		sourceLineageTag: c14472f3-8aa3-46ba-9297-13ebd2aab37a
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: dollars_
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column eq_
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a93d6a16-8f63-43fc-a953-63d2366641ec
+		sourceLineageTag: 9912f314-70b8-43d7-9df2-105591fdc123
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: eq_
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column units_
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 58b37ef4-f4ee-4b25-afc3-3d49b9a8d3b2
+		sourceLineageTag: 998392a2-bc33-41ce-beb5-778b38200560
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: units_
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column base_dollars
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 09eb5653-5f84-4812-aaaa-b30c28adca83
+		sourceLineageTag: abf16979-1cc5-403c-bd98-a7a1c477d99d
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: base_dollars
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column base_eq
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: cdf2ece6-5818-4732-9260-692ae67e8042
+		sourceLineageTag: 2578b1bb-d9ba-4c92-b769-102baa97a3ae
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: base_eq
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column any_promo_dollars
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a3225c91-3642-41a1-b5ff-6745e5de08b2
+		sourceLineageTag: f509a4b1-339c-409c-b4d7-0e80ae098ce5
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: any_promo_dollars
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column no_promo_dollars
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 4cd21772-086b-4c6b-908f-57fe7bf465f4
+		sourceLineageTag: 32533327-8de8-4ce0-90bd-c3e7bc72415e
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: no_promo_dollars
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column any_display_dollars
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ef91f271-e6f9-4d35-b4a4-926026daad93
+		sourceLineageTag: 62203d62-d065-46ae-b07e-4ec61cb3e81d
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: any_display_dollars
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column any_feature_dollars
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 1778c00c-04f2-41eb-808c-d9418facd0ed
+		sourceLineageTag: aee29ed3-f65c-44b3-9c6f-a741d3f33c97
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: any_feature_dollars
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column price_decr_only_dollars
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f18d67d6-4557-45b7-82bd-5dbdcb18aec6
+		sourceLineageTag: 1a2eaa00-e6f9-4134-9bbf-c0c38b906c48
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: price_decr_only_dollars
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column feature_without_display_dollars
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: addee162-8d6d-4be6-a9e7-9e019815f10b
+		sourceLineageTag: bef76bfc-48c9-4bee-aaef-d325737cb48d
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: feature_without_display_dollars
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column any_promo_eq
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 89515677-22c8-4613-875a-72ca7a2222ae
+		sourceLineageTag: 8c5f7dbe-bab0-44e5-98f5-8531c202f2e3
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: any_promo_eq
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column no_promo_eq
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a470c677-be4f-4252-a914-452fccd4a29d
+		sourceLineageTag: acfbf7b9-ba9c-4ff8-8ae6-d3ef9395ec8b
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: no_promo_eq
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_channel_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 5f998831-e9e7-46ce-842a-f23c966cef39
+		sourceLineageTag: 428cbd9f-9b7a-44f9-aedb-e6f8bf14b813
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: ad848066-2d38-4745-b40d-e67b69286a3e
+		sourceLineageTag: 12232251-85bb-4b8f-ac44-3b99e8a242c8
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column dim_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: e85723af-c84b-4175-904d-7be50e18bf76
+		sourceLineageTag: 0e1ddd43-60a0-4436-a234-aa6df75d33b4
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column feat_and_display_dollars
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: de8c1f1a-b087-4c8b-afbf-a80817968959
+		sourceLineageTag: 822093b2-fc5a-47d3-932e-0ca144015009
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: feat_and_display_dollars
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Share of Market' = entity
+		mode: directQuery
+		source
+			entityName: Share of Market
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

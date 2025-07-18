@@ -1,0 +1,434 @@
+/// rms_mdl vw_Dim_Period
+table Calendar
+	lineageTag: bf8ac801-920a-42f6-a059-686f7b0daaa1
+	dataCategory: Time
+
+	column 'Date Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fa2c6843-d8a9-43a6-9f0d-4539ebbdc84a
+		summarizeBy: none
+		sourceColumn: Date Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		isHidden
+		isKey
+		formatString: m/d/yyyy
+		lineageTag: c729fe57-8a0c-4a00-b2db-d63867da7bea
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	/// fiscal_year
+	column 'Fiscal Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e57ac97-731b-41bd-8f4b-04b3ab92db4d
+		summarizeBy: none
+		sourceColumn: Fiscal Year
+
+		annotation SummarizationSetBy = Automatic
+
+	/// fiscal_quarter
+	column 'Fiscal Quarter'
+		dataType: string
+		isHidden
+		lineageTag: 0b7d41a5-dbe5-4218-8fdd-ae2d225be39e
+		summarizeBy: none
+		sourceColumn: Fiscal Quarter
+		sortByColumn: 'Quarter Number'
+
+		changedProperty = SortByColumn
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// fiscal_month
+	column 'Fiscal Month'
+		dataType: string
+		isHidden
+		lineageTag: 190fad6b-78be-4dda-9cb8-4811a71c4ac5
+		summarizeBy: none
+		sourceColumn: Fiscal Month
+		sortByColumn: 'Month Number'
+
+		changedProperty = SortByColumn
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// fiscal_week
+	column 'Fiscal Week'
+		dataType: string
+		isHidden
+		lineageTag: c402ed21-2066-45b6-92e3-6af7b643b5a7
+		summarizeBy: none
+		sourceColumn: Fiscal Week
+		sortByColumn: 'Week Number'
+
+		changedProperty = SortByColumn
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// fiscal_year_quarter
+	column 'Fiscal Year Quarter'
+		dataType: string
+		lineageTag: ef330159-1373-4d36-a61e-5b2b836c9359
+		summarizeBy: none
+		sourceColumn: Fiscal Year Quarter
+		sortByColumn: 'Sequential Quarter Number'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Year Month'
+		dataType: string
+		lineageTag: 61d4f9ca-e3c3-4e0e-bf28-fd4b9d3bb100
+		summarizeBy: none
+		sourceColumn: Fiscal Year Month
+		sortByColumn: 'Sequential Month Number'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Year Week'
+		dataType: string
+		lineageTag: 2b63c438-9076-402e-b55c-e4781abcf05f
+		summarizeBy: none
+		sourceColumn: Fiscal Year Week
+		sortByColumn: 'Sequential Week Number'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	/// fiscal_quarter_ending_date
+	column 'Fiscal Quarter Ending Date'
+		dataType: dateTime
+		isHidden
+		formatString: mm/dd/yy
+		lineageTag: 5bd75638-6233-4a0c-96d8-5eece4e2b5e2
+		summarizeBy: none
+		sourceColumn: Fiscal Quarter Ending Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	/// fiscal_month_ending_date
+	column 'Fiscal Month Ending Date'
+		dataType: dateTime
+		isHidden
+		formatString: mm/dd/yy
+		lineageTag: 7837fc5a-2143-4bae-bc08-c7ab96501a9a
+		summarizeBy: none
+		sourceColumn: Fiscal Month Ending Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	/// fiscal_week_ending_date
+	column 'Fiscal Week Ending Date'
+		dataType: dateTime
+		isHidden
+		formatString: mm/dd/yy
+		lineageTag: 3c2b353b-8433-4f14-b77d-f7373ec75438
+		summarizeBy: none
+		sourceColumn: Fiscal Week Ending Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	/// quarter_number
+	column 'Quarter Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a15d9580-c371-4ebf-8020-655afa48b670
+		summarizeBy: none
+		sourceColumn: Quarter Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// month_number
+	column 'Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c151a0eb-440a-4ef1-befe-b9a62caa9d87
+		summarizeBy: none
+		sourceColumn: Month Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 38074334-1a48-4ca4-a1ca-ea6c088f8fed
+		summarizeBy: none
+		sourceColumn: Week Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// sequential_quarter_number
+	column 'Sequential Quarter Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e5697b30-4a13-4f81-900b-fc316f9983a8
+		summarizeBy: none
+		sourceColumn: Sequential Quarter Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// sequential_month_number
+	column 'Sequential Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d653e652-3bc4-4f22-befd-aa48bd503d63
+		summarizeBy: none
+		sourceColumn: Sequential Month Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// sequential_week_number
+	column 'Sequential Week Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 216ac7e6-f6e2-4042-85ae-1c6f0577c8b9
+		summarizeBy: none
+		sourceColumn: Sequential Week Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// sequential_day_number
+	column 'Sequential Day Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 052f0daf-51d9-49ba-8e37-d32516b99a2e
+		summarizeBy: none
+		sourceColumn: Sequential Day Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// fiscal_week_in_quarter_number
+	column 'Fiscal Week In Quarter Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fed31204-4bc5-4875-ba15-5663cf122405
+		summarizeBy: none
+		sourceColumn: Fiscal Week In Quarter Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// fiscal_week_in_month_number
+	column 'Fiscal Week In Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 39a8fdeb-fa11-4054-8cd2-e2cb3e13fdf1
+		summarizeBy: none
+		sourceColumn: Fiscal Week In Month Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nielsen Week Ending Date'
+		dataType: string
+		lineageTag: ae3e5e46-ba0b-4e52-84d7-4be9294e7c87
+		summarizeBy: none
+		sourceColumn: Nielsen Week Ending Date
+
+		annotation SummarizationSetBy = Automatic
+
+	/// sovi_wave
+	column 'SOVI Wave'
+		dataType: double
+		isHidden
+		lineageTag: a90f1c54-5d66-4941-9fa2-e2b20927bbbc
+		summarizeBy: none
+		sourceColumn: SOVI Wave
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// sovi_wave_year
+	column 'SOVI Wave Year'
+		dataType: string
+		isHidden
+		lineageTag: c99a884b-11ef-478d-ae37-7d5453092e2e
+		summarizeBy: none
+		sourceColumn: SOVI Wave Year
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// sovi_wave_ending_date
+	column 'SOVI Wave Ending Date'
+		dataType: string
+		isHidden
+		lineageTag: bdca21be-bb60-4716-ad39-8c0e82bf4995
+		summarizeBy: none
+		sourceColumn: SOVI Wave Ending Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_fiscal_period
+		dataType: string
+		isHidden
+		lineageTag: fb67e484-4097-49b8-a26e-3675218afb02
+		summarizeBy: none
+		sourceColumn: current_fiscal_period
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// week_number
+	column 'Week Number (Month)'
+		dataType: string
+		isHidden
+		lineageTag: c3f30187-a16a-439d-a687-e513c73ba0cc
+		summarizeBy: none
+		sourceColumn: Week Number (Month)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ymdid
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2afa191f-0069-4e8b-abfb-408d4fc3918a
+		summarizeBy: none
+		sourceColumn: ymdid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Fiscal Hierarchy by Period Name'
+		lineageTag: 7f69d1c0-dd13-423a-9b29-b2a000c3666d
+
+		level 'Fiscal Year'
+			lineageTag: a271f563-a65a-4fa9-8bc2-59988db299af
+			column: 'Fiscal Year'
+
+		level 'Fiscal Quarter'
+			lineageTag: 3745e07f-6db8-41f5-8433-2393b2a8b1a1
+			column: 'Fiscal Quarter'
+
+		level 'Fiscal Month'
+			lineageTag: d6e8e507-9626-4721-bf8a-961fb30c5410
+			column: 'Fiscal Month'
+
+		level 'Fiscal Week'
+			lineageTag: f1ec5e04-8aa5-441c-b402-c280068e4862
+			column: 'Fiscal Week'
+
+	hierarchy 'Fiscal Hierarchy by Ending Date'
+		lineageTag: 01027459-1a3e-4f7a-a5a4-3ae3b8dccc3c
+
+		level 'Fiscal Quarter Ending Date'
+			lineageTag: 11894954-0807-4e37-b004-ce4338c2f433
+			column: 'Fiscal Quarter Ending Date'
+
+		level 'Fiscal Month Ending Date'
+			lineageTag: 8172cf10-3dd4-4fe2-9d18-b3d9ed0b5ccb
+			column: 'Fiscal Month Ending Date'
+
+		level 'Fiscal Week Ending Date'
+			lineageTag: bf44aad1-83d6-47bf-88d5-a0dd184cdc11
+			column: 'Fiscal Week Ending Date'
+
+	partition Calendar = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    DnAIQDb_PreProd = Source{[Name="DnAIQDb_PreProd"]}[Data],
+				    rms_mdl_vw_Dim_Period = Source{[Schema="niqrms",Item="vw_Dim_Period"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(rms_mdl_vw_Dim_Period,{{"date", type date}, {"fiscal_quarter_ending_date", type date}, {"fiscal_month_ending_date", type date}, {"fiscal_week_ending_date", type date}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"fiscal_month", "Fiscal Month"}, {"fiscal_month_ending_date", "Fiscal Month Ending Date"}, {"fiscal_quarter", "Fiscal Quarter"}, {"fiscal_quarter_ending_date", "Fiscal Quarter Ending Date"}, {"fiscal_week", "Fiscal Week"}, {"fiscal_week_ending_date", "Fiscal Week Ending Date"}, {"fiscal_week_in_month_number", "Fiscal Week In Month Number"}, {"fiscal_week_in_quarter_number", "Fiscal Week In Quarter Number"}, {"fiscal_year", "Fiscal Year"}, {"fiscal_year_month", "Fiscal Year Month"}, {"fiscal_year_quarter", "Fiscal Year Quarter"}, {"month_number", "Month Number"}, {"quarter_number", "Quarter Number"}, {"sequential_day_number", "Sequential Day Number"}, {"sequential_month_number", "Sequential Month Number"}, {"sequential_quarter_number", "Sequential Quarter Number"}, {"sequential_week_number", "Sequential Week Number"}, {"sovi_wave", "SOVI Wave"}, {"sovi_wave_ending_date", "SOVI Wave Ending Date"}, {"sovi_wave_year", "SOVI Wave Year"}, {"week_number", "Week Number"}, {"date", "Date"}, {"rms_nielsen_week_ending_date", "Nielsen Week Ending Date"}}),
+				    #"Duplicated Column3" = Table.DuplicateColumn(#"Renamed Columns", "Fiscal Week", "Fiscal Week - Copy"),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Duplicated Column3",{{"Week Number", "Week Number (Month)"}, {"Fiscal Week - Copy", "Week Number"}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Week Number", Int64.Type}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type2",{{"Fiscal Year", Int64.Type}, {"Quarter Number", Int64.Type}, {"Month Number", Int64.Type}, {"Sequential Quarter Number", Int64.Type}, {"Sequential Month Number", Int64.Type}, {"Sequential Week Number", Int64.Type}, {"Sequential Day Number", Int64.Type}, {"Fiscal Week In Quarter Number", Int64.Type}, {"Fiscal Week In Month Number", Int64.Type}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type1",{{"dim_date_key", "Date Key"}}),
+				    #"Added Prefix" = Table.TransformColumns(#"Renamed Columns1", {{"Fiscal Week", each "Wk" & _, type text}}),
+				    #"Extracted First Characters" = Table.TransformColumns(#"Added Prefix", {{"Fiscal Month", each Text.Start(_, 3), type text}}),
+				    #"Extracted Text Range" = Table.TransformColumns(#"Extracted First Characters", {{"Fiscal Year Month", each Text.Middle(Text.From(_, "en-US"), 2, 2), type text}}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Extracted Text Range", "Fiscal Month", "Fiscal Month - Copy"),
+				    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column",{"Fiscal Year Month", "Fiscal Month - Copy"},Combiner.CombineTextByDelimiter("-", QuoteStyle.None),"Fiscal Year Month"),
+				    #"Duplicated Column1" = Table.DuplicateColumn(#"Merged Columns", "Fiscal Year", "Fiscal Year - Copy"),
+				    #"Duplicated Column2" = Table.DuplicateColumn(#"Duplicated Column1", "Fiscal Week", "Fiscal Week - Copy"),
+				    #"Merged Columns1" = Table.CombineColumns(Table.TransformColumnTypes(#"Duplicated Column2", {{"Fiscal Year - Copy", type text}}, "en-US"),{"Fiscal Week - Copy", "Fiscal Year - Copy"},Combiner.CombineTextByDelimiter(" ", QuoteStyle.None),"Fiscal Year Week")
+				in
+				    #"Merged Columns1"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

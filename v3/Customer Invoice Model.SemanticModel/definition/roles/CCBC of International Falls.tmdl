@@ -1,0 +1,7 @@
+role 'CCBC of International Falls'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "CCBC of International Falls"
+
+	annotation PBI_Id = db86c9f151234a2b8de55f64d8a7092d
+

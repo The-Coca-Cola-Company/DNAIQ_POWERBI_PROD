@@ -1,0 +1,7 @@
+role 'Mile High Beverages'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Mile High Beverages"
+
+	annotation PBI_Id = b60f7113459a43bea721134799732ef1
+

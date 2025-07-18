@@ -1,0 +1,7 @@
+role 'Timber Country Coca-Cola'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Timber Country Coca-Cola"
+
+	annotation PBI_Id = 956cee334d3e4a5ca90d46b94cfc4089
+

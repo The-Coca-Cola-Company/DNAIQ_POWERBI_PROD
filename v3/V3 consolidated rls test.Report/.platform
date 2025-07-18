@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "V3 consolidated rls test"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "520081de-1ed9-89a9-4326-acfac83e2f6f"
+  }
+}

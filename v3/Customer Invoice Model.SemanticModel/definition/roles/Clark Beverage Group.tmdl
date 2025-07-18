@@ -1,0 +1,7 @@
+role 'Clark Beverage Group'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Clark Beverage Group"
+
+	annotation PBI_Id = 6491f0e92064475d8f7d97a2e17efd8d
+

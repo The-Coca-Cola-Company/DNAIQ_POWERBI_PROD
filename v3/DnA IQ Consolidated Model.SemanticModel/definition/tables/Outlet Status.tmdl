@@ -1,0 +1,186 @@
+table 'Outlet Status'
+	lineageTag: 1ff038ce-36b2-4b40-ae2e-ad69ba3b06bf
+
+	measure 'Lost Outlets Count - OS' = ```
+			CALCULATE(DISTINCTCOUNT('Outlet Status'[ko_golden_record_identifier]), 'Outlet Status'[lost_flag] = 1) * -1
+			//SUM('Outlet Status'[lost_flag])
+			
+			/*COUNTROWS(
+			                            FILTER( VALUES(Outlet[Golden Record]), 
+			                                    'Outlet Status'[Outlet Status Lost] = 1)
+			                        )
+			*/
+			```
+		formatString: 0
+		lineageTag: a3e2b956-ff53-41ad-862a-6c1249d3114d
+
+	measure 'At Risk Outlets Count - OS' = ```
+			CALCULATE(DISTINCTCOUNT('Outlet Status'[ko_golden_record_identifier]), 'Outlet Status'[at_risk_flag] = 1)
+			//SUM('Outlet Status'[at_risk_flag])
+			
+			/*COUNTROWS(
+			                            FILTER( VALUES(Outlet[Golden Record]), 
+			                                    'Outlet Status'[Outlet Status At Risk] = 1)
+			                        )*/
+			```
+		formatString: 0
+		lineageTag: 34d07c9e-8be5-4b63-8a60-28804f155251
+
+	measure 'Retained Outlets Count - OS' =
+			CALCULATE(DISTINCTCOUNT('Outlet Status'[ko_golden_record_identifier]), 'Outlet Status'[retain_flag] = 1)
+			//SUM('Outlet Status'[retain_flag])
+		formatString: 0
+		lineageTag: 2453dd02-787d-4b2c-b174-21da31f588c3
+
+	measure 'Active Outlets Count - OS' = ```
+			[Retained Outlets Count - OS] + [New Outlets Count - OS] 
+			```
+		formatString: 0
+		lineageTag: 0bb250d5-cdff-4d92-89c2-dee28614522c
+
+	/// New Outlets - Lost Outlets
+	measure 'Net Outlets Count - OS' = [New Outlets Count - OS] + [Lost Outlets Count - OS]
+		lineageTag: f1c88060-d2b7-4e9d-8098-fcd93f0e4b8e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'New Outlets Count - OS' = ```
+			CALCULATE(DISTINCTCOUNT('Outlet Status'[ko_golden_record_identifier]), 'Outlet Status'[new_flag] = 1)
+			//SUM('Outlet Status'[new_flag])
+			
+			/*COUNTROWS(
+			                            FILTER( VALUES(Outlet[Golden Record]), 
+			                                    'Outlet Status'[Outlet Status New] = 1)
+			                        )*/
+			```
+		formatString: 0
+		lineageTag: e35f142b-dc68-4b3c-9301-89a1acab32f5
+
+	measure 'Outlet Base' =
+			
+			
+			VAR cy_end_date = DATE(MAX('Outlet Status'[year])-1,MAX('Outlet Status'[month]),1)
+			
+			//this variable to find 4 weeks ago, which is the start week of the query range
+			VAR cy_start_date = DATE(MAX('Outlet Status'[year])-2,MAX('Outlet Status'[month]),1)
+			
+			//this variable to calculate the results
+			VAR cy_results =
+			    CALCULATE (
+			        [Active Outlets Count - OS],
+			        'Outlet Status'[Month Start Date] > cy_start_date,
+			        'Outlet Status'[Month Start Date] <= cy_end_date
+			    )
+			
+			//return the results
+			RETURN cy_results
+		isHidden
+		lineageTag: 24933c07-4933-4172-8c2f-f9dbf435702b
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: aa481296-5b16-476a-982c-7dd73c4e0f47
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: 18ab3037-bfad-4d5d-abeb-c98306f4a4ce
+		summarizeBy: sum
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column active_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 8fcba288-07ab-4832-8f15-d06290110a13
+		summarizeBy: sum
+		sourceColumn: active_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Start Date' = DATE('Outlet Status'[year], 'Outlet Status'[month],1)
+		formatString: General Date
+		lineageTag: 3cddd3df-dd68-4fc6-ab7e-b97ef100ac3a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 1df81181-9654-4712-aeb3-13543fd3f333
+		summarizeBy: sum
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column new_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d802807-6082-473d-854d-6f38c7fec1f5
+		summarizeBy: sum
+		sourceColumn: new_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column lost_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: ce46f894-1cee-4a3a-ab00-86b7cbb354c7
+		summarizeBy: sum
+		sourceColumn: lost_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column at_risk_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 31b4c568-8709-4c9b-91a0-8fa67888d4d2
+		summarizeBy: sum
+		sourceColumn: at_risk_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column retain_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: b54cc71b-82f9-4b3f-b3cf-b478c9511c42
+		summarizeBy: sum
+		sourceColumn: retain_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_golden_record_identifier
+		dataType: string
+		lineageTag: cd1c51a8-6d8c-439f-9577-3694517c8ec8
+		summarizeBy: none
+		sourceColumn: ko_golden_record_identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Outlet Status' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    vw_Outlet_Status = Source{[Schema="dbov3",Item="vw_Outlet_Status"]}[Data]
+				in
+				    vw_Outlet_Status
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

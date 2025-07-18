@@ -1,0 +1,127 @@
+table Customer
+	lineageTag: cc2674d2-aed7-4534-95df-e0697993892f
+	sourceLineageTag: ce60f5f9-8f2b-4239-8b30-34925b62ab02
+
+	column 'Customer Name'
+		dataType: string
+		lineageTag: fbd8e71f-4714-432a-a404-2a45c06b8e56
+		sourceLineageTag: 8c12c645-7958-4eed-bfad-e2bb6b374d1d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_customer_name
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Customer Group'
+		dataType: string
+		lineageTag: aed2da48-2a24-45d2-b58f-5c028c5fa26d
+		sourceLineageTag: 9307f26f-d285-4251-b9b6-d2e4fe7749d7
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_customer_group_name
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column dim_customer_key
+		dataType: int64
+		isHidden
+		isNullable: false
+		formatString: 0
+		lineageTag: 88f8269e-d77f-4faa-9853-526c24ae5230
+		sourceLineageTag: df716c18-561f-4283-b6ad-38a26dbb86e7
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		annotation SummarizationSetBy = User
+
+	column dim_source_key
+		dataType: string
+		isHidden
+		lineageTag: b36c429c-df6f-4578-af51-f0a0755df532
+		sourceLineageTag: 91255251-467e-4936-b10a-1063f5da0bd0
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		annotation SummarizationSetBy = User
+
+	column src_hierarchy_source
+		dataType: string
+		isHidden
+		lineageTag: 6d932227-7f3b-450e-9d1c-04da9f6129db
+		sourceLineageTag: fd209df8-9a8f-4c9a-8f7e-f66312004f9d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_hierarchy_source
+
+		annotation SummarizationSetBy = User
+
+	column src_node_id
+		dataType: string
+		isHidden
+		lineageTag: 8773641b-7af3-4025-a9b9-bea2d8ed8b49
+		sourceLineageTag: 623204b8-961e-46c6-b7a2-fbbf9254535a
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_node_id
+
+		annotation SummarizationSetBy = User
+
+	column src_node_description
+		dataType: string
+		isHidden
+		lineageTag: ca167407-7279-4141-a381-2203b2928042
+		sourceLineageTag: 22e1a556-cb16-465c-866b-8f6cf2ba6d7f
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_node_description
+
+		annotation SummarizationSetBy = User
+
+	column conformed_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: acff7d2c-f71e-4536-b6c3-ebdcdf2a986b
+		sourceLineageTag: 4e7c2a29-2bc2-4666-851b-ff46063765bf
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: conformed_customer_key
+
+		annotation SummarizationSetBy = User
+
+	column created_date
+		dataType: dateTime
+		isHidden
+		formatString: General Number
+		lineageTag: 1b471bfa-e54e-48c6-aa1e-7f193bd34c4e
+		sourceLineageTag: 7cb07f9d-b269-4289-8ae1-323ccfc8b1bd
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: created_date
+
+		annotation SummarizationSetBy = User
+
+	column updated_date
+		dataType: dateTime
+		isHidden
+		formatString: General Number
+		lineageTag: 11d93219-3b06-4d85-987d-a5732bfca7d2
+		sourceLineageTag: 36615c6b-7af3-4166-b6b6-ca1f2d4e5525
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: updated_date
+
+		annotation SummarizationSetBy = User
+
+	partition Customer = entity
+		mode: directQuery
+		source
+			entityName: Customer
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

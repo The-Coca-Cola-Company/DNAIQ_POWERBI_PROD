@@ -1,0 +1,109 @@
+{
+  "config": "{\"version\":\"5.59\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU10\",\"type\":2,\"version\":\"5.64\"}},\"activeSectionIndex\":1,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":0,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "filters": "[{\"name\":\"7b4648f1739497e1b93b\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Bottlers & Distributors\"}},\"Property\":\"display_bottler_tier\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"b\",\"Entity\":\"Bottlers & Distributors\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Property\":\"display_bottler_tier\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Tier 1'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}}]",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY24SU10",
+            "path": "BaseThemes/CY24SU10.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "RLS test",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "5a62e780ebdea2c54d2d",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"0f53c275f8f618e5b0e0\",\"layouts\":[{\"id\":0,\"position\":{\"x\":565.7048092868989,\"y\":9.55223880597015,\"z\":1000,\"width\":478.6733001658375,\"height\":350.2487562189055,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Rows\":[{\"queryRef\":\"Territory Bottlers.Bottler Distributor Name\",\"active\":true}],\"Values\":[{\"queryRef\":\"Bottler Financials.Dead Net Net Sales Income\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"b1\",\"Entity\":\"Bottler Financials\",\"Type\":0},{\"Name\":\"t\",\"Entity\":\"Territory Bottlers\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b1\"}},\"Property\":\"Dead Net Net Sales Income\"},\"Name\":\"Bottler Financials.Dead Net Net Sales Income\",\"NativeReferenceName\":\"Dead Net Net Sales Income\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"Bottler Distributor Name\"},\"Name\":\"Territory Bottlers.Bottler Distributor Name\",\"NativeReferenceName\":\"Bottler Distributor Name\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 350.25,
+          "width": 478.67,
+          "x": 565.70,
+          "y": 9.55,
+          "z": 1000.00
+        },
+        {
+          "config": "{\"name\":\"3b2c65990583e6687336\",\"layouts\":[{\"id\":0,\"position\":{\"x\":9.930178432893715,\"y\":0,\"z\":0,\"width\":479.62761830876644,\"height\":298.8983708301008,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Values\":[{\"queryRef\":\"Customer Invoice Measures.Unit Cases\"}],\"Rows\":[{\"queryRef\":\"Territory Bottlers.Bottler Distributor Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Customer Invoice Measures\",\"Type\":0},{\"Name\":\"t\",\"Entity\":\"Territory Bottlers\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Unit Cases\"},\"Name\":\"Customer Invoice Measures.Unit Cases\",\"NativeReferenceName\":\"Unit Cases\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"Bottler Distributor Name\"},\"Name\":\"Territory Bottlers.Bottler Distributor Name\",\"NativeReferenceName\":\"Bottler Distributor Name\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 298.90,
+          "width": 479.63,
+          "x": 9.93,
+          "y": 0.00,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"474ad44e79544a6ce569\",\"layouts\":[{\"id\":0,\"position\":{\"x\":1093.4673366834172,\"y\":9.290898939140146,\"z\":2000,\"width\":186.53266331658293,\"height\":230.84310441094362,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Territory Bottlers.display_cona_indicator\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"t\",\"Entity\":\"Territory Bottlers\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"display_cona_indicator\"},\"Name\":\"Territory Bottlers.display_cona_indicator\",\"NativeReferenceName\":\"display_cona_indicator\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Basic'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"t\",\"Entity\":\"Territory Bottlers\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"display_cona_indicator\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'CONA'\"}}]]}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 230.84,
+          "width": 186.53,
+          "x": 1093.47,
+          "y": 9.29,
+          "z": 2000.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
+      "displayName": "Duplicate of RLS test",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "7f65c5363c5af3e1015b",
+      "ordinal": 1,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"313394e077cb5f7c2bf2\",\"layouts\":[{\"id\":0,\"position\":{\"x\":1079.508407896111,\"y\":318.0057793405981,\"z\":2001,\"width\":201.07091877589386,\"height\":402.1418375517877,\"tabOrder\":2001}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Measure Reference.Time_Period\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"Measure Reference\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Time_Period\"},\"Name\":\"Measure Reference.Time_Period\",\"NativeReferenceName\":\"Time_Period\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Basic'\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 402.14,
+          "width": 201.07,
+          "x": 1079.51,
+          "y": 318.01,
+          "z": 2001.00
+        },
+        {
+          "config": "{\"name\":\"54b743a75cdda44a3cae\",\"layouts\":[{\"id\":0,\"position\":{\"x\":1093.4673366834172,\"y\":9.290898939140146,\"z\":2000,\"width\":186.53266331658293,\"height\":230.84310441094362,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Territory Bottlers.display_cona_indicator\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"t\",\"Entity\":\"Territory Bottlers\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"display_cona_indicator\"},\"Name\":\"Territory Bottlers.display_cona_indicator\",\"NativeReferenceName\":\"display_cona_indicator\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Basic'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"t\",\"Entity\":\"Territory Bottlers\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"display_cona_indicator\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'CONA'\"}}]]}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 230.84,
+          "width": 186.53,
+          "x": 1093.47,
+          "y": 9.29,
+          "z": 2000.00
+        },
+        {
+          "config": "{\"name\":\"92551020e7a4cfebd411\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":0,\"width\":760.8077260755048,\"height\":412.43195785776993,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"Bottlers & Distributors.display_bottler_name_all\"},{\"queryRef\":\"Customer Invoice Measures.Unit Cases\"},{\"queryRef\":\"iRED Measures.SOVI\"},{\"queryRef\":\"iRED Measures.Average # of Facings\"},{\"queryRef\":\"Share of Market.Share of Dollars\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Customer Invoice Measures\",\"Type\":0},{\"Name\":\"b\",\"Entity\":\"Bottlers & Distributors\",\"Type\":0},{\"Name\":\"i\",\"Entity\":\"iRED Measures\",\"Type\":0},{\"Name\":\"s\",\"Entity\":\"Share of Market\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Unit Cases\"},\"Name\":\"Customer Invoice Measures.Unit Cases\",\"NativeReferenceName\":\"Unit Cases\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Property\":\"display_bottler_name_all\"},\"Name\":\"Bottlers & Distributors.display_bottler_name_all\",\"NativeReferenceName\":\"display_bottler_name_all\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"i\"}},\"Property\":\"SOVI\"},\"Name\":\"iRED Measures.SOVI\",\"NativeReferenceName\":\"SOVI\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"i\"}},\"Property\":\"Average # of Facings\"},\"Name\":\"iRED Measures.Average # of Facings\",\"NativeReferenceName\":\"Average # of Facings\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Share of Dollars\"},\"Name\":\"Share of Market.Share of Dollars\",\"NativeReferenceName\":\"Share of Dollars\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[{\"name\":\"ccb6c361f3446d241dbe\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Bottlers & Distributors\"}},\"Property\":\"display_bottler_name_tier1\"}},\"type\":\"Categorical\",\"howCreated\":1}]",
+          "height": 412.43,
+          "width": 760.81,
+          "x": 0.00,
+          "y": 0.00,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"e1a6ac036b9cab0eda95\",\"layouts\":[{\"id\":0,\"position\":{\"x\":626.5942591155934,\"y\":0,\"z\":1000,\"width\":453.8091543832428,\"height\":360.4654771140419,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Values\":[{\"queryRef\":\"Bottler Financials.Dead Net Net Sales Income\"}],\"Rows\":[{\"queryRef\":\"Bottlers & Distributors.display_bottler_name_all\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"b1\",\"Entity\":\"Bottler Financials\",\"Type\":0},{\"Name\":\"b\",\"Entity\":\"Bottlers & Distributors\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b1\"}},\"Property\":\"Dead Net Net Sales Income\"},\"Name\":\"Bottler Financials.Dead Net Net Sales Income\",\"NativeReferenceName\":\"Dead Net Net Sales Income\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Property\":\"display_bottler_name_all\"},\"Name\":\"Bottlers & Distributors.display_bottler_name_all\",\"NativeReferenceName\":\"display_bottler_name_all\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 360.47,
+          "width": 453.81,
+          "x": 626.59,
+          "y": 0.00,
+          "z": 1000.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

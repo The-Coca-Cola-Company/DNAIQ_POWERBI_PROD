@@ -1,0 +1,54 @@
+role 'ABARTA Coca-Cola Beverages'
+	modelPermission: read
+
+	tablePermission 'Territory Bottlers' = [Bottler Distributor Name] == "ABARTA Coca-Cola Beverages"
+
+	tablePermission _PreselectedSlicer
+
+	tablePermission 'ACV TDP'
+		metadataPermission: none
+
+	tablePermission Beach
+		metadataPermission: none
+
+	tablePermission Calendar
+
+	tablePermission CBR_Category_Groupings
+		metadataPermission: none
+
+	tablePermission 'Business Drivers'
+		metadataPermission: none
+
+	tablePermission 'Dim Slicer'
+		metadataPermission: none
+
+	tablePermission 'Dim Slicer Territory'
+
+	tablePermission Forecast
+		metadataPermission: none
+
+	tablePermission 'iRED Measures'
+		metadataPermission: none
+
+	tablePermission Market
+		metadataPermission: none
+
+	tablePermission 'Measures Slicer'
+		metadataPermission: none
+
+	tablePermission 'Performance Other'
+
+	tablePermission 'PRx Key Metrics'
+		metadataPermission: none
+
+	tablePermission 'Share of Market'
+		metadataPermission: none
+
+	tablePermission 'Store Area'
+		metadataPermission: none
+
+	tablePermission 'Week Parameter'
+		metadataPermission: none
+
+	annotation PBI_Id = 4374eaafc5fc46028c5609a13646ea89
+

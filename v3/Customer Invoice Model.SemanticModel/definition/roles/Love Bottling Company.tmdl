@@ -1,0 +1,7 @@
+role 'Love Bottling Company'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Love Bottling Company"
+
+	annotation PBI_Id = 7226f0a0f14b41b18973bcdd5ec8ee9c
+

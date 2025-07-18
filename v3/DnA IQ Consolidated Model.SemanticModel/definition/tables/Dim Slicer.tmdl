@@ -1,0 +1,84 @@
+table 'Dim Slicer'
+	lineageTag: eac4ddbe-1968-4975-a687-fae746bb0943
+
+	column 'Dim Slicer'
+		lineageTag: 2bf1954c-8069-4c48-b0a4-437f3117444e
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Dim Slicer Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Dim Slicer Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dim Slicer Fields'
+		isHidden
+		lineageTag: 189de71d-326f-47b9-b432-9320b793be14
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Dim Slicer Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "kind": 2,
+				  "version": 3
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dim Slicer Order'
+		isHidden
+		formatString: 0
+		lineageTag: 08581c43-e833-452f-a6ff-ae155e87a7d2
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim Slicer' = calculated
+		mode: import
+		source =
+				{
+				    ("Time Calculation", NAMEOF('Time Calculation'[Time Calculation]), 0),
+				    ("display_bottler_name_all", NAMEOF('Bottlers & Distributors'[display_bottler_name_all]), 18),
+				    ("Bottler", NAMEOF('Bottlers & Distributors'[display_bottler_name_tier1]), 1),
+				    ("display_bottler_tier", NAMEOF('Bottlers & Distributors'[display_bottler_tier]), 12),
+				    ("display_market_unit", NAMEOF('Bottlers & Distributors'[display_market_unit]), 14),
+				    ("Fiscal Year", NAMEOF('Calendar'[Fiscal Year]), 5),
+				    ("Fiscal Week", NAMEOF('Calendar'[Fiscal Week]), 6),
+				    ("fiscal_year_quarter", NAMEOF('Calendar'[fiscal_year_quarter]), 7),
+				    ("Fiscal Month Ending Date", NAMEOF('Calendar'[Fiscal Month Ending Date]), 8),
+				    ("Fiscal Quarter Ending Date", NAMEOF('Calendar'[Fiscal Quarter Ending Date]), 9),
+				    ("Fiscal Week Ending Date", NAMEOF('Calendar'[Fiscal Week Ending Date]), 10),
+				    ("month", NAMEOF('Calendar'[month]), 11),
+				    ("Channel", NAMEOF('Channel'[display_channel]), 3),
+				    ("display_customer_group_name", NAMEOF('Customer'[display_customer_group_name]), 13),
+				    ("Customer", NAMEOF('Customer'[display_customer_name]), 4),
+				    ("Division", NAMEOF('Market'[Division]), 15),
+				    ("Market Description", NAMEOF('Market'[Market Description]), 16),
+				    ("Market Set", NAMEOF('Market'[Market Set]), 17),
+				    ("Total", NAMEOF('Market'[Total]), 26),
+				    ("CBS Managed By Level 3", NAMEOF('Outlet'[CBS Managed By Level 3]), 19),
+				    ("CBS Managed By Account Name", NAMEOF('Outlet'[CBS Managed By Account Name]), 20),
+				    ("Channel Organization", NAMEOF('Outlet'[Channel Organization]), 21),
+				    ("Activity Cluster", NAMEOF('Outlet'[Activity Cluster]), 22),
+				    ("Trade Channel Name", NAMEOF('Outlet'[Trade Channel Name]), 23),
+				    ("Sub Trade Channel", NAMEOF('Outlet'[Sub Trade Channel]), 24),
+				    ("CBR Category", NAMEOF('Product'[CBR Category]), 25),
+				    ("Category", NAMEOF('Product'[display_category]), 2),
+				    ("ELT Category", NAMEOF('Product'[ELT Category]), 27),
+				    ("Consumption Type", NAMEOF('Product'[Consumption Type]), 28),
+				    ("Manufacturer", NAMEOF('Product'[Manufacturer]), 29),
+				    ("Brand", NAMEOF('Product'[Brand]), 30),
+				    ("System Brands", NAMEOF('Product'[System Brands]), 31),
+				    ("Trademark", NAMEOF('Product'[Trademark]), 32),
+				    ("Beverage Product", NAMEOF('Product'[Beverage Product]), 33),
+				    ("Beverage Product Package", NAMEOF('Product'[Beverage Product Package]), 34),
+				    ("location", NAMEOF('Store Area'[Location]), 35),
+				    ("sub_location", NAMEOF('Store Area'[Sub Location]), 36),
+				    ("Rolling Weeks", NAMEOF('Week Parameter'[Rolling Weeks]), 37)
+				}
+
+	annotation PBI_Id = b5d181e2e37a417f8c8a8a2c0bccf630
+

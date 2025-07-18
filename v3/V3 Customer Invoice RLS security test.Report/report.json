@@ -1,0 +1,69 @@
+{
+  "config": "{\"version\":\"5.59\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU10\",\"version\":\"5.64\",\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":0,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY24SU10",
+            "path": "BaseThemes/CY24SU10.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "Page 1",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "1ca39aa658cb1864fdeb",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"275c17c862a62d4db16d\",\"layouts\":[{\"id\":0,\"position\":{\"x\":10.264056382145654,\"y\":640.2205168363352,\"z\":1001,\"width\":266.86546593578703,\"height\":79.54643696162881,\"tabOrder\":1001}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Territory Bottlers.Territory Bottler CONA Indicator\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"t\",\"Entity\":\"Territory Bottlers\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"Territory Bottler CONA Indicator\"},\"Name\":\"Territory Bottlers.Territory Bottler CONA Indicator\",\"NativeReferenceName\":\"Territory Bottler CONA Indicator\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"t\",\"Entity\":\"Territory Bottlers\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"Territory Bottler CONA Indicator\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'CONA'\"}}]]}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 79.55,
+          "width": 266.87,
+          "x": 10.26,
+          "y": 640.22,
+          "z": 1001.00
+        },
+        {
+          "config": "{\"name\":\"3e0cc54549962ffdb4a8\",\"layouts\":[{\"id\":0,\"position\":{\"x\":477.2786217697729,\"y\":0,\"z\":1000,\"width\":588.9002349256069,\"height\":360.52498042286607,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Rows\":[{\"queryRef\":\"Territory Bottlers.Territory Bottler\",\"active\":true}],\"Values\":[{\"queryRef\":\"Bottler Financials.UCS/ADS\"},{\"queryRef\":\"Bottler Financials.Bottler Gross Profit / Standard Case\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"t\",\"Entity\":\"Territory Bottlers\",\"Type\":0},{\"Name\":\"b\",\"Entity\":\"Bottler Financials\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"Territory Bottler\"},\"Name\":\"Territory Bottlers.Territory Bottler\",\"NativeReferenceName\":\"Territory Bottler\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Property\":\"UCS/ADS\"},\"Name\":\"Bottler Financials.UCS/ADS\",\"NativeReferenceName\":\"UCS/ADS\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Property\":\"Bottler Gross Profit / Standard Case\"},\"Name\":\"Bottler Financials.Bottler Gross Profit / Standard Case\",\"NativeReferenceName\":\"Bottler Gross Profit / Standard Case\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 360.52,
+          "width": 588.90,
+          "x": 477.28,
+          "y": 0.00,
+          "z": 1000.00
+        },
+        {
+          "config": "{\"name\":\"47fa3c2f507c14e5dbe3\",\"layouts\":[{\"id\":0,\"position\":{\"x\":318.18574784651526,\"y\":640.2205168363352,\"z\":1002,\"width\":266.86546593578703,\"height\":79.54643696162881,\"tabOrder\":1002}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Fiscal Year\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Fiscal Year\"},\"Name\":\"Calendar.Fiscal Year\",\"NativeReferenceName\":\"Fiscal Year\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Fiscal Year\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2025L\"}}]]}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 79.55,
+          "width": 266.87,
+          "x": 318.19,
+          "y": 640.22,
+          "z": 1002.00
+        },
+        {
+          "config": "{\"name\":\"eb013a57a561510baacf\",\"layouts\":[{\"id\":0,\"position\":{\"x\":8.981049334377447,\"y\":0,\"z\":0,\"width\":442.6374314800313,\"height\":360.52498042286607,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Rows\":[{\"queryRef\":\"Territory Bottlers.Territory Bottler\",\"active\":true}],\"Values\":[{\"queryRef\":\"Customer Invoice Measures.EQ Unit Cases\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"t\",\"Entity\":\"Territory Bottlers\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Customer Invoice Measures\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"Territory Bottler\"},\"Name\":\"Territory Bottlers.Territory Bottler\",\"NativeReferenceName\":\"Territory Bottler\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"EQ Unit Cases\"},\"Name\":\"Customer Invoice Measures.EQ Unit Cases\",\"NativeReferenceName\":\"EQ Unit Cases\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 360.52,
+          "width": 442.64,
+          "x": 8.98,
+          "y": 0.00,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

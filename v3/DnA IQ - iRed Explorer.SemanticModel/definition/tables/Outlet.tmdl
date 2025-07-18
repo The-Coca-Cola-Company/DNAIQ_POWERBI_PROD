@@ -1,0 +1,1062 @@
+table Outlet
+	lineageTag: dcfb96ce-a3c7-4849-b6cc-ea9722282d21
+
+	column dim_outlet_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 2de9eefd-c74e-446f-ae8b-3204a3c58bc2
+		summarizeBy: none
+		sourceColumn: dim_outlet_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Channel Organization'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9f7202bf-49dd-43e8-8202-fca1ed16fe78
+		summarizeBy: none
+		sourceColumn: Channel Organization
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity Cluster'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 0fdd83b0-c233-45b6-9337-a2ade3decf53
+		summarizeBy: none
+		sourceColumn: Activity Cluster
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CBS Managed By Level 3'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9ece4cef-72af-4ffc-80e3-48f97613dea1
+		summarizeBy: none
+		sourceColumn: CBS Managed By Level 3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FSOP Chain ACN Name'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9ee58aa7-9127-4756-89ae-f31d5b469def
+		summarizeBy: none
+		sourceColumn: FSOP Chain ACN Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sub Trade Channel'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 78c06366-5567-44f8-921d-d1f92905860a
+		summarizeBy: none
+		sourceColumn: Sub Trade Channel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FSOP Sale Organization'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 54303f33-2fbf-40c4-86ae-ae64cad0981e
+		summarizeBy: none
+		sourceColumn: FSOP Sale Organization
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trade Name'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f5761e32-1102-434a-9f00-08f6dc5e2fe0
+		summarizeBy: none
+		sourceColumn: Trade Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Golden Record'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 5f34d5d1-9522-4a39-ba7a-a41b5034d875
+		summarizeBy: none
+		sourceColumn: Golden Record
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Outlet Type'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 675376fb-a692-48e2-aa48-44913315573a
+		summarizeBy: none
+		sourceColumn: Outlet Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CBS Managed By Account Name'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 06243e77-7433-41e7-acf2-5834b78fb2c3
+		summarizeBy: none
+		sourceColumn: CBS Managed By Account Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_bottler_delivery_point_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 50858768-46a2-4e88-a479-672baf74617f
+		summarizeBy: none
+		sourceColumn: ko_bottler_delivery_point_number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trade Channel Name'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ffbf2a3a-4680-401b-9d7e-9317468964d1
+		summarizeBy: none
+		sourceColumn: Trade Channel Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 8d99a3ca-673e-4a25-939a-b49a2678fe6d
+		summarizeBy: none
+		sourceColumn: State
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 3dccfd80-e0a8-49c0-90ac-3673e6907bd2
+		summarizeBy: none
+		sourceColumn: City
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Address
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 932bdce9-8d78-40f9-accb-d5854086d28f
+		summarizeBy: none
+		sourceColumn: Address
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Zip Code'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 89ef0704-54ef-4775-ab6e-12caf0e73fa0
+		summarizeBy: none
+		sourceColumn: Zip Code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bottler
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 6ba04751-5998-460d-97a9-57b8fdc8ed92
+		summarizeBy: none
+		sourceColumn: Bottler
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bottler MU'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 1d9adec0-37e9-4bf9-ae44-bb05307c07f8
+		summarizeBy: none
+		sourceColumn: Bottler MU
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sales Center'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b1983a93-b4ea-44f5-b4df-e66a76ad3fbf
+		summarizeBy: none
+		sourceColumn: Sales Center
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 172740a0-ba6a-4bd2-ac42-bb28ae7c5c43
+		summarizeBy: none
+		sourceColumn: Channel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b0bf386d-deb1-440e-9eef-eb2733d55ca6
+		summarizeBy: none
+		sourceColumn: Customer
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Banner'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ba899939-4c6a-436e-808e-f36343bad9f2
+		summarizeBy: none
+		sourceColumn: Customer Banner
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bottler Tier'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 180299a1-3ac5-4c90-aa0d-0bb40016a790
+		summarizeBy: none
+		sourceColumn: Bottler Tier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cnode3cbpid
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 1a18d346-c9e9-46b5-8fea-c05be56e87a4
+		summarizeBy: none
+		sourceColumn: ko_cnode3cbpid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_source_key
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: cf413781-8e25-473b-b672-d81ef14786ee
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 2c91019f-4c38-4197-abda-913238682fd4
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_outlet_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 80ed8fc6-b649-4c52-9fa0-848dc6a41212
+		summarizeBy: none
+		sourceColumn: dim_outlet_customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_foodservice_market_id
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 110e03fa-8c5a-4d26-a3fd-945ca22f5f37
+		summarizeBy: none
+		sourceColumn: ko_foodservice_market_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_outlet_name
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 6f19b63a-fbf8-4634-93e3-4ee78bfd44df
+		summarizeBy: none
+		sourceColumn: ko_outlet_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_bottler_ownership_identifier
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 8c5eb686-040b-439b-b60d-c950dde7e08b
+		summarizeBy: none
+		sourceColumn: ko_bottler_ownership_identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_bottler_customer_store_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 220e5ead-a6e2-4e70-8661-3537a52f9adc
+		summarizeBy: none
+		sourceColumn: ko_bottler_customer_store_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_activity_cluster_code
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 6d628085-8c14-4326-b915-222eeb31603e
+		summarizeBy: none
+		sourceColumn: ko_activity_cluster_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_customer_store_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ff4cc555-4d0a-4de5-8411-d7e86c9e1a93
+		summarizeBy: none
+		sourceColumn: ko_cbs_customer_store_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_outlet_type_code
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 257e1940-dfc4-4b12-a65a-c9f65fd8ea5c
+		summarizeBy: none
+		sourceColumn: ko_cbs_outlet_type_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_country_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 5e3efce5-344e-4553-ab5c-306a0e8ee006
+		summarizeBy: none
+		sourceColumn: ko_country_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_address_line_2
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: d998ce57-e8cc-4fef-b8fa-1cf676cdc8d9
+		summarizeBy: none
+		sourceColumn: ko_address_line_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_latitude
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ab4a0a14-38d8-436f-834d-9b60407e2cd6
+		summarizeBy: none
+		sourceColumn: ko_latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_longitude
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 75a9f91f-b27e-4a97-925d-fc209a6650e8
+		summarizeBy: none
+		sourceColumn: ko_longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_divestiture_ownership_identifier
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a86b4244-150e-451a-8a13-cb67b23520fe
+		summarizeBy: none
+		sourceColumn: ko_divestiture_ownership_identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_lmp_eligible_outlet
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 4192c20d-3742-4cf2-9499-02ca017d5590
+		summarizeBy: none
+		sourceColumn: ko_lmp_eligible_outlet
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_organization_channel_code
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9ad1f361-89f2-4f04-bb96-27dc3b000f54
+		summarizeBy: none
+		sourceColumn: ko_organization_channel_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_trade_name_id
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 46723a8d-e682-4545-b5f1-57703ecde3c4
+		summarizeBy: none
+		sourceColumn: ko_trade_name_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_trade_channel_code
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 5e526dba-cd13-48a7-93eb-7537b6e4d5fc
+		summarizeBy: none
+		sourceColumn: ko_trade_channel_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_sub_trade_channel_code
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: bade5b1b-253e-484f-ba85-b7fa5a758212
+		summarizeBy: none
+		sourceColumn: ko_sub_trade_channel_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_sub_channel_code
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 43b936ff-22db-4271-889c-1e978a1c4966
+		summarizeBy: none
+		sourceColumn: ko_sub_channel_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_sub_channel_name
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f154b0b8-14c6-4671-81f6-61f8b2833105
+		summarizeBy: none
+		sourceColumn: ko_sub_channel_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_fsop_franchise_region
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f7b1eee3-6a27-490d-b694-c44853a75772
+		summarizeBy: none
+		sourceColumn: ko_fsop_franchise_region
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_fsop_franchise_manager
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f29b4f26-cb20-4607-a88c-4191c96736ab
+		summarizeBy: none
+		sourceColumn: ko_fsop_franchise_manager
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_fsop_territory_bottler
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: acd3a623-8cfd-4b3b-8508-f9a7cf69006b
+		summarizeBy: none
+		sourceColumn: ko_fsop_territory_bottler
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_fsop_territory_bottler_mu_id
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a61d648f-1091-4eb4-bfde-2b1180444f43
+		summarizeBy: none
+		sourceColumn: ko_fsop_territory_bottler_mu_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_fsop_territory_bottler_mu
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 69ed9fd5-af2f-436c-9937-09030c2539c4
+		summarizeBy: none
+		sourceColumn: ko_fsop_territory_bottler_mu
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_fsop_territory_ownership_id
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9dc68e33-168f-4b27-991a-e9bee55b6784
+		summarizeBy: none
+		sourceColumn: ko_fsop_territory_ownership_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		displayFolder: Hidden
+		lineageTag: 9d98cdf7-990a-4780-9359-f08a96808a7e
+		summarizeBy: none
+		sourceColumn: created_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column updated_date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		displayFolder: Hidden
+		lineageTag: 12c507a1-2735-4f4c-89f7-e0ffe9cc65a2
+		summarizeBy: none
+		sourceColumn: updated_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_business_owner_flag
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: d53208d2-2003-4506-a9ca-f04dc6c0d541
+		summarizeBy: none
+		sourceColumn: ko_cbs_business_owner_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_business_ownership_account_customer_name
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ca21bbe1-b602-446c-b5a1-7872e24c0ef7
+		summarizeBy: none
+		sourceColumn: ko_cbs_business_ownership_account_customer_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_business_ownership_account_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9e9bfee0-5bb9-41c3-8c8b-ae2525d7841c
+		summarizeBy: none
+		sourceColumn: ko_cbs_business_ownership_account_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_business_ownership_account_subsidiary_name
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: adb197c6-e51d-4ed7-bf64-e64bee308d05
+		summarizeBy: none
+		sourceColumn: ko_cbs_business_ownership_account_subsidiary_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_business_ownership_account_subsidiary_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: c262a8c5-7662-41ac-aab8-ac31836aec0c
+		summarizeBy: none
+		sourceColumn: ko_cbs_business_ownership_account_subsidiary_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_concessionaire_account_customer_name
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 85072464-8e39-4c2e-80c8-159f9b5ff208
+		summarizeBy: none
+		sourceColumn: ko_cbs_concessionaire_account_customer_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_concessionaire_account_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: d92ffddc-ca4d-4671-add1-abd2df6f6fa0
+		summarizeBy: none
+		sourceColumn: ko_cbs_concessionaire_account_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_concessionaire_account_subsidiary_name
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 87328148-cbb4-48cd-ad87-2ff511487f96
+		summarizeBy: none
+		sourceColumn: ko_cbs_concessionaire_account_subsidiary_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_concessionaire_account_subsidiary_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 78d399c8-8a19-41f2-ac46-5062a9a6b89e
+		summarizeBy: none
+		sourceColumn: ko_cbs_concessionaire_account_subsidiary_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_concessionaire_flag
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 98a29b4f-ac40-4d38-b5ce-5ec3228b77f6
+		summarizeBy: none
+		sourceColumn: ko_cbs_concessionaire_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_managed_by_account_customer_name
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 570db7ca-6a3d-4a1c-9f53-7cb38908cb2a
+		summarizeBy: none
+		sourceColumn: ko_cbs_managed_by_account_customer_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_managed_by_account_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 11cf566c-ee94-441b-b31a-92a26b15fe5b
+		summarizeBy: none
+		sourceColumn: ko_cbs_managed_by_account_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_managed_account_subsidiary_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 968ac608-4afb-4bba-b680-e35e823e23ea
+		summarizeBy: none
+		sourceColumn: ko_cbs_managed_account_subsidiary_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_managed_account_subsidiary_name
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 7a3e89be-fb2f-424e-a170-6eac78c4b635
+		summarizeBy: none
+		sourceColumn: ko_cbs_managed_account_subsidiary_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_cbs_managed_by_flag
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 36dac393-72c4-4f4c-aa97-55f2805f3e84
+		summarizeBy: none
+		sourceColumn: ko_cbs_managed_by_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_foodservice_chain_acn
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9a4bc6d9-9ef4-43fc-baf4-c653ef05775d
+		summarizeBy: none
+		sourceColumn: ko_foodservice_chain_acn
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_foodservice_chain_name
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: cc9f43b9-2f47-4af5-9dfa-2fbb6c66e0c4
+		summarizeBy: none
+		sourceColumn: ko_foodservice_chain_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_foodservice_dma_name
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 5e36fc24-ce0c-4dcc-b2cb-e990799cd615
+		summarizeBy: none
+		sourceColumn: ko_foodservice_dma_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_foodservice_market_description
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ba72d3cd-8b42-4222-bffe-865698df608a
+		summarizeBy: none
+		sourceColumn: ko_foodservice_market_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_nrs_channel_description
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 44048371-ee50-4b12-b423-6ec011f35ed8
+		summarizeBy: none
+		sourceColumn: ko_nrs_channel_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_nrs_customer_description
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: dad630cf-5c86-4cc4-9ce0-511ca2600f64
+		summarizeBy: none
+		sourceColumn: ko_nrs_customer_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_nrs_designation
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: df5c40e8-e3b5-4459-9044-86102d5ee653
+		summarizeBy: none
+		sourceColumn: ko_nrs_designation
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_nrs_region_description
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 6d16550f-851d-4e56-8bf5-e483790322c0
+		summarizeBy: none
+		sourceColumn: ko_nrs_region_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_fsop_customer
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 051a0123-2332-4c66-92bf-424ee60dbe2c
+		summarizeBy: none
+		sourceColumn: ko_fsop_customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_fsop_customer_group1
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 16cb195b-782c-4af7-a845-64d645be4ac2
+		summarizeBy: none
+		sourceColumn: ko_fsop_customer_group1
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_fsop_customer_group2
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 7ba4281b-24b4-499a-8234-b549d74c5d91
+		summarizeBy: none
+		sourceColumn: ko_fsop_customer_group2
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_fsop_customer_group3
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 20018784-c9d2-464b-b122-8dbce91f7481
+		summarizeBy: none
+		sourceColumn: ko_fsop_customer_group3
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_fsop_market_description
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 51efa1ac-ca8d-4ac3-946c-8d9a6bee91a8
+		summarizeBy: none
+		sourceColumn: ko_fsop_market_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column cbp_channel
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 2f9af82e-bb37-48e2-b3b6-ff5120f2824e
+		summarizeBy: none
+		sourceColumn: cbp_channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column cbp_customer
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 8221ea4a-c4b9-4eb6-8d5c-804b75e2d82e
+		summarizeBy: none
+		sourceColumn: cbp_customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column cbp_customer_group
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e7925deb-f26a-4b55-85b0-e64d8b912057
+		summarizeBy: none
+		sourceColumn: cbp_customer_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column cbp_sales_org
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e41d0282-aca4-4a8f-aa67-f1d1c0a2d065
+		summarizeBy: none
+		sourceColumn: cbp_sales_org
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'LMP Flag'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 4180a137-a1da-490d-b958-818c09c0c36f
+		summarizeBy: none
+		sourceColumn: LMP Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column bottler_sales_branch_no
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a558206b-574d-4022-bb1d-4273150d448d
+		summarizeBy: none
+		sourceColumn: bottler_sales_branch_no
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Channel Hierarchy'
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 50b62628-1b39-4614-8154-8dd5b60eff78
+
+		level 'Channel Organization'
+			lineageTag: d74051cf-4e85-434a-98ca-026134ee9110
+			column: 'Channel Organization'
+
+		level 'Activity Cluster'
+			lineageTag: a84c3583-697a-4f24-8b6b-4aff841034db
+			column: 'Activity Cluster'
+
+		level 'Trade Channel Name'
+			lineageTag: d4ed9e49-36c3-4079-a086-bb89ef93a61f
+			column: 'Trade Channel Name'
+
+		level 'Sub Trade Channel Name'
+			lineageTag: a3c3c954-53b2-4483-ba57-7acced076550
+			column: 'Sub Trade Channel'
+
+		changedProperty = IsHidden
+
+	hierarchy 'CBS Managed By Hierarchy'
+		isHidden
+		displayFolder: Hidden
+		lineageTag: d836b3ad-96ab-46df-9383-515ba1bd66a9
+
+		level 'CBS Managed By Level 3'
+			lineageTag: a020943a-ae51-4495-bce5-55548ba058a0
+			column: 'CBS Managed By Level 3'
+
+		level 'CBS Managed By Account Name'
+			lineageTag: 84f59edc-a8dc-481d-9f0c-130a127b1119
+			column: 'CBS Managed By Account Name'
+
+		changedProperty = IsHidden
+
+	hierarchy 'Retail Customer Hierarchy'
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 4618499b-15af-4912-8a9d-370732ba8fc0
+
+		level cbp_sales_org
+			lineageTag: d347c68a-2376-4074-a52e-21f9c6904f34
+			column: cbp_sales_org
+
+		level cbp_customer_group
+			lineageTag: ad89bb8b-f0ee-486c-9511-c49c4d9ba4ff
+			column: cbp_customer_group
+
+		level cbp_customer
+			lineageTag: 14d61801-b8b2-4d42-87fd-73e10c1fde09
+			column: cbp_customer
+
+		level cbp_channel
+			lineageTag: d980e27e-b7b8-414d-b049-f52152827eba
+			column: cbp_channel
+
+	hierarchy 'Bottler Hierarchy'
+		lineageTag: 7beddad1-6321-42e8-8f7c-b866ad282676
+
+		level 'Bottler Tier'
+			lineageTag: e8b80aa0-1f50-4676-aa31-0ba98957b970
+			column: 'Bottler Tier'
+
+		level Bottler
+			lineageTag: 3df691b4-9688-4303-bccf-be34a61e33fd
+			column: Bottler
+
+		level 'Bottler MU'
+			lineageTag: a066eef7-b2fa-4dc9-8a95-cf51d491196d
+			column: 'Bottler MU'
+
+		level 'Sales Center'
+			lineageTag: bb3bcd57-747d-4a69-8de7-48aec902ab00
+			column: 'Sales Center'
+
+	hierarchy 'Customer Hierarchy'
+		lineageTag: 00165ed1-5d94-428d-9133-8095dd00cd6d
+
+		level Channel
+			lineageTag: 7442823f-25cc-4aa5-97cc-a29e78605fca
+			column: Channel
+
+		level Customer
+			lineageTag: 1b3e938e-68d6-4e92-9a52-2a08893cdf1e
+			column: Customer
+
+		level 'Customer Banner'
+			lineageTag: 0317bc04-d51c-4eb2-a344-8d2b8957f80e
+			column: 'Customer Banner'
+
+	partition Outlet = m
+		mode: import
+		source = ```
+				let
+				    Source = Sql.Database(Server, Database),
+				    invoice_mdl_vw_Dim_Outlet = Source{[Schema="dbov3",Item="vw_Dim_ired_Outlet"]}[Data],
+				    #"Added Custom" = Table.AddColumn(invoice_mdl_vw_Dim_Outlet, "LMP Flag", each if Text.StartsWith([ko_foodservice_market_id], "28") then "LMP" else "NON LMP"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"ko_cbs_outlet_type_name", "Outlet Type"}, {"ko_sub_trade_channel_name", "Sub Trade Channel"}, {"ko_trade_name", "Trade Name"}, {"ko_organization_channel_name", "Channel Organization"}, 
+				    {"ko_activity_cluster_name", "Activity Cluster"}, {"ko_fsop_customer_team", "FSOP Sale Organization"}, {"ko_cbs_managed_account_customer_name_top5_masked", "CBS Managed By Level 3"}, {"ko_foodservice_chain_name_top5_masked", "FSOP Chain ACN Name"}, 
+				    {"ko_trade_channel_name", "Trade Channel Name"}, {"ko_cbs_managed_account_subsidiary_name_top5_masked", "CBS Managed By Account Name"}, {"ko_address_line_1", "Address"}, {"ko_city_name", "City"}, {"ko_state_code", "State"}, 
+				    {"ko_golden_record_identifier", "Golden Record"}, {"ko_zip_code", "Zip Code"}, {"bottler", "Bottler"}, {"bottler_market_unit", "Bottler MU"}, {"bottler_sales_branch", "Sales Center"}, {"channel", "Channel"}, {"cbs_customer_name", "Customer"},
+					{"cbs_subsidiary_name", "Customer Banner"}, {"bottler_tier", "Bottler Tier"}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Renamed Columns", {"dim_outlet_key"})
+				in
+				    #"Removed Duplicates"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

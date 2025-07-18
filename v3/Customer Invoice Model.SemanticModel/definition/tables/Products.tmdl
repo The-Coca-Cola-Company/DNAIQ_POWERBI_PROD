@@ -1,0 +1,230 @@
+table Products
+	lineageTag: 1edfeced-1547-4905-8879-1cbea47cdd25
+
+	column dim_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: a14bbaca-1c63-456c-84ea-2ac01eb080e6
+		summarizeBy: none
+		sourceColumn: dim_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Name'
+		dataType: string
+		lineageTag: c59a3e7e-07fb-40e5-be4b-56377ba7bc1c
+		summarizeBy: none
+		sourceColumn: Product Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Type'
+		dataType: string
+		lineageTag: 9ea466e7-a1ba-407e-b45f-1d4fab2f80ee
+		summarizeBy: none
+		sourceColumn: Product Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Category Business Unit'
+		dataType: string
+		lineageTag: 116aea29-73b8-4552-a557-e63e7ebf847a
+		summarizeBy: none
+		sourceColumn: Category Business Unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beverage Category'
+		dataType: string
+		lineageTag: 31b1dcab-9596-4562-a895-fcd759c92169
+		summarizeBy: none
+		sourceColumn: Beverage Category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Foodservice Product Category'
+		dataType: string
+		lineageTag: 09bdeffc-3176-44cd-ac20-9a245131caac
+		summarizeBy: none
+		sourceColumn: Foodservice Product Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trademark
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 25985aab-2460-4aaa-abdb-7d42a60a9668
+		summarizeBy: none
+		sourceColumn: Trademark
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Brand
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b5dc2df6-2515-4cfc-a0e6-aa7c6862190e
+		summarizeBy: none
+		sourceColumn: Brand
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beverage Product'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 5e8782c2-1eaf-494f-a8af-0631d088b7fc
+		summarizeBy: none
+		sourceColumn: Beverage Product
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beverage Product Package'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: fbcd9465-e530-4e3e-b8b2-7c1b555df435
+		summarizeBy: none
+		sourceColumn: Beverage Product Package
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Package
+		dataType: string
+		lineageTag: 7bebf503-378c-4bbe-986d-e3c11712295a
+		summarizeBy: none
+		sourceColumn: Package
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Consumption Type'
+		dataType: string
+		lineageTag: 7d81a16e-bf80-459e-a2a2-419eda689be4
+		summarizeBy: none
+		sourceColumn: Consumption Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calorie Type'
+		dataType: string
+		lineageTag: 71b6bfed-4c0c-4226-a3c2-cc9bf28662ca
+		summarizeBy: none
+		sourceColumn: Calorie Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NABDB Funding Group'
+		dataType: string
+		lineageTag: bc07aa7b-093b-4d46-be11-d7422bef3557
+		summarizeBy: none
+		sourceColumn: NABDB Funding Group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NABDB Forecast Group'
+		dataType: string
+		lineageTag: 4f5ae3a1-32d1-41cc-ae21-2b19f2181d43
+		summarizeBy: none
+		sourceColumn: NABDB Forecast Group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NABDB Pricing Group'
+		dataType: string
+		lineageTag: a67b6668-0b63-4204-9d7f-391d7c952f2d
+		summarizeBy: none
+		sourceColumn: NABDB Pricing Group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NABDB Promoted Group'
+		dataType: string
+		lineageTag: 26cae3d8-4c74-43d7-80a9-355ed91e1195
+		summarizeBy: none
+		sourceColumn: NABDB Promoted Group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beverage Product Package Code'
+		dataType: string
+		lineageTag: 65d43557-4673-407d-a826-0ffa50d3b2ff
+		summarizeBy: none
+		sourceColumn: Beverage Product Package Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Universal Product Code'
+		dataType: string
+		lineageTag: f3dc83fd-e69d-4e0f-ae41-6d3673f81eaf
+		summarizeBy: none
+		sourceColumn: Universal Product Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NABDB Package Group'
+		dataType: string
+		lineageTag: b9e61043-9266-45e7-aa99-e258323845e9
+		summarizeBy: none
+		sourceColumn: NABDB Package Group
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Trademark Hierarchy'
+		lineageTag: eac8d2b4-9217-4d7a-8f68-4e5d460219f6
+
+		level Trademark
+			lineageTag: b159ed3b-f03f-4833-9c8d-ada95b0d45ca
+			column: Trademark
+
+		level Brand
+			lineageTag: 8b68c5f1-085c-4574-a7a0-7cdefee012c0
+			column: Brand
+
+		level 'Beverage Product'
+			lineageTag: 16702d25-f6b9-452e-83f5-46747b9305f1
+			column: 'Beverage Product'
+
+		level 'Beverage Product Package'
+			lineageTag: 8be117f0-1147-49c2-942e-8c694be1311f
+			column: 'Beverage Product Package'
+
+	partition Products = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    invoice_mdl_vw_Dim_Product = Source{[Schema="Invoice",Item="vw_Dim_KO_Product"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(invoice_mdl_vw_Dim_Product,{"dim_product_key", "ko_product_name", "ko_trademark_name", "ko_brand_name", "ko_beverage_product_name", "ko_beverage_product_package_code", "ko_beverage_product_package_description", "ko_package_name", "ko_beverage_category_description", "ko_beverage_category_name", "ko_foodservice_product_category_description", "ko_product_type_description", "ko_immediate_consumption_indicator", "ko_calorie_name", "ko_nabdb_funding_group_description", "ko_nabdb_target_set_description", "ko_nabdb_forecast_group_description", "ko_nabdb_pricing_group_description", "ko_nabdb_promoted_group_description", "ko_universal_product_code"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"ko_calorie_name", "Calorie Type"}, {"ko_immediate_consumption_indicator", "Consumption Type"}, {"ko_foodservice_product_category_description", "Foodservice Product Category"}, {"ko_package_name", "Package"}, {"ko_product_name", "Product Name"}, {"ko_product_type_description", "Product Type"}, {"ko_brand_name", "Brand"}, {"ko_trademark_name", "Trademark"}, {"ko_beverage_category_description", "Category Business Unit"}, {"ko_beverage_category_name", "Beverage Category"}, {"ko_beverage_product_name", "Beverage Product"}, {"ko_beverage_product_package_description", "Beverage Product Package"}, {"ko_nabdb_forecast_group_description", "NABDB Forecast Group"}, {"ko_nabdb_funding_group_description", "NABDB Funding Group"}, {"ko_nabdb_pricing_group_description", "NABDB Pricing Group"}, {"ko_nabdb_promoted_group_description", "NABDB Promoted Group"}, {"ko_beverage_product_package_code", "Beverage Product Package Code"}, {"ko_universal_product_code", "Universal Product Code"}, {"ko_nabdb_target_set_description", "NABDB Package Group"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,199 @@
+/// rms_mdl vw_Dim_Category
+table Product
+	lineageTag: eca76a9c-6f40-43d2-a69e-bc43b35111b7
+
+	/// ko_route_to_market
+	column Route-to-Market
+		dataType: string
+		lineageTag: f765ce51-3640-49ad-b52c-504257f1e328
+		summarizeBy: none
+		sourceColumn: Route-to-Market
+
+		annotation SummarizationSetBy = Automatic
+
+	/// ko_total_category
+	column 'Total Category'
+		dataType: string
+		lineageTag: 730c3e2a-837d-4111-b1a9-a87d38a10c98
+		summarizeBy: none
+		sourceColumn: Total Category
+
+		annotation SummarizationSetBy = Automatic
+
+	/// ko_elt_category
+	column 'ELT Category'
+		dataType: string
+		lineageTag: 5c5831d5-538b-4e51-b126-f693d7ff9fc4
+		summarizeBy: none
+		sourceColumn: ELT Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 977802b1-24c2-4ed7-bfa4-eb6119ee2e3b
+		summarizeBy: none
+		sourceColumn: Product Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'System Brands'
+		dataType: string
+		isHidden
+		lineageTag: 2e1986b7-68df-4b91-ab90-6c028f7d4f27
+		summarizeBy: none
+		sourceColumn: System Brands
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer
+		dataType: string
+		isHidden
+		lineageTag: 7be48039-7d2f-47fb-82d4-2854a40e81c3
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Flavor
+		dataType: string
+		lineageTag: e67bff78-01d3-4693-8fcb-a3a71192dc6c
+		summarizeBy: none
+		sourceColumn: Flavor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trademark
+		dataType: string
+		isHidden
+		lineageTag: 5ec991a9-226f-4655-b9ce-54ed8473d488
+		summarizeBy: none
+		sourceColumn: Trademark
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Brand
+		dataType: string
+		isHidden
+		lineageTag: 335e5cdd-5a40-4913-a5c6-546424c183da
+		summarizeBy: none
+		sourceColumn: Brand
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Consumption Type'
+		dataType: string
+		lineageTag: b6dc7711-fd1d-4d09-87c5-69a3ceb1ee28
+		summarizeBy: none
+		sourceColumn: Consumption Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sparkling vs. Non-Sparkling'
+		dataType: string
+		lineageTag: 941ae642-cea8-46eb-acc3-0b4cb82d0f23
+		summarizeBy: none
+		sourceColumn: Sparkling vs. Non-Sparkling
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beverage Type'
+		dataType: string
+		lineageTag: d619c8bd-5be1-4499-bf62-f860cba3cf3e
+		summarizeBy: none
+		sourceColumn: Beverage Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Container
+		dataType: string
+		lineageTag: c91ac471-2086-40f8-9c1f-38d2755a4662
+		summarizeBy: none
+		sourceColumn: Container
+
+		annotation SummarizationSetBy = Automatic
+
+	column Package
+		dataType: string
+		lineageTag: 76cecd04-fbf4-42d8-8bb1-b7cc151d6f4c
+		summarizeBy: none
+		sourceColumn: Package
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CBR Category'
+		dataType: string
+		lineageTag: 5a8ba873-f031-44bc-80ef-482ffb5f0d02
+		summarizeBy: none
+		sourceColumn: CBR Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gains and Drains Combo' = 'Product'[CBR Category] & " / " & 'Product'[Trademark] & " / " & 'Product'[Package]
+		lineageTag: 81bdb209-87ab-4164-8a83-5050c1d3ce59
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'KO CCNA Selected Beverage Category'
+		dataType: string
+		lineageTag: b6b14ea5-684e-4333-954f-20745b63bf29
+		summarizeBy: none
+		sourceColumn: KO CCNA Selected Beverage Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Item
+		dataType: string
+		lineageTag: 938122f2-dc68-4bb9-b9bc-f2a607822fd6
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Product Hierarchy'
+		lineageTag: 5125277d-8fe2-473c-be10-4581dd9c9223
+
+		level 'System Brands'
+			lineageTag: 3a341a52-bca2-4554-9a09-18d9efe43d3a
+			column: 'System Brands'
+
+		level Manufacturer
+			lineageTag: c131e964-96bd-4259-826e-98469a474235
+			column: Manufacturer
+
+		level Trademark
+			lineageTag: 74e007a2-dd46-484d-b3dc-608230b8eb0b
+			column: Trademark
+
+		level Brand
+			lineageTag: 8f971706-7f4a-44d6-88be-67f4f28a7cb9
+			column: Brand
+
+	partition Product = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    rms_mdl_vw_dim_product = Source{[Schema="niqrms",Item="vw_Dim_Nielsen_Product"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(rms_mdl_vw_dim_product, each ([ko_ccna_selected_beverage_category] = "CCNA COMP SET")),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"dim_product_key", "Product Key"}, {"ko_system_brands", "System Brands"}, {"ko_key_manufacturer", "Manufacturer"}, {"ko_key_flavor", "Flavor"}, {"ko_key_trademark", "Trademark"}, {"ko_key_brand", "Brand"}, {"ko_route_to_market", "Route-to-Market"}, {"ko_total_category", "Total Category"}, {"ko_elt_category", "ELT Category"}, {"ko_consumption", "Consumption Type"}, {"ko_sparkling_non_sparkling", "Sparkling vs. Non-Sparkling"}, {"ko_beverage_type", "Beverage Type"}, {"ko_container", "Container"}, {"ko_key_package", "Package"}, {"ko_business_review_category", "CBR Category"}, {"ko_ccna_selected_beverage_category", "KO CCNA Selected Beverage Category"}, {"item", "Item"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

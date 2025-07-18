@@ -1,0 +1,68 @@
+role 'All TCCC FTE'
+	modelPermission: read
+
+	tablePermission 'ACV TDP'
+
+	tablePermission Beach
+
+	tablePermission 'Week Parameter'
+
+	tablePermission 'Territory Bottlers'
+
+	tablePermission 'Bottler Financials'
+		metadataPermission: none
+
+	tablePermission 'Bottlers & Distributors'
+
+	tablePermission Channel
+
+	tablePermission Customer
+
+	tablePermission 'Customer Invoice Measures'
+		metadataPermission: none
+
+	tablePermission 'Business Drivers'
+
+	tablePermission 'Dim Slicer'
+
+	tablePermission Forecast
+		metadataPermission: none
+
+	tablePermission Invoice
+		metadataPermission: none
+
+	tablePermission 'iRED Measures'
+
+	tablePermission 'Measures Slicer'
+
+	tablePermission Outlet
+
+	tablePermission 'Outlet Status'
+		metadataPermission: none
+
+	tablePermission 'Overall Performance Plan'
+		metadataPermission: none
+
+	tablePermission 'Performance Other'
+		metadataPermission: none
+
+	tablePermission 'PRx Key Metrics'
+
+	tablePermission 'Store Area'
+
+	tablePermission Calendar
+
+	tablePermission _PreselectedSlicer
+
+	tablePermission 'Dim Slicer Territory'
+
+	tablePermission Market
+
+	tablePermission 'Measure Reference'
+
+	tablePermission Product
+
+	tablePermission 'Share of Market'
+
+	annotation PBI_Id = 69c1a13af50744ed94d073d004c1ab07
+

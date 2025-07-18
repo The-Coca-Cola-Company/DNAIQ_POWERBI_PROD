@@ -1,0 +1,16 @@
+relationship 001e637b-5e86-e22a-d763-86e4a43d71b2
+	fromColumn: 'iRED Measures'.dim_date_key
+	toColumn: Calendar.dim_date_key
+
+relationship e368a740-674a-ac24-881e-a2ba0f329dd8
+	fromColumn: 'iRED Measures'.dim_outlet_key
+	toColumn: Outlet.dim_outlet_key
+
+relationship a52e46b9-ce12-4802-be4c-f3be724b508a
+	fromColumn: 'iRED Measures'.dim_location_key
+	toColumn: 'Store Area'.dim_location_key
+
+relationship 08c901f0-8a71-9a1f-734d-4a1738cfd31b
+	fromColumn: 'iRED Measures'.dim_ired_product_key
+	toColumn: Product.dim_ired_product_key
+

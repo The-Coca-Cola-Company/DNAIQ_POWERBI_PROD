@@ -1,0 +1,48 @@
+role 'Coca-Cola Consolidated Inc'
+	modelPermission: read
+
+	tablePermission 'Territory Bottlers' = [Bottler Distributor Name] == "Coca-Cola Consolidated, Inc"
+
+	tablePermission 'ACV TDP'
+		metadataPermission: none
+
+	tablePermission Beach
+		metadataPermission: none
+
+	tablePermission CBR_Category_Groupings
+		metadataPermission: none
+
+	tablePermission 'Business Drivers'
+		metadataPermission: none
+
+	tablePermission 'Week Parameter'
+		metadataPermission: none
+
+	tablePermission 'Store Area'
+		metadataPermission: none
+
+	tablePermission 'Share of Market'
+		metadataPermission: none
+
+	tablePermission 'PRx Key Metrics'
+		metadataPermission: none
+
+	tablePermission 'Performance Other'
+
+	tablePermission 'Measures Slicer'
+		metadataPermission: none
+
+	tablePermission Market
+		metadataPermission: none
+
+	tablePermission 'iRED Measures'
+		metadataPermission: none
+
+	tablePermission Forecast
+		metadataPermission: none
+
+	tablePermission 'Dim Slicer'
+		metadataPermission: none
+
+	annotation PBI_Id = ed7fc91b01c54c8ca45bae44494a1aec
+

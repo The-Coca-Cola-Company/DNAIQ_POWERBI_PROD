@@ -1,0 +1,919 @@
+/// niqrmsv3.vw_Fact_Performance_ACV_TDP
+/// Group By: Bottler, Calendar, Channel, Customer, Product
+table 'ACV TDP'
+	lineageTag: 248e5820-8a7a-4527-99c4-6e9793c62ae7
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 2
+		incrementalGranularity: month
+		incrementalPeriods: 24
+		sourceExpression =
+			let
+			    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+			    VW_Fact_Performance_ACV_TDP = Source{[Schema="niqrmsv3",Item="vw_Fact_Performance_ACV_TDP"]}[Data],
+			    #"Filtered Rows" = Table.SelectRows(VW_Fact_Performance_ACV_TDP, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+			    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"created_date", "updated_date"})
+			in
+			    #"Removed Columns"
+
+	/// % of All Commodity Volume (ACV): measure of distribution
+	measure ACV = ```
+			
+			VAR results =
+			//    SWITCH (
+			//        TRUE(),
+			//        max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[acv_ytd]),
+			//        max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[acv_qtd]),
+			//        max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[acv_mtd]),
+			 //       max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[acv_latest_4_wks]),
+			//        max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[acv_latest_1_wk]),
+			 //       max('ACV TDP'[acv_])
+			//    )
+			
+			   SWITCH (
+			    TRUE(),
+			    max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[ACV_LCM]),
+			    max('Time Calculation'[Time Calculation]) = "LCM PY", MAX('ACV TDP'[ACV_LCM_PY]),
+			    max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[ACV_LCW]),
+			    max('Time Calculation'[Time Calculation]) = "LCW PY", MAX('ACV TDP'[ACV_LCW_PY]),
+			    max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[ACV_MTD]),
+			    max('Time Calculation'[Time Calculation]) = "MTD PY", MAX('ACV TDP'[ACV_MTD_PY]),
+			    max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[ACV_QTD]),
+			    max('Time Calculation'[Time Calculation]) = "QTD PY", MAX('ACV TDP'[ACV_QTD_PY]),
+			    max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[ACV_YTD]),
+			    max('Time Calculation'[Time Calculation]) = "YTD PY", MAX('ACV TDP'[ACV_YTD_PY]),
+			    max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[ACV_Rolling_4_Wks]),
+			    max('Time Calculation'[Time Calculation]) = "R4W PY", MAX('ACV TDP'[ACV_Rolling_4_Wks_PY]),
+			    max('Time Calculation'[Time Calculation]) = "R13W", MAX('ACV TDP'[ACV_Rolling_13_Wks]),
+			    max('Time Calculation'[Time Calculation]) = "R13W PY", MAX('ACV TDP'[ACV_Rolling_13_Wks_PY]),
+			    max('Time Calculation'[Time Calculation]) = "R52W", MAX('ACV TDP'[ACV_Rolling_52_Wk]),
+			    max('Time Calculation'[Time Calculation]) = "R52W PY", MAX('ACV TDP'[ACV_Rolling_52_Wk_PY]),
+			    BLANK()
+			    )
+			    
+			RETURN
+			    results
+			```
+		formatString: #,0
+		lineageTag: 18bbffd2-a6e6-46c2-8e9a-0a3c6ce88195
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Average count of items (depth of distribution)
+	measure 'Avg # of Items' = ```
+			
+			 DIVIDE(
+			    [TDP],
+			    [ACV])
+			```
+		formatString: #,0
+		lineageTag: e4e7aaff-e167-4d76-a146-12cbe67485c7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Total Points of Distribution (TDP): ACV multiplied by Average# of Items
+	measure TDP = ```
+			
+			
+			VAR results =
+			//   SWITCH (
+			//       TRUE(),
+			//       max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[tdp_ytd]),
+			//       max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[tdp_qtd]),
+			//        max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[tdp_mtd]),
+			//       max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[tdp_latest_4_wks]),
+			//       max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[tdp_latest_1_wk]),
+			//       max('ACV TDP'[tdp_])
+			//  )
+			 SWITCH (
+			    TRUE(),
+			    max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[TDP_LCM]),
+			    max('Time Calculation'[Time Calculation]) = "LCM PY", MAX('ACV TDP'[TDP_LCM_PY]),
+			    max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[TDP_LCW]),
+			    max('Time Calculation'[Time Calculation]) = "LCW PY", MAX('ACV TDP'[TDP_LCW_PY]),
+			    max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[TDP_MTD]),
+			    max('Time Calculation'[Time Calculation]) = "MTD PY", MAX('ACV TDP'[TDP_MTD_PY]),
+			    max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[TDP_QTD]),
+			    max('Time Calculation'[Time Calculation]) = "QTD PY", MAX('ACV TDP'[TDP_QTD_PY]),
+			    max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[TDP_YTD]),
+			    max('Time Calculation'[Time Calculation]) = "YTD PY", MAX('ACV TDP'[TDP_YTD_PY]),
+			    max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[TDP_Rolling_4_Wks]),
+			    max('Time Calculation'[Time Calculation]) = "R4W PY", MAX('ACV TDP'[TDP_Rolling_4_Wks_PY]),
+			    max('Time Calculation'[Time Calculation]) = "R13W", MAX('ACV TDP'[TDP_Rolling_13_Wks]),
+			    max('Time Calculation'[Time Calculation]) = "R13W PY", MAX('ACV TDP'[TDP_Rolling_13_Wks_PY]),
+			    max('Time Calculation'[Time Calculation]) = "R52W", MAX('ACV TDP'[TDP_Rolling_52_Wk]),
+			    max('Time Calculation'[Time Calculation]) = "R52W PY", MAX('ACV TDP'[TDP_Rolling_52_Wk_PY]),
+			        BLANK()
+			    )
+			    
+			RETURN
+			    results
+			```
+		formatString: #,0
+		lineageTag: a5e60199-e24e-49fc-b424-5b023f49f18f
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// % growth vs PY in Total Points of Distribution (TDP): ACV multiplied by Average# of Items
+	measure 'TDP % Change' = ```
+			
+			var CY =
+			SWITCH (
+			    TRUE(),
+			max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[TDP_MTD]),
+			max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[TDP_QTD]),
+			max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[TDP_YTD]),
+			max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[TDP_LCM]),
+			max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[TDP_LCW]),
+			max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[TDP_Rolling_4_Wks]),
+			max('Time Calculation'[Time Calculation]) = "R13W",MAX('ACV TDP'[TDP_Rolling_13_Wks]),
+			max('Time Calculation'[Time Calculation]) = "R52W",MAX('ACV TDP'[TDP_Rolling_52_Wk]),
+			BLANK()
+			     )
+			
+			var PY = 
+			 SWITCH (
+			    TRUE(),
+			 max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[TDP_MTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[TDP_QTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[TDP_YTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[TDP_LCM_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[TDP_LCW_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[TDP_Rolling_4_Wks_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R13W",MAX('ACV TDP'[TDP_Rolling_13_Wks_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R52W",MAX('ACV TDP'[TDP_Rolling_52_Wk_PY]),
+			    BLANK()
+			    )
+			
+			RETURN
+			DIVIDE(
+			    (CY - PY),
+			    PY)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: ac866b63-2cb9-48ef-986e-8cb9ea3a6b56
+
+		changedProperty = IsHidden
+
+	measure 'Avg # of Items % Change' = ```
+			
+			var acvcy = 
+			 SWITCH (
+			    TRUE(),
+			 max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[ACV_MTD]),
+			 max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[ACV_QTD]),
+			 max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[ACV_YTD]),
+			 max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[ACV_LCM]),
+			 max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[ACV_LCW]),
+			 max('Time Calculation'[Time Calculation]) = "R52W", MAX('ACV TDP'[ACV_Rolling_52_Wk]),
+			 max('Time Calculation'[Time Calculation]) = "R13W", MAX('ACV TDP'[ACV_Rolling_13_Wks]),
+			 max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[ACV_Rolling_4_Wks]),
+			    BLANK()
+			    )
+			
+			var tdpcy =
+			SWITCH (
+			    TRUE(),
+			max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[TDP_MTD]),
+			max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[TDP_QTD]),
+			max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[TDP_YTD]),
+			max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[TDP_LCM]),
+			max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[TDP_LCW]),
+			max('Time Calculation'[Time Calculation]) = "R52W", MAX('ACV TDP'[TDP_Rolling_52_Wk]),
+			max('Time Calculation'[Time Calculation]) = "R13W", MAX('ACV TDP'[TDP_Rolling_13_Wks]),
+			max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[TDP_Rolling_4_Wks]),
+			BLANK()
+			     )
+			
+			var acvpy = 
+			 SWITCH (
+			    TRUE(),
+			 max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[ACV_MTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[ACV_QTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[ACV_YTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[ACV_LCM_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[ACV_LCW_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R52W", MAX('ACV TDP'[ACV_Rolling_52_Wk_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R13W", MAX('ACV TDP'[ACV_Rolling_13_Wks_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[ACV_Rolling_4_Wks_PY]),
+			    BLANK()
+			    )
+			
+			var tdppy =
+			SWITCH (
+			    TRUE(),
+			max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[TDP_MTD_PY]),
+			max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[TDP_QTD_PY]),
+			max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[TDP_YTD_PY]),
+			max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[TDP_LCM_PY]),
+			max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[TDP_LCW_PY]),
+			max('Time Calculation'[Time Calculation]) = "R52W", MAX('ACV TDP'[TDP_Rolling_52_Wk_PY]),
+			max('Time Calculation'[Time Calculation]) = "R13W", MAX('ACV TDP'[TDP_Rolling_13_Wks_PY]),
+			max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[TDP_Rolling_4_Wks_PY]),
+			BLANK()
+			     )
+			
+			Var CY = DIVIDE(tdpcy,acvcy)
+			Var PY = DIVIDE(tdppy,acvpy)  
+			
+			RETURN
+			DIVIDE(
+			    (CY - PY),
+			    PY)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 57a9d116-6223-4c1e-813c-51a879025647
+
+	measure 'ACV % Change' = ```
+			
+			var CY =
+			SWITCH (
+			    TRUE(),
+			max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[ACV_MTD]),
+			max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[ACV_QTD]),
+			max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[ACV_YTD]),
+			max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[ACV_LCM]),
+			max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[ACV_LCW]),
+			max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[ACV_Rolling_4_Wks]),
+			max('Time Calculation'[Time Calculation]) = "R13W",MAX('ACV TDP'[ACV_Rolling_13_Wks]),
+			max('Time Calculation'[Time Calculation]) = "R52W",MAX('ACV TDP'[ACV_Rolling_52_Wk]),
+			BLANK()
+			     )
+			
+			var PY = 
+			 SWITCH (
+			    TRUE(),
+			 max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[ACV_MTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[ACV_QTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[ACV_YTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[ACV_LCM_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[ACV_LCW_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[ACV_Rolling_4_Wks_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R13W",MAX('ACV TDP'[ACV_Rolling_13_Wks_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R52W",MAX('ACV TDP'[ACV_Rolling_52_Wk_PY]),
+			    BLANK()
+			    )
+			
+			RETURN
+			DIVIDE(
+			    (CY - PY),
+			    PY) 
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 22c587fb-b09d-40fa-aa92-9ac308112dbf
+
+	measure 'ACV Change(Actual)' = ```
+			
+			var CY =
+			SWITCH (
+			    TRUE(),
+			max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[ACV_MTD]),
+			max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[ACV_QTD]),
+			max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[ACV_YTD]),
+			max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[ACV_LCM]),
+			max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[ACV_LCW]),
+			max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[ACV_Rolling_4_Wks]),
+			max('Time Calculation'[Time Calculation]) = "R13W",MAX('ACV TDP'[ACV_Rolling_13_Wks]),
+			max('Time Calculation'[Time Calculation]) = "R52W",MAX('ACV TDP'[ACV_Rolling_52_Wk]),
+			BLANK()
+			     )
+			
+			var PY = 
+			 SWITCH (
+			    TRUE(),
+			 max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[ACV_MTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[ACV_QTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[ACV_YTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[ACV_LCM_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[ACV_LCW_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[ACV_Rolling_4_Wks_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R13W",MAX('ACV TDP'[ACV_Rolling_13_Wks_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R52W",MAX('ACV TDP'[ACV_Rolling_52_Wk_PY]),
+			    BLANK()
+			    )
+			
+			RETURN
+			 (CY - PY)
+			```
+		formatString: #,0
+		lineageTag: d2f6cabd-ca7c-474c-b5f9-54b0a084e934
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'TDP Change(Actual)' = ```
+			
+			var CY =
+			SWITCH (
+			    TRUE(),
+			max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[TDP_MTD]),
+			max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[TDP_QTD]),
+			max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[TDP_YTD]),
+			max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[TDP_LCM]),
+			max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[TDP_LCW]),
+			max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[TDP_Rolling_4_Wks]),
+			max('Time Calculation'[Time Calculation]) = "R13W",MAX('ACV TDP'[TDP_Rolling_13_Wks]),
+			max('Time Calculation'[Time Calculation]) = "R52W",MAX('ACV TDP'[TDP_Rolling_52_Wk]),
+			BLANK()
+			     )
+			
+			var PY = 
+			 SWITCH (
+			    TRUE(),
+			 max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[TDP_MTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[TDP_QTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[TDP_YTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[TDP_LCM_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[TDP_LCW_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[TDP_Rolling_4_Wks_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R13W",MAX('ACV TDP'[TDP_Rolling_13_Wks_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R52W",MAX('ACV TDP'[TDP_Rolling_52_Wk_PY]),
+			    BLANK()
+			    )
+			
+			RETURN
+			(CY - PY)
+			```
+		formatString: #,0
+		lineageTag: 35acb0e0-5c31-4a93-ae25-f557e7496458
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Avg # of Items Change(Actual)' = ```
+			
+			var acvcy = 
+			 SWITCH (
+			    TRUE(),
+			 max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[ACV_MTD]),
+			 max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[ACV_QTD]),
+			 max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[ACV_YTD]),
+			 max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[ACV_LCM]),
+			 max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[ACV_LCW]),
+			 max('Time Calculation'[Time Calculation]) = "R52W", MAX('ACV TDP'[ACV_Rolling_52_Wk]),
+			 max('Time Calculation'[Time Calculation]) = "R13W", MAX('ACV TDP'[ACV_Rolling_13_Wks]),
+			 max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[ACV_Rolling_4_Wks]),
+			    BLANK()
+			    )
+			
+			var tdpcy =
+			SWITCH (
+			    TRUE(),
+			max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[TDP_MTD]),
+			max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[TDP_QTD]),
+			max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[TDP_YTD]),
+			max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[TDP_LCM]),
+			max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[TDP_LCW]),
+			max('Time Calculation'[Time Calculation]) = "R52W", MAX('ACV TDP'[TDP_Rolling_52_Wk]),
+			max('Time Calculation'[Time Calculation]) = "R13W", MAX('ACV TDP'[TDP_Rolling_13_Wks]),
+			max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[TDP_Rolling_4_Wks]),
+			BLANK()
+			     )
+			
+			var acvpy = 
+			 SWITCH (
+			    TRUE(),
+			 max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[ACV_MTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[ACV_QTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[ACV_YTD_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[ACV_LCM_PY]),
+			 max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[ACV_LCW_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R52W", MAX('ACV TDP'[ACV_Rolling_52_Wk_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R13W", MAX('ACV TDP'[ACV_Rolling_13_Wks_PY]),
+			 max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[ACV_Rolling_4_Wks_PY]),
+			    BLANK()
+			    )
+			
+			var tdppy =
+			SWITCH (
+			    TRUE(),
+			max('Time Calculation'[Time Calculation]) = "MTD", MAX('ACV TDP'[TDP_MTD_PY]),
+			max('Time Calculation'[Time Calculation]) = "QTD", MAX('ACV TDP'[TDP_QTD_PY]),
+			max('Time Calculation'[Time Calculation]) = "YTD", MAX('ACV TDP'[TDP_YTD_PY]),
+			max('Time Calculation'[Time Calculation]) = "LCM", MAX('ACV TDP'[TDP_LCM_PY]),
+			max('Time Calculation'[Time Calculation]) = "LCW", MAX('ACV TDP'[TDP_LCW_PY]),
+			max('Time Calculation'[Time Calculation]) = "R52W", MAX('ACV TDP'[TDP_Rolling_52_Wk_PY]),
+			max('Time Calculation'[Time Calculation]) = "R13W", MAX('ACV TDP'[TDP_Rolling_13_Wks_PY]),
+			max('Time Calculation'[Time Calculation]) = "R4W", MAX('ACV TDP'[TDP_Rolling_4_Wks_PY]),
+			BLANK()
+			     )
+			
+			Var CY = DIVIDE(tdpcy,acvcy)
+			Var PY = DIVIDE(tdppy,acvpy)  
+			
+			RETURN
+			(CY - PY)
+			```
+		formatString: #,0
+		lineageTag: 3bc210e5-909b-4b0f-bfd0-75e40279ea8b
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column dim_source_key
+		dataType: string
+		isHidden
+		lineageTag: 2269fb65-e382-4570-8ee9-6c043c115ebc
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0f56e0c8-d5a7-4c3a-90ce-4f09b0f3d74f
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8fe88636-6de9-41a1-96de-d5cb73c32691
+		summarizeBy: none
+		sourceColumn: dim_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 607b9e54-26ec-4e90-8c1a-ffe4f8e9bfae
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_channel_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9741d93d-f528-4cb2-83f4-af33b4e0feab
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8cde7c00-26e3-4af9-96b2-5650a72fa39d
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACV_MTD
+		dataType: decimal
+		isHidden
+		lineageTag: 884d0880-5a67-47e7-8561-5d83a982d5b5
+		summarizeBy: sum
+		sourceColumn: ACV_MTD
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_QTD
+		dataType: decimal
+		isHidden
+		lineageTag: e961623a-2bd1-4c2f-b497-56d8672c79b0
+		summarizeBy: sum
+		sourceColumn: ACV_QTD
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_YTD
+		dataType: decimal
+		isHidden
+		lineageTag: 90a7c91e-4c9c-478c-9a1a-121a293e194f
+		summarizeBy: sum
+		sourceColumn: ACV_YTD
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_MTD
+		dataType: decimal
+		isHidden
+		lineageTag: 76b42b24-048a-4381-8066-80f35c16439a
+		summarizeBy: sum
+		sourceColumn: TDP_MTD
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_QTD
+		dataType: decimal
+		isHidden
+		lineageTag: 1ecd894c-af3e-4e85-97ad-1d123ea61370
+		summarizeBy: sum
+		sourceColumn: TDP_QTD
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_YTD
+		dataType: decimal
+		isHidden
+		lineageTag: d44be765-3abd-40a8-9edf-19ccd516e41e
+		summarizeBy: sum
+		sourceColumn: TDP_YTD
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_LCM
+		dataType: decimal
+		isHidden
+		lineageTag: 98341fc4-990e-4b8d-818a-139c1aa11e40
+		summarizeBy: sum
+		sourceColumn: ACV_LCM
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_LCM_PY
+		dataType: decimal
+		isHidden
+		lineageTag: 11a7d32f-c097-415f-a537-0f40e5dd46be
+		summarizeBy: sum
+		sourceColumn: ACV_LCM_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_LCW
+		dataType: decimal
+		isHidden
+		lineageTag: 359929ed-f93c-4345-8dcb-9cfd41bee5a8
+		summarizeBy: sum
+		sourceColumn: ACV_LCW
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_LCW_PY
+		dataType: decimal
+		isHidden
+		lineageTag: 2b06eae6-cd3f-4792-9334-84b05c975731
+		summarizeBy: sum
+		sourceColumn: ACV_LCW_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_MTD_PY
+		dataType: decimal
+		isHidden
+		lineageTag: 293ce863-d937-4a0e-81e9-7c2eca436d99
+		summarizeBy: sum
+		sourceColumn: ACV_MTD_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_QTD_PY
+		dataType: decimal
+		isHidden
+		lineageTag: 05ab5694-abed-4fb9-94dd-4bd83ac483b6
+		summarizeBy: sum
+		sourceColumn: ACV_QTD_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_YTD_PY
+		dataType: decimal
+		isHidden
+		lineageTag: 7cc648ca-bf09-49cf-9113-4349474cb7b8
+		summarizeBy: sum
+		sourceColumn: ACV_YTD_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_Rolling_4_Wks
+		dataType: decimal
+		isHidden
+		lineageTag: 7f17a328-4ccf-4c8c-8955-526b731153fd
+		summarizeBy: sum
+		sourceColumn: ACV_Rolling_4_Wks
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_Rolling_4_Wks_PY
+		dataType: decimal
+		isHidden
+		lineageTag: cbaee009-141e-4291-b928-1dc83a24e033
+		summarizeBy: sum
+		sourceColumn: ACV_Rolling_4_Wks_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_Rolling_13_Wks
+		dataType: decimal
+		isHidden
+		lineageTag: 859f3728-7da9-40c6-9631-193aa9e70bb2
+		summarizeBy: sum
+		sourceColumn: ACV_Rolling_13_Wks
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_Rolling_13_Wks_PY
+		dataType: decimal
+		isHidden
+		lineageTag: 57c47f02-b172-4fd2-bbdd-ea415d178f6b
+		summarizeBy: sum
+		sourceColumn: ACV_Rolling_13_Wks_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_Rolling_52_Wk
+		dataType: decimal
+		isHidden
+		lineageTag: fafd415d-5787-4758-9314-1f986a97aca3
+		summarizeBy: sum
+		sourceColumn: ACV_Rolling_52_Wk
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACV_Rolling_52_Wk_PY
+		dataType: decimal
+		isHidden
+		lineageTag: cc844f0d-1993-445d-98c5-6ac58dfd91bb
+		summarizeBy: sum
+		sourceColumn: ACV_Rolling_52_Wk_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_LCM
+		dataType: decimal
+		isHidden
+		lineageTag: 93b7c8a7-f7d9-414c-ba4f-3f850e0b8170
+		summarizeBy: sum
+		sourceColumn: TDP_LCM
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_LCM_PY
+		dataType: decimal
+		isHidden
+		lineageTag: a660dde7-a3da-4e8c-b410-5914ae1218eb
+		summarizeBy: sum
+		sourceColumn: TDP_LCM_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_LCW
+		dataType: decimal
+		isHidden
+		lineageTag: c6acb4b1-dd73-4a7c-8bec-837ed30988a7
+		summarizeBy: sum
+		sourceColumn: TDP_LCW
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_LCW_PY
+		dataType: decimal
+		isHidden
+		lineageTag: 9ac83ec5-d910-4260-a948-fb19b2b16251
+		summarizeBy: sum
+		sourceColumn: TDP_LCW_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_MTD_PY
+		dataType: decimal
+		isHidden
+		lineageTag: 763540c5-de22-46e9-9b89-20c989ecbd6f
+		summarizeBy: sum
+		sourceColumn: TDP_MTD_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_QTD_PY
+		dataType: decimal
+		isHidden
+		lineageTag: 57ec2b77-e217-4a88-956e-77d926c172d1
+		summarizeBy: sum
+		sourceColumn: TDP_QTD_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_YTD_PY
+		dataType: decimal
+		isHidden
+		lineageTag: 6be80a43-c182-45f8-a4f1-2e5e80d24ba5
+		summarizeBy: sum
+		sourceColumn: TDP_YTD_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_Rolling_4_Wks
+		dataType: decimal
+		isHidden
+		lineageTag: db08cdc5-c936-42a6-b3b3-94182e02c25e
+		summarizeBy: sum
+		sourceColumn: TDP_Rolling_4_Wks
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_Rolling_4_Wks_PY
+		dataType: decimal
+		isHidden
+		lineageTag: cc63bb3f-e5b4-4c22-8fee-d6c2935abfa5
+		summarizeBy: sum
+		sourceColumn: TDP_Rolling_4_Wks_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_Rolling_13_Wks
+		dataType: decimal
+		isHidden
+		lineageTag: cdec8585-e82e-4c87-8477-8aec1c664e0e
+		summarizeBy: sum
+		sourceColumn: TDP_Rolling_13_Wks
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_Rolling_13_Wks_PY
+		dataType: decimal
+		isHidden
+		lineageTag: d495d7dd-ae47-4314-a430-e4ee4c5d7131
+		summarizeBy: sum
+		sourceColumn: TDP_Rolling_13_Wks_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_Rolling_52_Wk
+		dataType: decimal
+		isHidden
+		lineageTag: 643c4d12-f981-4c3c-944e-73162ac6a87c
+		summarizeBy: sum
+		sourceColumn: TDP_Rolling_52_Wk
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TDP_Rolling_52_Wk_PY
+		dataType: decimal
+		isHidden
+		lineageTag: 87b393af-9a52-4c3e-b450-971edbefaebc
+		summarizeBy: sum
+		sourceColumn: TDP_Rolling_52_Wk_PY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'ACV TDP' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    VW_Fact_Performance_ACV_TDP = Source{[Schema="niqrmsv3",Item="vw_Fact_Performance_ACV_TDP"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(VW_Fact_Performance_ACV_TDP, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"created_date", "updated_date"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

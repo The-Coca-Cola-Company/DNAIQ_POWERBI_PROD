@@ -1,0 +1,861 @@
+/// rms_mdl vw_Dim_Category
+table Product
+	lineageTag: c51dc5a2-992e-4531-9a50-b2dd5b59de27
+
+	column 'Product Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8e24affb-063c-4ad9-808a-f385421d2314
+		summarizeBy: none
+		sourceColumn: Product Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_source_key
+		dataType: string
+		isHidden
+		lineageTag: a528dc5a-4d9e-417e-a16b-ffeb57c9a5a5
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_cce_material_number
+		dataType: string
+		isHidden
+		lineageTag: cdb39012-615a-43ff-b21d-83c306593020
+		summarizeBy: none
+		sourceColumn: src_cce_material_number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Universal Product Code'
+		dataType: string
+		lineageTag: 88b7082e-be2a-4df1-b6f3-988b433076a0
+		summarizeBy: none
+		sourceColumn: Universal Product Code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Productid
+		dataType: string
+		lineageTag: f9cadee2-7313-48a8-a536-73a7830b4a23
+		summarizeBy: none
+		sourceColumn: Productid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_major_brand_code
+		dataType: string
+		lineageTag: 9c1a036a-51ec-4b0e-8f59-6ed22a6a8c39
+		summarizeBy: none
+		sourceColumn: src_major_brand_code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_nabdb_promoted_group_identifier
+		dataType: string
+		lineageTag: a5a218cb-3337-4b0e-a892-5e8f4fbf2f12
+		summarizeBy: none
+		sourceColumn: src_nabdb_promoted_group_identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Name'
+		dataType: string
+		lineageTag: 570b51c8-3d50-41e0-a33b-6d8cae5a60a7
+		summarizeBy: none
+		sourceColumn: Product Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_product_description
+		dataType: string
+		lineageTag: 4aa26443-d722-464f-a315-4548644ed383
+		summarizeBy: none
+		sourceColumn: src_product_description
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Category Business Unit'
+		dataType: string
+		lineageTag: 1e8cb071-c99e-44df-ba43-0d3d3d61538e
+		summarizeBy: none
+		sourceColumn: Category Business Unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beverage Category'
+		dataType: string
+		lineageTag: ba14e980-c8cb-4203-b954-b58ce4ec514a
+		summarizeBy: none
+		sourceColumn: Beverage Category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_beverage_product_code
+		dataType: string
+		lineageTag: c92cd24e-0095-4990-8039-d917d1b930ae
+		summarizeBy: none
+		sourceColumn: src_beverage_product_code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beverage Product'
+		dataType: string
+		lineageTag: 4e1fb336-67e4-4bcb-9677-19032f6621b0
+		summarizeBy: none
+		sourceColumn: Beverage Product
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beverage Product Package Code'
+		dataType: string
+		lineageTag: 077f3409-8d7f-4ae3-b13b-b3bb8c57a843
+		summarizeBy: none
+		sourceColumn: Beverage Product Package Code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_beverage_product_package_no_dashes_code
+		dataType: string
+		lineageTag: ce935663-ff94-4089-9d53-c904db9f4e1e
+		summarizeBy: none
+		sourceColumn: src_beverage_product_package_no_dashes_code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beverage Product Package'
+		dataType: string
+		lineageTag: 8021d042-a5c5-496b-85e8-2f695f638578
+		summarizeBy: none
+		sourceColumn: Beverage Product Package
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beverage Type'
+		dataType: string
+		lineageTag: 3917eb31-cd73-44d5-99ac-c3ea8b1b0ce9
+		summarizeBy: none
+		sourceColumn: Beverage Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_brand_code
+		dataType: string
+		lineageTag: 2d65306b-0421-46ab-a5d9-dffb5d6e3854
+		summarizeBy: none
+		sourceColumn: src_brand_code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_brand_name
+		dataType: string
+		lineageTag: c67656bc-913b-477a-b2ba-aedf1cdb8410
+		summarizeBy: none
+		sourceColumn: src_brand_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calorie Type'
+		dataType: string
+		lineageTag: ddfb3e57-4d0f-4f34-b378-ec05c2d6f0ff
+		summarizeBy: none
+		sourceColumn: Calorie Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'KO CCNA Selected Beverage Category'
+		dataType: string
+		lineageTag: bd127718-9527-40f8-8475-46895089127c
+		summarizeBy: none
+		sourceColumn: KO CCNA Selected Beverage Category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Immediate Consumption (1L or smaller) or Future Consumption (larger than 1L, and all multi-packs)
+	column 'Consumption Type'
+		dataType: string
+		lineageTag: 7bf8acfb-eec8-4aa5-b95b-dbd69e79aa2d
+		summarizeBy: none
+		sourceColumn: Consumption Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Container
+		dataType: string
+		lineageTag: 8ed78dbc-01c6-42eb-b00c-7f31b2f58d53
+		summarizeBy: none
+		sourceColumn: Container
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ELT Category'
+		dataType: string
+		lineageTag: a8f7fe51-01c2-4cd7-a499-bf3721cc811a
+		summarizeBy: none
+		sourceColumn: ELT Category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CBR Category'
+		dataType: string
+		lineageTag: cc29c3e5-7135-4b70-a190-b07af7595e2d
+		summarizeBy: none
+		sourceColumn: CBR Category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Flavor
+		dataType: string
+		lineageTag: 29862f9c-01ab-43b5-80cd-8da8a7ffde57
+		summarizeBy: none
+		sourceColumn: Flavor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Foodservice Product Category'
+		dataType: string
+		lineageTag: 51c4bf0e-41b2-4426-9c08-f410be41c00c
+		summarizeBy: none
+		sourceColumn: Foodservice Product Category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Manufacturer Name
+	column Manufacturer
+		dataType: string
+		lineageTag: b0a17c9a-f675-46c4-b9ff-198f6a1ad939
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_package_category_description
+		dataType: string
+		lineageTag: 0337aca2-e002-4e9f-b28b-2d8fe7e3718d
+		summarizeBy: none
+		sourceColumn: src_package_category_description
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_package_code
+		dataType: string
+		lineageTag: a8c747e8-c474-4cc1-bfa7-87d7350d69a2
+		summarizeBy: none
+		sourceColumn: src_package_code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_package_name
+		dataType: string
+		lineageTag: 14f8f7d4-16aa-4bb2-8a2b-0d0c511495b0
+		summarizeBy: none
+		sourceColumn: src_package_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_perf_mgmt_sub_category
+		dataType: string
+		lineageTag: 8d16a05e-b527-4c99-aeb5-acd51c1da335
+		summarizeBy: none
+		sourceColumn: src_perf_mgmt_sub_category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_product_type_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c1936e2-7db9-4d29-ab38-cdcdffbb40f4
+		summarizeBy: sum
+		sourceColumn: src_product_type_code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Type'
+		dataType: string
+		lineageTag: 51fbe2ee-1557-4df6-b7c6-08d11481f0e7
+		summarizeBy: none
+		sourceColumn: Product Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Route-to-Market
+		dataType: string
+		lineageTag: a050b89d-71ba-404f-88d8-9a3ac7d3c456
+		summarizeBy: none
+		sourceColumn: Route-to-Market
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sparkling vs. Non-Sparkling'
+		dataType: string
+		lineageTag: b12b4534-55ca-4c00-8a3d-9bf0117191f4
+		summarizeBy: none
+		sourceColumn: Sparkling vs. Non-Sparkling
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// System Brand
+	column 'System Brands'
+		dataType: string
+		lineageTag: 12089b61-0e2e-4486-9cec-9764f965664a
+		summarizeBy: none
+		sourceColumn: System Brands
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// ELT Category and CBR Category
+	column 'Total Category'
+		dataType: string
+		lineageTag: 7dcd9ab9-2fc0-4913-b05e-0f5424897898
+		summarizeBy: none
+		sourceColumn: Total Category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_trademark_code
+		dataType: string
+		lineageTag: 64443050-263a-4145-b6fa-9c5c7f8ce79d
+		summarizeBy: none
+		sourceColumn: src_trademark_code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_trademark_name
+		dataType: string
+		lineageTag: 49647387-98c3-4504-a5a9-443947f65912
+		summarizeBy: none
+		sourceColumn: src_trademark_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_case_universal_product_code
+		dataType: string
+		lineageTag: 7a8f7b83-772a-477a-bce5-506a1555ac65
+		summarizeBy: none
+		sourceColumn: src_case_universal_product_code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_each_universal_product_code
+		dataType: string
+		lineageTag: fa3a820a-8911-479a-83fe-ec4e1e279cb5
+		summarizeBy: none
+		sourceColumn: src_each_universal_product_code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_package_universal_product_code
+		dataType: string
+		lineageTag: e8dc8ca6-3691-424c-b5e0-5087e6e169e6
+		summarizeBy: none
+		sourceColumn: src_package_universal_product_code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Brand
+	column Brand
+		dataType: string
+		lineageTag: 52be7579-2bab-4b88-a891-166d55d65a01
+		summarizeBy: none
+		sourceColumn: Brand
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// ELT Category and CBR Category
+	column display_category
+		dataType: string
+		lineageTag: 8382e7d6-4f24-4c78-9041-fe8f06248da9
+		summarizeBy: none
+		sourceColumn: display_category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_manufacturer
+		dataType: string
+		lineageTag: 5aa8e19a-4992-4577-aad0-15c61d4f6693
+		summarizeBy: none
+		sourceColumn: display_manufacturer
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Short description of a package i.e., 12oz 12pk Can as shown in Nielsen's "Key Package"
+	column Package
+		dataType: string
+		lineageTag: 96a91a7a-32b0-4653-8b00-5a4343a11f57
+		summarizeBy: none
+		sourceColumn: Package
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Trademark Name
+	column Trademark
+		dataType: string
+		lineageTag: 616d3ff8-6467-473e-b254-82aa61461daf
+		summarizeBy: none
+		sourceColumn: Trademark
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Rollup of categories to Sparkling Soft Drinks
+	column SSD/Still
+		dataType: string
+		lineageTag: d5342707-15c9-47ae-aa8e-f742c018f596
+		summarizeBy: none
+		sourceColumn: SSD/Still
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'System Brands Groups'
+		dataType: string
+		lineageTag: b9365c9c-f554-414d-a39c-b01b4df2d3bc
+		summarizeBy: none
+		sourceColumn: System Brands Groups
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'System Brands Sub-Groups'
+		dataType: string
+		lineageTag: f18d79ee-4ab6-48a2-b465-c309020f1ae5
+		summarizeBy: none
+		sourceColumn: System Brands Sub-Groups
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nabdb_funding_group_identifier
+		dataType: string
+		lineageTag: 130894e9-ab92-4f9b-963a-8cae00880a26
+		summarizeBy: none
+		sourceColumn: nabdb_funding_group_identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NABDB Funding Group'
+		dataType: string
+		lineageTag: f32f7581-1d59-4a24-971a-5f6c858abda3
+		summarizeBy: none
+		sourceColumn: NABDB Funding Group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nabdb_target_set_identifier
+		dataType: string
+		lineageTag: 119f6793-93dd-40b1-a959-c631c65fbe33
+		summarizeBy: none
+		sourceColumn: nabdb_target_set_identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NABDB Package Group'
+		dataType: string
+		lineageTag: 478f6f19-17e0-4acb-a701-c0d7c3fd1fb2
+		summarizeBy: none
+		sourceColumn: NABDB Package Group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nabdb_forecast_group_identifier
+		dataType: string
+		lineageTag: 9b9a6764-c326-4a58-a9f6-f81a18a8d80c
+		summarizeBy: none
+		sourceColumn: nabdb_forecast_group_identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NABDB Forecast Group'
+		dataType: string
+		lineageTag: e919102b-5fb4-4f69-a8d1-0504dcd920ec
+		summarizeBy: none
+		sourceColumn: NABDB Forecast Group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nabdb_pricing_group_identifier
+		dataType: string
+		lineageTag: b7623a19-70d1-4104-9aa7-733dac24bc39
+		summarizeBy: none
+		sourceColumn: nabdb_pricing_group_identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nabdb_promoted_group_identifier
+		dataType: string
+		lineageTag: 3116b2c7-e8fe-4a5b-89e5-a1e356a010ed
+		summarizeBy: none
+		sourceColumn: nabdb_promoted_group_identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nabdb_sku_identifier
+		dataType: string
+		lineageTag: c04ac57f-f238-4748-afd1-20c9410fadcf
+		summarizeBy: none
+		sourceColumn: nabdb_sku_identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_ko_category_segment
+		dataType: string
+		lineageTag: 9c64b106-cd02-4543-b6ac-0544ecd4e369
+		summarizeBy: none
+		sourceColumn: src_ko_category_segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_ko_storage_type
+		dataType: string
+		lineageTag: 9d1e668f-b31f-4c02-8992-f601ab9ff4ce
+		summarizeBy: none
+		sourceColumn: src_ko_storage_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_cbr_sub_category
+		dataType: string
+		lineageTag: 24c355ab-62fc-4de4-8818-a9b6d84995ef
+		summarizeBy: none
+		sourceColumn: src_cbr_sub_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_cbr_category_group
+		dataType: string
+		lineageTag: 66e6dc70-b427-4704-b7c4-0a07c6b876f6
+		summarizeBy: none
+		sourceColumn: src_cbr_category_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_cbr_category_group_sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 036be81c-fa56-4c86-aead-5957f6b25276
+		summarizeBy: sum
+		sourceColumn: src_cbr_category_group_sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_innv_project_name
+		dataType: string
+		lineageTag: 86dde3f9-01ec-492b-a059-aa0f29b3577f
+		summarizeBy: none
+		sourceColumn: src_innv_project_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_innv_brand
+		dataType: string
+		lineageTag: e8f835d4-5fc1-4697-99ef-74571b59ba70
+		summarizeBy: none
+		sourceColumn: src_innv_brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_innv_package
+		dataType: string
+		lineageTag: 78f9fc0d-82f8-43f2-8818-80edc14b463f
+		summarizeBy: none
+		sourceColumn: src_innv_package
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_innv_created_brand_package_flavour
+		dataType: string
+		lineageTag: 73ae867c-6e7b-4a0f-9ff1-516afd5ba0e4
+		summarizeBy: none
+		sourceColumn: src_innv_created_brand_package_flavour
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_innv_upc
+		dataType: string
+		lineageTag: bf0adf6b-4d7c-4022-91df-38df8a9af950
+		summarizeBy: none
+		sourceColumn: src_innv_upc
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_innv_in_market_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 9cea6689-d52e-4a8f-9883-bf0f5c16002d
+		summarizeBy: none
+		sourceColumn: src_innv_in_market_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column src_innv_project_ref
+		dataType: string
+		lineageTag: 853e53fd-db77-4ea3-99d5-49a06d97332f
+		summarizeBy: none
+		sourceColumn: src_innv_project_ref
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_coresku_product_nm
+		dataType: string
+		lineageTag: d810e089-56be-4760-8791-cc996b50c5da
+		summarizeBy: none
+		sourceColumn: src_coresku_product_nm
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_coresku_tccs_bpp_id
+		dataType: string
+		lineageTag: 5c8922ed-fa91-4777-83fd-fb2219ffc213
+		summarizeBy: none
+		sourceColumn: src_coresku_tccs_bpp_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_coresku_core_sku_flag
+		dataType: string
+		lineageTag: fbc9a38c-939c-4c99-9b95-6f929ec5ec5e
+		summarizeBy: none
+		sourceColumn: src_coresku_core_sku_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_coresku_base_business_sku_flag
+		dataType: string
+		lineageTag: 5e4cb91d-c8ef-43b3-b2b8-4aa2ae755bca
+		summarizeBy: none
+		sourceColumn: src_coresku_base_business_sku_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_ous_key_pack
+		dataType: string
+		lineageTag: 3624d0c0-80b3-47c0-bf2c-27f9fed14400
+		summarizeBy: none
+		sourceColumn: display_ous_key_pack
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_major_brand_name
+		dataType: string
+		lineageTag: b55abdfc-ac8b-4d9b-a3f2-4e9919db69c6
+		summarizeBy: none
+		sourceColumn: src_major_brand_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ired_active_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 047a2ca2-6884-44fb-ade3-c9b353c840ea
+		summarizeBy: sum
+		sourceColumn: ired_active_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_active_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: aea27d9c-f1f1-4a3d-aa67-95e9be273af0
+		summarizeBy: sum
+		sourceColumn: invoice_active_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column som_active_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c23bcfa-ef83-44eb-aa2e-4495b00fbcfa
+		summarizeBy: sum
+		sourceColumn: som_active_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'TCCC Product Hierarchy'
+		lineageTag: d4c972b3-3855-47f0-8aa8-f00937d209a5
+
+		level Trademark
+			lineageTag: 8d5595ec-89a6-42a0-bc14-515139cedcd2
+			column: Trademark
+
+		level Brand
+			lineageTag: 6e963901-c061-40a1-9641-8f57c41795cf
+			column: Brand
+
+		level 'Beverage Product'
+			lineageTag: d5a8cf28-1cd7-445a-b896-6f5b15d2ffe4
+			column: 'Beverage Product'
+
+		level 'Beverage Product Package'
+			lineageTag: 032bc932-6727-4253-9f4e-d28d5022c4cc
+			column: 'Beverage Product Package'
+
+		changedProperty = IsHidden
+
+	hierarchy 'Product Hierarchy'
+		lineageTag: 4c223453-70ed-4fc0-a5b6-54d3b12b64e3
+
+		level 'System Brands'
+			lineageTag: 943dc976-0746-47be-8ab7-49a2743a06ad
+			column: 'System Brands'
+
+		level display_manufacturer
+			lineageTag: 78df6741-f5ef-4c80-af1a-033fea32fc3a
+			column: display_manufacturer
+
+		level Trademark
+			lineageTag: 45fbc4fa-cec9-43d9-a749-4640fee6b46c
+			column: Trademark
+
+		level Brand
+			lineageTag: a7be9b77-8b0f-46cf-8b6b-a3d380526b5c
+			column: Brand
+
+		changedProperty = IsHidden
+
+	partition Product = m
+		mode: import
+		source = ```
+				let
+				    Source = Sql.Database(Server, Database),
+				    rms_mdl_vw_dim_product = Source{[Schema="dbov3",Item="vw_Dim_Product"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(rms_mdl_vw_dim_product,{{"dim_product_key", "Product Key"}, {"src_system_brands", "System Brands"}, {"src_key_manufacturer", "Manufacturer"}, {"src_flavor", "Flavor"}, {"display_trademark", "Trademark"}, 
+				    {"display_brand", "Brand"}, {"src_route_to_market", "Route-to-Market"}, {"src_total_category", "Total Category"}, {"src_elt_category", "ELT Category"}, {"src_consumption", "Consumption Type"}, {"src_sparkling_non_sparkling", "Sparkling vs. Non-Sparkling"}, 
+				    {"src_beverage_type", "Beverage Type"}, {"src_container", "Container"}, {"display_package", "Package"}, {"src_cbr_category", "CBR Category"}, {"src_ccna_selected_beverage_category", "KO CCNA Selected Beverage Category"},
+				    {"sparkling_still", "SSD/Still"},{"src_calorie_name", "Calorie Type"},  {"src_foodservice_product_category_description", "Foodservice Product Category"}, 
+				     {"src_product_name", "Product Name"}, {"src_product_type_description", "Product Type"},   {"src_beverage_category_description", "Category Business Unit"},
+				     {"src_beverage_category_name", "Beverage Category"}, {"src_beverage_product_name", "Beverage Product"}, {"src_beverage_product_package_description", "Beverage Product Package"}, 
+				     {"src_beverage_product_package_code", "Beverage Product Package Code"},{"src_universal_product_code", "Universal Product Code"},{"src_productid", "Productid"},
+				     {"nabdb_forecast_group_description", "NABDB Forecast Group"},{"nabdb_funding_group_description", "NABDB Funding Group"},{"nabdb_target_set_description", "NABDB Package Group"}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns", "System Brands Groups", each if [System Brands] = "DR PEPPER SNAPPLE GRP" then "DR PEPPER SNAPPLE GRP" else if [System Brands] = "CCNA SYSTEM BRANDS" then "CCNA SYSTEM BRANDS" else if [System Brands] = "PBNA SYSTEM BRANDS" then "PBNA SYSTEM BRANDS" else "AO", type text),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Added Conditional Column", "System Brands Sub-Groups", each if [System Brands] = "DR PEPPER SNAPPLE GRP" then "DR PEPPER SNAPPLE GRP" else if [System Brands] = "CCNA SYSTEM BRANDS" then "CCNA SYSTEM BRANDS" else if [System Brands] = "PBNA SYSTEM BRANDS" then "PBNA SYSTEM BRANDS" else if [System Brands] = "PRIVATE LABEL" then "PRIVATE LABEL" else "AO"),
+				    #"Removed Duplicates" = Table.Distinct(#"Added Conditional Column1", {"Product Key"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Removed Duplicates","Unknown",null,Replacer.ReplaceValue,{"Productid"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Replaced Value",{"created_date", "updated_date"}) // , {"item", "Item"}
+				in
+				    #"Removed Columns"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

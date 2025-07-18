@@ -1,0 +1,69 @@
+table 'Core Skus'
+	isHidden
+	lineageTag: d964c489-36fe-4b89-9146-9b5908378c24
+
+	column 'TCCS BPP ID'
+		dataType: string
+		isHidden
+		lineageTag: 12431a16-ec8a-431d-b153-c9e8b7d3ee46
+		summarizeBy: none
+		sourceColumn: TCCS BPP ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Name'
+		dataType: string
+		isHidden
+		lineageTag: 7e0b892d-5118-48bd-b9ef-012deb5559fc
+		summarizeBy: none
+		sourceColumn: Product Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Base Business SKU?'
+		dataType: string
+		isHidden
+		lineageTag: c13e37c7-5808-4966-9be4-c9d176de84e6
+		summarizeBy: none
+		sourceColumn: Base Business SKU?
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Core SKU?'
+		dataType: string
+		isHidden
+		lineageTag: f768ea66-2f70-411b-929e-e7e982090f0b
+		summarizeBy: none
+		sourceColumn: Core SKU?
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Core Skus' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://groups.coca-cola.com/sites/DnAIQ/Shared%20Documents/General/Power%20BI%20Manual%20Files/Customer%20Invoice%20Model/All%20Core%20SKU's.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"SKU Description", type text}, {"Category", type text}, {"Brand/Flavor", type text}, {"Package", type text}, {"Additional Package Details", type text}, {"TCCS BPP ID", type text}, {"Core SKU?", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type1", "Product Name", each [#"Brand/Flavor"]&" "&[Package]),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Added Custom",{"TCCS BPP ID", "Core SKU?", "Base Business SKU?", "Product Name"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each [TCCS BPP ID] <> null and [TCCS BPP ID] <> "")
+				in
+				    #"Filtered Rows"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

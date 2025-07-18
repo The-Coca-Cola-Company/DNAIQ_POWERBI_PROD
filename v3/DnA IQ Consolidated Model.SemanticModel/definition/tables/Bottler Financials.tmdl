@@ -1,0 +1,208 @@
+table 'Bottler Financials'
+	lineageTag: 0ca21b68-81eb-492c-8298-33348c3a07d8
+
+	/// Bottler Revenue (DNNSI)
+	measure 'Dead Net Net Sales Income' = CALCULATE(SUM('Customer Invoice Measures'[bottler_dead_net_net_sales_income]))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: a32242de-327b-40cb-8c54-fb3d871f00e6
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Dead Net Net Sales Income - Plan' = CALCULATE(SUM('Overall Performance Plan'[revenue_plan]))
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: ce018cac-5860-4e81-a32e-5bbce05ea400
+
+	measure 'Dead Net Net Sales Income - Forecast' = CALCULATE(SUM(Forecast[revenue_forecast]))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 99f1429a-7a59-4353-bedd-abe373c64b72
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'NSR / UC' =
+			
+			DIVIDE(
+			    [Dead Net Net Sales Income],
+			    [Unit Cases])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 796ff0f4-4a37-4976-9b0c-eff73630844d
+
+	measure UCS/ADS = ```
+			
+			Var CY = YEAR(TODAY())
+			Var PY = CY-1
+			VAR ytd_week = 
+			    CALCULATE(
+			        max('Calendar'[Week Number]),
+			        'Calendar'[Fiscal Year] = CY)
+			
+			var CYSellingDays = [SC SellingDays CY2]
+			
+			var PYSellingDays = [SC SellingDays PY2]
+			
+			var AdjRatio = divide(CYSellingDays,PYSellingDays)
+			
+			var CYVolume = [SC Unit Cases CY]
+			var PYVolume = [SC Unit Cases PY]
+			
+			var ADS = DIVIDE(([SC Unit Cases CY] - [SC Unit Cases PY]*[SC Adj Ratio]),[SC Unit Cases PY]*[SC Adj Ratio])
+			
+			RETURN 
+			ADS
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 8d0118cb-4fbb-4744-8277-ee9ec654a3c1
+
+	measure 'Bottler Gross Profit / EQ Case' = divide([Bottler Gross Profit],[Unit Cases])
+		lineageTag: c63e3ed8-6bfd-40eb-aa5f-ea8d0b8dbd4d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Bottler Gross Profit / EQ Case - Plan' = divide([Bottler Gross Profit],[Unit Cases - Plan])
+		formatString: #,0.00
+		lineageTag: 3c10e14e-9934-4d11-b539-848029ed1fcb
+
+	measure 'Bottler Gross Profit / Standard Physical Case' = divide([Bottler Gross Profit],[Standard Cases])
+		lineageTag: 4baab38d-468d-4ec1-b758-826a5a8e2c10
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Bottler Gross Profit / Standard Physical Case - Plan' = divide([Bottler Gross Profit],[Standard Cases - Plan])
+		formatString: #,0.00
+		lineageTag: f68da0d8-d832-46e8-b04b-da38a66bd679
+
+	measure 'Bottler Revenue' = SUM('Customer Invoice Measures'[bottler_dead_net_net_sales_income])
+		lineageTag: b0f764c9-bd3f-4fdb-b740-11899d3b7a35
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Bottler Gross Profit
+	measure 'Bottler Gross Profit' =
+			
+			//[Dead Net Net Sales Income] - SUM('Customer Invoice Measures'[cogs])
+			[Bottler Dead Net Net Sales Income with Proxy] - SUM('Customer Invoice Measures'[cogs])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 453142e2-cac5-49cf-a95b-67fe67afc8eb
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Bottler Margin
+	measure 'Bottler Margin' = DIVIDE([Bottler Gross Profit], [Bottler Revenue])
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: d5461d9d-d270-4598-a944-3e8a2f22781b
+
+	measure 'SC SellingDays CY2' =
+			
+			Var CY = YEAR(TODAY())
+			Var PY = CY-1
+			var CYSellingDays = CALCULATE(DISTINCTCOUNT('Calendar'[dim_date_key]), 'Calendar'[selling_day_ind] = 1,'Calendar'[Fiscal Year] = CY)
+			var PYSellingDays = CALCULATE(DISTINCTCOUNT('Calendar'[dim_date_key]), 'Calendar'[selling_day_ind] = 1,'Calendar'[Fiscal Year] = PY)
+			
+			
+			VAR TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			RETURN
+			    IF(
+			        ISBLANK(TimePeriod),
+			        CYSellingDays,  -- When no selection, return the CYSellingDays
+			        CALCULATE(
+			            [SellingDays],
+			            'Time Calculation'[Time Calculation] = TimePeriod
+			        )
+			    )
+		displayFolder: Temporary Measures - to be deleted
+		lineageTag: 910593a6-1198-41cd-ad03-0a4665b1cc59
+
+	measure 'SC SellingDays PY2' =
+			
+			Var CY = YEAR(TODAY())
+			Var PY = CY-1
+			var CYSellingDays = CALCULATE(DISTINCTCOUNT('Calendar'[dim_date_key]), 'Calendar'[selling_day_ind] = 1,'Calendar'[Fiscal Year] = CY)
+			var PYSellingDays = CALCULATE(DISTINCTCOUNT('Calendar'[dim_date_key]), 'Calendar'[selling_day_ind] = 1,'Calendar'[Fiscal Year] = PY)
+			
+			
+			VAR TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			RETURN
+			    IF(
+			        ISBLANK(TimePeriod),
+			        PYSellingDays,  -- When no selection, return the CYSellingDays
+			        CALCULATE(
+			            [SellingDays],
+			            'Time Calculation'[Time Calculation] = TimePeriod & " PY"
+			        )
+			    )
+		displayFolder: Temporary Measures - to be deleted
+		lineageTag: 344ba6d8-5869-47d1-bfe1-678032f9d5a3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SC Unit Cases CY' = ```
+			
+			Var CY = YEAR(TODAY())
+			Var PY = CY-1
+			var CYVolume = CALCULATE([Unit Cases],'Calendar'[Fiscal Year]=CY)
+			var PYVolume = calculate([Unit Cases],'Calendar'[Fiscal Year]=PY)
+			
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			     IF(
+			        ISBLANK(TimePeriod),
+			        CYVolume,
+			            CALCULATE([Unit Cases],
+			        'Time Calculation'[Time Calculation] = TimePeriod ))
+			```
+		displayFolder: Temporary Measures - to be deleted
+		lineageTag: ec2ccbf3-41dd-4f3f-be87-7514321f9b12
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SC Unit Cases PY' = ```
+			
+			Var CY = YEAR(TODAY())
+			Var PY = CY-1
+			var CYVolume = CALCULATE([Unit Cases],'Calendar'[Fiscal Year]=CY)
+			var PYVolume = calculate([Unit Cases],'Calendar'[Fiscal Year]=PY)
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			     IF(
+			        ISBLANK(TimePeriod),
+			        PYVolume,
+			            CALCULATE([Unit Cases],
+			       'Time Calculation'[Time Calculation] = TimePeriod & " PY") )
+			```
+		displayFolder: Temporary Measures - to be deleted
+		lineageTag: 87aa25c1-676d-40c4-9e38-157a44ca2d9c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SC Adj Ratio' = DIVIDE([SC SellingDays CY2],[SC SellingDays PY2])
+		displayFolder: Temporary Measures - to be deleted
+		lineageTag: 24ad2187-fa6b-4174-9bb0-12afde665d51
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure SellingDays = CALCULATE(DISTINCTCOUNT('Calendar'[Calendar Date]), 'Calendar'[selling_day_ind] = 1)
+		displayFolder: Temporary Measures - to be deleted
+		lineageTag: 81dafc54-512d-4eab-9e84-fcfa14c68d11
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		formatString: 0
+		lineageTag: 9ceb7cee-39fc-4734-9dfc-5341afc2ed5f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Bottler Financials' = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = c5362e31b9ed4103b74881a017968069
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

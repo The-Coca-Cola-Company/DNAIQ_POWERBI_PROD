@@ -1,0 +1,7 @@
+role 'The Odom Corporation'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "The Odom Corporation"
+
+	annotation PBI_Id = 8b52a236dc844759a52a9c1840ab30a6
+

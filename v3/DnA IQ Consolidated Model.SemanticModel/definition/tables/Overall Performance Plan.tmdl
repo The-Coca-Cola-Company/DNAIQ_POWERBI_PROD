@@ -1,0 +1,656 @@
+/// dbov3.vw_Fact_Overall_Performance_Plan
+/// Group By: Bottler, Calendar, Channel, Customer, Product
+table 'Overall Performance Plan'
+	lineageTag: 3f65ac3f-070f-4634-86fb-caaf7036a7f0
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 2
+		incrementalGranularity: month
+		incrementalPeriods: 24
+		sourceExpression =
+			let
+			    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+			    vw_Fact_Overall_Performance_Plan = Source{[Schema="dbov3",Item="vw_Fact_Overall_Performance_Plan"]}[Data],
+			    #"Filtered Rows" = Table.SelectRows(vw_Fact_Overall_Performance_Plan, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+			    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"created_date"}),
+			    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns",{"dim_date_key", "dim_source_key", "dim_customer_key", "dim_product_key", "dim_outlet_key", "dim_bottler_key", "dim_channel_key", "standard_physical_cases_plan", "unit_cases_plan", "physical_cases_plan", "purchase_transactions_plan", "gallons_plan", "consumption_transactions_plan", "revenue", "revenue_plan", "revenue_py", "cogs", "cogs_plan", "true_rate_dnnsi_cy_ka_wk_py_act", "adj_factor_cy_ka_wk_py_act", "true_rate_dnnsi_cy_ka_wk_cy_plan", "adj_factor_cy_ka_wk_cy_plan", "true_rate_dnnsi_cy_plan_wk_cy_plan", "true_rate_dnnsi_py_act_wk_py_act", "true_rate_dnnsi_cy_ka_mnth_py_act", "adj_factor_cy_ka_mnth_py_act", "true_rate_dnnsi_cy_ka_mnth_cy_plan", "adj_factor_cy_ka_mnth_cy_plan", "true_rate_dnnsi_cy_plan_mnth_cy_plan", "true_rate_dnnsi_py_act_mnth_py_act", "curio_flag", "dim_territory_bottler_key"})
+			in
+			    #"Removed Other Columns"
+
+	measure 'True Rate - Plan (month)' =
+			SUMX(
+			    'Overall Performance Plan',
+			    'Overall Performance Plan'[true_rate_dnnsi_cy_ka_mnth_cy_plan] * 'Overall Performance Plan'[adj_factor_cy_ka_mnth_cy_plan])
+		formatString: #,0
+		lineageTag: 7f4c5ed1-b484-402a-a2b1-5a779cb76d30
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'True Rate - Plan (week)' =
+			SUMX(
+			    'Overall Performance Plan',
+			    'Overall Performance Plan'[true_rate_dnnsi_cy_ka_wk_cy_plan] * 'Overall Performance Plan'[adj_factor_cy_ka_wk_cy_plan])
+		formatString: #,0.00
+		lineageTag: ecc31e55-f16f-4895-8dc6-b1848db939e2
+
+		changedProperty = IsHidden
+
+	measure 'True Rate - Plan PY (month)' =
+			SUMX(
+			    'Overall Performance Plan',
+			    'Overall Performance Plan'[revenue_plan] * 'Overall Performance Plan'[adj_factor_cy_ka_mnth_cy_plan])
+		formatString: #,0
+		lineageTag: 154d763a-7665-4206-94dd-aa11bf12e7f7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'True Rate - Plan PY (week)' =
+			SUMX(
+			    'Overall Performance Plan',
+			    'Overall Performance Plan'[revenue_plan] * 'Overall Performance Plan'[adj_factor_cy_ka_wk_cy_plan])
+		formatString: #,0.00
+		lineageTag: 7b609346-3db7-43af-b268-4fc94f526a62
+
+		changedProperty = IsHidden
+
+	measure 'True Rate - PY (month)' =
+			SUMX(
+			    'Overall Performance Plan',
+			    'Overall Performance Plan'[revenue_py] * 'Overall Performance Plan'[adj_factor_cy_ka_mnth_py_act])
+		formatString: #,0
+		lineageTag: 95b23b16-f610-47c5-b786-ee14c52d2aed
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'True Rate - PY (week)' =
+			SUMX(
+			    'Overall Performance Plan',
+			    'Overall Performance Plan'[revenue_py] * 'Overall Performance Plan'[adj_factor_cy_ka_wk_py_act])
+		formatString: #,0.00
+		lineageTag: e54584e3-4c25-473c-b068-22b067aaf49d
+
+		changedProperty = IsHidden
+
+	measure 'True Rate % vs Plan (month)' = ```
+			
+			    DIVIDE(
+			    [True Rate - Plan (month)],
+			    [True Rate - Plan PY (month)])-1
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 5ce9a3e3-5887-4094-8516-a5b4a0cf959d
+
+		changedProperty = IsHidden
+
+	measure 'True Rate % vs Plan (week)' = ```
+			
+			    DIVIDE(
+			    [True Rate - Plan (week)],
+			    [True Rate - Plan PY (week)])-1
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 4654f205-f6be-4803-a5da-e3ffc3571261
+
+		changedProperty = IsHidden
+
+	measure 'True Rate % vs PY (month)' = ```
+			
+			    DIVIDE(
+			    [True Rate (month)],
+			    [True Rate - PY (month)])-1
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 02735148-d25e-4819-99b8-4a814016e5cf
+
+		changedProperty = IsHidden
+
+	measure 'True Rate % vs PY (week)' = ```
+			
+			    DIVIDE(
+			    [True Rate (week)],
+			    [True Rate - PY (week)])-1
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 69ec6d42-3b98-421a-a9eb-0aa5f17a6b6f
+
+		changedProperty = IsHidden
+
+	measure 'True Rate (month)' =
+			SUMX(
+			    'Overall Performance Plan',
+			    'Overall Performance Plan'[true_rate_dnnsi_cy_ka_mnth_py_act] * 'Overall Performance Plan'[adj_factor_cy_ka_mnth_py_act])
+		formatString: #,0
+		lineageTag: 1e301beb-c8a2-45f4-a500-1da97d8c48c6
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'True Rate (week)' =
+			SUMX(
+			    'Overall Performance Plan',
+			    'Overall Performance Plan'[true_rate_dnnsi_cy_ka_wk_py_act] * 'Overall Performance Plan'[adj_factor_cy_ka_wk_py_act])
+		formatString: #,0.00
+		lineageTag: c6ae42e3-8945-42af-9119-8743697f95c4
+
+		changedProperty = IsHidden
+
+	/// Mix is the impact of the shift from higher and lower revenue generating components based on changes in volume for brands, packages, channels, and/or customers. Mix is calculated on the absolute change in volume and revenue vs PY.
+	measure 'Rate Mix Cases' =
+			
+			
+			Var Revenue_Change = CALCULATE([Bottler Revenue], 'Time Calculation'[Time Calculation] = "YTD vs. PY (Percent)")
+			
+			Var Volume_Change = CALCULATE([Unit Cases], 'Time Calculation'[Time Calculation] = "YTD vs. PY (Percent)")
+			
+			Var Return_val = ABS(Revenue_Change) - ABS(Volume_Change) - ABS([True Rate % vs PY (month)])
+			
+			Return Return_val
+		formatString: #,0.00
+		lineageTag: ac0f7aa7-fc9a-46d5-b9e3-173109b599a6
+
+		changedProperty = IsHidden
+
+	measure 'Rate Mix Gallons' =
+			
+			
+			Var Revenue_Change = CALCULATE([Bottler Revenue], 'Time Calculation'[Time Calculation] = "YTD vs. PY (Percent)")
+			
+			Var Volume_Change = CALCULATE([Gallons], 'Time Calculation'[Time Calculation] = "YTD vs. PY (Percent)")
+			
+			Var Return_val = ABS(Revenue_Change) - ABS(Volume_Change) - ABS([True Rate % vs PY (month)])
+			
+			Return Return_val
+		formatString: #,0.00
+		lineageTag: 4d92a906-c108-40eb-99b9-e92b6a7572dd
+
+		changedProperty = IsHidden
+
+	measure 'True Rate % vs Plan' = ```
+			
+			
+			VAR results =
+			   IF((max('Time Calculation'[Time Calculation]) in {"LCM", "MTD", "QTD", "YTD", "LCW", "R4W", "R13W", "R52W" }) || not (ISFILTERED('Time Calculation'[Time Calculation])), 
+			    SWITCH (
+			        TRUE(),
+			        max('Time Calculation'[Time Calculation]) = "LCM", [True Rate % vs Plan (month)],
+			        max('Time Calculation'[Time Calculation]) = "MTD", [True Rate % vs Plan (month)],
+			        max('Time Calculation'[Time Calculation]) = "QTD", [True Rate % vs Plan (month)],
+			        max('Time Calculation'[Time Calculation]) = "YTD", [True Rate % vs Plan (month)],
+			        max('Time Calculation'[Time Calculation]) = "LCW", [True Rate % vs Plan (week)],
+			        max('Time Calculation'[Time Calculation]) = "R4W", [True Rate % vs Plan (week)],
+			        max('Time Calculation'[Time Calculation]) = "R13W", [True Rate % vs Plan (week)],
+			        max('Time Calculation'[Time Calculation]) = "R52W", [True Rate % vs Plan (week)],
+			        [True Rate % vs Plan (month)]
+			        ),
+			    BLANK())
+			    
+			RETURN
+			    results
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 1013ce18-c77f-4e4b-8caf-c064b5096c51
+
+		changedProperty = IsHidden
+
+	measure 'True Rate % vs PY' = ```
+			
+			
+			VAR results =
+			   IF((max('Time Calculation'[Time Calculation]) in {"LCM", "MTD", "QTD", "YTD", "LCW", "R4W", "R13W", "R52W" }) || not (ISFILTERED('Time Calculation'[Time Calculation])), 
+			    SWITCH (
+			        TRUE(),
+			        max('Time Calculation'[Time Calculation]) = "LCM", [True Rate % vs PY (month)],
+			        max('Time Calculation'[Time Calculation]) = "MTD", [True Rate % vs PY (month)],
+			        max('Time Calculation'[Time Calculation]) = "QTD", [True Rate % vs PY (month)],
+			        max('Time Calculation'[Time Calculation]) = "YTD", [True Rate % vs PY (month)],
+			        max('Time Calculation'[Time Calculation]) = "LCW", [True Rate % vs PY (week)],
+			        max('Time Calculation'[Time Calculation]) = "R4W", [True Rate % vs PY (week)],
+			        max('Time Calculation'[Time Calculation]) = "R13W", [True Rate % vs PY (week)],
+			        max('Time Calculation'[Time Calculation]) = "R52W", [True Rate % vs PY (week)],
+			        [True Rate % vs PY (month)]
+			        ),
+			    BLANK())
+			    
+			RETURN
+			    results
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 96968d90-87c7-454b-97d4-e1ee774f9de0
+
+		changedProperty = IsHidden
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 79702ef9-82d3-4ec7-aa02-46f7931bd4c7
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_source_key
+		dataType: string
+		isHidden
+		lineageTag: 1356fceb-79dd-4198-b08c-8a001db5ca13
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 699645ea-ed71-4275-9f2f-a5c827d37bd2
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2d2326a6-aa42-42fb-888a-49dc87b7954b
+		summarizeBy: none
+		sourceColumn: dim_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d8d75cfa-d25e-4d43-b68e-54308a6e33f7
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_channel_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7ab433ac-796d-4a10-8ddf-b59a689ee22e
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column standard_physical_cases_plan
+		dataType: decimal
+		isHidden
+		lineageTag: 1adac54e-07ef-4877-b51a-affd774ce136
+		summarizeBy: sum
+		sourceColumn: standard_physical_cases_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_cases_plan
+		dataType: decimal
+		isHidden
+		lineageTag: 6a6b35b8-4e1e-485f-b5e3-93f1385b1914
+		summarizeBy: sum
+		sourceColumn: unit_cases_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column physical_cases_plan
+		dataType: decimal
+		isHidden
+		lineageTag: de0cf3c8-4b0e-457b-b5b2-7a27baff598b
+		summarizeBy: sum
+		sourceColumn: physical_cases_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column purchase_transactions_plan
+		dataType: decimal
+		isHidden
+		lineageTag: 935332d0-b740-4b94-97c9-6d3b1e858e60
+		summarizeBy: sum
+		sourceColumn: purchase_transactions_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gallons_plan
+		dataType: decimal
+		isHidden
+		lineageTag: 2f6505a8-3900-45da-bbce-08c66db5fc14
+		summarizeBy: sum
+		sourceColumn: gallons_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column consumption_transactions_plan
+		dataType: decimal
+		isHidden
+		lineageTag: 5f300083-ad27-4318-a6ec-4a040037a6ed
+		summarizeBy: sum
+		sourceColumn: consumption_transactions_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column revenue
+		dataType: decimal
+		isHidden
+		lineageTag: 82cbb830-5def-4603-a964-cbf3f12cbca0
+		summarizeBy: sum
+		sourceColumn: revenue
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column revenue_plan
+		dataType: decimal
+		isHidden
+		lineageTag: a5da12f6-f657-44bf-a829-6d0d9c6a547a
+		summarizeBy: sum
+		sourceColumn: revenue_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cogs
+		dataType: decimal
+		isHidden
+		lineageTag: b14fa111-efa0-491a-a0f5-274eb1212acd
+		summarizeBy: sum
+		sourceColumn: cogs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cogs_plan
+		dataType: decimal
+		isHidden
+		lineageTag: 722148eb-9cd6-4acd-a9dc-64011d710a9c
+		summarizeBy: sum
+		sourceColumn: cogs_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column revenue_py
+		dataType: decimal
+		isHidden
+		lineageTag: 34f06eea-1a47-4e61-859e-bf8703076b71
+		summarizeBy: sum
+		sourceColumn: revenue_py
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_cy_ka_wk_py_act
+		dataType: decimal
+		isHidden
+		lineageTag: 7e227b9e-0e5c-4514-b455-f914e6f4811b
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_ka_wk_py_act
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column adj_factor_cy_ka_wk_py_act
+		dataType: decimal
+		isHidden
+		lineageTag: 5aabb914-68cd-4fcd-9387-8f914ca5caa7
+		summarizeBy: sum
+		sourceColumn: adj_factor_cy_ka_wk_py_act
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_cy_ka_wk_cy_plan
+		dataType: decimal
+		isHidden
+		lineageTag: 173b333e-6a3c-40cf-9547-018decbe97fc
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_ka_wk_cy_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column adj_factor_cy_ka_wk_cy_plan
+		dataType: decimal
+		isHidden
+		lineageTag: 0016a749-f1d1-4eb2-9131-cb934633146d
+		summarizeBy: sum
+		sourceColumn: adj_factor_cy_ka_wk_cy_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_cy_plan_wk_cy_plan
+		dataType: decimal
+		isHidden
+		lineageTag: e0bf7f48-3783-4977-adac-0c1e511e7354
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_plan_wk_cy_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_py_act_wk_py_act
+		dataType: decimal
+		isHidden
+		lineageTag: fc9c664a-e835-4c7f-80df-050143e01a02
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_py_act_wk_py_act
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_cy_ka_mnth_py_act
+		dataType: decimal
+		isHidden
+		lineageTag: b34620b2-6bf3-4418-9e48-f103a99bf2c4
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_ka_mnth_py_act
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column adj_factor_cy_ka_mnth_py_act
+		dataType: decimal
+		isHidden
+		lineageTag: d4dce579-cd02-4ae8-aa76-6f5bb4afd7df
+		summarizeBy: sum
+		sourceColumn: adj_factor_cy_ka_mnth_py_act
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_cy_ka_mnth_cy_plan
+		dataType: decimal
+		isHidden
+		lineageTag: f41c2bd6-64e1-4390-a8de-abd9e62565ae
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_ka_mnth_cy_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column adj_factor_cy_ka_mnth_cy_plan
+		dataType: decimal
+		isHidden
+		lineageTag: 439e2764-5c26-4fec-99e3-9c2c7b69f94e
+		summarizeBy: sum
+		sourceColumn: adj_factor_cy_ka_mnth_cy_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_cy_plan_mnth_cy_plan
+		dataType: decimal
+		isHidden
+		lineageTag: 464d8f23-5f8c-46e5-9c07-4675ee5755fe
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_plan_mnth_cy_plan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_py_act_mnth_py_act
+		dataType: decimal
+		isHidden
+		lineageTag: b1256689-0f69-4f06-bcc1-3ce9b312f7ed
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_py_act_mnth_py_act
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column curio_flag
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ab49e62a-dc6f-4999-9e46-b1b2a71dfcd7
+		summarizeBy: sum
+		sourceColumn: curio_flag
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_outlet_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d0ba7449-a1c8-47d0-9882-65abcb4f0e71
+		summarizeBy: none
+		sourceColumn: dim_outlet_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_territory_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f5495f0e-8a13-48fb-82b5-6c16d22e596e
+		summarizeBy: none
+		sourceColumn: dim_territory_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Overall Performance Plan' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    vw_Fact_Overall_Performance_Plan = Source{[Schema="dbov3",Item="vw_Fact_Overall_Performance_Plan"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(vw_Fact_Overall_Performance_Plan, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"created_date"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns",{"dim_date_key", "dim_source_key", "dim_customer_key", "dim_product_key", "dim_outlet_key", "dim_bottler_key", "dim_channel_key", "standard_physical_cases_plan", "unit_cases_plan", "physical_cases_plan", "purchase_transactions_plan", "gallons_plan", "consumption_transactions_plan", "revenue", "revenue_plan", "revenue_py", "cogs", "cogs_plan", "true_rate_dnnsi_cy_ka_wk_py_act", "adj_factor_cy_ka_wk_py_act", "true_rate_dnnsi_cy_ka_wk_cy_plan", "adj_factor_cy_ka_wk_cy_plan", "true_rate_dnnsi_cy_plan_wk_cy_plan", "true_rate_dnnsi_py_act_wk_py_act", "true_rate_dnnsi_cy_ka_mnth_py_act", "adj_factor_cy_ka_mnth_py_act", "true_rate_dnnsi_cy_ka_mnth_cy_plan", "adj_factor_cy_ka_mnth_cy_plan", "true_rate_dnnsi_cy_plan_mnth_cy_plan", "true_rate_dnnsi_py_act_mnth_py_act", "curio_flag", "dim_territory_bottler_key"})
+				in
+				    #"Removed Other Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_IsMQueryFoldable = True
+

@@ -1,0 +1,29 @@
+relationship AutoDetected_e9a57f4c-627d-4136-84d6-d52a1488666b
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'Customer Invoice Measures'.dim_outlet_key
+	toColumn: Outlets.dim_outlet_key
+
+relationship e422c5ff-04c4-2566-3172-b5cf99c4ba5c
+	fromColumn: 'Customer Invoice Measures'.dim_date_key
+	toColumn: Calendar.dim_date_key
+
+relationship 1079a1e8-1df7-2697-fd08-64a0f555c014
+	fromColumn: 'Customer Invoice Measures'.dim_invoice_key
+	toColumn: Invoice.dim_invoice_key
+
+relationship 2a98112c-f2e6-d94a-1399-368565920749
+	fromColumn: 'Customer Invoice Measures'.dim_sales_branch_key
+	toColumn: 'Bottlers & Distributors'.sales_branch_key
+
+relationship 17a875c6-04c0-b19e-9301-53d1fe1d72d2
+	fromColumn: 'Customer Invoice Measures'.dim_ko_product_key
+	toColumn: Products.dim_product_key
+
+relationship a080c083-f445-8ec1-e370-e8ead9a7deae
+	fromColumn: Products.'Universal Product Code'
+	toColumn: Innovations.'Universal Product Code'
+
+relationship 9a7b415f-c836-15f3-5329-be168a4efcb7
+	fromColumn: Products.'Beverage Product Package Code'
+	toColumn: 'Core Skus'.'TCCS BPP ID'
+

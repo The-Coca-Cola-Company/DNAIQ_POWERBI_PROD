@@ -1,0 +1,2065 @@
+/// iredv3.vw_Fact_Facing
+/// Group By: Bottler, Calendar, Channel, Customer, Location, Outlet, Product
+table 'iRED Measures'
+	lineageTag: d827ec56-f799-4b77-b467-7a8b01195859
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 3
+		incrementalGranularity: month
+		incrementalPeriods: 24
+		sourceExpression =
+			let
+			    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+			    ired_mdl_vw_fact_facing = Source{[Schema="iredv3",Item="vw_Fact_Facing"]}[Data],
+			    #"Filtered Rows" = Table.SelectRows(ired_mdl_vw_fact_facing, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+			    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"dim_date_key", "dim_product_key", "dim_location_key", "dim_outlet_key", "dim_bottler_key", "dim_customer_key", "dim_channel_key", "session_id", "scene_id", "facing"})
+			in
+			    #"Removed Other Columns"
+
+	measure Availability =
+			
+			(
+			    DIVIDE(
+			        DISTINCTCOUNT('iRED Measures'[session_id]),
+			        [Sample Size]
+			    )
+			)
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Actual
+		lineageTag: 815a6094-949d-4c1c-bdf6-5097f8d9c716
+
+		changedProperty = IsHidden
+
+	measure 'Availability CW' = ```
+			
+			/* Percentage with 1 decimal point; hide from user */
+			VAR year_wave_cw = MAX('Calendar'[Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Availability],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cw
+			    )
+			//return the results
+			RETURN results
+			```
+		displayFolder: Hidden Measures
+		lineageTag: 05741b88-9ca5-4a84-b994-4d6954cf6a9a
+
+		changedProperty = IsHidden
+
+	measure 'Availability PW' = ```
+			
+			/* Percentage with 1 decimal point; hide from user */
+			VAR year_wave_pw = MAX('Calendar'[Prior Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Availability],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_pw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Hidden Measures
+		lineageTag: 787da0e8-ebd4-42f1-b350-2a30e06c1bf8
+
+		changedProperty = IsHidden
+
+	measure 'Availability PY' = ```
+			
+			/* Percentage with 1 decimal point; hide from user */ 
+			VAR year_wave_py = MAX('Calendar'[Prior Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Availability],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_py
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Hidden Measures
+		lineageTag: 09bb76e0-2a1a-41cd-b1dd-5dda1127c4ca
+
+		changedProperty = IsHidden
+
+	measure 'Availability vs PW' =
+			
+			/* Decimal number with 2 decimal points; show to user */
+			    IF(
+			        OR(ISBLANK([Availability PW]),ISBLANK([Availability CW])),
+			        BLANK(),
+			        ([Availability CW]-[Availability PW])*100
+			    )
+		formatString: #,0
+		displayFolder: Change vs PW
+		lineageTag: 4d6bb9ab-013d-4e88-8b88-3118f41d286d
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Availability vs PY' =
+			
+			/* Decimal number with 2 decimal points; show to user */
+			    IF(
+			        OR(ISBLANK([Availability PY]),ISBLANK([Availability CW])),
+			        BLANK(),
+			        ([Availability CW]-[Availability PY])*100
+			    )
+		formatString: #,0
+		displayFolder: Change vs PY
+		lineageTag: a1d5ed66-df2f-4859-87eb-dab6b8d85a6c
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of Coolers' =
+			/* decimal, 2 decimal points, show to user */
+			VAR _AvgCoolersFiltered =
+			    IF (
+			        ISFILTERED ( 'Store Area'[Sub Location] )
+			            && LEFT ( SELECTEDVALUE ( 'Store Area'[Sub Location] ), 6 ) = "Cooler",
+			        DIVIDE (
+			            CALCULATE (
+			                DISTINCTCOUNT ( 'iRED Measures'[scene_id] ),
+			                FILTER ( 'Store Area', LEFT ( 'Store Area'[Sub Location], 6 ) = "Cooler" )
+			            ),
+			            [Sample Size]
+			        ),
+			        0
+			    )
+			VAR _AvgCoolers =
+			    DIVIDE (
+			        CALCULATE (
+			            DISTINCTCOUNT ( 'iRED Measures'[scene_id] ),
+			            FILTER ( 'Store Area', LEFT ( 'Store Area'[Sub Location], 6 ) = "Cooler" )
+			        ),
+			        [Sample Size]
+			    )
+			VAR _Results =
+			    SWITCH (
+			        TRUE (),
+			        HASONEFILTER ( 'Store Area'[Sub Location] ), _AvgCoolersFiltered,
+			        _AvgCoolers
+			    )
+			RETURN
+			    _Results
+		formatString: #,##0.00
+		displayFolder: Actual
+		lineageTag: 1e6c58f3-4673-4717-a3e0-5207afcfa915
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Coolers CW' =
+			/* decimal, 2 decimal points, hide from user */
+			VAR year_wave_cw =
+			    MAX ( 'Calendar'[Year Wave] )
+			VAR results =
+			    CALCULATE (
+			        [Average # of Coolers],
+			        REMOVEFILTERS ( 'Calendar' ),
+			        'Calendar'[Year Wave] = year_wave_cw
+			    ) //return the results
+			RETURN
+			    results
+		formatString: #,##0.00
+		displayFolder: Hidden Measures
+		lineageTag: de8fb185-6a4f-4761-a0af-116dfa611274
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Coolers PW' =
+			/* decimal, 2 decimal points, hide from user */
+			VAR year_wave_pw =
+			    MAX ( 'Calendar'[Prior Wave] )
+			VAR results =
+			    CALCULATE (
+			        [Average # of Coolers],
+			        REMOVEFILTERS ( 'Calendar' ),
+			        'Calendar'[Year Wave] = year_wave_pw
+			    ) //return the results
+			RETURN
+			    results
+		formatString: #,##0.00
+		displayFolder: Hidden Measures
+		lineageTag: 8c42c6b2-b8c0-44fd-bd9b-4e8498aef2ac
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Coolers PY' =
+			/* Decimal number with 2 decimal place, hide from user */
+			VAR year_wave_py =
+			    MAX ( 'Calendar'[Prior Year Wave] )
+			VAR results =
+			    CALCULATE (
+			        [Average # of Coolers],
+			        REMOVEFILTERS ( 'Calendar' ),
+			        'Calendar'[Year Wave] = year_wave_py
+			    ) //return the results
+			RETURN
+			    results
+		formatString: #,##0.00
+		displayFolder: Hidden Measures
+		lineageTag: 8f7d0483-2ba5-499c-85d7-8a66fe4b175e
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Coolers vs PW ' =
+			/* percentage, 1 decimal point, show to user */
+			IF (
+			    OR (
+			        ISBLANK ( [Average # of Coolers PW] ),
+			        ISBLANK ( [Average # of Coolers CW] )
+			    ),
+			    BLANK (),
+			    DIVIDE (
+			        [Average # of Coolers CW] - [Average # of Coolers PW],
+			        [Average # of Coolers PW]
+			    )
+			)
+		formatString: #,##0.0
+		displayFolder: Change vs PW
+		lineageTag: b7977379-bc3e-4f15-ab05-2c838ebbc623
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Coolers vs PY' =
+			/* Percentage with 1 decimal place, show to user */
+			IF (
+			    OR (
+			        ISBLANK ( [Average # of Coolers PY] ),
+			        ISBLANK ( [Average # of Coolers CW] )
+			    ),
+			    BLANK (),
+			    DIVIDE (
+			        [Average # of Coolers CW] - [Average # of Coolers PY],
+			        [Average # of Coolers PY]
+			    )
+			)
+		formatString: #,##0.0
+		displayFolder: Change vs PY
+		lineageTag: b594792b-0588-43ac-ae41-3cdd0b1f2fc8
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Displays' = ```
+			
+			 
+			VAR _AvgDisplaysFiltered =
+			 
+			IF (
+			    ISFILTERED('Store Area'[Location]) && SELECTEDVALUE('Store Area'[Location]) = "Display",
+			    DIVIDE (
+			        CALCULATE (
+			            DISTINCTCOUNT ( 'iRED Measures'[scene_id] ),
+			            FILTER('Store Area', 'Store Area'[Location] = "Display")
+			        ),
+			        [Sample Size]
+			    ),
+			    0
+			)
+			 
+			VAR _AvgDisplays =
+			DIVIDE (
+			        CALCULATE (
+			            DISTINCTCOUNT ( 'iRED Measures'[scene_id] ),
+			            FILTER('Store Area', 'Store Area'[Location] = "Display")
+			        ),
+			        [Sample Size]
+			    )
+			 
+			VAR _Results =
+			SWITCH(
+			    TRUE(),
+			    HASONEFILTER('Store Area'[Location]), _AvgDisplaysFiltered,
+			    _AvgDisplays
+			 
+			)
+			 
+			RETURN
+			_Results
+			```
+		formatString: #,0
+		displayFolder: Actual
+		lineageTag: 5c288e53-61b7-4d2a-bc03-4c1986a459cd
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of Displays CW' = ```
+			
+			/* Decimal number with 1 decimal place, hide from user */
+			VAR year_wave_cw = MAX('Calendar'[Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of Displays],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 5e42a09d-ab69-4881-8b00-3a4677882aa9
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of Displays PW' = ```
+			
+			/* Decimal number with 1 decimal place, hide from user */
+			VAR year_wave_pw = MAX('Calendar'[Prior Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of Displays],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_pw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: fc3dd446-853e-4625-a084-d7b869bc6650
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of Displays PY' = ```
+			
+			/* Decimal number with 1 decimal place, hide from user */
+			VAR year_wave_py = MAX('Calendar'[Prior Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of Displays],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_py
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 152ddb39-83ff-4456-a1da-bbc780be27f5
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of Displays vs PW' =
+			
+			/* Percentage with 1 decimal place , show to user*/
+			    IF(
+			        OR(ISBLANK([Average # of Displays PW]),ISBLANK([Average # of Displays CW])),
+			        BLANK(),
+			        DIVIDE([Average # of Displays CW]-[Average # of Displays PW],[Average # of Displays PW])
+			    )
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Change vs PW
+		lineageTag: c846f9f0-9ceb-4e27-8d85-381bb4ae3b06
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Displays vs PY' =
+			
+			/* Percentage with 1 decimal place, show to user */
+			    IF(
+			        OR(ISBLANK([Average # of Displays PY]),ISBLANK([Average # of Displays CW])),
+			        BLANK(),
+			        DIVIDE([Average # of Displays CW]-[Average # of Displays PY],[Average # of Displays PY])
+			    )
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Change vs PY
+		lineageTag: adfdede1-7214-4c8f-86b9-6451882f9aff
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Facings' =
+			
+			
+			VAR total_facings = [Total # of Facings]
+			
+			VAR total_stores = DISTINCTCOUNT('iRED Measures'[dim_outlet_key])
+			
+			VAR results = DIVIDE(total_facings, total_stores)
+			
+			RETURN results
+		formatString: #,0
+		displayFolder: Actual
+		lineageTag: c506108f-482a-4fdd-a5a3-978bc74275c7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of Facings CW' = ```
+			
+			/* Decimal number with 1 decimal place; hide from user */
+			VAR year_wave_cw = MAX('Calendar'[Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of Facings],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 487d5cca-a359-416a-b520-adcc3f5bdcb6
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// The number of facings divided by the sample size.
+	measure 'Average # of Facings per Survey' =
+			
+			DIVIDE ( [Total # of Facings], [Sample Size] )
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 5b791f05-6f4a-45e0-a458-5c73673f4a15
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of Facings PW' = ```
+			
+			/* Decimal number with 1 decimal place; hide from user */
+			VAR year_wave_pw = MAX('Calendar'[Prior Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of Facings],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_pw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 6f708f44-cd42-43fa-8eea-6dc4adc0fcab
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of Facings PY' = ```
+			
+			/* Decimal number with 1 decimal place; hide from user */
+			VAR year_wave_py = MAX('Calendar'[Prior Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of Facings],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_py
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: c2efdf48-21c7-43d0-95dc-bdd09c4e6060
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of Facings vs PW' =
+			
+			/* Percentage with 1 decimal place; show to user */
+			    IF(
+			        OR(ISBLANK([Average # of Facings PW]),ISBLANK([Average # of Facings CW])),
+			        BLANK(),
+			        DIVIDE([Average # of Facings CW]-[Average # of Facings PW],[Average # of Facings PW])
+			    )
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Change vs PW
+		lineageTag: 0841c77c-f97b-4823-a9fc-2ccdc9182aa5
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Facings vs PY' =
+			
+			/* Percentage with 1 decimal place; show to user */
+			    IF(
+			        OR(ISBLANK([Average # of Facings PY]),ISBLANK([Average # of Facings CW])),
+			        BLANK(),
+			        DIVIDE([Average # of Facings CW]-[Average # of Facings PY],[Average # of Facings PY])
+			    )
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Change vs PY
+		lineageTag: 26a9dd1d-29bb-4482-b3bf-df80f28ad904
+
+		changedProperty = IsHidden
+
+	measure 'Average # of SKUs' =
+			
+			DIVIDE ( [Total # of SKUs], [Sample Size] )
+		formatString: #,0
+		displayFolder: Actual
+		lineageTag: 0fb01914-8a24-4590-bae9-7a10655fc34a
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of SKUs CW' = ```
+			
+			/* Decimal number with 1 decimal place, hide from user */
+			VAR year_wave_cw = MAX('Calendar'[Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of SKUs],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: c505c307-ff17-4eec-bb39-aa9908850fab
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of SKUs PW' = ```
+			
+			/* Decimal number with 1 decimal place, hide from user */
+			VAR year_wave_pw = MAX('Calendar'[Prior Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of SKUs],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_pw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 3978b27c-ba8c-40ce-8453-87768e526fda
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of SKUs PY' = ```
+			
+			/* Decimal number with 1 decimal place, hide from user */
+			VAR year_wave_py = MAX('Calendar'[Prior Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of SKUs],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_py
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: fcc5881b-037b-4499-bada-c84ee360d14f
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Average # of SKUs vs PW' =
+			
+			/* Percentage with 1 decimal place, show to user */
+			    IF(
+			        OR(ISBLANK([Average # of SKUs PW]),ISBLANK([Average # of SKUs CW])),
+			        BLANK(),
+			        divide([Average # of SKUs CW]-[Average # of SKUs PW],[Average # of SKUs PW])
+			    )
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Change vs PW
+		lineageTag: 0cbf8d00-6397-42c2-b950-4272ff5b6439
+
+		changedProperty = IsHidden
+
+	measure 'Average # of SKUs vs PY' =
+			
+			/* Percentage with 1 decimal place, show to user */
+			    IF(
+			        OR(ISBLANK([Average # of SKUs PY]),ISBLANK([Average # of SKUs CW])),
+			        BLANK(),
+			        DIVIDE([Average # of SKUs CW]-[Average # of SKUs PY],[Average # of SKUs PY])
+			    )
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Change vs PY
+		lineageTag: a5259b89-d729-477f-a4ba-74a842b763e1
+
+		changedProperty = IsHidden
+
+	measure Category_Total_Facings = ```
+			
+			    CALCULATE (
+			        [Total # of Facings],
+			        VALUES ( 'Product'[ELT Category] ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[display_manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand]))
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 8b233f4c-9368-4a79-92d3-d8b81226c0e4
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Category_Total_Facings SSD' = ```
+			
+			    CALCULATE (
+			        [Total # of Facings],
+			        VALUES ( 'Product'[ELT Category] ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[display_manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand],
+				    'Product' [Flavor]
+			            
+			        ), 'Product'[SSD/Still] = "SSD"
+			)
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 3ac8d894-a6fc-438e-b854-f75c120b97ed
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Flavor Facings' = CALCULATE([Total # of Facings], 'Product'[SSD/Still] = "SSD")
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 2e944fe0-a063-426a-8100-39b5dbae951a
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Flavor SOVI' = DIVIDE([Flavor Facings], [Category_Total_Facings SSD])
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Hidden Measures
+		lineageTag: 137e7e57-cc4a-4c78-8522-94b94147a139
+
+		changedProperty = IsHidden
+
+	measure 'Sample Size' =
+			
+			VAR Results = CALCULATE(
+			   DISTINCTCOUNT('iRED Measures'[session_id]),
+			   ALL('Product'),
+			   ALL('Store Area')
+			)
+			
+			RETURN
+			SWITCH(
+			   TRUE(),
+			   [Total # of Facings] > 0, Results,
+			   BLANK()
+			)
+		formatString: #,0
+		displayFolder: Actual
+		lineageTag: 214510d7-e50b-497a-ad21-4a0441be09f2
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'slicer test' = IF([wave ending test],TRUE(),0)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		displayFolder: Hidden Measures
+		lineageTag: 8b74ccad-c349-4e96-8969-8e2663ec1261
+
+		changedProperty = IsHidden
+
+	measure 'SOVI CW' = ```
+			
+			/* Percentage with 1 decimal place; hide from user view */
+			VAR year_wave_cw = MAX('Calendar'[Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [SOVI],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Hidden Measures
+		lineageTag: 37b01ad6-53c3-425d-84b2-ea63e7644f93
+
+		changedProperty = IsHidden
+
+	measure 'SOVI PW' = ```
+			
+			/* Percentage with 1 decimal place; hide from user view */
+			VAR year_wave_pw = MAX('Calendar'[Prior Wave])
+			VAR results = 
+			    CALCULATE(
+			        [SOVI],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_pw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Hidden Measures
+		lineageTag: 87fd48ee-5150-4c41-ad08-d7a4709dfab8
+
+		changedProperty = IsHidden
+
+	measure 'SOVI PY' = ```
+			
+			/* Percentage with 1 decimal place; hide from user view */
+			VAR year_wave_py = MAX('Calendar'[Prior Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [SOVI],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_py
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Hidden Measures
+		lineageTag: be04987e-81a5-44c8-bad6-80913fe1fb46
+
+		changedProperty = IsHidden
+
+	measure 'SOVI Test' = ```
+			/*
+			The SOVI measure calculates the share of visual inventory.  The user must select/filter using the Product Hierarchy for the formula to work.  The numerator (1st variable) will always be the total facings for the selected/filtered product(s).  The denominator changes depending on the filters from the user.  It will be total facings for All Beverages if the user has selected/filtered against System Brands or Manufacturer (2nd variable).  The denominator will be total facings for all related categories if the user has selected/fitlered against a Trademark or Brand (3rd variable).  
+			
+			SOVI must be filtered by at least one field in the Product Hierarchy.  If you filter by System Brands or Manufacturer, SOVI is calculated against all beverage categories.  If you filter by Trademark or Brand, SOVI is calculated against only the categories that the products fall under.
+			*/
+			
+			//If it is being used, pre-load variables for CBR Share and ELT Share.   
+			VAR Total_Facings = [Total # of Facings]
+			
+			VAR ELT_Category_Total_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        VALUES ( 'Product'[ELT Category] ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[Manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			        )
+			    )
+			VAR CBR_Category_Total_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        VALUES ( 'Product'[CBR Category]),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[Manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			        )
+			    )
+			VAR Total_Beverage_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        ALL ( 'Product'[System Brands], 'Product'[Manufacturer] )
+			    )
+			
+			VAR Total_Beverage_Share =
+			    DIVIDE ( Total_Facings, Total_Beverage_Facings )
+			    
+			VAR ELT_Category_Share =
+			    DIVIDE ( Total_Facings, ELT_Category_Total_Facings )
+			    
+			VAR CBR_Category_Share =
+			    DIVIDE ( Total_Facings, CBR_Category_Total_Facings )
+			    
+			//Check for which Category is being filtered.
+			VAR cat_results = 
+			IF(
+			    ISFILTERED('Product'[ELT Category]),
+			    ELT_Category_Share,
+			        CBR_Category_Share)
+			    
+			VAR Results =
+			    SWITCH (TRUE(),
+			    ISFILTERED('Product'[Brand]), cat_results, 
+			    ISFILTERED('Product'[Trademark]), cat_results,
+			    ISFILTERED('Product'[Manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands]), Total_Beverage_Share, 1
+			    )
+			RETURN
+			    Results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 70634a33-471a-40a5-a915-1ff47647859c
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Sovi test variance' = [SOVI] - [SOVI Test]
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 19affc84-7f13-49ef-82f1-1326606ab788
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'SOVI vs PW' =
+			
+			/* Decimal number with 2 decimal places; show to user */
+			    IF(
+			        OR(ISBLANK([SOVI PW]),ISBLANK([SOVI CW])),
+			        BLANK(),
+			        ([SOVI CW]-[SOVI PW])*100
+			    )
+		formatString: #,0
+		displayFolder: Change vs PW
+		lineageTag: d54eb584-4c9a-4d9b-b761-21d56e0ef3cf
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'SOVI vs PY' =
+			
+			/* Decimal number with 2 decimal places; show to user */
+			    IF(
+			        OR(ISBLANK([SOVI PY]),ISBLANK([SOVI CY])),
+			        BLANK(),
+			        ([SOVI CY]-[SOVI PY])*100
+			    )
+		formatString: #,0
+		displayFolder: Change vs PY
+		lineageTag: 5d65b13c-46fa-4c43-8e29-b71701195454
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'SOVI with Flavor' = ```
+			
+			
+			/*
+			The SOVI measure calculates the share of visual inventory.  The user must select/filter using the Product Hierarchy for the formula to work.  The numerator (1st variable) will always be the total facings for the selected/filtered product(s).  The denominator changes depending on the filters from the user.  It will be total facings for All Beverages if the user has selected/filtered against System Brands or Manufacturer (2nd variable).  The denominator will be total facings for all related categories if the user has selected/fitlered against a Trademark or Brand (3rd variable).  
+			
+			SOVI must be filtered by at least one field in the Product Hierarchy.  If you filter by System Brands or Manufacturer, SOVI is calculated against all beverage categories.  If you filter by Trademark or Brand, SOVI is calculated against only the categories that the products fall under. If you filter by flavor, SOVI is calculated against SSD beverage categories or STILL beverage categories only.
+			*/
+			
+			VAR Total_Facings = [Total # of Facings]
+			
+			VAR Category_Total_Facings =
+			     CALCULATE ([Total # of Facings],
+			        VALUES ( 'Product'[ELT Category] ),
+			        ALL (
+			        'Product'[System Brands],
+			        'Product'[Manufacturer],
+			        'Product'[Trademark],
+			        'Product'[Brand]
+			       
+			
+			    )
+			) 
+			    
+			VAR Flavor_Category_Total_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        VALUES ( 'Product'[SSD/Still] ),
+			        ALL (
+			          'Product'[System Brands],
+			          'Product'[Manufacturer],
+			          'Product'[Trademark],
+			          'Product'[Flavor]
+			            
+			        )
+			)
+			         
+			VAR Total_Beverage_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        ALL ( 'Product'[System Brands], 'Product'[System Brands Groups], 'Product'[System Brands Sub-Groups], 'Product'[Manufacturer] )
+			    )
+			VAR Category_Share =
+			    DIVIDE ( Total_Facings, Category_Total_Facings )
+			
+			VAR Total_Beverage_Share =
+			    DIVIDE ( Total_Facings, Total_Beverage_Facings )
+			
+			VAR Flavor_Category_Share = 
+			    DIVIDE( Total_Facings, Flavor_Category_Total_Facings )
+			
+			VAR Results =
+			    SWITCH (TRUE(),
+			    ISFILTERED('Product'[Brand]), Category_Share, 
+			    ISFILTERED('Product'[Flavor]), Flavor_Category_Share,
+			    ISFILTERED('Product'[Trademark]), Category_Share,
+			    ISFILTERED('Product'[System Brands Sub-Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands]), Total_Beverage_Share,
+			    ISFILTERED('Product'[Manufacturer]), Total_Beverage_Share,
+			    1
+			    )
+			RETURN
+			    Results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 2df732c4-71c7-4521-bba9-5885e180d6c4
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total # of Facings' =
+			
+			SUMX ( 'iRED Measures', 'iRED Measures'[facing] )
+		formatString: #,0
+		displayFolder: Actual
+		lineageTag: ef2c9596-ed5b-4ee5-a29c-f9c4754c0255
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total # of SKUs' =
+			
+			DISTINCTCOUNT('iRED Measures'[dim_product_key])
+		formatString: #,0
+		displayFolder: Actual
+		lineageTag: 4e2ef1bd-65aa-49c8-8bbf-06f9971351b9
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total # of SKUs CW' = ```
+			
+			/* Whole number, 0 decimal places, comma for thousands separator, hide from user */
+			VAR year_wave_cw = MAX('Calendar'[Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Total # of SKUs],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: c82a6a85-4365-429d-970c-ae1bfb924813
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total # of SKUs PW' = ```
+			
+			/* Whole number, 0 decimal places, comma for thousands separator, hide from user */
+			VAR year_wave_pw = MAX('Calendar'[Prior Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Total # of SKUs],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_pw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: fad0660e-3677-4fce-b733-175f5de072d7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total # of SKUs PY' = ```
+			
+			/* Whole number, 0 decimal places, comma for thousands separator, hide from user */
+			VAR year_wave_py = MAX('Calendar'[Prior Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Total # of SKUs],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_py
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 6a316322-3282-446a-82be-2920185aef73
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total # of SKUs vs PW' =
+			
+			/* Percentage, 1 decimal place, show to user */
+			    IF(
+			        OR(ISBLANK([Total # of SKUs PW]),ISBLANK([Total # of SKUs CW])),
+			        BLANK(),
+			        DIVIDE([Total # of SKUs CW]-[Total # of SKUs PW],[Total # of SKUs PW])
+			    )
+		formatString: #,0
+		displayFolder: Change vs PW
+		lineageTag: 577c7cc8-383b-4edd-8e0f-0d646e2b3239
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total # of SKUs vs PY' =
+			
+			/* Percentage, 1 decimal place, show to user */
+			    IF(
+			        OR(ISBLANK([Total # of SKUs PY]),ISBLANK([Total # of SKUs])),
+			        BLANK(),
+			        DIVIDE([Total # of SKUs]-[Total # of SKUs PY],[Total # of SKUs PY])
+			    )
+		formatString: #,0
+		displayFolder: Change vs PY
+		lineageTag: 04bee254-932a-4380-8acc-8ea33b3cb4c6
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure Total_Beverage_Facings = ```
+			
+			    CALCULATE (
+			        [Total # of Facings],
+			        ALL ( 'Product'[System Brands], 'Product'[display_manufacturer] ))
+			```
+		formatString: #,0
+		displayFolder: Hidden Measures
+		lineageTag: 7d364751-fd9d-407e-9f8c-7de95e93d07e
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure User = USERPRINCIPALNAME()
+		displayFolder: Hidden Measures
+		lineageTag: b8d3b9ec-0c73-4c4d-a11d-8b97dfae3cec
+
+		changedProperty = IsHidden
+
+	measure 'wave ending test' = max('Calendar'[Wave Ending Date]) <= NOW()
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		displayFolder: Hidden Measures
+		lineageTag: 5c78a179-5fce-4fcb-be01-1d3d7fa1f3f4
+
+		changedProperty = IsHidden
+
+	/// Abs Growth vs PY in % of total facings (share of visual inventory)
+	measure 'SOVI Change' = [SOVI CY] - [SOVI PY]
+		formatString: #,0.0000
+		displayFolder: PRX Measures
+		lineageTag: fdbe80c0-f88a-435b-b835-b116ddac904a
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Displays CY' = ```
+			
+			/* Decimal number with 1 decimal place, hide from user */
+			VAR year_wave_cy = MAX('Calendar'[Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of Displays],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cy
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: PRX Measures
+		lineageTag: 83887c3e-36d3-486e-ba9d-bcda68dae1ad
+
+		changedProperty = IsHidden
+
+	/// % growth vs PY in Average count of displays
+	measure 'Avg # of Displays % Change' = DIVIDE([Average # of Displays CY] - [Average # of Displays PY], [Average # of Displays PY])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Measures
+		lineageTag: 31910edc-b126-4aa7-ae1e-1f7f9d32b641
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Facings on Display' = CALCULATE([Average # of Facings], 'Store Area'[Location] = "Display")
+		formatString: #,0.00
+		displayFolder: PRX Measures
+		lineageTag: ad48e0f7-12fc-4253-be0c-70e35d3a5692
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Facings on Display PY' = ```
+			
+			/* Decimal number with 1 decimal place; hide from user */
+			VAR year_wave_py = MAX('Calendar'[Prior Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of Facings on Display],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_py
+			    )
+			//return the results
+			RETURN results
+			```
+		displayFolder: PRX Measures
+		lineageTag: c07dea93-6f87-4b89-be01-efbcbac59d04
+
+		changedProperty = IsHidden
+
+	measure 'Average # of Facings on Display CY' = ```
+			
+			/* Decimal number with 1 decimal place; hide from user */
+			VAR year_wave_cy = MAX('Calendar'[Wave])
+			VAR results = 
+			    CALCULATE(
+			        [Average # of Facings on Display],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cy
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: PRX Measures
+		lineageTag: 376080ae-a62f-404f-a23a-d85d95249ada
+
+		changedProperty = IsHidden
+
+	/// % growth vs PY in Average count of facings on display
+	measure 'Avg # Facings on Display % Change' = DIVIDE([Average # of Facings on Display CY] - [Average # of Facings on Display PY], [Average # of Facings on Display PY])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Measures
+		lineageTag: 45271087-e074-4982-8054-a61f04d59073
+
+		changedProperty = IsHidden
+
+	measure 'SOVI CY' = ```
+			
+			/* Percentage with 1 decimal place; hide from user view */
+			VAR year_wave_cy = MAX('Calendar'[Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [SOVI],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cy
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0.0000%;-#,0.0000%;#,0.0000%
+		displayFolder: PRX Measures
+		lineageTag: 755963a3-f615-47a6-8748-5f2f6ce8e2f6
+
+		changedProperty = IsHidden
+
+	/// Share of Visual Inventory by the Competitive Set Facings for 'Cold' locations
+	measure SOVI = ```
+			
+			
+			/*
+			The SOVI measure calculates the share of visual inventory.  The user must select/filter using the Product Hierarchy for the formula to work.  The numerator (1st variable) will always be the total facings for the selected/filtered product(s).  The denominator changes depending on the filters from the user.  It will be total facings for All Beverages if the user has selected/filtered against System Brands or Manufacturer (2nd variable).  The denominator will be total facings for all related categories if the user has selected/fitlered against a Trademark or Brand (3rd variable).  
+			
+			SOVI must be filtered by at least one field in the Product Hierarchy.  If you filter by System Brands or Manufacturer, SOVI is calculated against all beverage categories.  If you filter by Trademark or Brand, SOVI is calculated against only the categories that the products fall under.
+			*/
+			
+			VAR Total_Facings = [Total # of Facings]
+			VAR Category_Total_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        VALUES ( 'Product'[CBR Category] ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Manufacturer],
+			            'Product'[Trademark],
+			            'Product'[src_trademark_name],
+			            'Product'[src_brand_name],
+			            'Product'[Brand]
+			
+			        )
+			    )
+			VAR Total_Beverage_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			       ALL ( 'Product'[System Brands], 'Product'[System Brands Groups], 'Product'[System Brands Sub-Groups], 'Product'[display_manufacturer], 'Product'[Manufacturer] )
+			
+			    )
+			VAR Category_Share =
+			    DIVIDE ( Total_Facings, Category_Total_Facings )
+			VAR Total_Beverage_Share =
+			    DIVIDE ( Total_Facings, Total_Beverage_Facings )
+			VAR Results =
+			    SWITCH (TRUE(),
+			    ISFILTERED('Product'[Brand]), Category_Share, 
+			    ISFILTERED('Product'[src_brand_name]), Category_Share, 
+			    ISFILTERED('Product'[Trademark]), Category_Share,
+			    ISFILTERED('Product'[src_trademark_name]), Category_Share,
+			    ISFILTERED('Product'[System Brands Sub-Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[display_manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[Manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands]), Total_Beverage_Share, 1
+			    )
+			RETURN 
+			IF([Total # of Facings] > 0 && [Sample Size] > 0,
+			Results,BLANK())
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Actual
+		lineageTag: 64543d90-29cc-4685-8546-271a38cfb505
+
+		changedProperty = IsHidden
+
+	measure 'Total SOVI' = ```
+			
+			
+			/*
+			The SOVI measure calculates the share of visual inventory.  The user must select/filter using the Product Hierarchy for the formula to work.  The numerator (1st variable) will always be the total facings for the selected/filtered product(s).  The denominator changes depending on the filters from the user.  It will be total facings for All Beverages if the user has selected/filtered against System Brands or Manufacturer (2nd variable).  The denominator will be total facings for all related categories if the user has selected/fitlered against a Trademark or Brand (3rd variable).  
+			
+			SOVI must be filtered by at least one field in the Product Hierarchy.  If you filter by System Brands or Manufacturer, SOVI is calculated against all beverage categories.  If you filter by Trademark or Brand, SOVI is calculated against only the categories that the products fall under.
+			*/
+			
+			VAR Total_Facings = [Total # of Facings]
+			VAR Category_Total_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        VALUES ( 'Product'[CBR Category] ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[display_manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			     
+			        )
+			    )
+			VAR Total_Beverage_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        ALL ( 'Product'[System Brands], 'Product'[display_manufacturer] )
+			    )
+			VAR Category_Share =
+			    DIVIDE ( Total_Facings, Category_Total_Facings )
+			VAR Total_Beverage_Share =
+			    DIVIDE ( Total_Facings, Total_Beverage_Facings )
+			VAR Results =
+			    SWITCH (TRUE(),
+			    ISFILTERED('Product'[Brand]), Category_Share, 
+			    ISFILTERED('Product'[Trademark]), Category_Share,
+			    ISFILTERED('Product'[display_manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands]), Total_Beverage_Share, 1
+			    )
+			RETURN
+			    Results
+			```
+		formatString: #,0.00
+		lineageTag: b69ca097-379f-4caf-830c-ddce32a164c5
+
+		changedProperty = IsHidden
+
+	measure 'SOVI - ELT' = ```
+			
+			
+			/*
+			The SOVI measure calculates the share of visual inventory.  The user must select/filter using the Product Hierarchy for the formula to work.  The numerator (1st variable) will always be the total facings for the selected/filtered product(s).  The denominator changes depending on the filters from the user.  It will be total facings for All Beverages if the user has selected/filtered against System Brands or Manufacturer (2nd variable).  The denominator will be total facings for all related categories if the user has selected/fitlered against a Trademark or Brand (3rd variable).  
+			
+			SOVI must be filtered by at least one field in the Product Hierarchy.  If you filter by System Brands or Manufacturer, SOVI is calculated against all beverage categories.  If you filter by Trademark or Brand, SOVI is calculated against only the categories that the products fall under.
+			*/
+			
+			VAR Total_Facings = [Total # of Facings]
+			VAR Category_Total_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        VALUES ( 'Product'[ELT Category] ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			
+			        )
+			    )
+			VAR Total_Beverage_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			       ALL ( 'Product'[System Brands], 'Product'[System Brands Groups], 'Product'[System Brands Sub-Groups], 'Product'[display_manufacturer], 'Product'[Manufacturer] )
+			
+			    )
+			VAR Category_Share =
+			    DIVIDE ( Total_Facings, Category_Total_Facings )
+			VAR Total_Beverage_Share =
+			    DIVIDE ( Total_Facings, Total_Beverage_Facings )
+			VAR Results =
+			    SWITCH (TRUE(),
+			    ISFILTERED('Product'[Brand]), Category_Share, 
+			    ISFILTERED('Product'[Trademark]), Category_Share,
+			    ISFILTERED('Product'[System Brands Sub-Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[display_manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[Manufacturer]), Total_Beverage_Share,
+			
+			    ISFILTERED('Product'[System Brands]), Total_Beverage_Share, 1
+			    )
+			RETURN
+			    Results
+			```
+		formatString: #,0
+		displayFolder: Actual
+		lineageTag: b6fb60c6-6562-4d8f-9645-0d6435d8707a
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total SOVI - ELT' = ```
+			
+			
+			/*
+			The SOVI measure calculates the share of visual inventory.  The user must select/filter using the Product Hierarchy for the formula to work.  The numerator (1st variable) will always be the total facings for the selected/filtered product(s).  The denominator changes depending on the filters from the user.  It will be total facings for All Beverages if the user has selected/filtered against System Brands or Manufacturer (2nd variable).  The denominator will be total facings for all related categories if the user has selected/fitlered against a Trademark or Brand (3rd variable).  
+			
+			SOVI must be filtered by at least one field in the Product Hierarchy.  If you filter by System Brands or Manufacturer, SOVI is calculated against all beverage categories.  If you filter by Trademark or Brand, SOVI is calculated against only the categories that the products fall under.
+			*/
+			
+			VAR Total_Facings = [Total # of Facings]
+			VAR Category_Total_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        VALUES ( 'Product'[ELT Category] ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[display_manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			     
+			        )
+			    )
+			VAR Total_Beverage_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        ALL ( 'Product'[System Brands], 'Product'[display_manufacturer] )
+			    )
+			VAR Category_Share =
+			    DIVIDE ( Total_Facings, Category_Total_Facings )
+			VAR Total_Beverage_Share =
+			    DIVIDE ( Total_Facings, Total_Beverage_Facings )
+			VAR Results =
+			    SWITCH (TRUE(),
+			    ISFILTERED('Product'[Brand]), Category_Share, 
+			    ISFILTERED('Product'[Trademark]), Category_Share,
+			    ISFILTERED('Product'[display_manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands]), Total_Beverage_Share, 1
+			    )
+			RETURN
+			    Results
+			```
+		formatString: #,0.00
+		lineageTag: 47f25317-ac10-4a13-b305-1234aee7b575
+
+	measure 'ASB Facings' = DIVIDE( [Total # of Facings],[SOVI CW])
+		formatString: #,0
+		displayFolder: Gains_Drians
+		lineageTag: d09ce90c-ef03-4b3c-bda3-161d630912fd
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'ASB Facings Mix' = ```
+			
+			VAR ASB_Total_Trademark = SUMX( VALUES('Product'[Trademark]), [ASB Facings] )
+			VAR ASB_Total_Package = SUMX( VALUES('Product'[Package]), [ASB Facings] )
+			
+			RETURN SWITCH (
+			        TRUE (),
+			        HASONEFILTER ( 'Product'[Trademark] ), 
+			                                DIVIDE([ASB Facings], ASB_Total_Trademark),
+			        HASONEFILTER ( 'Product'[Package] ),
+			                                DIVIDE([ASB Facings],ASB_Total_Package)
+			                                )
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Gains_Drians
+		lineageTag: 574414c4-145d-4a0a-9a08-88c8d0b95ceb
+
+	measure 'Weighted SOVI Change' = [SOVI vs PW] * [ASB Facings Mix consolidated]
+		formatString: #,0
+		displayFolder: Gains_Drians
+		lineageTag: bac1d434-d267-4623-8136-e8a140b2b990
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'ASB Customer Facings Mix' =
+			
+			/* percentage, 2 decimal points, hide from user */
+			VAR Total_ASB_Total_Facings =
+			 CALCULATE (
+			        [Total # of Facings],
+			        ALLSELECTED(
+			            'Outlet'[Bottler Tier],
+			            'Outlet'[Bottler],
+			            'Outlet'[Bottler MU],
+			            'Outlet'[Sales Center],
+			            'Outlet'[Channel]
+			        ),
+			        ALLSELECTED('Store Area'),
+			        ALLSELECTED(
+			            'Product'[ELT Category],
+			            'Product'[src_perf_mgmt_sub_category],
+			            'Product'[CBR Category],
+			            'Product'[Package],
+			            'Product'[Route-to-Market],
+			            'Product'[SSD/Still],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			            ),
+			        ALL ( 'Product'[System Brands], 'Product'[Manufacturer] ),
+			        ALL(Outlet[Customer], Outlet[Customer Banner])
+			    )
+			VAR Row_ASB_Total_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        ALL ( 'Product'[System Brands], 'Product'[Manufacturer] )
+			    )
+			VAR Results =
+			    DIVIDE(Row_ASB_Total_Facings,Total_ASB_Total_Facings)
+			RETURN
+			    Results
+		formatString: #,0
+		displayFolder: Backup
+		lineageTag: ceec31a2-a402-4b23-b668-055f22884de9
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'ASB Customer Facings Mix CW' = ```
+			
+			/* percentage, 2 decimal points, show to user */
+			VAR year_wave_cw = MAX('Calendar'[Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [ASB Customer Facings Mix],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Backup
+		lineageTag: d437c418-5744-4d6f-9730-d64a0654afd7
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'ASB Package Facings Mix' = ```
+			
+			/* percentage, 2 decimal points, hide from user */
+			VAR Total_ASB_Total_Facings =
+			 CALCULATE (
+			        [Total # of Facings],
+			        ALLSELECTED('Outlet'),
+			        ALLSELECTED('Store Area'),
+			        ALLSELECTED(
+			            'Product'[ELT Category],
+			            'Product'[src_perf_mgmt_sub_category],
+			            'Product'[CBR Category],
+			            'Product'[Route-to-Market],
+			            'Product'[SSD/Still],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			            ),
+			        ALL ( 'Product'[System Brands], 
+			            'Product'[Manufacturer], 
+			            'Product'[Package] )
+			    )
+			VAR Row_ASB_Total_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        ALL ( 'Product'[System Brands], 'Product'[Manufacturer] )
+			    )
+			VAR Results =
+			    DIVIDE(Row_ASB_Total_Facings,Total_ASB_Total_Facings)
+			RETURN
+			    Results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Backup
+		lineageTag: f934db68-d0c8-4cc7-8f9a-3572b95e9f32
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'ASB Package Facings Mix CW' = ```
+			
+			/* percentage, 2 decimal points, show to user */
+			VAR year_wave_cw = MAX('Calendar'[Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [ASB Package Facings Mix],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Backup
+		lineageTag: 23ce53db-23ca-445a-adf8-82aa898551d9
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'ASB Trademark Facings Mix' =
+			
+			/* percentage, 2 decimal points, hide from user */
+			VAR Total_ASB_Total_Facings =
+			 CALCULATE (
+			        [Total # of Facings],
+			        ALLSELECTED('Outlet'),
+			        ALLSELECTED('Store Area'),
+			        ALLSELECTED(
+			            'Product'[ELT Category],
+			            'Product'[src_perf_mgmt_sub_category],
+			            'Product'[CBR Category],
+			            'Product'[Package],
+			            'Product'[Route-to-Market],
+			            'Product'[SSD/Still]
+			            ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[Manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			        )
+			    )
+			VAR Category_ASB_Total_Facings =
+			    CALCULATE (
+			        [Total # of Facings],
+			        VALUES ( 'Product'[ELT Category] ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[Manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			        )
+			    )
+			VAR Results =
+			    DIVIDE(Category_ASB_Total_Facings,Total_ASB_Total_Facings)
+			RETURN
+			    Results
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Backup
+		lineageTag: 48ad27f4-832f-4bcf-92b7-5e2c7c0434c2
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'ASB Trademark Facings Mix CW' = ```
+			
+			/* percentage, 2 decimal points, show to user */
+			VAR year_wave_cw = MAX('Calendar'[Year Wave])
+			VAR results = 
+			    CALCULATE(
+			        [ASB Trademark Facings Mix],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Year Wave] = year_wave_cw
+			    )
+			//return the results
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Backup
+		lineageTag: bc383940-72ac-4ff7-9701-9c1f76f2cdbd
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'SOVI % Change Contribution VS PW Customer' = ```
+			
+			    DIVIDE(
+			        [SOVI Change Contribution vs PW Customer],
+			        CALCULATE([SOVI Change Contribution vs PW Customer], ALLSELECTED())
+			    )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Backup
+		lineageTag: 5380ae33-53d2-44ec-bfa6-03547215ef78
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'SOVI % Change Contribution VS PW Package' = ```
+			
+			    DIVIDE(
+			        [SOVI Change Contribution vs PW Package],
+			        CALCULATE([SOVI Change Contribution vs PW Package], ALLSELECTED())
+			    )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Backup
+		lineageTag: d6dc0d97-609c-4256-9957-7ba023e9bb5e
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'SOVI % Change Contribution VS PW Trademark' = ```
+			
+			    DIVIDE(
+			        [SOVI Change Contribution vs PW Trademark],
+			        CALCULATE([SOVI Change Contribution vs PW Trademark], ALLSELECTED())
+			    )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Backup
+		lineageTag: 00f24ae6-5fab-451e-8eb2-07f1abebb539
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'SOVI % Change Contribution VS PY Customer' = ```
+			
+			    DIVIDE(
+			        [SOVI Change Contribution vs PY Customer],
+			        CALCULATE([SOVI Change Contribution vs PY Customer], ALLSELECTED())
+			    )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Backup
+		lineageTag: 474cca0b-7365-4a76-a091-e4e5a109478f
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'SOVI % Change Contribution VS PY Package' = ```
+			
+			    DIVIDE(
+			        [SOVI Change Contribution vs PY Package],
+			        CALCULATE([SOVI Change Contribution vs PY Package], ALLSELECTED())
+			    )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Backup
+		lineageTag: e913afed-4b4f-4710-8198-93368326364c
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'SOVI % Change Contribution VS PY Trademark' = ```
+			
+			    DIVIDE(
+			        [SOVI Change Contribution vs PY Trademark],
+			        CALCULATE([SOVI Change Contribution vs PY Trademark], ALLSELECTED())
+			    )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Backup
+		lineageTag: 55efb23e-12f5-4931-aed9-9060c78abeb1
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'SOVI Change Contribution vs PW Customer' =
+			
+			    SUMX(
+				    VALUES(Outlet[Customer]),
+			        [SOVI vs PW] * [ASB Customer Facings Mix CW]
+			    )
+		formatString: #,0
+		displayFolder: Backup
+		lineageTag: 9c73bf62-9e6d-4b1e-a16f-a06b62b52e9c
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'SOVI Change Contribution vs PW Package' = ```
+			
+			    SUMX(
+			        VALUES('Product'[Package]),
+			        [SOVI vs PW] * [ASB Package Facings Mix CW]
+			    )
+			```
+		formatString: #,0
+		displayFolder: Backup
+		lineageTag: 2f51c374-c418-4eb4-8655-f85f07f69d27
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'SOVI Change Contribution vs PW Trademark' = ```
+			
+			    SUMX(
+			        VALUES('Product'[Trademark]),
+			        [SOVI vs PW] * [ASB Trademark Facings Mix CW]
+			    )
+			```
+		formatString: #,0
+		displayFolder: Backup
+		lineageTag: cb1d0805-29fa-42eb-b489-c96c3bc66f86
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'SOVI Change Contribution vs PY Customer' =
+			
+			    SUMX(
+				    VALUES(Outlet[Customer]),
+			        [SOVI vs PY] * [ASB Customer Facings Mix CW]
+			    )
+		formatString: #,0
+		displayFolder: Backup
+		lineageTag: c7c723c6-bbe2-4446-af0f-dc7d3032cbb2
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'SOVI Change Contribution vs PY Package' = ```
+			
+			    SUMX(
+			        VALUES('Product'[Package]),
+			        [SOVI vs PY] * [ASB Package Facings Mix CW]
+			    )
+			```
+		formatString: #,0
+		displayFolder: Backup
+		lineageTag: 0bbbe862-c094-4e81-a803-76127bb487c5
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'SOVI Change Contribution vs PY Trademark' = ```
+			
+			    SUMX(
+			        VALUES('Product'[Trademark]),
+			        [SOVI vs PY] * [ASB Trademark Facings Mix CW]
+			    )
+			```
+		formatString: #,0
+		displayFolder: Backup
+		lineageTag: 9f8838a2-4132-4703-bc1d-d8f6c2a8a349
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'ASB Facings Mix consolidated' = ```
+			
+			SWITCH (
+			        TRUE (),
+			        HASONEFILTER ( 'Product'[Trademark] ), 
+			                                DIVIDE([ASB Facings], CALCULATE(SUMX(VALUES('Product'[Trademark]),
+			                                [ASB Facings]), ALL('Product'[Trademark]))),
+			        HASONEFILTER ( 'Product'[Package] ),
+			                                DIVIDE([ASB Facings], CALCULATE(SUMX(VALUES('Product'[Trademark]),
+			                                [ASB Facings]), ALL('Product'[Package]))))
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Gains_Drians
+		lineageTag: 50388c82-7956-42fd-abe2-cf7254ac0744
+
+	measure 'SOVI Change Contribution vs PW Consolidated' = ```
+			
+			SWITCH (
+			        TRUE (),
+			        HASONEFILTER ( 'Product'[Trademark] ), 
+			                            SUMX(
+			                                VALUES('Product'[Trademark]),
+			                                [SOVI vs PW] * [ASB Facings Mix consolidated]
+			                            ),
+			        HASONEFILTER ( 'Product'[Package] ), 
+			                            SUMX(
+			                                VALUES('Product'[Package]),
+			                                [SOVI vs PW] * [ASB Facings Mix consolidated]
+			                            )
+			)
+			```
+		formatString: #,0.00
+		lineageTag: 32b7d4d6-e097-48df-817e-9a5150a929c9
+
+	measure 'SOVI % Change Contribution VS PW Consolidated' = ```
+			
+			    DIVIDE(
+			        [SOVI Change Contribution vs PW Consolidated],
+			        CALCULATE([SOVI Change Contribution vs PW Consolidated], ALLSELECTED())
+			    )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 5f9e9677-1c87-4793-bd29-f348be1be1a9
+
+	measure 'SOVI % Change Contribution VS PW Gains Consolidated' = ```
+			
+			    IF([SOVI Change Contribution vs PW Consolidated] > 0 ,
+			        DIVIDE([SOVI Change Contribution vs PW Consolidated],
+			            CALCULATE([SOVI Change Contribution vs PW Consolidated], ALLSELECTED(),FILTER('iRED Measures',[SOVI Change Contribution vs PW Consolidated] > 0)))
+			    )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b3557040-b3a9-43bf-920b-4c44cebd428e
+
+	measure 'SOVI % Change Contribution VS PW Drains Consolidated' = ```
+			
+			    IF([SOVI Change Contribution vs PW Consolidated] < 0 ,
+			        DIVIDE([SOVI Change Contribution vs PW Consolidated],
+			            CALCULATE([SOVI Change Contribution vs PW Consolidated], ALLSELECTED(),FILTER('iRED Measures',[SOVI Change Contribution vs PW Consolidated] < 0)))
+			    )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 7c9c66ab-0658-47c8-9f8e-163adcae2060
+
+	measure 'ASB Facings Mix consolidated new' =
+			
+			DIVIDE([ASB Facings], CALCULATE(SUMX(
+			                        VALUES('Product'[Trademark]),
+			                        [ASB Facings]), ALL('Product'[Trademark]))
+			    )
+		formatString: #,0
+		displayFolder: Gains_Drians
+		lineageTag: c333669c-058e-4104-b817-24899f323199
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Sum of Gains' = ```
+			
+			SWITCH (
+			        TRUE (),
+			        HASONEFILTER ( 'Product'[Trademark] ), 
+			                                CALCULATE(SUMX(VALUES('Product'[Trademark]),
+			                                            IF( [Weighted SOVI Change] > 0, [Weighted SOVI Change])), ALL('Product'[Trademark])),
+			        HASONEFILTER ( 'Product'[Package] ),
+			                                CALCULATE(SUMX(VALUES('Product'[Trademark]),
+			                                            IF( [Weighted SOVI Change] > 0, [Weighted SOVI Change])), ALL('Product'[Package])))
+			```
+		formatString: #,0
+		displayFolder: Gains_Drians
+		lineageTag: 7c4ba9ee-a113-427b-9378-a13db5c80558
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Sum of Drains' = ```
+			
+			SWITCH (
+			        TRUE (),
+			        HASONEFILTER ( 'Product'[Trademark] ), 
+			                                CALCULATE(SUMX(VALUES('Product'[Trademark]),
+			                                            IF( [Weighted SOVI Change] < 0, [Weighted SOVI Change])), ALL('Product'[Trademark])),
+			        HASONEFILTER ( 'Product'[Package] ),
+			                                CALCULATE(SUMX(VALUES('Product'[Trademark]),
+			                                            IF( [Weighted SOVI Change] < 0, [Weighted SOVI Change])), ALL('Product'[Package])))                       
+			```
+		formatString: #,0
+		displayFolder: Gains_Drians
+		lineageTag: 0d5f8fd7-c9f3-4926-ae84-515e83f5f2f4
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'SOVI contribution to Gains' = IF([Weighted SOVI Change] > 0, DIVIDE([Weighted SOVI Change],[Sum of Gains]))
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Gains_Drians
+		lineageTag: 626ad339-7069-4792-b4fb-0fc0ae89b3b9
+
+	measure 'SOVI contribution to Drains' = IF([Weighted SOVI Change] < 0, DIVIDE([Weighted SOVI Change],[Sum of Drains]))
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Gains_Drians
+		lineageTag: f89b9a8e-1795-4911-aa43-94e553c70837
+
+	column session_id
+		dataType: string
+		isHidden
+		lineageTag: a8f56458-d224-42e6-a581-d00c612d330a
+		summarizeBy: none
+		sourceColumn: session_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column scene_id
+		dataType: string
+		isHidden
+		lineageTag: e4676609-e8c5-462e-bf28-fbb85b89ed18
+		summarizeBy: none
+		sourceColumn: scene_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column facing
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e020d0bb-ebcf-444f-90ce-4415db769ac2
+		summarizeBy: sum
+		sourceColumn: facing
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 86f9b9f5-4c10-4674-9696-f3f010daa986
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9e309ec3-49f1-46e9-bdd7-34842f24e240
+		summarizeBy: none
+		sourceColumn: dim_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_location_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: cb4f65a7-9c95-4950-86ad-f58098c40e2d
+		summarizeBy: none
+		sourceColumn: dim_location_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_outlet_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 45e6e3ff-e539-4401-ad76-de6cbfcf466b
+		summarizeBy: none
+		sourceColumn: dim_outlet_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2f17c10f-0765-4ccc-a189-96af8ebcd289
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bc9ba8f6-375c-4d71-85eb-b389a7d07004
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_channel_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ef7f3df1-4078-429e-ab79-b347a13d4e10
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'iRED Measures' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    ired_mdl_vw_fact_facing = Source{[Schema="iredv3",Item="vw_Fact_Facing"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(ired_mdl_vw_fact_facing, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"dim_date_key", "dim_product_key", "dim_location_key", "dim_outlet_key", "dim_bottler_key", "dim_customer_key", "dim_channel_key", "session_id", "scene_id", "facing"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_IsMQueryFoldable = True
+
+	annotation PBI_NavigationStepName = Navigation
+

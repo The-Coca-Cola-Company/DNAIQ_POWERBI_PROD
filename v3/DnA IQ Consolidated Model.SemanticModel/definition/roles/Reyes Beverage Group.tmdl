@@ -1,0 +1,51 @@
+role 'Reyes Beverage Group'
+	modelPermission: read
+
+	tablePermission 'Territory Bottlers' = [Bottler Distributor Name] == "Reyes Coca-Cola Bottling"
+
+	tablePermission 'ACV TDP'
+		metadataPermission: none
+
+	tablePermission Beach
+		metadataPermission: none
+
+	tablePermission CBR_Category_Groupings
+		metadataPermission: none
+
+	tablePermission 'Business Drivers'
+		metadataPermission: none
+
+	tablePermission 'Dim Slicer'
+		metadataPermission: none
+
+	tablePermission Forecast
+		metadataPermission: none
+
+	tablePermission Invoice
+
+	tablePermission 'iRED Measures'
+		metadataPermission: none
+
+	tablePermission Market
+		metadataPermission: none
+
+	tablePermission 'Measures Slicer'
+		metadataPermission: none
+
+	tablePermission 'Performance Other'
+		metadataPermission: none
+
+	tablePermission 'PRx Key Metrics'
+		metadataPermission: none
+
+	tablePermission 'Share of Market'
+		metadataPermission: none
+
+	tablePermission 'Store Area'
+		metadataPermission: none
+
+	tablePermission 'Week Parameter'
+		metadataPermission: none
+
+	annotation PBI_Id = d484ed198a5846f5a971df69f57b2574
+

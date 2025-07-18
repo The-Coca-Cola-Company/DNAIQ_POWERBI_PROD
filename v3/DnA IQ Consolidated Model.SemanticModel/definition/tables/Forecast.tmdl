@@ -1,0 +1,291 @@
+table Forecast
+	lineageTag: 54d3a2a2-4fbc-4dc4-a87d-6efbd3da5ac2
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 2
+		incrementalGranularity: month
+		incrementalPeriods: 24
+		sourceExpression = ```
+			let
+			    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+			    vw_Fact_Overall_Performance_Forecast = Source{[Schema="dbov3",Item="vw_Fact_Overall_Performance_Forecast"]}[Data],
+			    #"Filtered Rows" = Table.SelectRows(vw_Fact_Overall_Performance_Forecast, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+			    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"created_date", "updated_date"})
+			   
+			in
+			    #"Removed Columns"
+			```
+
+	column dim_source_key
+		dataType: string
+		lineageTag: 19dd2373-e67e-4d02-aa01-9594daf7fe0b
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9818047f-d086-46d3-9a87-f935573eb95c
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 121e9849-1912-45dc-90d5-480326ffd34c
+		summarizeBy: none
+		sourceColumn: dim_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7e345e4b-5356-4c8e-8f48-0ea24f9a84d7
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 94cc0eec-d5be-4445-af13-b5030c79d18f
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_channel_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 27a6ff2e-da18-4734-b054-20e3150ee213
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column standard_physical_cases_forecast
+		dataType: decimal
+		lineageTag: 35006289-2e25-473b-a614-b4ac21fb827c
+		summarizeBy: sum
+		sourceColumn: standard_physical_cases_forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column standard_physical_cases_forecast_evc
+		dataType: decimal
+		lineageTag: 03b5058f-19ec-4451-937d-a5f5c935ef52
+		summarizeBy: sum
+		sourceColumn: standard_physical_cases_forecast_evc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_cases_forecast
+		dataType: decimal
+		lineageTag: c9ce4aec-3ccf-4215-8dda-0d2dd316da99
+		summarizeBy: sum
+		sourceColumn: unit_cases_forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_cases_forecast_evc
+		dataType: decimal
+		lineageTag: b637d8ad-6d76-4158-8b7e-1b2881a12bc0
+		summarizeBy: sum
+		sourceColumn: unit_cases_forecast_evc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column physical_cases_forecast
+		dataType: decimal
+		lineageTag: 21ae5816-028a-47c8-b69e-3960a607e015
+		summarizeBy: sum
+		sourceColumn: physical_cases_forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column physical_cases_forecast_evc
+		dataType: decimal
+		lineageTag: ab18f4cc-c0b9-4daf-b265-2e172fdacf56
+		summarizeBy: sum
+		sourceColumn: physical_cases_forecast_evc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column purchase_transactions_forecast
+		dataType: decimal
+		lineageTag: ddc8c5ae-68fc-498b-b171-74055daed8a2
+		summarizeBy: sum
+		sourceColumn: purchase_transactions_forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column purchase_transactions_forecast_evc
+		dataType: decimal
+		lineageTag: 6d96b888-6a79-4aa0-b6a7-557563b92213
+		summarizeBy: sum
+		sourceColumn: purchase_transactions_forecast_evc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gallons_forecast
+		dataType: decimal
+		lineageTag: c7c15539-26b5-43b8-be87-de5841eeb7b8
+		summarizeBy: sum
+		sourceColumn: gallons_forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gallons_forecast_evc
+		dataType: decimal
+		lineageTag: 8694d06e-fa0a-4f9c-98ba-a8ba7d906327
+		summarizeBy: sum
+		sourceColumn: gallons_forecast_evc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column consumption_transactions_forecast
+		dataType: decimal
+		lineageTag: 3ebaa2a7-2a20-470f-8581-fb9f654254cd
+		summarizeBy: sum
+		sourceColumn: consumption_transactions_forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column consumption_transactions_forecast_evc
+		dataType: decimal
+		lineageTag: 5a7a2d25-999d-4894-a5d6-e7826b53f662
+		summarizeBy: sum
+		sourceColumn: consumption_transactions_forecast_evc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column revenue_forecast
+		dataType: decimal
+		lineageTag: f40c1976-ecf3-4700-8bfc-858d53b32422
+		summarizeBy: sum
+		sourceColumn: revenue_forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column revenue_forecast_evc
+		dataType: decimal
+		lineageTag: df6bc5ee-b981-40e7-beac-b4c494e5b7fc
+		summarizeBy: sum
+		sourceColumn: revenue_forecast_evc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cogs_forecast
+		dataType: decimal
+		lineageTag: 6e7fa8cc-0adb-4649-b626-4d4b3ad4ab91
+		summarizeBy: sum
+		sourceColumn: cogs_forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cogs_forecast_evc
+		dataType: decimal
+		lineageTag: 4727f2d3-0fb0-4111-a264-df1e2b0840db
+		summarizeBy: sum
+		sourceColumn: cogs_forecast_evc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_outlet_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f16803bf-7877-47de-86e6-5e19ed40245c
+		summarizeBy: none
+		sourceColumn: dim_outlet_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_territory_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 26a1d224-dbcc-4375-bbd6-082fdbb3cb9d
+		summarizeBy: none
+		sourceColumn: dim_territory_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Forecast = m
+		mode: import
+		source = ```
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    vw_Fact_Overall_Performance_Forecast = Source{[Schema="dbov3",Item="vw_Fact_Overall_Performance_Forecast"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(vw_Fact_Overall_Performance_Forecast, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"created_date", "updated_date"})
+				   
+				in
+				    #"Removed Columns"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_IsMQueryFoldable = True
+

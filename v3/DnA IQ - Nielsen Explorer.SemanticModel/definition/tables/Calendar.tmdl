@@ -1,0 +1,626 @@
+table Calendar
+	lineageTag: 066c8720-13e3-499c-afb4-d2eeb5e22161
+	sourceLineageTag: 125a55a7-f38d-48af-9576-3434a2be4778
+
+	column 'Calendar Date'
+		dataType: dateTime
+		isHidden
+		isNullable: false
+		formatString: Short Date
+		displayFolder: Hidden
+		lineageTag: fd09bf9f-a723-4363-9130-6cbbbcff1505
+		sourceLineageTag: 586be44e-7cac-44c0-9408-96b8862cec23
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Year'
+		dataType: int64
+		formatString: 0
+		displayFolder: Fiscal Year
+		lineageTag: 6473401b-5b82-49bf-ae48-8b97df1268fa
+		sourceLineageTag: cb47a8a8-a434-4856-8050-b46c9f32b49d
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Fiscal Year
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Quarter'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: cc282381-e775-484b-9f4b-3b9499038452
+		sourceLineageTag: 29f8713d-fee5-4a33-ab7e-153671f89db2
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: quarter
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Month'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 967ae353-58f2-4717-a4d4-a74885ebd388
+		sourceLineageTag: a1695e9b-19cb-44fd-b889-e074aa186d31
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: month
+		sortByColumn: month_sort_number
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Year Quarter'
+		dataType: string
+		displayFolder: Fiscal Year
+		lineageTag: b1dc9c70-7e84-4b72-855a-bc5dcfea47c2
+		sourceLineageTag: 7a172323-ac6a-419e-9b11-019f5e4db866
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: fiscal_year_quarter
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Year Week'
+		dataType: int64
+		formatString: 0
+		displayFolder: Fiscal Year
+		lineageTag: c580877a-5f76-48ed-9f3d-b6da54dba3fb
+		sourceLineageTag: 7eccb8ef-aa98-4af8-acf5-b3d1f62f2910
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: fiscal_year_month_week
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Quarter Ending Date'
+		dataType: dateTime
+		formatString: Long Date
+		displayFolder: Fiscal Ending Date
+		lineageTag: 5d9ec448-cd6c-43e6-b820-0d879dbb54ed
+		sourceLineageTag: 54e3e70e-3312-4607-b493-3bdee22eafc7
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Fiscal Quarter Ending Date
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Month Ending Date'
+		dataType: dateTime
+		formatString: Long Date
+		displayFolder: Fiscal Ending Date
+		lineageTag: 225fa7ec-d292-4261-ab31-5db6fece47fb
+		sourceLineageTag: 9430ff33-2593-4fb3-9b8f-ffc9aa7f2705
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Fiscal Month Ending Date
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Week Ending Date'
+		dataType: dateTime
+		formatString: Long Date
+		displayFolder: Fiscal Ending Date
+		lineageTag: f82eaff8-0da3-4c1a-a7d2-dec9843bdd5a
+		sourceLineageTag: a1a9a8a8-6113-4be1-95b1-16da2e785e11
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Fiscal Week Ending Date
+		sortByColumn: 'fiscal_year_month_week DESC'
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Week Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 0ad5146d-84f3-4b74-b464-76a11a5cb5a8
+		sourceLineageTag: 2e589bd4-301f-4fd8-968a-c124601fc511
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Week Number
+
+		annotation SummarizationSetBy = User
+
+	column 'Sequential Quarter Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: f87f82a8-bf3f-4a73-95cb-2fd05a8b0e0f
+		sourceLineageTag: 7462331e-2f75-4d17-bdd5-e90bf061c74c
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Sequential Quarter Number
+
+		annotation SummarizationSetBy = User
+
+	column 'Sequential Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 1634b540-d6e8-4582-abb5-3c889d72dff4
+		sourceLineageTag: d5ecd6c6-5852-43d4-86fe-7974da9aeb01
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Sequential Month Number
+
+		annotation SummarizationSetBy = User
+
+	column 'Sequential Week Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: a88b078c-2e1a-460a-a12e-9db04bd522f4
+		sourceLineageTag: 2a55e5ed-b814-46d8-95d2-87ef2275a2c2
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Sequential Week Number
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Week in Quarter Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: a12c9d0d-fcb8-41fa-b430-1563d36a4aff
+		sourceLineageTag: e7894bc0-16f0-4337-9925-a3abcd8f66a6
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Fiscal Week in Quarter Number
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Week in Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 6b11f697-e52d-421b-81c0-61cf444d09ce
+		sourceLineageTag: f97f1177-b517-4fdb-8757-8d0129cd4ed4
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Fiscal Week in Month Number
+
+		annotation SummarizationSetBy = User
+
+	column Wave
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 87922389-eb2a-4736-8349-66ed8b801ff9
+		sourceLineageTag: f487d341-492d-4a57-ad1a-9fe3345c40fb
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Wave
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Year Wave'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: dc36f067-0a30-4087-bb9a-59105c125080
+		sourceLineageTag: 8c7d59df-c79a-47a9-8ccd-bb6a0d5b4eeb
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Year Wave
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Prior Wave'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e3612391-72c5-4068-a8f4-05965288423c
+		sourceLineageTag: 16a86385-ca1a-4a4e-b041-90f9f875b2a1
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Prior Wave
+
+		annotation SummarizationSetBy = User
+
+	column 'Prior Year Wave'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: d4f6ae9c-7b98-4e7a-b3ac-8dd2832d3bc8
+		sourceLineageTag: 0921d511-6106-469a-aa2b-437118b984a8
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Prior Year Wave
+
+		annotation SummarizationSetBy = User
+
+	column 'Wave Ending Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		displayFolder: Hidden
+		lineageTag: aa7f4770-ae74-409b-b15a-49c139b5df63
+		sourceLineageTag: a3583fe1-0e28-4239-b391-a1d499cba707
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Wave Ending Date
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column ymdid
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: f5e31541-df76-4f10-a26f-8fb3b32a967e
+		sourceLineageTag: b41cf885-bc95-43a2-9253-8c54b2001dc6
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: ymdid
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Nielsen Week Ending Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 7f221fd5-34cf-469c-9d65-a0ced1dfd14e
+		sourceLineageTag: 99cf7595-7870-4537-bf29-bd851f01a10a
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: rms_nielsen_week_ending_date
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Week'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: fea21ef0-9584-49ae-ac50-99d3bf90fb14
+		sourceLineageTag: 83c1576b-3dfd-4fbd-9a2b-308acca7feea
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Fiscal Week
+		sortByColumn: 'Week Number'
+
+		annotation SummarizationSetBy = User
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		isNullable: false
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 94c06a24-438f-4b50-954e-7ba5aed8a3b1
+		sourceLineageTag: 6695e402-084a-4b41-ae77-d2e216d55d7d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		annotation SummarizationSetBy = User
+
+	column year_month_number
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: ca17f67f-2c2a-4ada-8aa9-5078e2cda809
+		sourceLineageTag: 1f43ccb6-0273-48fe-aeb1-57df3ccb8d32
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: year_month_number
+
+		annotation SummarizationSetBy = User
+
+	column quarter_number
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: e62b7b7d-22bf-4a73-a580-9b774039cc78
+		sourceLineageTag: 01cf897f-f44e-4f39-b6e9-ae15f42dcffc
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: quarter_number
+
+		annotation SummarizationSetBy = User
+
+	column month_sort_number
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: c0888aab-fe9b-4520-ab6b-a93a73316679
+		sourceLineageTag: 6b5fb9ce-323e-478d-bf0f-c79357217cb3
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: month_sort_number
+
+		annotation SummarizationSetBy = User
+
+	column sequential_day_number
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 3b414338-4cd9-469c-84e1-ce1d54c4ba0f
+		sourceLineageTag: eb21a38f-7930-487f-abf5-cf0165839109
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: sequential_day_number
+
+		annotation SummarizationSetBy = User
+
+	column R13W_LCM_CY
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 43d3dc3f-c78c-4b3a-80d3-24726904da2f
+		sourceLineageTag: 2d99c56d-c54e-423d-a223-70268cde4b57
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: R13W_LCM_CY
+
+		annotation SummarizationSetBy = User
+
+	column R13W_LCM_PY
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: e81b997f-5bd3-427d-be4a-5065cdad9115
+		sourceLineageTag: acf3b730-4352-4f15-bc8c-9ad7eafb73c5
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: R13W_LCM_PY
+
+		annotation SummarizationSetBy = User
+
+	column year_wave_sort
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e15c36ac-1d6e-4b3e-9727-1f3b52d14199
+		sourceLineageTag: bf8b745e-4a59-4a1c-8311-d10f2c5b3dd8
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: year_wave_sort
+
+		annotation SummarizationSetBy = User
+
+	column ko_holiday
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: bc0a8444-02b8-4560-ba3e-d1e6fb95c0e8
+		sourceLineageTag: 372b4ae5-7535-4f94-9b56-cc57f91dd11a
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: ko_holiday
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column ko_pryr1_year_month_number
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 0e2166aa-f99d-4166-af5f-2ccf9057008b
+		sourceLineageTag: d43c1eca-fcb6-4490-bd26-a0ae7c88900f
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: ko_pryr1_year_month_number
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column ko_pryr1_year_month_week_number
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 68d6e651-fa64-47e0-94e6-3d99dd109f25
+		sourceLineageTag: ee48fa19-2107-4489-a8eb-21cfb95ceafb
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: ko_pryr1_year_month_week_number
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column ko_R12M
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 41440b36-5010-43f7-9c4b-5e78451e4f84
+		sourceLineageTag: 40b3757a-feb1-4dea-8060-00ea832d289e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: ko_R12M
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column ko_R24M_LCM_CY
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b7208526-8429-48cf-922a-6c6a5f3e7308
+		sourceLineageTag: ed2b4459-3c2e-473d-a86a-a2a05a3a9f2b
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: ko_R24M_LCM_CY
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column ko_R24M_LCM_PY
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a807f8fe-88a4-41c1-8b3a-f6a38f1c3c68
+		sourceLineageTag: eb47848a-bfd8-424a-8118-9b70ebf59608
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: ko_R24M_LCM_PY
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column rms_period_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 4a33aec9-50b9-4824-a801-47d9a0d00016
+		sourceLineageTag: 18601e8e-512a-4438-a0d7-5c9fc0506597
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: rms_period_key
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column rms_period_description
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: c760d42c-5d85-494c-964d-eaea128066c6
+		sourceLineageTag: 29e62537-f987-411d-ae46-07631b6ddaaf
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: rms_period_description
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'fiscal_year_month_week DESC'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 908d567d-b94c-4068-8c73-61d142328eb6
+		sourceLineageTag: 61f6c3db-07cf-4357-9230-104ab1460eed
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: fiscal_year_month_week DESC
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column selling_day_ind
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a6eb3862-f8e5-4f27-96ee-5a1192bc71b8
+		sourceLineageTag: cf0060aa-6ece-459a-8485-5e2799782243
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: selling_day_ind
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Dates_with_RMS_data
+		dataType: int64
+		formatString: 0
+		lineageTag: fcd3fe38-bdd8-445b-829f-c050c7a2908e
+		sourceLineageTag: 07d771f8-3282-488b-a494-ef70444a861a
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Dates_with_RMS_data
+
+		changedProperty = IsHidden
+
+		changedProperty = DisplayFolder
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+	hierarchy 'Fiscal Hierarchy'
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 6e055013-e085-4e27-96b1-cca9b60985cb
+		sourceLineageTag: 8759cfc1-c73e-436b-b27f-48e187e1a76c
+
+		level 'Fiscal Year'
+			lineageTag: c9f81023-240d-46f3-8f32-24c507fd1034
+			sourceLineageTag: 209b0c7a-7128-4dcc-b807-ee6e16eac8f6
+			column: 'Fiscal Year'
+
+		level 'Fiscal Quarter'
+			lineageTag: 14e3fa6e-a774-420b-b6a7-ab0451e1b92c
+			sourceLineageTag: 4b60f78e-1091-413f-9873-f3e00cc7c958
+			column: 'Fiscal Quarter'
+
+		level '_Fiscal Month'
+			lineageTag: 412837c7-6017-4e68-858d-edc664e5b154
+			sourceLineageTag: 05b678ee-f555-465c-a66c-c0dc553845ef
+			column: 'Fiscal Month'
+
+		level 'Fiscal Week'
+			lineageTag: 3d15f974-d05b-4de1-a98e-977528ea3195
+			sourceLineageTag: 930ce919-0e2f-4735-b090-d39f2b7444f4
+			column: 'Fiscal Week'
+
+		changedProperty = DisplayFolder
+
+	partition Calendar = entity
+		mode: directQuery
+		source
+			entityName: Calendar
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

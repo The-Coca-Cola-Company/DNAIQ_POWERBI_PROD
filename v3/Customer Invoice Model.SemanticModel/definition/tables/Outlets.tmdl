@@ -1,0 +1,295 @@
+table Outlets
+	lineageTag: dcfb96ce-a3c7-4849-b6cc-ea9722282d21
+
+	column dim_outlet_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 2de9eefd-c74e-446f-ae8b-3204a3c58bc2
+		summarizeBy: none
+		sourceColumn: dim_outlet_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Channel Organization'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9f7202bf-49dd-43e8-8202-fca1ed16fe78
+		summarizeBy: none
+		sourceColumn: Channel Organization
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity Cluster'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 0fdd83b0-c233-45b6-9337-a2ade3decf53
+		summarizeBy: none
+		sourceColumn: Activity Cluster
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CBS Managed By Level 3'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9ece4cef-72af-4ffc-80e3-48f97613dea1
+		summarizeBy: none
+		sourceColumn: CBS Managed By Level 3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FSOP Chain ACN Name'
+		dataType: string
+		lineageTag: 9ee58aa7-9127-4756-89ae-f31d5b469def
+		summarizeBy: none
+		sourceColumn: FSOP Chain ACN Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sub Trade Channel'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 78c06366-5567-44f8-921d-d1f92905860a
+		summarizeBy: none
+		sourceColumn: Sub Trade Channel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FSOP Sale Organization'
+		dataType: string
+		lineageTag: 54303f33-2fbf-40c4-86ae-ae64cad0981e
+		summarizeBy: none
+		sourceColumn: FSOP Sale Organization
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trade Name'
+		dataType: string
+		isHidden
+		lineageTag: f5761e32-1102-434a-9f00-08f6dc5e2fe0
+		summarizeBy: none
+		sourceColumn: Trade Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Outlet Type'
+		dataType: string
+		lineageTag: 675376fb-a692-48e2-aa48-44913315573a
+		summarizeBy: none
+		sourceColumn: Outlet Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CBS Managed By Account Name'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 06243e77-7433-41e7-acf2-5834b78fb2c3
+		summarizeBy: none
+		sourceColumn: CBS Managed By Account Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_bottler_delivery_point_number
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 50858768-46a2-4e88-a479-672baf74617f
+		summarizeBy: none
+		sourceColumn: ko_bottler_delivery_point_number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trade Channel Name'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ffbf2a3a-4680-401b-9d7e-9317468964d1
+		summarizeBy: none
+		sourceColumn: Trade Channel Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Golden Record'
+		dataType: string
+		lineageTag: 5f34d5d1-9522-4a39-ba7a-a41b5034d875
+		summarizeBy: none
+		sourceColumn: Golden Record
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 8d99a3ca-673e-4a25-939a-b49a2678fe6d
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 3dccfd80-e0a8-49c0-90ac-3673e6907bd2
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Address
+		dataType: string
+		lineageTag: 932bdce9-8d78-40f9-accb-d5854086d28f
+		summarizeBy: none
+		sourceColumn: Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Lost Outlet' = ```
+			IF(
+			    ([Unit Cases Per Outlet R52W] = 0 || ISBLANK([Unit Cases Per Outlet R52W])) 
+			    && ([Unit Cases Per Outlet R52-104W] <> 0 || NOT ISBLANK([Unit Cases Per Outlet R52-104W])),
+			1, 0)
+			```
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: c65221d8-2be2-4957-89a1-ccf40eb2cc25
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'At Risk Outlet' =
+			
+			IF(
+			    ([Unit Cases Per Outlet R13W] = 0 || ISBLANK([Unit Cases Per Outlet R13W]))
+			 && ([Unit Cases Per Outlet R14-26W] <> 0 || NOT ISBLANK([Unit Cases Per Outlet R14-26W])),
+			 1, 0)
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 2ea93fba-66f4-478f-a1a4-24c009d5b10e
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'New Outlet' = ```
+			
+			IF(
+			    ([Unit Cases Per Outlet R52W] <> 0 || NOT ISBLANK([Unit Cases Per Outlet R52W]))
+			    && 
+			    ([Unit Cases Per Outlet R52-104W] = 0 || ISBLANK([Unit Cases Per Outlet R52-104W])),
+			    1, 0)
+			```
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 7d5226cb-66b0-4c48-bcfb-3672794465ee
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Zip Code'
+		dataType: string
+		lineageTag: 89ef0704-54ef-4775-ab6e-12caf0e73fa0
+		summarizeBy: none
+		sourceColumn: Zip Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'LMP Flag'
+		dataType: string
+		lineageTag: f292576e-4d3f-4add-ad5e-cc2f8bb4bc64
+		summarizeBy: none
+		sourceColumn: LMP Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Has Coke Zero' = IF(CALCULATE([EQ Unit Cases], Products[Brand] = "Coca-Cola Zero", 'Time Calculation'[Time Calculation] = "R13W") > 0, 1, 0)
+		isHidden
+		formatString: 0
+		lineageTag: 7e1aba0f-3d87-4e91-8c80-eaea9401e4d6
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Channel Hierarchy'
+		lineageTag: 50b62628-1b39-4614-8154-8dd5b60eff78
+
+		level 'Channel Organization'
+			lineageTag: d74051cf-4e85-434a-98ca-026134ee9110
+			column: 'Channel Organization'
+
+		level 'Activity Cluster'
+			lineageTag: a84c3583-697a-4f24-8b6b-4aff841034db
+			column: 'Activity Cluster'
+
+		level 'Trade Channel Name'
+			lineageTag: d4ed9e49-36c3-4079-a086-bb89ef93a61f
+			column: 'Trade Channel Name'
+
+		level 'Sub Trade Channel Name'
+			lineageTag: a3c3c954-53b2-4483-ba57-7acced076550
+			column: 'Sub Trade Channel'
+
+	hierarchy 'CBS Managed By Hierarchy'
+		lineageTag: d836b3ad-96ab-46df-9383-515ba1bd66a9
+
+		level 'CBS Managed By Level 3'
+			lineageTag: a020943a-ae51-4495-bce5-55548ba058a0
+			column: 'CBS Managed By Level 3'
+
+		level 'CBS Managed By Account Name'
+			lineageTag: 84f59edc-a8dc-481d-9f0c-130a127b1119
+			column: 'CBS Managed By Account Name'
+
+	partition Outlets = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    invoice_mdl_vw_Dim_Outlet = Source{[Schema="Invoice",Item="vw_Dim_Outlet"]}[Data],
+				    #"Added Conditional Column" = Table.AddColumn(invoice_mdl_vw_Dim_Outlet, "LMP Flag", each if Text.StartsWith([ko_foodservice_market_id], "28") then "LMP" else "NON LMP"),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Added Conditional Column",{"dim_outlet_key", "ko_organization_channel_name", "ko_activity_cluster_name", "ko_cbs_managed_account_customer_name_top5_masked", "ko_foodservice_chain_name_top5_masked", "ko_sub_trade_channel_name", "ko_trade_channel_name", "ko_fsop_customer_team", "ko_trade_name", "ko_golden_record_identifier", "ko_cbs_outlet_type_name", "ko_cbs_managed_account_subsidiary_name_top5_masked", "ko_bottler_delivery_point_number", "ko_state_code", "ko_city_name", "ko_address_line_1", "ko_zip_code", "LMP Flag"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"ko_cbs_outlet_type_name", "Outlet Type"}, {"ko_sub_trade_channel_name", "Sub Trade Channel"}, {"ko_trade_name", "Trade Name"}, {"ko_organization_channel_name", "Channel Organization"}, {"ko_activity_cluster_name", "Activity Cluster"}, {"ko_fsop_customer_team", "FSOP Sale Organization"}, {"ko_cbs_managed_account_customer_name_top5_masked", "CBS Managed By Level 3"}, {"ko_foodservice_chain_name_top5_masked", "FSOP Chain ACN Name"}, {"ko_trade_channel_name", "Trade Channel Name"}, {"ko_cbs_managed_account_subsidiary_name_top5_masked", "CBS Managed By Account Name"}, {"ko_address_line_1", "Address"}, {"ko_city_name", "City"}, {"ko_state_code", "State"}, {"ko_golden_record_identifier", "Golden Record"}, {"ko_zip_code", "Zip Code"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

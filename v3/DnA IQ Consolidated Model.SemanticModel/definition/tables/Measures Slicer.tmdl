@@ -1,0 +1,209 @@
+table 'Measures Slicer'
+	lineageTag: 57a09535-cb04-4a83-b4b0-49632efa705d
+
+	column 'Measures Slicer'
+		lineageTag: 2d6e0afc-59e2-4f63-8cf7-5dcf115dbd6c
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Measures Slicer Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Measures Slicer Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measures Slicer Fields'
+		isHidden
+		lineageTag: 15f8cdfc-fdd4-46a5-bcbe-c1a6c5381033
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Measures Slicer Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "kind": 2,
+				  "version": 3
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measures Slicer Order'
+		isHidden
+		formatString: 0
+		lineageTag: b532a7bd-f76d-49f5-a8d3-e4932f2d6da5
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Measures Slicer' = calculated
+		mode: import
+		source =
+				{
+				    ("Time Calculation", NAMEOF('Time Calculation'[Time Calculation]), 161),
+				    ("Avg # of Items", NAMEOF([Avg # of Items]), 3),
+				    ("TDP", NAMEOF([TDP]), 2),
+				    ("TDP % Change", NAMEOF([TDP % Change]), 5),
+				    ("Bottler Gross Profit", NAMEOF([Bottler Gross Profit]), 161),
+				    ("Bottler Gross Profit / EQ Case", NAMEOF([Bottler Gross Profit / EQ Case]), 162),
+				    ("Bottler Gross Profit / EQ Case - Plan", NAMEOF([Bottler Gross Profit / EQ Case - Plan]), 6),
+				    ---("Bottler Gross Profit / EQ Case - PY", NAMEOF([Bottler Gross Profit / EQ Case - PY]), 7),
+				    ("Bottler Gross Profit / Standar Physical Case", NAMEOF([Bottler Gross Profit / Standard Physical Case]), 8),
+				    ("Bottler Gross Profit / Standar Physical Case - Plan", NAMEOF([Bottler Gross Profit / Standard Physical Case - Plan]), 9),
+				    ----("Bottler Gross Profit / Standar Physical Case - PY", NAMEOF([Bottler Gross Profit / Standard Physical Case - PY]), 10),
+				    ("Bottler Margin", NAMEOF([Bottler Margin]), 11),
+				    ("Bottler Revenue", NAMEOF([Bottler Revenue]), 12),
+				    ("Dead Net Net Sales Income", NAMEOF([Dead Net Net Sales Income]), 13),
+				    ("Dead Net Net Sales Income - Forecast", NAMEOF([Dead Net Net Sales Income - Forecast]), 14),
+				    ("Dead Net Net Sales Income - Plan", NAMEOF([Dead Net Net Sales Income - Plan]), 15),
+				    ("NSR / UC", NAMEOF([NSR / UC]), 16),
+				    ("UCS/ADS", NAMEOF([UCS/ADS]), 17),
+				    ("Dead Net Net Sales Income / EQ Case", NAMEOF([Dead Net Net Sales Income / EQ Case]), 18),
+				    ("Dead Net Net Sales Income / EQ Case - Plan", NAMEOF([Dead Net Net Sales Income / EQ Case - Plan]), 19),
+				    ---("Dead Net Net Sales Income / EQ Case - PY", NAMEOF([Dead Net Net Sales Income / EQ Case - PY]), 20),
+				    ("Dead Net Net Sales Income / Standar Physical Case", NAMEOF([Dead Net Net Sales Income / Standard Physical Case]), 21),
+				    ("Dead Net Net Sales Income / Standar Physical Case - Plan", NAMEOF([Dead Net Net Sales Income / Standard Physical Case - Plan]), 22),
+				    ----("Dead Net Net Sales Income / Standar Physical Case - PY", NAMEOF([Dead Net Net Sales Income / Standard Physical Case - PY]), 23),
+				    ("New Outlets", NAMEOF([New Outlets Count - OS]), 24),
+				    ("Net Outlets", NAMEOF([Net Outlets Count - OS]), 25),
+				    ("Lost Outlets", NAMEOF([Lost Outlets Count - OS]), 26),
+				    ("At Risk Outlets", NAMEOF([At Risk Outlets Count - OS]), 27),
+				    ("% ACV (FSOP KOZS)", NAMEOF([% ACV (FSOP KOZS)]), 28),
+				    ("FSOP KOZS Penetration", NAMEOF([FSOP KOZS Penetration]), 29),
+				    ("KO Zero Sugar FSOP Distribution", NAMEOF([KO Zero Sugar FSOP Distribution]), 30),
+				    ("Number of Outlets", NAMEOF([Number of Outlets]), 31),
+				    ("Outlet Pen Norm", NAMEOF([Outlet Pen Norm]), 32),
+				    ("Outlet Penetration", NAMEOF([Outlet Penetration]), 33),
+				    ("Outlet Penetration Denominator", NAMEOF([Outlet Penetration Denominator]), 34),
+				    ("Outlet Penetration Numerator", NAMEOF([Outlet Penetration Numerator]), 35),
+				    ("Outlet Penetration TA", NAMEOF([Outlet Penetration TA]), 36),
+				    ("Outlet Penetration weighted by Unit Cases (%ACV)", NAMEOF([Outlet Penetration weighted by Unit Cases (%ACV)]), 37),
+				    ("Outlet Penetration weighted by Unit Cases (%ACV) Denominator", NAMEOF([Outlet Penetration weighted by Unit Cases (%ACV) Denominator]), 38),
+				    ("Outlet Penetration weighted by Unit Cases (%ACV) Numerator", NAMEOF([Outlet Penetration weighted by Unit Cases (%ACV) Numerator]), 39),
+				    ("Qualified Volume", NAMEOF([Qualified Volume]), 40),
+				    ("Consumption Transactions", NAMEOF([Consumption Transactions]), 41),
+				    ("Consumption Transactions - Forecast", NAMEOF([Consumption Transactions - Forecast]), 42),
+				    ("Consumption Transactions - Plan", NAMEOF([Consumption Transactions - Plan]), 43),
+				    ---("Consumption Transactions - Warehouse", NAMEOF([Consumption Transactions - Forecast Warehouse]), 44),
+				    ("Distinct Skus Count", NAMEOF([Distinct Skus Count]), 45),
+				    ("Gallons", NAMEOF([Gallons]), 46),
+				    ("Gallons - Forecast", NAMEOF([Gallons - Forecast]), 47),
+				    ("Gallons - Plan", NAMEOF([Gallons - Plan]), 48),
+				    ("Physical Cases", NAMEOF([Physical Cases]), 49),
+				    ("Physical Cases - Forecast", NAMEOF([Physical Cases - Forecast]), 50),
+				    ("Physical Cases - Plan", NAMEOF([Physical Cases - Plan]), 51),
+				    ("Purchase Transactions", NAMEOF([Purchase Transactions]), 52),
+				    ("Purchase Transactions - Forecast", NAMEOF([Purchase Transactions - Forecast]), 53),
+				    ("Purchase Transactions - Plan", NAMEOF([Purchase Transactions - Plan]), 54),
+				    ("SSD IC MIX", NAMEOF([SSD IC MIX]), 55),
+				    ("SSD IC MIX - Forecast", NAMEOF([SSD IC MIX - Forecast]), 56),
+				    ("SSD IC MIX - Plan", NAMEOF([SSD IC MIX - Plan]), 57),
+				    ("SSD IC UCS", NAMEOF([SSD IC UCS]), 58),
+				    ("Standard Cases", NAMEOF([Standard Cases]), 59),
+				    ("Standard Cases - Forecast", NAMEOF([Standard Cases - Forecast]), 60),
+				    ("Standard Cases - Plan", NAMEOF([Standard Cases - Plan]), 61),
+				    ("Unit Cases", NAMEOF([Unit Cases]), 62),
+				    ("Unit Cases - Forecast", NAMEOF([Unit Cases - Forecast]), 63),
+				    ("Unit Cases - Plan", NAMEOF([Unit Cases - Plan]), 64),
+				    ("Consumption Transactions Per Outlet", NAMEOF([Consumption Transactions Per Outlet]), 65),
+				    ("Consumption Transactions Per Outlet - Forecast", NAMEOF([Consumption Transactions Per Outlet - Forecast]), 66),
+				    ("Consumption Transactions Per Outlet - Plan", NAMEOF([Consumption Transactions Per Outlet - Plan]), 67),
+				    ("Gallons per Outlet", NAMEOF([Gallons per Outlet]), 68),
+				    ("Gallons per Outlet - Forecast", NAMEOF([Gallons per Outlet - Forecast]), 69),
+				    ("Gallons per Outlet - Plan", NAMEOF([Gallons per Outlet - Plan]), 70),
+				    ("Physical Cases Per Outlet", NAMEOF([Physical Cases Per Outlet]), 71),
+				    ("Physical Cases Per Outlet - Forecast", NAMEOF([Physical Cases Per Outlet - Forecast]), 72),
+				    ("Physical Cases Per Outlet - Plan", NAMEOF([Physical Cases Per Outlet - Plan]), 73),
+				    ("Purchase Transactions per Outlet", NAMEOF([Purchase Transactions per Outlet]), 74),
+				    ("Purchase Transactions per Outlet - Forecast", NAMEOF([Purchase Transactions per Outlet - Forecast]), 75),
+				    ("Purchase Transactions per Outlet - Plan", NAMEOF([Purchase Transactions per Outlet - Plan]), 76),
+				    ("Standard Cases per Outlet", NAMEOF([Standard Cases per Outlet]), 77),
+				    ("Unit Cases per Outlet", NAMEOF([Unit Cases per Outlet]), 78),
+				    ("Unit Cases per Outlet - Forecast", NAMEOF([Unit Cases per Outlet - Forecast]), 79),
+				    ("Unit Cases per Outlet - Plan", NAMEOF([Unit Cases per Outlet - Plan]), 80),
+				    ("Availability", NAMEOF([Availability]), 81),
+				    ("Average # of Coolers", NAMEOF([Average # of Coolers]), 82),
+				    ("Average # of Displays", NAMEOF([Average # of Displays]), 83),
+				    ("Average # of Facings", NAMEOF([Average # of Facings]), 84),
+				    ("Average # of SKUs", NAMEOF([Average # of SKUs]), 85),
+				    ("Sample Size", NAMEOF([Sample Size]), 86),
+				    ("SOVI", NAMEOF([SOVI]), 87),
+				    ("SOVI - ELT", NAMEOF([SOVI - ELT]), 88),
+				    ("Total # of Facings", NAMEOF([Total # of Facings]), 89),
+				    ("Total # of SKUs", NAMEOF([Total # of SKUs]), 90),
+				    ("Availability vs PW", NAMEOF([Availability vs PW]), 91),
+				    ("Average # of Coolers vs PW ", NAMEOF([Average # of Coolers vs PW ]), 92),
+				    ("Average # of Displays vs PW", NAMEOF([Average # of Displays vs PW]), 93),
+				    ("Average # of Facings vs PW", NAMEOF([Average # of Facings vs PW]), 94),
+				    ("Average # of SKUs vs PW", NAMEOF([Average # of SKUs vs PW]), 95),
+				    ("SOVI vs PW", NAMEOF([SOVI vs PW]), 96),
+				    ("Total # of SKUs vs PW", NAMEOF([Total # of SKUs vs PW]), 97),
+				    ("Availability vs PY", NAMEOF([Availability vs PY]), 98),
+				    ("Average # of Coolers vs PY", NAMEOF([Average # of Coolers vs PY]), 99),
+				    ("Average # of Displays vs PY", NAMEOF([Average # of Displays vs PY]), 100),
+				    ("Average # of Facings vs PY", NAMEOF([Average # of Facings vs PY]), 101),
+				    ("Average # of SKUs vs PY", NAMEOF([Average # of SKUs vs PY]), 102),
+				    ("SOVI vs PY", NAMEOF([SOVI vs PY]), 103),
+				    ("Total # of SKUs vs PY", NAMEOF([Total # of SKUs vs PY]), 104),
+				    /*("Average # of Displays CY", NAMEOF([Average # of Displays CY]), 105),
+				    ("Average # of Facings on Display", NAMEOF([Average # of Facings on Display]), 106),
+				    ("Average # of Facings on Display CY", NAMEOF([Average # of Facings on Display CY]), 107),
+				    ("Average # of Facings on Display PY", NAMEOF([Average # of Facings on Display PY]), 108),
+				    ("Avg # Facings on Display % Change", NAMEOF([Avg # Facings on Display % Change]), 109),
+				    ("Avg # of Displays % Change", NAMEOF([Avg # of Displays % Change]), 110),*/
+				    ("SOVI Change", NAMEOF([SOVI Change]), 111),
+				    ("SOVI CY", NAMEOF([SOVI CY]), 112),
+				    /*("SOVI Contribution to Drains vs. PW", NAMEOF([SOVI Contribution to Drains vs. PW]), 113),
+				    ("SOVI Contribution to Drains vs. PY", NAMEOF([SOVI Contribution to Drains vs. PY]), 114),
+				    ("SOVI Contribution to Gains vs. PW", NAMEOF([SOVI Contribution to Gains vs. PW]), 115),
+				    ("SOVI Contribution to Gains vs. PY", NAMEOF([SOVI Contribution to Gains vs. PY]), 116),*/
+				    ("Total SOVI", NAMEOF([Total SOVI]), 117),
+				    ("Total SOVI - ELT", NAMEOF([Total SOVI - ELT]), 118),
+				    ("Any Display Dollars", NAMEOF([Any Display Dollars]), 119),
+				    ("Any Feature Dollars", NAMEOF([Any Feature Dollars]), 120),
+				    ("Any Promo Dollars", NAMEOF([Any Promo Dollars]), 121),
+				    ("Any Promo EQs", NAMEOF([Any Promo EQs]), 122),
+				    ("Base Dollars", NAMEOF([Base Dollars]), 123),
+				    ("Base EQs", NAMEOF([Base EQs]), 124),
+				    ("Contribution %", NAMEOF([Contribution %]), 125),
+				    ("Dollars", NAMEOF([Dollars]), 126),
+				    ("EQs", NAMEOF([EQs]), 127),
+				    ("Feature and Display Dollars", NAMEOF([Feature and Display Dollars]), 128),
+				    ("Feature Without Display Dollars", NAMEOF([Feature Without Display Dollars]), 129),
+				    ("Incremental Dollars", NAMEOF([Incremental Dollars]), 130),
+				    ("No Promo Dollars", NAMEOF([No Promo Dollars]), 131),
+				    ("No Promo Eqs", NAMEOF([No Promo Eqs]), 132),
+				    ("Price Decrease Only Dollars", NAMEOF([Price Decrease Only Dollars]), 133),
+				    ("% Dollars Any Display", NAMEOF([% Dollars Any Display]), 134),
+				    ("% Dollars Any Promo", NAMEOF([% Dollars Any Promo]), 135),
+				    ("% Dollars Feature & Display", NAMEOF([% Dollars Feature & Display]), 136),
+				    ("% Dollars Feature Only", NAMEOF([% Dollars Feature Only]), 137),
+				    ("% Dollars Price Reduction Only", NAMEOF([% Dollars Price Reduction Only]), 138),
+				    ("% EQ Any Promo", NAMEOF([% EQ Any Promo]), 139),
+				    ("Avg EQ Price", NAMEOF([Avg EQ Price]), 0),
+				    ---("Avg EQ Price % Chg", NAMEOF([Avg EQ Price % Chg]), 141),
+				    ("EQ Price Elasticity", NAMEOF([EQ Price Elasticity]), 142),
+				    ("EQ Share", NAMEOF([EQ Share]), 143),
+				    ("EQ Volume % Chg vs PY", NAMEOF([EQ Volume % Chg vs PY]), 144),
+				    ("EQ Volume Chg vs PY", NAMEOF([EQ Volume Chg vs PY]), 145),
+				    ("LCE Price Index Tier", NAMEOF([LCE Price Index Tier]), 146),
+				    ("Promo Mix", NAMEOF([Promo Mix]), 147),
+				    ("Transaction Share", NAMEOF([Transaction Share]), 148),
+				    ("Share of Dollars", NAMEOF([Share of Dollars]), 149),
+				    ("Share of Dollars - ELT", NAMEOF([Share of Dollars - ELT]), 150),
+				    ("Share of Dollars Drains vs PY", NAMEOF([Share of Dollars Drains vs PY]), 151),
+				    ("Share of Dollars Gains vs PY", NAMEOF([Share of Dollars Gains vs PY]), 152),
+				    ("Share of EQs", NAMEOF([Share of EQs]), 153),
+				    ("Share of EQs - ELT", NAMEOF([Share of EQs - ELT]), 154),
+				    ("Share of Units", NAMEOF([Share of Units]), 155),
+				    ("Share of Units - ELT", NAMEOF([Share of Units - ELT]), 156),
+				    ("SOVI:SOM Ratio", NAMEOF([SOVI:SOM Ratio]), 157),
+				    ("Subsidized Dollars", NAMEOF([Subsidized Dollars]), 158),
+				    ("Subsidized EQs", NAMEOF([Subsidized EQs]), 159),
+				    ("Units", NAMEOF([Units]), 160),
+				    ("ACV", NAMEOF([ACV]), 1),
+				    ("Weekly + Consumption", NAMEOF([Weekly + Consumption]), 4)
+				}
+
+	annotation PBI_Id = 6bfee2f72f244377a25c49df177db245
+

@@ -1,0 +1,79 @@
+table 'Time Calculation'
+	lineageTag: 27b60488-b26e-4e90-916b-3956a8518bd4
+	sourceLineageTag: 3934e7f5-d0ad-4027-8aaf-250bb2741ede
+
+	column 'Time Calculation'
+		dataType: string
+		lineageTag: 3cd5cd84-22d3-42c6-818d-417262f16389
+		sourceLineageTag: cc753233-1dc5-42a5-a888-c126ef4ad7d2
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Time Calculation
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = User
+
+	column Ordinal
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: a21ac16a-e51e-4810-998d-302d4cf81665
+		sourceLineageTag: e5978096-8e12-4590-ab65-38c41c9710bf
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Time Calc Parent'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 8c1377a4-073c-46e0-8186-be2212a28ebe
+		sourceLineageTag: f7f4bc32-e458-4aba-b2cc-e6acf91690db
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Time Calc Parent
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Time Calc Category'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 092ddfc3-05f9-413d-b77c-1d3e21562d1e
+		sourceLineageTag: 8a528262-f61a-4297-8399-93fd19478f97
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Time Calc Category
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Order Time Cal'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 23bbd84b-a199-47a4-9c8c-83adb50c6ee7
+		sourceLineageTag: 0b77b2ba-bfd4-46b0-ac03-a45f2636c0e3
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Order Time Cal
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	partition 'Time Calculation' = entity
+		mode: directQuery
+		source
+			entityName: Time Calculation
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

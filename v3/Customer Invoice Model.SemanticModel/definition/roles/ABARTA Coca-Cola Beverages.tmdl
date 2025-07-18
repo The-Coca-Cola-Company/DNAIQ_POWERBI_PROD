@@ -1,0 +1,7 @@
+role 'ABARTA Coca-Cola Beverages'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "ABARTA Coca-Cola Beverages"
+
+	annotation PBI_Id = 4374eaafc5fc46028c5609a13646ea89
+

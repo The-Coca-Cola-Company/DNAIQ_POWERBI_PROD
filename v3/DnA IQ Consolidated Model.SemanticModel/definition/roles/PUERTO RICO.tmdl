@@ -1,0 +1,43 @@
+role 'PUERTO RICO'
+	modelPermission: read
+
+	tablePermission 'Territory Bottlers' = [Bottler Distributor Name] == "PUERTO RICO"
+
+	tablePermission 'Store Area'
+		metadataPermission: none
+
+	tablePermission 'Share of Market'
+		metadataPermission: none
+
+	tablePermission 'PRx Key Metrics'
+		metadataPermission: none
+
+	tablePermission 'Week Parameter'
+		metadataPermission: none
+
+	tablePermission 'Measures Slicer'
+		metadataPermission: none
+
+	tablePermission Market
+		metadataPermission: none
+
+	tablePermission 'iRED Measures'
+		metadataPermission: none
+
+	tablePermission 'Dim Slicer'
+		metadataPermission: none
+
+	tablePermission 'Business Drivers'
+		metadataPermission: none
+
+	tablePermission CBR_Category_Groupings
+		metadataPermission: none
+
+	tablePermission Beach
+		metadataPermission: none
+
+	tablePermission 'ACV TDP'
+		metadataPermission: none
+
+	annotation PBI_Id = c34f1d6d25994ac5a462ee3cef30ffe8
+

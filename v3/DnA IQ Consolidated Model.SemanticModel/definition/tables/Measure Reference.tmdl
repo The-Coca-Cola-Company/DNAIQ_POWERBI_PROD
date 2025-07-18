@@ -1,0 +1,67 @@
+table 'Measure Reference'
+	lineageTag: 02a4445b-ff2e-48f1-9e6f-34ea38fa2017
+
+	column Product
+		dataType: string
+		lineageTag: f057c0c3-b303-4fcf-8a16-b71c0e2d30d1
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	/// LCW, LCM, MTD, QTD, YTD, R4W, R13W, R52W
+	column Time_Period
+		dataType: string
+		lineageTag: 58bdfe47-bd1c-43dd-9587-592162c7da6c
+		summarizeBy: none
+		sourceColumn: Time_Period
+
+		annotation SummarizationSetBy = Automatic
+
+	column Metric
+		dataType: string
+		lineageTag: 39deb197-b51f-4f4b-8242-eec50fc349ee
+		summarizeBy: none
+		sourceColumn: Metric
+
+		annotation SummarizationSetBy = Automatic
+
+	column Labels
+		dataType: string
+		lineageTag: d9a998b7-3106-4f24-b0d5-5c6d4972f247
+		summarizeBy: none
+		sourceColumn: Labels
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort_Order
+		dataType: int64
+		formatString: 0
+		lineageTag: dfbacf47-f06d-48b9-a418-0f68999ebcd3
+		summarizeBy: sum
+		sourceColumn: Sort_Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rolling_Wks
+		dataType: int64
+		formatString: 0
+		lineageTag: 27b9ac88-99f8-411f-ba45-d14ed5006ef0
+		summarizeBy: sum
+		sourceColumn: Rolling_Wks
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Measure Reference' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database),
+				    dbov3_vw_Measures = Source{[Schema="dbov3",Item="vw_Measures"]}[Data]
+				in
+				    dbov3_vw_Measures
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

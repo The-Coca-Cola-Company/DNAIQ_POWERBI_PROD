@@ -1,0 +1,2461 @@
+table 'Customer Invoice Measures'
+	lineageTag: d99bf500-fb0c-4392-bdfa-29ffdacca612
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 2
+		incrementalGranularity: month
+		incrementalPeriods: 24
+		sourceExpression =
+			let
+			    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+			    invoice_vw_Fact_Invoice_Weekly = Source{[Schema="invoicev3",Item="vw_Fact_Invoice_Weekly"]}[Data],
+			    #"Renamed Columns" = Table.RenameColumns(invoice_vw_Fact_Invoice_Weekly,{{"gallons", "gallons_"}, {"dim_settlement_date_key","dim_date_key"}}),
+			    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns", each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+			    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"dim_date_key"
+			 ,"dim_outlet_key"
+			 ,"dim_outlet_golden_record_key"
+			 ,"dim_bottler_key"
+			 ,"dim_territory_bottler_key"
+			 ,"dim_customer_key"
+			 ,"dim_channel_key"
+			 ,"dim_product_key"
+			 ,"dim_delivery_mode_key"
+			 ,"dim_invoice_key"
+			 ,"physical_cases"
+			 ,"standard_physical_cases"
+			 ,"unit_cases"
+			 ,"gallons_"
+			 ,"purchase_transactions"
+			 ,"consumption_transactions"
+			 //,"wholesale_price_amount"
+			 //,"wholesale_price_amount_with_proxy"
+			// ,"on_invoice_discount_amount"
+			 //,"on_invoice_discount_amount_with_proxy"
+			 //,"off_invoice_discount_amount"
+			 //,"off_invoice_discount_amount_with_proxy"
+			// ,"on_invoice_cma_discount_amount"
+			 //,"on_invoice_cma_discount_amount_with_proxy"
+			 //,"off_invoice_cma_discount_amount"
+			 //,"off_invoice_cma_discount_amount_with_proxy"
+			// ,"on_invoice_ctm_discount_amount"
+			 //,"on_invoice_ctm_discount_amount_with_proxy"
+			 //,"off_invoice_ctm_discount_amount"
+			 //,"off_invoice_ctm_discount_amount_with_proxy"
+			 ,"bottler_dead_net_net_sales_income"
+			 ,"bottler_dead_net_net_sales_income_with_proxy"
+			 ,"cogs"
+			 ,"dim_source_key"
+			 ,"curio_flag"}),
+			    #"Removed Columns" = Table.RemoveColumns(#"Removed Other Columns",{"dim_delivery_mode_key"})
+			in
+			    #"Removed Columns"
+
+	measure 'ACV Chg%' = [ACV%] -[ACV PY%]
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Hidden
+		lineageTag: 2d2a2147-eef2-4424-a333-4cd0cdf0ca06
+
+		changedProperty = IsHidden
+
+	measure ACV% = ```
+			
+			VAR ACV = 
+				DIVIDE([Standard Cases per Outlet],[Total Outlet Standard Case Volume with no Product Filters])
+			RETURN ACV
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Hidden
+		lineageTag: 0b13d89d-bbe4-4486-a04e-0299ca7de68b
+
+		changedProperty = IsHidden
+
+	measure 'ACV PY%' =
+			CALCULATE(
+						[ACV%],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Hidden
+		lineageTag: a712cd55-02b5-43a8-b9e7-9f2907cb0dd2
+
+		changedProperty = IsHidden
+
+	measure 'ACV YoY%' =
+			
+			IF(
+				ISFILTERED('Calendar'[Fiscal Month Ending Date]),
+				ERROR("Time intelligence quick measures can only be grouped or filtered by the Power BI-provided date hierarchy or primary date column."),
+				VAR __PREV_YEAR =
+					CALCULATE(
+						[ACV%],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date])
+					)
+				RETURN
+					DIVIDE([ACV%] - __PREV_YEAR, __PREV_YEAR)
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Hidden
+		lineageTag: 30af0743-2e69-46d3-8e6d-0ce590ac3475
+
+		changedProperty = IsHidden
+
+	measure 'Consumption Transactions' = SUM('Customer Invoice Measures'[consumption_transactions])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 8243c820-112d-41da-bc04-5cdbacb74b00
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Distinct Outlet Count' = ```
+			
+			VAR OutletsFromSales =
+			    SUMMARIZE ( 'Customer Invoice Measures', Outlet[Golden Record])
+			VAR Result =
+			    SUMX ( OutletsFromSales, 1 )
+			RETURN 
+			    Result 
+			```
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 21209b70-9533-4cc5-897f-917603ce2f7a
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Distinct Outlet Count PY' =
+			CALCULATE(
+						[Distinct Outlet Count],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		displayFolder: Hidden
+		lineageTag: df5e2494-d470-44f0-9bf9-8a7d40aa9f7b
+
+		changedProperty = IsHidden
+
+	measure 'Distinct Outlet Count R13W LCM' =
+			
+			//Number of outlets over the last 13 weeks after any filters from the end user
+			    CALCULATE(
+			        [Distinct Outlet Count],
+			        'Calendar'[R13W_LCM_CY]=1
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: b7af93e7-b0b5-497f-8ef4-2eeecea45ede
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Distinct Skus Count' = DISTINCTCOUNT('Customer Invoice Measures'[dim_product_key])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: aad47dcb-b70b-4e45-bc13-cd474087136c
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Outlet Penetration - R13W LCM' = ```
+			
+			
+			//Number of outlets over the last 13 weeks, ignores any user filters on the Product Table
+			VAR R13W_TotalOutlets = 
+			    CALCULATE (
+			        [Distinct Outlet Count],
+			        ALL ('Product'),
+			        'Calendar'[R13W_LCM_CY]=1
+			    )
+			
+			VAR Penetration = 
+			        DIVIDE([Distinct Outlet Count R13W LCM],R13W_TotalOutlets)
+			        
+			RETURN Penetration
+			```
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 2390e883-c1d7-4d0e-8410-8dd7a1e34c7a
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure Gallons = SUM('Customer Invoice Measures'[gallons_])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 01e2d959-b0a0-43b6-a5b7-cd98ce9bd8d5
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Gallons Outlet Volume' = ```
+			
+			VAR OutletsFromGallons =  
+			    SUMMARIZE('Customer Invoice Measures','Customer Invoice Measures'[gallons_])
+			VAR Result =
+			    SUMX(OutletsFromGallons,1)
+			RETURN
+			    Result
+			```
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 508ea65e-43b4-4361-8b3c-68cb3355fbc8
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Gallons Outlet Volume PY' =
+			CALCULATE(
+						[Gallons Outlet Volume],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		displayFolder: Hidden
+		lineageTag: 5dba83c7-de39-432d-9521-4c36f7b3b5e7
+
+		changedProperty = IsHidden
+
+	measure 'Gallons PY' =
+			CALCULATE(
+						[Gallons],
+						DATEADD('Calendar'[Fiscal Month Ending Date], -1, YEAR))
+		displayFolder: Hidden
+		lineageTag: f2bb66dc-bff2-4200-8fa7-c16af57f0a49
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration Chg%' = [Outlet Penetration%] - [Outlet Penetration PY%]
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Hidden
+		lineageTag: 473544a2-47d7-4994-9585-97d11925d4b5
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration PY%' =
+			CALCULATE(
+						[Outlet Penetration%],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Hidden
+		lineageTag: 0a3914a8-8a13-42ad-a5f6-7a18d6c4e577
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration YoY%' =
+			
+			IF(
+				ISFILTERED('Calendar'[Fiscal Month Ending Date]),
+				ERROR("Time intelligence quick measures can only be grouped or filtered by the Power BI-provided date hierarchy or primary date column."),
+				VAR __PREV_YEAR =
+					CALCULATE(
+						[Outlet Penetration%],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date])
+					)
+				RETURN
+					DIVIDE([Outlet Penetration%] - __PREV_YEAR, __PREV_YEAR)
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Hidden
+		lineageTag: 921207f2-a3f3-4bbb-bd18-e0427726be7b
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration%' = ```
+			
+			VAR Penetration = 
+				DIVIDE([Distinct Outlet Count],[Total Outlets with no Product Filters])
+			RETURN Penetration
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Hidden
+		lineageTag: fc5f8206-34bb-4b44-9166-6a45d545de77
+
+		changedProperty = IsHidden
+
+	measure 'row count' = COUNTROWS('Customer Invoice Measures')
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 6b71a8bf-9e1e-4ba8-a50a-3d1159c3431c
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Standard Cases per Outlet' = ```
+			DIVIDE([Standard Cases],[Number of Outlets])
+			/**
+			VAR OutletsFromStandardCases =  
+			    SUMMARIZE('Customer Invoice Metrics Agg','Customer Invoice Metrics Agg'[standard_physical_cases])
+			VAR Result =
+			    SUMX(OutletsFromStandardCases,1)
+			RETURN
+			    Result  **/
+			```
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 8f4fbeb7-837b-473f-a24e-fc794538e0b7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Standard Cases per Outlet PY' =
+			CALCULATE(
+						[Standard Cases per Outlet],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 50554ea4-7055-4e05-9c8d-5eb773f1aea3
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Standard Cases' = SUM('Customer Invoice Measures'[standard_physical_cases])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 3f94e9ef-98b1-44ce-bf94-cf3e77b8a715
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Standard Cases PY' =
+			CALCULATE(
+						[Standard Cases],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		displayFolder: Hidden
+		lineageTag: 0b145f1e-df11-4fae-ad50-83bfac61fb23
+
+		changedProperty = IsHidden
+
+	measure 'Total Outlet Standard Case Volume with no Product Filters' = ```
+			
+			VAR TotalOutletStandardCaseVol =  
+			    CALCULATE(
+			            [Standard Cases per Outlet],
+			            ALL(Product[Trademark],
+			            Product[Brand],
+			            Product[Product Name],
+			            Product[Package]
+			            )
+			    )
+			RETURN
+			    TotalOutletStandardCaseVol
+			```
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: d05a9c0d-40dc-472d-b565-3b2d95c17c93
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total Outlets with no Product Filters' =
+			
+			VAR TotalOutlets =
+				CALCULATE (
+					[Distinct Outlet Count],
+					ALL (
+						Product[Trademark],
+						Product[Brand],
+						Product[Beverage Product],
+						Product[Beverage Product Package]
+					)
+				)
+			RETURN
+				TotalOutlets
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: c4b8c1ec-f5f9-4c11-9931-ef696a884f67
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases per Outlet' = ```
+			DIVIDE( [Unit Cases],[Number of Outlets])
+			/**VAR OutletsFromUnitCases =  
+			    SUMMARIZE('Customer Invoice Metrics Agg','Customer Invoice Metrics Agg'[unit_cases])
+			VAR Result =
+			    SUMX(OutletsFromUnitCases,1)
+			RETURN
+			    Result**/
+			```
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 82fdf340-701e-4d7e-b1fe-8c17a5c5c31b
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases per Outlet PY' =
+			CALCULATE(
+						[Unit Cases per Outlet],
+						SAMEPERIODLASTYEAR('Calendar'[Calendar Date]))
+		displayFolder: Hidden
+		lineageTag: 0c2414cf-700a-4d35-b661-3c37de0c1ac3
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases' = SUM('Customer Invoice Measures'[unit_cases])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 73b2ff2e-0c29-4d54-b82a-37f8fef5550b
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases PY' =
+			COALESCE(CALCULATE([Unit Cases], 'Time Calculation'[Time Calculation] = "R52W PY"),0) //using coalesce to force 0's
+			
+			/*CALCULATE(
+						[Unit Cases],
+						DATEADD('Calendar'[Fiscal Month Ending Date], -1, YEAR))*/
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 574656df-646a-427c-9fa2-8c44466880a7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// # of individual purchaseable packages at retail in a standard physical case (SPC) i.e., 2 purchase transactions in an SPC of 12oz12pks which is made up of (2) 12oz 12pks
+	measure 'Purchase Transactions' = SUM('Customer Invoice Measures'[purchase_transactions])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: ce87571c-84f4-4dd0-b779-050ca89166bb
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Physical Cases' = SUM('Customer Invoice Measures'[physical_cases])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: e9426836-7d35-4e6e-8a91-802507bcae64
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Physical Cases Per Outlet' = ```
+			DIVIDE([Physical Cases],[Number of Outlets]) 
+			```
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 62b10172-1364-44a7-914c-995d6aa5465c
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Number of Outlets' =
+			
+			DISTINCTCOUNT ( 'Customer Invoice Measures'[dim_outlet_golden_record_key] )
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: b2edcad5-abd3-4a2f-a937-df2efb138ade
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Purchase Transactions per Outlet' = DIVIDE([Purchase Transactions],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: bed7cdec-ea77-4e85-b0f4-7ed37c4f7897
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// % of outlets selling X product
+	measure 'Outlet Penetration' = ```
+			
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), RELATEDTABLE('Customer Invoice Measures'))
+			
+			VAR start_week = end_week - 13
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			VAR numerator =
+			    CALCULATE (
+			        [Number of Outlets],
+			        date_range
+			    )
+			
+			VAR denominator =
+			    CALCULATE (
+			        [Number of Outlets],
+			        date_range,
+			        ALL ('Product')
+			    )
+			
+			VAR results = DIVIDE(numerator, denominator)
+			
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Outlet Penetration
+		lineageTag: dbfc884e-93ac-44b5-9c06-5d24db174793
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases Per Outlet R52W' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 52
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases per Outlet],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 2efa22c4-96a7-44f2-b893-3a2294a7a8cf
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases Per Outlet R52-104W' =
+			//CALCULATE([Unit Cases Per Outlet R52W], SAMEPERIODLASTYEAR('Invoice Date'[Calendar Date]))
+			//this variable will define the number of weeks in the rolling calculation
+			VAR  number_of_rolling_weeks = 52
+			
+			//this variable to find the end of the query range
+			VAR last_year = MAX('Calendar'[Fiscal Year]) - 1
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), 'Calendar'[Fiscal Year] = last_year)
+			
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases per Outlet],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Fiscal Year] = last_year,
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: de2980c7-de9c-4459-9758-a1fc584ec2eb
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases Per Outlet R13W' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases per Outlet],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 47482d40-e968-474f-933e-b13b42a70107
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases Per Outlet R14-26W' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR upper_number_of_rolling_weeks = 14
+			VAR lower_number_of_rolling_weeks = 26
+			
+			//this variable to find the end of the query range
+			VAR max_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = max_week - lower_number_of_rolling_weeks
+			VAR end_week = max_week - upper_number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases per Outlet],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: b5e25c5b-3542-4bf1-a668-05427e551648
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Consumption Transactions Per Outlet' = DIVIDE([Consumption Transactions],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 4b325137-bd79-4522-abdc-d5334e5b085a
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Outlet Penetration weighted by Unit Cases (%ACV)' = ```
+			
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), RELATEDTABLE('Customer Invoice Measures'))
+			 
+			VAR start_week = end_week - 13
+			 
+			VAR date_range =
+			FILTER(
+			ALL('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			 
+			VAR SelectedProductID = VALUES('Product'[Product Key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[dim_outlet_golden_record_key]),
+			        'Customer Invoice Measures'[dim_product_key] IN SelectedProductID,
+			        date_range
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        'Customer Invoice Measures'[Unit Cases],
+			        OutletsWithProduct,
+			        ALL('Product'),
+			        date_range
+			    )
+			 
+			VAR TotalSalesInOutlets =
+			    CALCULATE(
+			        'Customer Invoice Measures'[Unit Cases],
+			        ALL('Product'),
+			        date_range
+			    )
+			 
+			VAR results = DIVIDE(TotalSalesInOutletsWithProduct, TotalSalesInOutlets)
+			 
+			RETURN results  
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Outlet Penetration
+		lineageTag: bbb38a26-1c8c-4c8b-88c2-7351e3799a51
+
+		changedProperty = IsHidden
+
+	/// Volume measured in gallons
+	measure 'Gallons per Outlet' = DIVIDE( [Gallons],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: c55cc5d4-e31e-4609-bf09-8ab5a0a82e56
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total Products' = CALCULATE(DISTINCTCOUNT('Customer Invoice Measures'[dim_product_key]), ALLSELECTED('Customer Invoice Measures'))
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: dd384bde-415a-4160-9bcf-4ca5cea8ec79
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Outlet Penetration Denominator' = ```
+			
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), RELATEDTABLE('Customer Invoice Measures'))
+			
+			VAR start_week = end_week - 13
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			//VAR numerator =
+			//    CALCULATE (
+			//        [Number of Outlets],
+			//        date_range
+			//    )
+			
+			VAR denominator =
+			    CALCULATE (
+			        [Number of Outlets],
+			        date_range,
+			        ALL ('Product')
+			    )
+			
+			//VAR results = DIVIDE(numerator, denominator)
+			
+			RETURN IF( end_week > 0,  denominator)
+			```
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: ddff16a6-b658-4c04-aa32-90055f87025f
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases R52W' =
+			COALESCE(CALCULATE([Unit Cases], 'Time Calculation'[Time Calculation] = "R52W"),0)
+			//this variable will define the number of weeks in the rolling calculation
+			/*VAR number_of_rolling_weeks = 52
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        ALL('Product')
+			    )*/
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 37a3d426-2d7d-402e-943a-cf5365fc4463
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases PR52W' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 52
+			
+			
+			//this variable to find the end of the query range
+			VAR last_year = MAX('Calendar'[Fiscal Year]) - 1
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]),'Calendar'[Fiscal Year] = last_year)
+			
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        'Calendar'[Fiscal Year] = last_year,
+			        ALL('Product')
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 4860df42-d899-4b9e-bcd1-8f956856e89d
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure _SUMX_Distinct_Outlets = SUMX(DISTINCT(Outlet[Golden Record]), 1)
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 0a34b1ee-bb2e-4eda-a524-a515af1b2f7d
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Outlet Penetration Numerator' = ```
+			
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), RELATEDTABLE('Customer Invoice Measures'))
+			
+			VAR start_week = end_week - 13
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			VAR numerator =
+			    CALCULATE (
+			        [Number of Outlets],
+			        date_range
+			    )
+			
+			//VAR denominator =
+			//    CALCULATE (
+			//        [Number of Outlets],
+			//        date_range,
+			//        ALL ('Product')
+			//    )
+			
+			//VAR results = DIVIDE(numerator, denominator)
+			
+			RETURN IF( end_week > 0,  numerator)
+			```
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: f82a8d3c-73bf-44a0-af6f-200b37516e16
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Outlet Penetration Old' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR date_range = CALCULATETABLE('Calendar', 'Calendar'[Sequential Week Number] > start_week && 'Calendar'[Sequential Week Number] <= end_week)
+			
+			//this variable to calculate the numerator
+			VAR numerator =
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlet[Golden Record]),
+			        date_range
+			    )
+			
+			//this variable to calculate the denominator
+			VAR denominator =
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlet[Golden Record]),
+			        date_range,
+				    ALL ('Product')
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(numerator, denominator)
+			
+			//return the results
+			RETURN results
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 48c5f3cd-02f0-49fc-a7ad-fe372a41b6fc
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Outlet Penetration SUMX' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			/**CALCULATETABLE('Calendar', 'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week)**/
+			
+			//this variable to calculate the numerator
+			VAR numerator =
+			    CALCULATE([_SUMX_Distinct_Outlets],
+			        date_range,
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			//this variable to calculate the denominator
+			VAR denominator =
+			    CALCULATE (
+			        [_SUMX_Distinct_Outlets],
+			        date_range,
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week,
+				    ALL ('Product')
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(numerator, denominator)
+			
+			//return the results
+			RETURN results
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 1bb014b9-6cde-4831-bf2a-4e696ad40d0c
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure UCPN =
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			RETURN
+			    CALCULATE(
+			       [Unit Cases],
+			        date_range,
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        REMOVEFILTERS('Product')
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 965c6234-f299-4b74-bac5-d8dce1c3dfbf
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure UCPD =
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR date_range = TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key])
+			
+			RETURN
+			    CALCULATE(
+			        [Unit Cases],
+			        date_range,
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+				    ALL('Product'),
+			        ALL(Outlet),
+			        ALL('Territory Bottlers'),
+			        ALL('Invoice')
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 363d59b7-9c4c-41d7-ade5-bae25fe1d56b
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases R13W' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 29f87f1d-e828-4536-8db8-4ea9e09516dd
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total Unit Cases R13W All Outlets' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        ALL(Outlet)
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 2a563ed7-d7e1-498c-af4c-7aac771fea80
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases R13W CC' =
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			//this variable to calculate the numerator
+			RETURN
+			    CALCULATE (
+			        [Unit Cases],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week,
+			        'Calendar'[Sequential Week Number] <= end_week,
+			        Product[Trademark] = "Coca-Cola"
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 29f95c44-20bf-46a7-b227-bce4e0b744f0
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Qualified Volume' = ```
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			 
+			//this variable to find the end of the query range
+			VAR end_week = CALCULATE(MAX ( 'Calendar'[Sequential Week Number] ) , RELATEDTABLE('Customer Invoice Measures'))
+			 
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			 
+			VAR SelectedProductID = VALUES('Product'[Product Key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[dim_outlet_golden_record_key]),
+			        'Customer Invoice Measures'[dim_product_key] IN SelectedProductID
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        [Unit Cases],
+			        OutletsWithProduct,
+			        ALL('Product'),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			 
+			return TotalSalesInOutletsWithProduct
+			```
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: 489736a4-675e-4838-8cdd-9f3763d878bb
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Selected Product Volume' =
+			
+			CALCULATE(
+			        [Unit Cases],
+			        ALL('Product'),
+			        'Time Calculation'[Time Calculation] = "R13W"
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 961642db-29f6-41cb-9b61-28e53454a722
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases Coca-Cola Trademark' =
+			
+			CALCULATE(
+			        [Unit Cases],
+			        Product[Trademark] = "Coca-Cola"
+			    )
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: cc3f22f8-164c-4576-a9cf-00bf2c410efc
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Outlet Pen Norm' = ```
+			
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			VAR start_week = end_week - 13
+			
+			//VAR date_range = CALCULATETABLE(TREATAS(VALUES('Calendar'[dim_date_key]), 'Customer Invoice Measures'[dim_date_key]), 'Calendar'[Sequential Week Number] > start_week && 'Calendar'[Sequential Week Number] <= end_week)
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			//RETURN CALCULATE([Outlet Penetration], date_range)
+			
+			RETURN CALCULATE (
+			        [Outlet Pen],
+			        date_range
+			    )
+			```
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: 58b0bd9a-7ec7-4832-9371-ae8c7d172135
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases YTD' = ```
+			
+			COALESCE(CALCULATE([Unit Cases], 'Time Calculation'[Time Calculation] = "R52W"),0)
+			/*VAR rolling_weeks = 52
+			VAR selectedWeek = MAX('Calendar'[Sequential Week Number])
+			VAR startWeek = selectedWeek - rolling_weeks
+			
+			VAR result = IF( ISBLANK(selectedWeek), BLANK(), CALCULATE([Unit Cases], REMOVEFILTERS('Calendar'), 
+			                                                                'Calendar'[Sequential Week Number] > startWeek, 
+			                                                                'Calendar'[Sequential Week Number] <= selectedWeek
+			                                                            )
+			                )
+			
+			RETURN COALESCE(result, 0)*/
+			//CALCULATE([Unit Cases], 'Time Calculation'[Time Calculation] = "YTD")
+			```
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 9bef0318-254f-4d7b-acfb-88d967b0f1b5
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Outlet Pen' =
+			
+			VAR numerator =
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlet[Golden Record])
+			    )
+			
+			//this variable to calculate the denominator
+			VAR denominator =
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlet[Golden Record]),
+				    ALL ('Product')
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(numerator, denominator)
+			
+			//return the results
+			RETURN results
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Hidden
+		lineageTag: f5bbbf7a-edb1-4bf1-8e18-8ea11c8d975c
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration Weighted by Unit Cases 2' = ```
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = IF(ISBLANK(SELECTEDVALUE('Week Parameter'[Rolling Weeks])), 13, SELECTEDVALUE('Week Parameter'[Rolling Weeks]))
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			VAR SelectedProductID = VALUES('Product'[Product Key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT(Outlet[Golden Record]),
+			        'Customer Invoice Measures'[dim_product_key] IN SelectedProductID,
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        [Unit Cases],
+			        OutletsWithProduct,
+			        ALL('Product'),
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			VAR TotalSalesInOutlets = 
+			    CALCULATE(
+			        [Unit Cases],
+			        ALL('Product'),
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(TotalSalesInOutletsWithProduct, TotalSalesInOutlets)
+			
+			//return the results
+			RETURN results
+			```
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 5b69efde-a8bd-4d26-a78c-047996c3d0f4
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases All Products' = ```
+			
+			
+			//this variable will define the number of weeks in the rolling calculation
+			VAR number_of_rolling_weeks = 13
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX ( 'Calendar'[Sequential Week Number] )
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - number_of_rolling_weeks
+			
+			
+			RETURN
+			    CALCULATE(
+			        [Unit Cases],
+			        ALL('Product'),
+			        REMOVEFILTERS('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			```
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 409f073e-99b4-4463-83a6-d238a87296c7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Gallons - Plan' = SUM('Overall Performance Plan'[gallons_plan])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 5c0cf3e0-3d9c-4def-b2c1-f35150e7c681
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Gallons - Forecast' = SUM(Forecast[gallons_forecast])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 0973ac0e-3db5-4381-a17f-77585a36bd83
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases - Plan' = SUM('Overall Performance Plan'[unit_cases_plan])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 502745ce-f918-426a-97ae-a8cf2ac7f131
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases - Forecast' = SUM(Forecast[unit_cases_forecast])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 57247f73-c46f-4cba-8591-84dc7b89d2a9
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Physical Cases - Plan' = SUM('Overall Performance Plan'[physical_cases_plan])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 5a461f07-ad0b-4fbb-843b-320a68de011b
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Physical Cases - Forecast' = SUM(Forecast[physical_cases_forecast])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: e60c2869-9755-40a6-85c9-8bfdc62a3d5b
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Purchase Transactions - Plan' = SUM('Overall Performance Plan'[purchase_transactions_plan])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 80d057df-b410-4607-9193-b9d345f58b49
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Purchase Transactions - Forecast' = SUM(Forecast[purchase_transactions_forecast])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 3a3ca7ad-bed0-4fb2-ba4a-e450fa4e66ce
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Standard Cases - Plan' = SUM('Overall Performance Plan'[standard_physical_cases_plan])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 96c5629b-a85a-488e-b427-83f749933871
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Standard Cases - Forecast' = SUM(Forecast[standard_physical_cases_forecast])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: cc94d847-d18c-4a06-b43d-c139a21e9c13
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases per Outlet - Plan' = DIVIDE([Unit Cases - Plan],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 2d33fb74-10f8-4d61-b952-c91bec46026c
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Unit Cases per Outlet - Forecast' = DIVIDE([Unit Cases - Forecast],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 257842fb-1ccc-47d3-8808-4e0a4a503915
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Purchase Transactions per Outlet - Plan' = DIVIDE([Purchase Transactions - Plan],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 42f92dc3-8a88-4aed-99dc-723e95fb68fa
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Purchase Transactions per Outlet - Forecast' = DIVIDE([Purchase Transactions - Forecast],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 9e80b748-0586-450e-9618-ffe12219174d
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Gallons per Outlet - Plan' = DIVIDE([Gallons - Plan],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: fd714184-161f-46f9-ae74-aa1b08f3c18e
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Gallons per Outlet - Forecast' = DIVIDE([Gallons - Forecast],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 269615e9-eb51-4766-8e90-ac84e64503f7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Consumption Transactions - Plan' = SUM('Overall Performance Plan'[consumption_transactions_plan])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 5ced9128-27c4-4d33-b15f-474c9625a428
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Consumption Transactions - Forecast' = SUM(Forecast[consumption_transactions_forecast])
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: ab6f2779-cbab-491c-b247-a78a402bdd7c
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Consumption Transactions Per Outlet - Plan' = DIVIDE([Consumption Transactions - Plan],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: c94e617e-8509-476a-b1cd-ffb78c1a27e9
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Consumption Transactions Per Outlet - Forecast' = DIVIDE([Consumption Transactions - Forecast],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 99fb5d1f-d3bb-4a56-b293-d12b96c919b6
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Physical Cases Per Outlet - Plan' = DIVIDE([Physical Cases - Plan],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 73a5d58e-1524-4479-a283-8d50c7536f91
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Physical Cases Per Outlet - Forecast' = DIVIDE([Physical Cases - Forecast],[Number of Outlets])
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: 278ad0e4-6057-46b1-90d8-a5ee2c7bb9a7
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Dead Net Net Sales Income / EQ Case' = divide([Dead Net Net Sales Income],[Unit Cases])
+		formatString: #,0
+		displayFolder: Bottler Financials
+		lineageTag: f11c9061-0ace-480c-a99f-eadbde47ed4d
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Dead Net Net Sales Income / EQ Case - Plan' = divide([Dead Net Net Sales Income - Plan],[Unit Cases])
+		formatString: #,0
+		displayFolder: Bottler Financials
+		lineageTag: e0c0d460-a9e3-476a-b2ec-58ea4e3e7695
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Dead Net Net Sales Income / Standard Physical Case' = divide([Dead Net Net Sales Income],[Standard Cases])
+		formatString: #,0
+		displayFolder: Bottler Financials
+		lineageTag: 41061b84-afb7-4e3a-9acb-4b24e98c1451
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Dead Net Net Sales Income / Standard Physical Case - Plan' = divide([Dead Net Net Sales Income - Plan],[Standard Cases - Plan])
+		formatString: #,0
+		displayFolder: Bottler Financials
+		lineageTag: 9ffad5ec-e68d-4ffd-a1a4-8a3314d1b551
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Volume penetration of KOZS for FSOP channels
+	measure '% ACV (FSOP KOZS)' =
+			
+			
+			VAR QualifiedVolume = CALCULATE([Standard Cases], ALLSELECTED('Product'[Brand]))
+			
+			RETURN DIVIDE(QualifiedVolume, [Standard Cases])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Outlet Penetration
+		lineageTag: b8ded9b9-bf2d-4d35-aba6-aa42ccb36c62
+
+		changedProperty = IsHidden
+
+	measure 'FSOP KOZS Penetration' = CALCULATE([Outlet Penetration], 'Product'[Brand] = "COCA-COLA ZERO SUGAR")
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: 2b1e9c26-b2b2-411b-8e73-31efa1ee6590
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'KO Zero Sugar FSOP Distribution' = CALCULATE([Outlet Penetration weighted by Unit Cases (%ACV)], 'Product'[src_brand_name] = "Coca-Cola Zero")
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: d0e4bd89-6918-47e3-8bb1-4a08b2535deb
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Outlet Penetration TA' = ```
+			
+			//this variable to find the end of the query range
+			VAR end_week = MAX('Calendar'[Sequential Week Number])
+			
+			//this variable to find the start of the query range
+			VAR start_week = end_week - 13
+			
+			VAR date_range = TREATAS(
+			                      SUMMARIZE(
+			                              FILTER(ALL('Calendar'), 
+			                              'Calendar'[Sequential Week Number] > start_week &&
+			                              'Calendar'[Sequential Week Number] <= end_week), 'Calendar'[dim_date_key]),
+			                              'Customer Invoice Measures'[dim_date_key])
+			
+			//this variable to calculate the numerator
+			VAR numerator =
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlet[Golden Record]),
+			        date_range
+			    )
+			
+			//this variable to calculate the denominator
+			VAR denominator =
+			    CALCULATE (
+			        DISTINCTCOUNT(Outlet[Golden Record]),
+			        date_range,
+				    ALL ('Product')
+			    )
+			
+			//this variable to calculate the results
+			VAR results = DIVIDE(numerator, denominator)
+			
+			//return the results
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Outlet Penetration
+		lineageTag: b5fc65e5-d0c4-426d-87ae-28fda106d7fd
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration weighted by Unit Cases (%ACV) Numerator' = ```
+			
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), RELATEDTABLE('Customer Invoice Measures'))
+			 
+			VAR start_week = end_week - 13
+			 
+			VAR date_range =
+			FILTER(
+			ALL('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			 
+			VAR SelectedProductID = VALUES('Product'[Product Key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[dim_outlet_golden_record_key]),
+			        'Customer Invoice Measures'[dim_product_key] IN SelectedProductID,
+			        date_range
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        'Customer Invoice Measures'[Unit Cases],
+			        OutletsWithProduct,
+			        ALL('Product'),
+			        date_range
+			    )
+			 
+			//VAR results = DIVIDE(TotalSalesInOutletsWithProduct, TotalSalesInOutlets)
+			 
+			RETURN TotalSalesInOutletsWithProduct
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Outlet Penetration
+		lineageTag: b2a60f43-9ea0-4a8a-a015-55689ea7e82a
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration weighted by Unit Cases (%ACV) Denominator' = ```
+			
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), RELATEDTABLE('Customer Invoice Measures'))
+			 
+			VAR start_week = end_week - 13
+			 
+			VAR date_range =
+			FILTER(
+			ALL('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			 
+			VAR TotalSalesInOutlets =
+			    CALCULATE(
+			        'Customer Invoice Measures'[Unit Cases],
+			        ALL('Product'),
+			        date_range
+			    )
+			 
+			//VAR results = DIVIDE(TotalSalesInOutletsWithProduct, TotalSalesInOutlets)
+			 
+			RETURN TotalSalesInOutlets  
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Outlet Penetration
+		lineageTag: 7c89e53a-81ca-45d0-9d0d-36dd9e11d420
+
+		changedProperty = IsHidden
+
+	measure 'SSD IC UCS' = CALCULATE([Unit Cases],'Product'[NABDB Package Group] = "SSD IC")
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 1ab77608-778f-4c10-a97a-9ccdf54dc083
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// % of SSD sales that are immediate consumption products (i.e., 1L or smaller)
+	measure 'SSD IC MIX' = ```
+			
+			VAR Numerator = CALCULATE([Unit Cases],'Product'[NABDB Package Group] = "SSD IC")
+			VAR Denominator = CALCULATE(
+			            [Unit Cases],
+			            'Product'[NABDB Funding Group] = "SSD"
+			            )    
+			RETURN DIVIDE(Numerator, Denominator)
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Volume
+		lineageTag: 3c35f8fa-9288-4980-95d3-41b67523a01a
+
+		changedProperty = IsHidden
+
+	measure 'SSD IC MIX - Forecast' = ```
+			
+			VAR Numerator = CALCULATE([Unit Cases - Forecast],'Product'[NABDB Package Group] = "SSD IC")
+			VAR Denominator = CALCULATE(
+			            [Unit Cases - Forecast],
+			            'Product'[NABDB Funding Group] = "SSD"
+			            )   
+			RETURN DIVIDE(Numerator, Denominator)
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Volume
+		lineageTag: c0667418-7905-4ca0-9323-6639d078a595
+
+		changedProperty = IsHidden
+
+	measure 'SSD IC MIX - Plan' = ```
+			
+			VAR Numerator = CALCULATE([Unit Cases - Plan],'Product'[NABDB Package Group] = "SSD IC")
+			VAR Denominator = CALCULATE(
+			            [Unit Cases - Plan],
+			            'Product'[NABDB Funding Group] = "SSD"
+			            )   
+			RETURN DIVIDE(Numerator, Denominator)
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Volume
+		lineageTag: 4cf1a607-56a1-45e2-8e8d-942362564ebb
+
+		changedProperty = IsHidden
+
+	measure 'SSD IC Unit Cases' = CALCULATE([Unit Cases],'Product'[NABDB Package Group] = "SSD IC")
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 194cf84d-f70d-4b36-a670-29f257a7097c
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Outlet Penetration Mix Unit Cases' = ```
+			
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), RELATEDTABLE('Customer Invoice Measures'))
+			 
+			VAR start_week = end_week - 13
+			 
+			VAR date_range =
+			FILTER(
+			ALL('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			 
+			VAR SelectedProductID = VALUES('Product'[Product Key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[dim_outlet_golden_record_key]),
+			        'Customer Invoice Measures'[dim_product_key] IN SelectedProductID,
+			        date_range
+			)
+			 
+			VAR ItemSalesInOutletsWithProduct =
+			    CALCULATE(
+			        'Customer Invoice Measures'[Unit Cases],
+			        OutletsWithProduct,
+			        date_range
+			    )
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        'Customer Invoice Measures'[Unit Cases],
+			        OutletsWithProduct,
+			        ALL('Product'),
+			        date_range
+			    )
+			 
+			VAR results = DIVIDE(ItemSalesInOutletsWithProduct, TotalSalesInOutletsWithProduct)
+			 
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Outlet Penetration
+		lineageTag: 373e87b4-dfce-4548-882f-b3bde362ec73
+
+	measure 'Outlet Penetration Mix Unit Cases Denominator' = ```
+			
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), RELATEDTABLE('Customer Invoice Measures'))
+			 
+			VAR start_week = end_week - 13
+			 
+			VAR date_range =
+			FILTER(
+			ALL('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			 
+			VAR SelectedProductID = VALUES('Product'[Product Key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[dim_outlet_golden_record_key]),
+			        'Customer Invoice Measures'[dim_product_key] IN SelectedProductID,
+			        date_range
+			)
+			 
+			VAR TotalSalesInOutletsWithProduct =
+			    CALCULATE(
+			        'Customer Invoice Measures'[Unit Cases],
+			        OutletsWithProduct,
+			        ALL('Product'),
+			        date_range
+			    )
+			 
+			//VAR results = DIVIDE(ItemSalesInOutletsWithProduct, TotalSalesInOutletsWithProduct)
+			 
+			RETURN TotalSalesInOutletsWithProduct
+			```
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: fe8275c5-3669-4310-ae0b-6e0b9629360c
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Outlet Penetration Mix Unit Cases Numerator' = ```
+			
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), RELATEDTABLE('Customer Invoice Measures'))
+			 
+			VAR start_week = end_week - 13
+			 
+			VAR date_range =
+			FILTER(
+			ALL('Calendar'),
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			 
+			VAR SelectedProductID = VALUES('Product'[Product Key])
+			 
+			VAR OutletsWithProduct =
+			    CALCULATETABLE (
+			        DISTINCT('Customer Invoice Measures'[dim_outlet_golden_record_key]),
+			        'Customer Invoice Measures'[dim_product_key] IN SelectedProductID,
+			        date_range
+			)
+			 
+			VAR ItemSalesInOutletsWithProduct =
+			    CALCULATE(
+			        'Customer Invoice Measures'[Unit Cases],
+			        OutletsWithProduct,
+			        date_range
+			    )
+			 
+			//VAR results = DIVIDE(ItemSalesInOutletsWithProduct, TotalSalesInOutletsWithProduct)
+			 
+			RETURN ItemSalesInOutletsWithProduct
+			```
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: a2f5f9a5-7594-4c6e-990c-16d5fd32c45b
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'myCoke Penetration' = ```
+			
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), RELATEDTABLE('Customer Invoice Measures'))
+			
+			VAR start_week = end_week - 13
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			VAR numerator =
+			    CALCULATE (
+			        [myCoke Outlet Count],
+			        date_range
+			    )
+			
+			VAR denominator =
+			    CALCULATE ([Number of Outlets],
+			        date_range,
+			        ALL ('Product')
+			    )
+			
+			VAR results = DIVIDE(numerator, denominator)
+			
+			RETURN results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Outlet Penetration
+		lineageTag: 76ec6eb2-1df0-4b79-9db4-301f20ac3f2d
+
+	measure 'Non myCoke Outlet Count R13W' =
+			
+			[Outlet Penetration Denominator] - [myCoke Outlet Count R13W]
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: 0b6806b8-fa57-4382-bc5f-768035b784f4
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Count of outlets on myCoke (defined universe)
+	measure 'myCoke Outlet Count' =
+			
+			CALCULATE(
+			        [Number of Outlets],
+			        OR(Invoice[eB2B] = "myCoke", Invoice[eB2B] = "myCoke360")
+			)
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: b8526242-9edd-4ec6-a5d6-244e3f7109d0
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'myCoke Penetration Denominator' = ```
+			
+			VAR end_week = CALCULATE(MAX('Calendar'[Sequential Week Number]), RELATEDTABLE('Customer Invoice Measures'))
+			
+			VAR start_week = end_week - 13
+			
+			VAR date_range = 
+			FILTER(
+			ALL('Calendar'), 
+			        'Calendar'[Sequential Week Number] > start_week &&
+			        'Calendar'[Sequential Week Number] <= end_week
+			    )
+			
+			//VAR numerator =
+			//   CALCULATE (
+			//        [myCoke Outlet Count],
+			//        date_range
+			//    )
+			
+			VAR denominator =
+			    CALCULATE ([Number of Outlets],
+			        date_range,
+			        ALL ('Product')
+			    )
+			
+			//VAR results = DIVIDE(numerator, denominator)
+			
+			RETURN IF( end_week > 0,  denominator)
+			```
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: a3604d96-c230-48de-bda9-1818862c5233
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Bottler Dead Net Net Sales Income with Proxy' = SUM('Customer Invoice Measures'[bottler_dead_net_net_sales_income_with_proxy])
+		formatString: #,0
+		displayFolder: Hidden
+		lineageTag: 85881a44-d2b3-4b87-9acf-921d9db25645
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'SSD IC UCS - Plan' = CALCULATE([Unit Cases - Plan],'Product'[NABDB Package Group] = "SSD IC")
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 0e888914-7c56-43b6-bb69-d2964ee3863a
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'VPO Segmentation' =
+			
+			
+			SWITCH(TRUE(),
+			ISBLANK([Standard Cases per Outlet]), BLANK(),
+			[Standard Cases per Outlet] <= 50, " 50 or less",
+			[Standard Cases per Outlet] > 50 && [Standard Cases per Outlet] <= 100, " 51 - 100",
+			[Standard Cases per Outlet] > 100 && [Standard Cases per Outlet] <= 250, " 101 - 250",
+			[Standard Cases per Outlet] > 250 && [Standard Cases per Outlet] <= 500, " 251 - 500",
+			[Standard Cases per Outlet] > 500 && [Standard Cases per Outlet] <= 1000, " 501 - 1000",
+			"1000+"
+			)
+		formatString: #,0
+		displayFolder: Volume per Outlet
+		lineageTag: fadf1d4f-45a8-41b0-8b50-ae3502d0f60e
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'myCoke Outlet Count R13W' = ```
+			CALCULATE([myCoke Outlet Count],'Time Calculation'[Time Calculation] = "R13W")
+			
+			```
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: f7f7164f-6793-433c-849a-ac41914c29f7
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'myCoke Qualified Outlets' =
+			
+			CALCULATE(
+			    [Number of Outlets],
+			    KEEPFILTERS(
+			            Outlet[Activity Cluster]<>"Large Store" &&
+			            Outlet[Activity Cluster]<>"Bottler House Sales" &&
+			            Outlet[Activity Cluster]<>"eCommerce" &&
+			            Outlet[Activity Cluster]<>"Club" &&
+			            Outlet[Activity Cluster]<>"All Other & Estimated" &&
+			            Outlet[Activity Cluster]<>"Bottler to Bottler Sales"
+			    ),
+			    Outlet[Outlet Type] = "TRADE SALE",
+			    Invoice[Credit Report Type] = "RTL",
+			    'Territory Bottlers'[display_cona_indicator] = "CONA"
+			)
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: 6176de06-5541-4d6c-8c18-521f9a45d270
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'myCoke Qualified Outlets R13W' = CALCULATE([myCoke Qualified Outlets],'Time Calculation'[Time Calculation] = "R13W")
+		formatString: #,0
+		displayFolder: Outlet Penetration
+		lineageTag: 05d45eba-b966-400a-9e43-924e6d20fbca
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'myCoke Penetration R13W' = CALCULATE( [myCoke Penetration],'Time Calculation'[Time Calculation] = "R13W")
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Outlet Penetration
+		lineageTag: 57e73a61-68a0-4c5b-9e67-a37f2b4bd147
+
+	measure 'New Outlets' = ```
+			
+			 
+			var max_date_in_fact = MAX('Customer Invoice Measures'[dim_date_key])
+			var one_yr_cut_off_date = max_date_in_fact - 10000
+			var table_gr =
+			    FILTER(
+			        SUMMARIZE(CALCULATETABLE('Customer Invoice Measures', 
+			                            ALL('Calendar'),
+			                            'Customer Invoice Measures'[dim_date_key] <= max_date_in_fact),
+			                            'Customer Invoice Measures'[dim_outlet_golden_record_key],
+			        "Min_Order_Date", MIN('Customer Invoice Measures'[dim_date_key])
+			        ),
+			        [Min_Order_Date] > one_yr_cut_off_date
+			    )
+			
+			return COUNTROWS(table_gr)
+			```
+		formatString: #,0
+		displayFolder: Outlet Status
+		lineageTag: 84556f67-e114-4b95-a112-881fb6304fcc
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Active Outlets' = ```
+			
+			var max_date_in_fact = MAX('Customer Invoice Measures'[dim_date_key])
+			var one_yr_cut_off_date = max_date_in_fact - 10000
+			var table_gr =
+			SUMMARIZE(
+			            CALCULATETABLE('Customer Invoice Measures', 
+			                            ALL('Calendar'),
+			                            'Customer Invoice Measures'[dim_date_key] <= max_date_in_fact,
+			                            'Customer Invoice Measures'[dim_date_key] > one_yr_cut_off_date),
+			                             'Customer Invoice Measures'[dim_outlet_golden_record_key])
+			 
+			return COUNTROWS(table_gr)
+			```
+		formatString: #,0
+		displayFolder: Outlet Status
+		lineageTag: db5764e7-4bf0-4d7d-be5f-4e9e0b0d719f
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Lost Outlets' = ```
+			
+			 
+			var max_date_in_fact = MAX('Customer Invoice Measures'[dim_date_key])
+			var one_yr_cut_off_date = max_date_in_fact - 10000
+			var two_yr_cut_off_date = max_date_in_fact - 20000
+			var table_gr =
+			    FILTER(
+			        SUMMARIZE(CALCULATETABLE('Customer Invoice Measures', 
+			                            //REMOVEFILTERS('Customer Invoice Measures'[dim_date_key]),
+			                            ALL('Calendar'),
+			                            'Customer Invoice Measures'[dim_date_key] <= max_date_in_fact),
+			                            'Customer Invoice Measures'[dim_outlet_golden_record_key],
+			            "Max_Order_Date", MAX('Customer Invoice Measures'[dim_date_key])
+			        ),
+			        AND([Max_Order_Date] < one_yr_cut_off_date, [Max_Order_Date] > two_yr_cut_off_date)
+			    ) 
+			return COUNTROWS(table_gr) * -1
+			```
+		displayFolder: Outlet Status
+		lineageTag: c9129e04-45e2-4241-adbe-dded4125c2d4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Net Outlets' = [New Outlets] + [Lost Outlets]
+		formatString: #,0
+		displayFolder: Outlet Status
+		lineageTag: 720f6e60-8960-4e8f-87ce-8b0155712997
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure Gallons/ADS = ```
+			
+			Var CY = max('Calendar'[Fiscal Year])
+			Var PY = MAX('Calendar'[Fiscal Year])-1
+			
+			var CYSellingDays = CALCULATE(DISTINCTCOUNT('Calendar'[dim_date_key]), 'Calendar'[selling_day_ind] = 1,'Calendar'[Fiscal Year] = CY)
+			var PYSellingDays = CALCULATE(DISTINCTCOUNT('Calendar'[dim_date_key]), 'Calendar'[selling_day_ind] = 1,'Calendar'[Fiscal Year] = PY)
+			var AdjRatio = divide(CYSellingDays,PYSellingDays)
+			
+			var CYVolume = CALCULATE([Gallons],'Calendar'[Fiscal Year]=CY)
+			var PYVolume = calculate([Gallons],'Calendar'[Fiscal Year]=PY)
+			
+			var ADS = DIVIDE((CYVolume - PYVolume*AdjRatio),PYVolume*AdjRatio)
+			
+			RETURN 
+			ADS
+			```
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: Volume
+		lineageTag: 3f21eabc-7dad-486f-b380-6cd36f44f08d
+
+	column standard_physical_cases
+		dataType: decimal
+		displayFolder: Hidden
+		lineageTag: a01bc040-5a2c-48f6-9696-b70ed18690a5
+		summarizeBy: sum
+		sourceColumn: standard_physical_cases
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_cases
+		dataType: decimal
+		displayFolder: Hidden
+		lineageTag: 7dd87a5b-9632-44d0-8033-6c4dcd13282e
+		summarizeBy: sum
+		sourceColumn: unit_cases
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gallons_
+		dataType: decimal
+		displayFolder: Hidden
+		lineageTag: f5da60a4-9eeb-4015-bbc7-384e25a99aef
+		summarizeBy: sum
+		sourceColumn: gallons_
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_outlet_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 9cf021e6-cd88-4b3a-9471-3baad4a4ba30
+		summarizeBy: none
+		sourceColumn: dim_outlet_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_invoice_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 8e683593-991b-430b-b95d-bae7e53ebc62
+		summarizeBy: none
+		sourceColumn: dim_invoice_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column purchase_transactions
+		dataType: decimal
+		displayFolder: Hidden
+		lineageTag: 25811937-edbc-4494-aae3-645d5fa59780
+		summarizeBy: sum
+		sourceColumn: purchase_transactions
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column physical_cases
+		dataType: decimal
+		displayFolder: Hidden
+		lineageTag: 3a8d2bed-73a9-4470-a109-48e28c131479
+		summarizeBy: sum
+		sourceColumn: physical_cases
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column consumption_transactions
+		dataType: decimal
+		displayFolder: Hidden
+		lineageTag: b95da7f3-7d66-4a62-b593-d9086fc4befc
+		summarizeBy: sum
+		sourceColumn: consumption_transactions
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column bottler_dead_net_net_sales_income
+		dataType: decimal
+		displayFolder: Hidden
+		lineageTag: 57bb2099-44d7-42f7-b665-bb880fc7b72a
+		summarizeBy: sum
+		sourceColumn: bottler_dead_net_net_sales_income
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_date_key
+		dataType: int64
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: faf9d405-f033-4598-b44b-f569d26d30a6
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 1fe10127-2805-412e-8898-17bb303572e6
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_territory_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 24016eca-76c8-45ed-90bb-5d6938ea4c59
+		summarizeBy: none
+		sourceColumn: dim_territory_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 552f15d0-5078-4b0b-b634-e1114864f93e
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_channel_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 3db20e45-0d09-4376-8afa-7b40e25de067
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 78f4ac48-884b-4cad-b04b-53babc37c9ad
+		summarizeBy: none
+		sourceColumn: dim_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column bottler_dead_net_net_sales_income_with_proxy
+		dataType: decimal
+		displayFolder: Hidden
+		lineageTag: a72eef48-b0c7-450d-b65f-5283bb71a0f4
+		summarizeBy: sum
+		sourceColumn: bottler_dead_net_net_sales_income_with_proxy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cogs
+		dataType: decimal
+		displayFolder: Hidden
+		lineageTag: 8b92f7fd-e841-4443-9e13-150a92e82844
+		summarizeBy: sum
+		sourceColumn: cogs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_source_key
+		dataType: string
+		lineageTag: df4aa012-36c0-4a3a-9475-03e89a58dd6e
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column curio_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: a78d45ff-1129-4db9-b221-09d3a11b3571
+		summarizeBy: sum
+		sourceColumn: curio_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FSOP Flag' =
+			
+			IF (
+			    RELATED(Outlet[Outlet Type]) = "TRADE SALE" || RELATED(Outlet[Outlet Type]) = "Full Serve",
+			    SWITCH(
+			        TRUE(),
+			        RELATED(Invoice[lmp_indicator]) = "LMP", "FSOP",
+			        RELATED(Outlet[Channel Organization]) = "On Premise" &&  RELATED(Outlet[Outlet Type]) = "TRADE SALE"  && RELATED(Invoice[Credit Report Type]) = "RTL"  , "FSOP",
+			        RELATED(Outlet[Activity Cluster]) = "All Other & Estimated" && RELATED(Invoice[lmp_indicator]) = "LMP", "FSOP",
+			        BLANK()
+			    ),
+			    BLANK()
+			)
+		lineageTag: 23d6b8ae-2896-4dc3-ace0-7f3b123648cf
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_outlet_golden_record_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 2f7ac859-3515-4573-9e1a-296132a871cc
+		summarizeBy: sum
+		sourceColumn: dim_outlet_golden_record_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Customer Invoice Measures' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    invoice_vw_Fact_Invoice_Weekly = Source{[Schema="invoicev3",Item="vw_Fact_Invoice_Weekly"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(invoice_vw_Fact_Invoice_Weekly,{{"gallons", "gallons_"}, {"dim_settlement_date_key","dim_date_key"}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns", each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"dim_date_key"
+				 ,"dim_outlet_key"
+				 ,"dim_outlet_golden_record_key"
+				 ,"dim_bottler_key"
+				 ,"dim_territory_bottler_key"
+				 ,"dim_customer_key"
+				 ,"dim_channel_key"
+				 ,"dim_product_key"
+				 ,"dim_delivery_mode_key"
+				 ,"dim_invoice_key"
+				 ,"physical_cases"
+				 ,"standard_physical_cases"
+				 ,"unit_cases"
+				 ,"gallons_"
+				 ,"purchase_transactions"
+				 ,"consumption_transactions"
+				 //,"wholesale_price_amount"
+				 //,"wholesale_price_amount_with_proxy"
+				// ,"on_invoice_discount_amount"
+				 //,"on_invoice_discount_amount_with_proxy"
+				 //,"off_invoice_discount_amount"
+				 //,"off_invoice_discount_amount_with_proxy"
+				// ,"on_invoice_cma_discount_amount"
+				 //,"on_invoice_cma_discount_amount_with_proxy"
+				 //,"off_invoice_cma_discount_amount"
+				 //,"off_invoice_cma_discount_amount_with_proxy"
+				// ,"on_invoice_ctm_discount_amount"
+				 //,"on_invoice_ctm_discount_amount_with_proxy"
+				 //,"off_invoice_ctm_discount_amount"
+				 //,"off_invoice_ctm_discount_amount_with_proxy"
+				 ,"bottler_dead_net_net_sales_income"
+				 ,"bottler_dead_net_net_sales_income_with_proxy"
+				 ,"cogs"
+				 ,"dim_source_key"
+				 ,"curio_flag"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Removed Other Columns",{"dim_delivery_mode_key"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

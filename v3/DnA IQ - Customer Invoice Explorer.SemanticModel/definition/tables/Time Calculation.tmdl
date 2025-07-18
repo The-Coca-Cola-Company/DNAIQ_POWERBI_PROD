@@ -1,0 +1,75 @@
+table 'Time Calculation'
+	lineageTag: df50ec4b-79a6-49c7-8c57-3e7d4a537427
+	sourceLineageTag: 3934e7f5-d0ad-4027-8aaf-250bb2741ede
+
+	column 'Time Calculation'
+		dataType: string
+		lineageTag: 5cf12d74-5e78-4414-ba13-0028ac7ecfc6
+		sourceLineageTag: cc753233-1dc5-42a5-a888-c126ef4ad7d2
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Time Calculation
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = User
+
+	column Ordinal
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b111cf0b-c68b-447a-8321-9afadd4873f4
+		sourceLineageTag: e5978096-8e12-4590-ab65-38c41c9710bf
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Time Calc Parent'
+		dataType: string
+		isHidden
+		lineageTag: be86a564-97ea-43fd-9591-d66705596788
+		sourceLineageTag: f7f4bc32-e458-4aba-b2cc-e6acf91690db
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Time Calc Parent
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Time Calc Category'
+		dataType: string
+		isHidden
+		lineageTag: ca7e23bc-41fe-41a3-b398-a667ad504d9e
+		sourceLineageTag: 8a528262-f61a-4297-8399-93fd19478f97
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Time Calc Category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Order Time Cal'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ec9327f2-65d7-468c-94ee-e1f37ba6cb7c
+		sourceLineageTag: 0b77b2ba-bfd4-46b0-ac03-a45f2636c0e3
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Order Time Cal
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition 'Time Calculation' = entity
+		mode: directQuery
+		source
+			entityName: Time Calculation
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

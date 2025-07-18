@@ -1,0 +1,68 @@
+role 'Bottlers and External Guests'
+	modelPermission: read
+
+	tablePermission 'ACV TDP'
+		metadataPermission: none
+
+	tablePermission Beach
+		metadataPermission: none
+
+	tablePermission 'Bottler Financials'
+		metadataPermission: none
+
+	tablePermission CBR_Category_Groupings
+		metadataPermission: none
+
+	tablePermission 'Customer Invoice Measures'
+		metadataPermission: none
+
+	tablePermission 'Business Drivers'
+		metadataPermission: none
+
+	tablePermission 'Dim Slicer'
+		metadataPermission: none
+
+	tablePermission 'Dim Slicer Territory'
+		metadataPermission: none
+
+	tablePermission Forecast
+		metadataPermission: none
+
+	tablePermission Invoice
+		metadataPermission: none
+
+	tablePermission Market
+		metadataPermission: none
+
+	tablePermission 'Measure Reference'
+		metadataPermission: none
+
+	tablePermission 'Measures Slicer'
+		metadataPermission: none
+
+	tablePermission 'Measures Slicer PRX'
+		metadataPermission: none
+
+	tablePermission 'Outlet Status'
+		metadataPermission: none
+
+	tablePermission 'Overall Performance Plan'
+		metadataPermission: none
+
+	tablePermission 'Performance Other'
+		metadataPermission: none
+
+	tablePermission 'PRx Key Metrics'
+		metadataPermission: none
+
+	tablePermission 'Share of Market'
+		metadataPermission: none
+
+	tablePermission 'Territory Bottlers'
+		metadataPermission: none
+
+	tablePermission 'Week Parameter'
+		metadataPermission: none
+
+	annotation PBI_Id = 094cf516f6154377b629dc5e4596b8ea
+

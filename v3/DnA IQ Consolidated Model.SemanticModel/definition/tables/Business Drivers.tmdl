@@ -1,0 +1,133 @@
+table 'Business Drivers'
+	lineageTag: 99bc29ba-0889-4e65-b108-a6b6b063b6ed
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e432fa18-2f01-43dd-a47f-9c4ecc37445a
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_source_key
+		dataType: string
+		lineageTag: 5355810f-3f32-49fb-b462-15fc94a53037
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ee005ca1-bd18-4da3-8b59-c94d28fed10a
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b066148c-f470-40fc-bd9e-40bdd3a68b2d
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_channel_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: efe937e7-8176-4bbb-b559-51c0481937fc
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4156851a-108b-4791-849c-f940931afe51
+		summarizeBy: none
+		sourceColumn: dim_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column business_driver
+		dataType: string
+		lineageTag: 0810a96e-ca49-47db-8535-e512ca83b6e4
+		summarizeBy: none
+		sourceColumn: business_driver
+
+		annotation SummarizationSetBy = Automatic
+
+	column metric
+		dataType: string
+		lineageTag: ff2f7758-bdad-4d0f-883a-ca45244b418c
+		summarizeBy: none
+		sourceColumn: metric
+
+		annotation SummarizationSetBy = Automatic
+
+	column shap_value
+		dataType: decimal
+		lineageTag: 02b85f19-86bb-4006-a174-2c665db6dce9
+		summarizeBy: sum
+		sourceColumn: shap_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column original_value
+		dataType: decimal
+		lineageTag: 60a6e197-d74a-45cb-8a55-324d86eccd91
+		summarizeBy: sum
+		sourceColumn: original_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column corr_coef
+		dataType: decimal
+		lineageTag: 6969c4f7-e211-4d0b-9f14-802f74feb781
+		summarizeBy: sum
+		sourceColumn: corr_coef
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Business Drivers' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    vw_Fact_ML_PRX = Source{[Schema="dbov3",Item="vw_Fact_ML_PRX"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(vw_Fact_ML_PRX,{"created_date", "updated_date"})
+				in
+				    #"Removed Columns"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

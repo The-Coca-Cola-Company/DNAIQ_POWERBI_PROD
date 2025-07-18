@@ -1,0 +1,37 @@
+table _PreselectedSlicer
+	lineageTag: 1db80052-58ee-478c-9799-8ca70b0d618a
+
+	column Slicer1
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6465b982-9ce7-45a3-a1eb-b35f7dfb5d74
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Slicer1]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Slicer2
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7a0eac47-2d0b-4f3d-95fd-db2fc126b3f2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Slicer2]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _PreselectedSlicer = calculated
+		mode: import
+		source = ```
+				DATATABLE(
+				    "Slicer1", BOOLEAN, "Slicer2", BOOLEAN, 
+				    {
+				        {FALSE(), FALSE()},
+				        {FALSE(), TRUE()},
+				        {TRUE(), FALSE()},
+				        {TRUE(), TRUE()}
+				    }
+				)
+				```
+
+	annotation PBI_Id = a61f1bdcc8f94c6c8f7f42b6e9989cf2
+

@@ -1,0 +1,1809 @@
+table 'Customer Invoice Measures'
+	lineageTag: d5744554-1521-4bd6-99e4-8c8c1d1f482b
+	sourceLineageTag: d99bf500-fb0c-4392-bdfa-29ffdacca612
+
+	measure 'ACV Chg%' = EXTERNALMEASURE("ACV Chg%", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 75347863-e56e-4e2a-97cb-b4d3438d0e91
+		sourceLineageTag: 2d2a2147-eef2-4424-a333-4cd0cdf0ca06
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_ACV Chg% FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure ACV% = EXTERNALMEASURE("ACV%", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 80251537-9004-4b26-a4c7-74353a379f02
+		sourceLineageTag: 0b13d89d-bbe4-4486-a04e-0299ca7de68b
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_ACV% FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'ACV PY%' = EXTERNALMEASURE("ACV PY%", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 809286de-5c76-41bb-9d5d-ff14b55667e0
+		sourceLineageTag: a712cd55-02b5-43a8-b9e7-9f2907cb0dd2
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_ACV PY% FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'ACV YoY%' = EXTERNALMEASURE("ACV YoY%", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 544cf14b-4969-4b1c-85ff-0c3e493f9f7c
+		sourceLineageTag: 30af0743-2e69-46d3-8e6d-0ce590ac3475
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_ACV YoY% FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Consumption Transactions' = EXTERNALMEASURE("Consumption Transactions", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume
+		lineageTag: 71720ad6-b9e1-4dcb-9762-d062f0e5c47f
+		sourceLineageTag: 8243c820-112d-41da-bc04-5cdbacb74b00
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Consumption Transactions FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Distinct Outlet Count' = EXTERNALMEASURE("Distinct Outlet Count", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 737f19d9-22cb-4db5-a760-501024a68fb5
+		sourceLineageTag: 21209b70-9533-4cc5-897f-917603ce2f7a
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Distinct Outlet Count FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Distinct Outlet Count PY' = EXTERNALMEASURE("Distinct Outlet Count PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: fc94df0e-53c1-40e8-ac12-19d6388d15c2
+		sourceLineageTag: df5e2494-d470-44f0-9bf9-8a7d40aa9f7b
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Distinct Outlet Count PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Distinct Outlet Count R13W LCM' = EXTERNALMEASURE("Distinct Outlet Count R13W LCM", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 7c706f99-fb67-4e88-b1ac-f3afbdd8fb15
+		sourceLineageTag: b7af93e7-b0b5-497f-8ef4-2eeecea45ede
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Distinct Outlet Count R13W LCM FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Distinct Skus Count' = EXTERNALMEASURE("Distinct Skus Count", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume
+		lineageTag: 68661c9f-38b3-42da-a820-15c559d6c0df
+		sourceLineageTag: aad47dcb-b70b-4e45-bc13-cd474087136c
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Distinct Skus Count FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Outlet Penetration - R13W LCM' = EXTERNALMEASURE("Outlet Penetration - R13W LCM", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 227213a3-0990-4e4c-a339-577c6da8148a
+		sourceLineageTag: 2390e883-c1d7-4d0e-8410-8dd7a1e34c7a
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration - R13W LCM FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure Gallons = EXTERNALMEASURE("Gallons", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume
+		lineageTag: 28b0bbd4-ce10-461f-a8de-ef93176f2577
+		sourceLineageTag: 01e2d959-b0a0-43b6-a5b7-cd98ce9bd8d5
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Gallons FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Gallons Outlet Volume' = EXTERNALMEASURE("Gallons Outlet Volume", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b057a757-949f-4610-a900-c330d6f01a8d
+		sourceLineageTag: 508ea65e-43b4-4361-8b3c-68cb3355fbc8
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Gallons Outlet Volume FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Gallons Outlet Volume PY' = EXTERNALMEASURE("Gallons Outlet Volume PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 0e1e2d52-c539-46fc-95fb-8c9ff2b2c030
+		sourceLineageTag: 5dba83c7-de39-432d-9521-4c36f7b3b5e7
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Gallons Outlet Volume PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Gallons PY' = EXTERNALMEASURE("Gallons PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9db801e1-befd-45a1-964b-5bfd404724cb
+		sourceLineageTag: f2bb66dc-bff2-4200-8fa7-c16af57f0a49
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Gallons PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration Chg%' = EXTERNALMEASURE("Outlet Penetration Chg%", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e5939f90-15d3-43e2-a5f3-e1eff32cfb99
+		sourceLineageTag: 473544a2-47d7-4994-9585-97d11925d4b5
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration Chg% FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration PY%' = EXTERNALMEASURE("Outlet Penetration PY%", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 635356de-ff1c-418c-aba9-c984254dcae9
+		sourceLineageTag: 0a3914a8-8a13-42ad-a5f6-7a18d6c4e577
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration PY% FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration YoY%' = EXTERNALMEASURE("Outlet Penetration YoY%", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 2b46ed5b-5d9a-4529-8b89-fa5f494e1cf4
+		sourceLineageTag: 921207f2-a3f3-4bbb-bd18-e0427726be7b
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration YoY% FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration%' = EXTERNALMEASURE("Outlet Penetration%", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 821b192f-45ca-4aa2-b2bb-1cd1bbc535e6
+		sourceLineageTag: fc5f8206-34bb-4b44-9166-6a45d545de77
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration% FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'row count' = EXTERNALMEASURE("row count", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f34b5d35-14ce-4c35-87a8-bd5b569b792a
+		sourceLineageTag: 6b71a8bf-9e1e-4ba8-a50a-3d1159c3431c
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_row count FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Standard Cases per Outlet' = EXTERNALMEASURE("Standard Cases per Outlet", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume per Outlet
+		lineageTag: ebfc3495-1e59-4961-a544-32c6fa24a140
+		sourceLineageTag: 8f4fbeb7-837b-473f-a24e-fc794538e0b7
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Standard Cases per Outlet FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Standard Cases per Outlet PY' = EXTERNALMEASURE("Standard Cases per Outlet PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b8a101d9-9548-4cb3-aad6-cd03fae71a02
+		sourceLineageTag: 50554ea4-7055-4e05-9c8d-5eb773f1aea3
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Standard Cases per Outlet PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Standard Cases' = EXTERNALMEASURE("Standard Cases", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume
+		lineageTag: 84ed1786-ec3a-49b3-bb55-700a0ad6683b
+		sourceLineageTag: 3f94e9ef-98b1-44ce-bf94-cf3e77b8a715
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Standard Cases FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Standard Cases PY' = EXTERNALMEASURE("Standard Cases PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ad34ab71-d37e-4237-9cea-e897d92e3d2c
+		sourceLineageTag: 0b145f1e-df11-4fae-ad50-83bfac61fb23
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Standard Cases PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Total Outlet Standard Case Volume with no Product Filters' = EXTERNALMEASURE("Total Outlet Standard Case Volume with no Product Filters", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 5f9a4cc8-482d-41e2-b2ff-8a30694d5a86
+		sourceLineageTag: d05a9c0d-40dc-472d-b565-3b2d95c17c93
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Total Outlet Standard Case Volume with no Product Filters FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Total Outlets with no Product Filters' = EXTERNALMEASURE("Total Outlets with no Product Filters", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 95b1ad37-8dfe-4ea4-a0df-ee326200c6ef
+		sourceLineageTag: c4b8c1ec-f5f9-4c11-9931-ef696a884f67
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Total Outlets with no Product Filters FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'EQ Unit Cases per Outlet' = EXTERNALMEASURE("Unit Cases per Outlet", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume per Outlet
+		lineageTag: 5224ec35-6720-4f92-985f-89cf746eec46
+		sourceLineageTag: 82fdf340-701e-4d7e-b1fe-8c17a5c5c31b
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases per Outlet FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = Name
+
+	measure 'Unit Cases per Outlet PY' = EXTERNALMEASURE("Unit Cases per Outlet PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: bce43b71-34f3-4968-a755-27c1ad16941d
+		sourceLineageTag: 0c2414cf-700a-4d35-b661-3c37de0c1ac3
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases per Outlet PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'EQ Unit Cases' = EXTERNALMEASURE("Unit Cases", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume
+		lineageTag: 66e949f8-8a77-48c4-8a82-2c6f3462f8d8
+		sourceLineageTag: 73b2ff2e-0c29-4d54-b82a-37f8fef5550b
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = Name
+
+	measure 'Unit Cases PY' = EXTERNALMEASURE("Unit Cases PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 378db64d-1675-4bc4-a2b3-c81e92b4e31a
+		sourceLineageTag: 574656df-646a-427c-9fa2-8c44466880a7
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	/// # of individual purchaseable packages at retail in a standard physical case (SPC) i.e., 2 purchase transactions in an SPC of 12oz12pks which is made up of (2) 12oz 12pks
+	measure 'Purchase Transactions' = EXTERNALMEASURE("Purchase Transactions", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume
+		lineageTag: 2aba0781-6149-4045-ad32-66d1ac65645a
+		sourceLineageTag: ce87571c-84f4-4dd0-b779-050ca89166bb
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Purchase Transactions FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Raw Cases' = EXTERNALMEASURE("Physical Cases", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume
+		lineageTag: f83f760f-8eb0-4340-a46a-23ee0b0caffd
+		sourceLineageTag: e9426836-7d35-4e6e-8a91-802507bcae64
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Physical Cases FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+	measure 'Raw Cases Per Outlet' = EXTERNALMEASURE("Physical Cases Per Outlet", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume per Outlet
+		lineageTag: 815e316b-af41-4422-9e2c-15576d54f422
+		sourceLineageTag: 62b10172-1364-44a7-914c-995d6aa5465c
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Physical Cases Per Outlet FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+	measure 'Number of Outlets' = EXTERNALMEASURE("Number of Outlets", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Outlet
+		lineageTag: a80f88f6-0ce0-4917-a528-5ecf8b36d13b
+		sourceLineageTag: b2edcad5-abd3-4a2f-a937-df2efb138ade
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Number of Outlets FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'Purchase Transactions per Outlet' = EXTERNALMEASURE("Purchase Transactions per Outlet", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume per Outlet
+		lineageTag: 3a458790-69d0-4d4a-a286-488fe0cfcdf6
+		sourceLineageTag: bed7cdec-ea77-4e85-b0f4-7ed37c4f7897
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Purchase Transactions per Outlet FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	/// % of SSD sales that are immediate consumption products (i.e., 1L or smaller)
+	measure 'SSD IC MIX' = EXTERNALMEASURE("SSD IC MIX", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume
+		lineageTag: 2659a252-1f6f-4509-a7e9-264fb0b17223
+		sourceLineageTag: 3c35f8fa-9288-4980-95d3-41b67523a01a
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_SSD IC MIX FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	/// % of outlets selling X product
+	measure 'Outlet Penetration' = EXTERNALMEASURE("Outlet Penetration", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Outlet Penetration
+		lineageTag: 15ece614-1512-4bee-b696-fbded9cebdfd
+		sourceLineageTag: dbfc884e-93ac-44b5-9c06-5d24db174793
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Unit Cases Per Outlet R52W' = EXTERNALMEASURE("Unit Cases Per Outlet R52W", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a68343a8-f93e-4317-a248-9e93200cb9c4
+		sourceLineageTag: 2efa22c4-96a7-44f2-b893-3a2294a7a8cf
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases Per Outlet R52W FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases Per Outlet R52-104W' = EXTERNALMEASURE("Unit Cases Per Outlet R52-104W", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ef527e31-ad71-4a1b-958c-d28bef2e4091
+		sourceLineageTag: de2980c7-de9c-4459-9758-a1fc584ec2eb
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases Per Outlet R52-104W FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases Per Outlet R13W' = EXTERNALMEASURE("Unit Cases Per Outlet R13W", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 28d8bdfa-1624-49ea-a98e-914eba9f7909
+		sourceLineageTag: 47482d40-e968-474f-933e-b13b42a70107
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases Per Outlet R13W FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases Per Outlet R14-26W' = EXTERNALMEASURE("Unit Cases Per Outlet R14-26W", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: cba70203-cbf3-49a9-8d1b-d444fe5e179b
+		sourceLineageTag: b5e25c5b-3542-4bf1-a668-05427e551648
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases Per Outlet R14-26W FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Consumption Transactions Per Outlet' = EXTERNALMEASURE("Consumption Transactions Per Outlet", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume per Outlet
+		lineageTag: 7303fb5f-e36d-407d-a19d-53b4a8a5005f
+		sourceLineageTag: 4b325137-bd79-4522-abdc-d5334e5b085a
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Consumption Transactions Per Outlet FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Outlet Penetration weighted by Unit Cases (%ACV)' = EXTERNALMEASURE("Outlet Penetration weighted by Unit Cases (%ACV)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Weighted Outlet Penetration
+		lineageTag: 561f8640-5f94-4ce2-9ddc-779955a02c0a
+		sourceLineageTag: bbb38a26-1c8c-4c8b-88c2-7351e3799a51
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration weighted by Unit Cases (%ACV) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	/// Volume measured in gallons
+	measure 'Gallons per Outlet' = EXTERNALMEASURE("Gallons per Outlet", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Volume per Outlet
+		lineageTag: 5798f769-ec58-44cc-bc3b-130c6ac3606c
+		sourceLineageTag: c55cc5d4-e31e-4609-bf09-8ab5a0a82e56
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Gallons per Outlet FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Total Products' = EXTERNALMEASURE("Total Products", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 013dd0e1-0938-4c97-bc0b-eb59746a1145
+		sourceLineageTag: dd384bde-415a-4160-9bcf-4ca5cea8ec79
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Total Products FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Number of Products' = EXTERNALMEASURE("Number of Products", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: fd75073a-9e7d-4ec2-8b49-87f9bb9d9fff
+		sourceLineageTag: d4e2c805-a98f-4ff8-b114-9a137e45c4d7
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Number of Products FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration Denominator' = EXTERNALMEASURE("Outlet Penetration Denominator", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		formatString: #,##0
+		displayFolder: Outlet Penetration
+		lineageTag: 0fa34e2c-a168-46fa-9c50-67a12c08ebed
+		sourceLineageTag: ddff16a6-b658-4c04-aa32-90055f87025f
+		dataCategory: Uncategorized
+
+		changedProperty = DisplayFolder
+
+	measure 'Unit Cases R52W' = EXTERNALMEASURE("Unit Cases R52W", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 92fc713b-6818-40e5-8bc0-03527b109cc2
+		sourceLineageTag: 37a3d426-2d7d-402e-943a-cf5365fc4463
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases R52W FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases PR52W' = EXTERNALMEASURE("Unit Cases PR52W", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: eeb10139-c40f-401a-ba44-39e1a7531d1c
+		sourceLineageTag: 4860df42-d899-4b9e-bcd1-8f956856e89d
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases PR52W FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure _SUMX_Distinct_Outlets = EXTERNALMEASURE("_SUMX_Distinct_Outlets", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 045c88b4-a246-427c-a6e2-ee54cbd5e474
+		sourceLineageTag: 0a34b1ee-bb2e-4eda-a524-a515af1b2f7d
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("__SUMX_Distinct_Outlets FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration Numerator' = EXTERNALMEASURE("Outlet Penetration Numerator", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		formatString: #,##0
+		displayFolder: Outlet Penetration
+		lineageTag: d416888e-ae86-46bd-836b-8b949971eccc
+		sourceLineageTag: f82a8d3c-73bf-44a0-af6f-200b37516e16
+		dataCategory: Uncategorized
+
+		changedProperty = DisplayFolder
+
+	measure 'Outlet Penetration Old' = EXTERNALMEASURE("Outlet Penetration Old", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e21799b0-3a39-4294-9533-c01d6f463642
+		sourceLineageTag: 48c5f3cd-02f0-49fc-a7ad-fe372a41b6fc
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration Old FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration SUMX' = EXTERNALMEASURE("Outlet Penetration SUMX", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 62c25079-696d-40b0-855f-491ad8ce94cf
+		sourceLineageTag: 1bb014b9-6cde-4831-bf2a-4e696ad40d0c
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration SUMX FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure UCPN = EXTERNALMEASURE("UCPN", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 80fe05d9-844d-41bc-9eee-91214e3b88d9
+		sourceLineageTag: 965c6234-f299-4b74-bac5-d8dce1c3dfbf
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_UCPN FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure UCPD = EXTERNALMEASURE("UCPD", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: d91994a7-fa00-4463-a33f-91777f4be3cf
+		sourceLineageTag: 363d59b7-9c4c-41d7-ade5-bae25fe1d56b
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_UCPD FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases R13W' = EXTERNALMEASURE("Unit Cases R13W", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 9b41c4c5-7e8f-4739-b036-a81ab7b8764b
+		sourceLineageTag: 29f87f1d-e828-4536-8db8-4ea9e09516dd
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases R13W FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Total Unit Cases R13W All Outlets' = EXTERNALMEASURE("Total Unit Cases R13W All Outlets", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 73ced074-874c-4f12-8f89-924d80a1f6f4
+		sourceLineageTag: 2a563ed7-d7e1-498c-af4c-7aac771fea80
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Total Unit Cases R13W All Outlets FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases R13W CC' = EXTERNALMEASURE("Unit Cases R13W CC", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e23178c5-dfcd-4bc5-969e-b83a0bf6ceca
+		sourceLineageTag: 29f95c44-20bf-46a7-b227-bce4e0b744f0
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases R13W CC FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Qualified Volume' = EXTERNALMEASURE("Qualified Volume", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Weighted Outlet Penetration
+		lineageTag: 0b3ba243-3e7c-4c56-8656-fbd81248b308
+		sourceLineageTag: 489736a4-675e-4838-8cdd-9f3763d878bb
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Qualified Volume FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Selected Product Volume' = EXTERNALMEASURE("Selected Product Volume", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 33e93d0e-8785-4713-a476-bdcda31d614e
+		sourceLineageTag: 961642db-29f6-41cb-9b61-28e53454a722
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Selected Product Volume FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases Coca-Cola Trademark' = EXTERNALMEASURE("Unit Cases Coca-Cola Trademark", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 7258e31f-57df-4f9c-95fc-4f67d68a3aca
+		sourceLineageTag: cc3f22f8-164c-4576-a9cf-00bf2c410efc
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases Coca-Cola Trademark FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Pen Norm' = EXTERNALMEASURE("Outlet Pen Norm", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: b73da6f2-14f1-434e-a5c1-54d06c72a359
+		sourceLineageTag: 58b0bd9a-7ec7-4832-9371-ae8c7d172135
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Pen Norm FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+		changedProperty = DisplayFolder
+
+	measure 'Unit Cases YTD' = EXTERNALMEASURE("Unit Cases YTD", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 05ca7cde-924a-44ac-a87c-7802dd870c1e
+		sourceLineageTag: 9bef0318-254f-4d7b-acfb-88d967b0f1b5
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases YTD FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Pen' = EXTERNALMEASURE("Outlet Pen", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: d09dc499-721a-44ef-9ef2-9d1a1fc9c266
+		sourceLineageTag: f5bbbf7a-edb1-4bf1-8e18-8ea11c8d975c
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Pen FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration Weighted by Unit Cases 2' = EXTERNALMEASURE("Outlet Penetration Weighted by Unit Cases 2", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ea020e7b-d391-498d-be89-ca00f50af4a2
+		sourceLineageTag: 5b69efde-a8bd-4d26-a78c-047996c3d0f4
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration Weighted by Unit Cases 2 FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases All Products' = EXTERNALMEASURE("Unit Cases All Products", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 0600cf81-27c5-4ae5-9c91-20275b7a6643
+		sourceLineageTag: 409f073e-99b4-4463-83a6-d238a87296c7
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases All Products FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Gallons - Plan' = EXTERNALMEASURE("Gallons - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume Plan
+		lineageTag: e2412ca7-7e95-471e-befa-af2363d04ce6
+		sourceLineageTag: 5c0cf3e0-3d9c-4def-b2c1-f35150e7c681
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Gallons - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'Gallons - Forecast' = EXTERNALMEASURE("Gallons - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 0f821656-86c6-48a5-b737-091c24622beb
+		sourceLineageTag: 0973ac0e-3db5-4381-a17f-77585a36bd83
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Gallons - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases - Plan' = EXTERNALMEASURE("Unit Cases - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 44da3dd5-a05a-4828-b91e-0f5a5deda01b
+		sourceLineageTag: 502745ce-f918-426a-97ae-a8cf2ac7f131
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases - Forecast' = EXTERNALMEASURE("Unit Cases - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 8660b8f2-a3b1-430d-9b07-cc5b48c4fecf
+		sourceLineageTag: 57247f73-c46f-4cba-8591-84dc7b89d2a9
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Physical Cases - Forecast' = EXTERNALMEASURE("Physical Cases - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 8c717a00-3414-405e-b93d-e58a935d3985
+		sourceLineageTag: e60c2869-9755-40a6-85c9-8bfdc62a3d5b
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Physical Cases - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Purchase Transactions - Plan' = EXTERNALMEASURE("Purchase Transactions - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 59297c74-e66c-4dc6-aa4d-4ac5b260b3a7
+		sourceLineageTag: 80d057df-b410-4607-9193-b9d345f58b49
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Purchase Transactions - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Purchase Transactions - Forecast' = EXTERNALMEASURE("Purchase Transactions - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 17fdae2d-f017-4a23-b1cb-c62e8546c777
+		sourceLineageTag: 3a3ca7ad-bed0-4fb2-ba4a-e450fa4e66ce
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Purchase Transactions - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Standard Cases - Plan' = EXTERNALMEASURE("Standard Cases - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 2a9f27fc-aa5f-4df6-9b55-b66e5d650ceb
+		sourceLineageTag: 96c5629b-a85a-488e-b427-83f749933871
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Standard Cases - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Standard Cases - Forecast' = EXTERNALMEASURE("Standard Cases - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 0b370b4a-cb97-4c37-a38f-b7c269580251
+		sourceLineageTag: cc94d847-d18c-4a06-b43d-c139a21e9c13
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Standard Cases - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases per Outlet - Plan' = EXTERNALMEASURE("Unit Cases per Outlet - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume per Outlet
+		lineageTag: f8736693-a40f-48af-984a-e23a088da8c0
+		sourceLineageTag: 2d33fb74-10f8-4d61-b952-c91bec46026c
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases per Outlet - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Unit Cases per Outlet - Forecast' = EXTERNALMEASURE("Unit Cases per Outlet - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume per Outlet
+		lineageTag: 79cc8109-cffe-4dff-988d-e9c370016de1
+		sourceLineageTag: 257842fb-1ccc-47d3-8808-4e0a4a503915
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Unit Cases per Outlet - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Purchase Transactions per Outlet - Plan' = EXTERNALMEASURE("Purchase Transactions per Outlet - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume per Outlet
+		lineageTag: 980bd569-d76b-4473-8751-27e09bf1f3bc
+		sourceLineageTag: 42f92dc3-8a88-4aed-99dc-723e95fb68fa
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Purchase Transactions per Outlet - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Purchase Transactions per Outlet - Forecast' = EXTERNALMEASURE("Purchase Transactions per Outlet - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume per Outlet
+		lineageTag: 8f3fb8c3-101b-4a98-81ae-203d344b463a
+		sourceLineageTag: 9e80b748-0586-450e-9618-ffe12219174d
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Purchase Transactions per Outlet - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Gallons per Outlet - Plan' = EXTERNALMEASURE("Gallons per Outlet - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume Plan
+		lineageTag: 3c451ffb-bf53-4d4c-b279-c191214505ea
+		sourceLineageTag: fd714184-161f-46f9-ae74-aa1b08f3c18e
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Gallons per Outlet - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'Gallons per Outlet - Forecast' = EXTERNALMEASURE("Gallons per Outlet - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume per Outlet
+		lineageTag: 6356e18b-51ee-41a0-8f81-922a791468f4
+		sourceLineageTag: 269615e9-eb51-4766-8e90-ac84e64503f7
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Gallons per Outlet - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Consumption Transactions - Plan' = EXTERNALMEASURE("Consumption Transactions - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume Plan
+		lineageTag: 67d84f83-06cd-41ac-b8bf-01a5d275688e
+		sourceLineageTag: 5ced9128-27c4-4d33-b15f-474c9625a428
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Consumption Transactions - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'Consumption Transactions - Forecast' = EXTERNALMEASURE("Consumption Transactions - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 265724a7-c6f6-4e2e-89cc-09e97b5c09f6
+		sourceLineageTag: ab6f2779-cbab-491c-b247-a78a402bdd7c
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Consumption Transactions - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Consumption Transactions Per Outlet - Plan' = EXTERNALMEASURE("Consumption Transactions Per Outlet - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume Plan
+		lineageTag: 009dc7ba-4330-47c8-bceb-b964aa72d1a1
+		sourceLineageTag: c94e617e-8509-476a-b1cd-ffb78c1a27e9
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Consumption Transactions Per Outlet - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'Consumption Transactions Per Outlet - Forecast' = EXTERNALMEASURE("Consumption Transactions Per Outlet - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume per Outlet
+		lineageTag: e23b216d-cbb8-4135-b527-2ec450171635
+		sourceLineageTag: 99fb5d1f-d3bb-4a56-b293-d12b96c919b6
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Consumption Transactions Per Outlet - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Physical Cases Per Outlet - Forecast' = EXTERNALMEASURE("Physical Cases Per Outlet - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume per Outlet
+		lineageTag: 00f91402-9b3c-4b6d-b21b-79b663532114
+		sourceLineageTag: 278ad0e4-6057-46b1-90d8-a5ee2c7bb9a7
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Physical Cases Per Outlet - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'SSD IC MIX - Plan' = EXTERNALMEASURE("SSD IC MIX - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 5fdb2972-fbba-4f7b-a36e-5a85de96e980
+		sourceLineageTag: 4cf1a607-56a1-45e2-8e8d-942362564ebb
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_SSD IC MIX - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'SSD IC MIX - Forecast' = EXTERNALMEASURE("SSD IC MIX - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 11666498-8e46-412b-956c-bc2df1ff659a
+		sourceLineageTag: c0667418-7905-4ca0-9323-6639d078a595
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_SSD IC MIX - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Revenue / EQ Unit Case' = EXTERNALMEASURE("Dead Net Net Sales Income / EQ Case", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Financials
+		lineageTag: d44e1d3a-0e13-4b0a-ac56-e3e2f01b3b9e
+		sourceLineageTag: f11c9061-0ace-480c-a99f-eadbde47ed4d
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Dead Net Net Sales Income / EQ Case FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+	measure 'Revenue / EQ Unit Case - Plan' = EXTERNALMEASURE("Dead Net Net Sales Income / EQ Case - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Financials
+		lineageTag: c1a05237-f859-437c-a7b4-345e9053b436
+		sourceLineageTag: e0c0d460-a9e3-476a-b2ec-58ea4e3e7695
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Dead Net Net Sales Income / EQ Case - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+	measure 'Revenue / EQ Unit Case - PY' = EXTERNALMEASURE("Dead Net Net Sales Income / EQ Case - PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Financials
+		lineageTag: 9350ce44-3d04-43d3-9a31-ad03f266cd89
+		sourceLineageTag: f9c016a9-3b5f-49fb-8457-dd50b8e797fc
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Dead Net Net Sales Income / EQ Case - PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		changedProperty = DisplayFolder
+
+	measure 'Revenue / Standard Case' = EXTERNALMEASURE("Dead Net Net Sales Income / Standard Physical Case", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Financials
+		lineageTag: 23752aa8-7040-400b-8978-9052dbeea200
+		sourceLineageTag: 41061b84-afb7-4e3a-9acb-4b24e98c1451
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Dead Net Net Sales Income / Standard Physical Case FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+	measure 'Revenue / Standard Case - Plan' = EXTERNALMEASURE("Dead Net Net Sales Income / Standard Physical Case - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Financials
+		lineageTag: 8e16a0f4-7717-4a78-bca9-8268035a3ae6
+		sourceLineageTag: 9ffad5ec-e68d-4ffd-a1a4-8a3314d1b551
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Dead Net Net Sales Income / Standard Physical Case - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+	measure 'Revenue / Standard Case - PY' = EXTERNALMEASURE("Dead Net Net Sales Income / Standard Physical Case - PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Financials
+		lineageTag: 0e8be474-7e83-4c94-a084-11e4ae39ac3d
+		sourceLineageTag: d5ed6cb1-a9bd-4d66-97d4-721d09aa528a
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Dead Net Net Sales Income / Standard Physical Case - PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		changedProperty = DisplayFolder
+
+	/// Volume penetration of KOZS for FSOP channels
+	measure '% ACV (FSOP KOZS)' = EXTERNALMEASURE("% ACV (FSOP KOZS)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: c1322752-daab-4eb9-9fd8-c1f89a5161cf
+		sourceLineageTag: b8ded9b9-bf2d-4d35-aba6-aa42ccb36c62
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_% ACV (FSOP KOZS) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'FSOP KOZS Penetration' = EXTERNALMEASURE("FSOP KOZS Penetration", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: 19726fa6-8ee7-476e-b7cd-74089a9581ba
+		sourceLineageTag: 2b1e9c26-b2b2-411b-8e73-31efa1ee6590
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_FSOP KOZS Penetration FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'KO Zero Sugar FSOP Distribution' = EXTERNALMEASURE("KO Zero Sugar FSOP Distribution", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: fe47c97b-50ee-4d35-b2b0-e466e2a14be8
+		sourceLineageTag: d0e4bd89-6918-47e3-8bb1-4a08b2535deb
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_KO Zero Sugar FSOP Distribution FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration TA' = EXTERNALMEASURE("Outlet Penetration TA", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Outlet Penetration
+		lineageTag: a5176771-e337-4029-be6f-b94a6c566f91
+		sourceLineageTag: b5fc65e5-d0c4-426d-87ae-28fda106d7fd
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration TA FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+		changedProperty = DisplayFolder
+
+	measure 'Outlet Penetration weighted by Unit Cases (%ACV) Numerator' = EXTERNALMEASURE("Outlet Penetration weighted by Unit Cases (%ACV) Numerator", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		formatString: #,##0
+		displayFolder: Weighted Outlet Penetration
+		lineageTag: b214e591-4b26-482b-8b6e-f46d4022c690
+		sourceLineageTag: b2a60f43-9ea0-4a8a-a015-55689ea7e82a
+		dataCategory: Uncategorized
+
+		changedProperty = DisplayFolder
+
+	measure 'Outlet Penetration weighted by Unit Cases (%ACV) Denominator' = EXTERNALMEASURE("Outlet Penetration weighted by Unit Cases (%ACV) Denominator", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		formatString: #,##0
+		displayFolder: Weighted Outlet Penetration
+		lineageTag: 1c13a7e0-a1f3-4eed-8eda-fbc3e61899c2
+		sourceLineageTag: 7c89e53a-81ca-45d0-9d0d-36dd9e11d420
+		dataCategory: Uncategorized
+
+		changedProperty = DisplayFolder
+
+	measure 'SSD IC UCS' = EXTERNALMEASURE("SSD IC UCS", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: 24f9aa30-a27c-490e-bb9a-3816f1f07020
+		sourceLineageTag: 1ab77608-778f-4c10-a97a-9ccdf54dc083
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_SSD IC UCS FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'SSD IC Unit Cases' = EXTERNALMEASURE("SSD IC Unit Cases", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: c23d95d9-00e1-408a-a05f-e7a20848a07d
+		sourceLineageTag: 194cf84d-f70d-4b36-a670-29f257a7097c
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_SSD IC Unit Cases FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Outlet Penetration Mix Unit Cases' = EXTERNALMEASURE("Outlet Penetration Mix Unit Cases", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: Weighted Outlet Penetration
+		lineageTag: 45b9ccca-923c-4da9-a86f-69bfcec00bdd
+		sourceLineageTag: 373e87b4-dfce-4548-882f-b3bde362ec73
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Outlet Penetration Mix Unit Cases FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'Outlet Penetration Mix Unit Cases Denominator' = EXTERNALMEASURE("Outlet Penetration Mix Unit Cases Denominator", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		formatString: #,##0
+		displayFolder: Weighted Outlet Penetration
+		lineageTag: 3d8ff125-9861-441b-a757-676ae4d5d4a3
+		sourceLineageTag: fe8275c5-3669-4310-ae0b-6e0b9629360c
+		dataCategory: Uncategorized
+
+		changedProperty = DisplayFolder
+
+	measure 'Outlet Penetration Mix Unit Cases Numerator' = EXTERNALMEASURE("Outlet Penetration Mix Unit Cases Numerator", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		formatString: #,##0
+		displayFolder: Weighted Outlet Penetration
+		lineageTag: 87c0658c-fc47-411e-9d02-55aeaa373628
+		sourceLineageTag: a2f5f9a5-7594-4c6e-990c-16d5fd32c45b
+		dataCategory: Uncategorized
+
+		changedProperty = DisplayFolder
+
+	measure 'myCoke Penetration' = EXTERNALMEASURE("myCoke Penetration", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: MyCoke Outlet Penetration
+		lineageTag: b8585513-0365-4607-94bd-80aad898ed36
+		sourceLineageTag: 76ec6eb2-1df0-4b79-9db4-301f20ac3f2d
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_myCoke Penetration FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'Non myCoke Outlet Count' = EXTERNALMEASURE("Non myCoke Outlet Count", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: MyCoke Outlet Penetration
+		lineageTag: a6c4e444-c0d3-4b8f-8ecf-7832c456b738
+		sourceLineageTag: 0b6806b8-fa57-4382-bc5f-768035b784f4
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Non myCoke Outlet Count FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'myCoke Penetration Denominator' = EXTERNALMEASURE("myCoke Penetration Denominator", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: MyCoke Outlet Penetration
+		lineageTag: 56072eab-4e5e-4c30-b2be-47fd4c9ec62c
+		sourceLineageTag: a3604d96-c230-48de-bda9-1818862c5233
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_myCoke Penetration Denominator FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'Physical Cases - Plan' = EXTERNALMEASURE("Physical Cases - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: e7d80d01-69cf-40ce-9e79-f406217db4a1
+		sourceLineageTag: 5a461f07-ad0b-4fbb-843b-320a68de011b
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Physical Cases - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'Physical Cases Per Outlet - Plan' = EXTERNALMEASURE("Physical Cases Per Outlet - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume per Outlet
+		lineageTag: 4a4b14a4-8091-4715-ab52-b15a34c3e598
+		sourceLineageTag: 73a5d58e-1524-4479-a283-8d50c7536f91
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Physical Cases Per Outlet - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	/// Count of outlets on myCoke (defined universe)
+	measure 'MyCoke Outlet Count Numerator' = EXTERNALMEASURE("myCoke Outlet Count", INTEGER, "DirectQuery to AS - DnA IQ Consolidated Model")
+		displayFolder: MyCoke Outlet Penetration
+		lineageTag: ea117794-8d2b-4fac-a02e-b617c0ebfc10
+		sourceLineageTag: b8526242-9edd-4ec6-a5d6-244e3f7109d0
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_myCoke Outlet Count FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		changedProperty = Name
+
+	measure 'Bottler Dead Net Net Sales Income with Proxy' = EXTERNALMEASURE("Bottler Dead Net Net Sales Income with Proxy", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 5b579f2c-7487-47a2-8b5d-148ff77ac280
+		sourceLineageTag: 85881a44-d2b3-4b87-9acf-921d9db25645
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Bottler Dead Net Net Sales Income with Proxy FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'SSD IC UCS - Plan' = EXTERNALMEASURE("SSD IC UCS - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume
+		lineageTag: dd0ee2db-d759-4608-8897-8cd1c2b965ef
+		sourceLineageTag: 0e888914-7c56-43b6-bb69-d2964ee3863a
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_SSD IC UCS - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	measure 'VPO Segmentation' = EXTERNALMEASURE("VPO Segmentation", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Volume per Outlet
+		lineageTag: 01e98009-cc0c-4c23-904c-e2d81d9cfccf
+		sourceLineageTag: fadf1d4f-45a8-41b0-8b50-ae3502d0f60e
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_VPO Segmentation FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = IsHidden
+
+	column gallons_
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 230648f1-3960-414e-bf9f-6c2060213deb
+		sourceLineageTag: f5da60a4-9eeb-4015-bbc7-384e25a99aef
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: gallons_
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Revenue
+		dataType: double
+		displayFolder: Financials
+		lineageTag: 91e60730-1620-42b5-a0e8-70aafaacc92a
+		sourceLineageTag: 57bb2099-44d7-42f7-b665-bb880fc7b72a
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: bottler_dead_net_net_sales_income
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cogs
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 88fc0745-00d9-4206-9b6b-080bac98a72d
+		sourceLineageTag: 8b92f7fd-e841-4443-9e13-150a92e82844
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: cogs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column standard_physical_cases
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 5a4d939c-ed24-4e02-983a-8ecd3dcb04a8
+		sourceLineageTag: a01bc040-5a2c-48f6-9696-b70ed18690a5
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: standard_physical_cases
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_cases
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e75d3c94-0a7a-4bc0-ab32-e425df8ce60e
+		sourceLineageTag: 7dd87a5b-9632-44d0-8033-6c4dcd13282e
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: unit_cases
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_outlet_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 694f252d-7b7d-49b4-810b-821932337b8f
+		sourceLineageTag: 9cf021e6-cd88-4b3a-9471-3baad4a4ba30
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_outlet_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_invoice_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: b4807b24-4c25-4213-8a1f-f2fa0d66ab2d
+		sourceLineageTag: 8e683593-991b-430b-b95d-bae7e53ebc62
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_invoice_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column purchase_transactions
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e61b0127-d5f9-499f-8f02-85831a2b5b58
+		sourceLineageTag: 25811937-edbc-4494-aae3-645d5fa59780
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: purchase_transactions
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column physical_cases
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e8bf5b42-913c-4970-b5e9-cb0925014c3e
+		sourceLineageTag: 3a8d2bed-73a9-4470-a109-48e28c131479
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: physical_cases
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column consumption_transactions
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f6501697-5cb7-4e15-b7e9-fa360c863f90
+		sourceLineageTag: b95da7f3-7d66-4a62-b593-d9086fc4befc
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: consumption_transactions
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 3a9c3b57-2f79-463d-a579-84c30c3699dd
+		sourceLineageTag: faf9d405-f033-4598-b44b-f569d26d30a6
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: f1361214-2425-458d-81e1-7cef75d7b64e
+		sourceLineageTag: 1fe10127-2805-412e-8898-17bb303572e6
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_territory_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 0d17ad59-004f-4ef9-a758-c9602c46f705
+		sourceLineageTag: 24016eca-76c8-45ed-90bb-5d6938ea4c59
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_territory_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 6e1bef8a-8c9c-4f94-8bac-4451a91914d7
+		sourceLineageTag: 552f15d0-5078-4b0b-b634-e1114864f93e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_channel_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 79b4cac4-006b-472a-8462-966a2a131100
+		sourceLineageTag: 3db20e45-0d09-4376-8afa-7b40e25de067
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: f99f655b-fb89-430b-889b-60d1732d9a98
+		sourceLineageTag: 78f4ac48-884b-4cad-b04b-53babc37c9ad
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_delivery_mode_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 9c464e45-9fce-4a30-8c0b-304575417efd
+		sourceLineageTag: 72217590-44e0-4ab3-a3f4-091d7c1ebe01
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: dim_delivery_mode_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column wholesale_price_amount
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ec4c61a4-d158-4d52-b871-e21398ec4fc2
+		sourceLineageTag: 77afb972-04e2-403a-90c2-5ba5fabed02e
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: wholesale_price_amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wholesale_price_amount_with_proxy
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 63e7cdfb-7a3f-4981-83bd-c0d393912af0
+		sourceLineageTag: 06f1cfc5-b89a-4b0a-9250-53c54a80c78a
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: wholesale_price_amount_with_proxy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column on_invoice_discount_amount
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ade8b57e-3e8a-4577-be98-5c66d83e80fc
+		sourceLineageTag: faa2d8d6-a8d2-453f-8aa4-25ae49b22dac
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: on_invoice_discount_amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column on_invoice_discount_amount_with_proxy
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: cf805fcd-8696-44ba-a181-90710cea6fdf
+		sourceLineageTag: c6a14403-75c8-4799-a94f-6f88f2632569
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: on_invoice_discount_amount_with_proxy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column off_invoice_discount_amount
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b2d4a4dd-e493-4fa9-ad9f-717db2a0184c
+		sourceLineageTag: 55f9d274-387b-4209-b0e7-ec907025bc2d
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: off_invoice_discount_amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column off_invoice_discount_amount_with_proxy
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 04ad61ea-0358-4f09-88fc-bae5689ccccb
+		sourceLineageTag: 4ceab378-64cb-4f91-b95c-d86385e4dacf
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: off_invoice_discount_amount_with_proxy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column on_invoice_cma_discount_amount
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 7470ffda-2480-4fca-9fc4-c64013817f22
+		sourceLineageTag: 5a224429-b851-43e1-b2c3-f9b0845d4d04
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: on_invoice_cma_discount_amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column on_invoice_cma_discount_amount_with_proxy
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 41b58806-e8c5-42d6-a72b-ee1734cee8e8
+		sourceLineageTag: f26fcfb3-c611-4d21-8a99-7b3d77b76621
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: on_invoice_cma_discount_amount_with_proxy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column off_invoice_cma_discount_amount
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 026d7189-5314-465c-9a87-1e4ab019dee5
+		sourceLineageTag: d49c88bf-8b12-4372-95e0-506a2af790fd
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: off_invoice_cma_discount_amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column off_invoice_cma_discount_amount_with_proxy
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 92252eaf-9931-49fa-aa45-dbf2a08188a3
+		sourceLineageTag: d6c85d8b-f0fa-41a2-b170-2399411225e0
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: off_invoice_cma_discount_amount_with_proxy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column on_invoice_ctm_discount_amount
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 55738dbe-9f05-458c-82a1-da4bccf2c1fd
+		sourceLineageTag: 555783b0-1288-4e28-a21a-6724e60c8837
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: on_invoice_ctm_discount_amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column on_invoice_ctm_discount_amount_with_proxy
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ca74dd7b-cfcf-472a-a2b1-47aeffdbab9a
+		sourceLineageTag: 11748ee0-6a96-4dc6-af56-f786e457cc07
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: on_invoice_ctm_discount_amount_with_proxy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column off_invoice_ctm_discount_amount
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b5e5f8e2-c171-4b4d-88eb-3cbb0175080f
+		sourceLineageTag: 14e70c7c-72cc-4959-b57f-0073806ada86
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: off_invoice_ctm_discount_amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column off_invoice_ctm_discount_amount_with_proxy
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 7345878b-f4e8-40ca-943c-97af3a898cb1
+		sourceLineageTag: efb92d42-70e8-4ff2-ab2e-fc5d9e9a83fb
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: off_invoice_ctm_discount_amount_with_proxy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column bottler_dead_net_net_sales_income_with_proxy
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 23d9806e-733e-49fd-b27e-af111eb362f0
+		sourceLineageTag: a72eef48-b0c7-450d-b65f-5283bb71a0f4
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: bottler_dead_net_net_sales_income_with_proxy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_source_key
+		dataType: string
+		isHidden
+		lineageTag: 687caf61-d559-4a2c-b769-494a7511a5d5
+		sourceLineageTag: df4aa012-36c0-4a3a-9475-03e89a58dd6e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column curio_flag
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 18ec1a58-30d0-425f-8762-fed978c856ef
+		sourceLineageTag: a78d45ff-1129-4db9-b221-09d3a11b3571
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: curio_flag
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'FSOP Flag'
+		dataType: string
+		isHidden
+		lineageTag: 8f7382b9-c25c-41f0-8d6c-0f0a59d1c716
+		sourceLineageTag: 23d6b8ae-2896-4dc3-ace0-7f3b123648cf
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: FSOP Flag
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_outlet_golden_record_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bc99dca9-8089-4b8f-abe1-b5d5a08935f9
+		sourceLineageTag: 2f7ac859-3515-4573-9e1a-296132a871cc
+		summarizeBy: sum
+		sourceColumn: dim_outlet_golden_record_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition 'Customer Invoice Measures' = entity
+		mode: directQuery
+		source
+			entityName: Customer Invoice Measures
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

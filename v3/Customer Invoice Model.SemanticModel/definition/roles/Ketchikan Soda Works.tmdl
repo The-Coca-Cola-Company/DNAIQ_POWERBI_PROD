@@ -1,0 +1,7 @@
+role 'Ketchikan Soda Works'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Ketchikan Soda Works"
+
+	annotation PBI_Id = 4c04bb180550497b83effe22b40684c5
+

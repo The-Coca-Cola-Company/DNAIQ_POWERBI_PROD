@@ -1,0 +1,41 @@
+table CBR_Category_Groupings
+	lineageTag: 1d0171f7-b186-44f5-ae32-e98dbf6bf343
+
+	column cbr_sub_category
+		dataType: string
+		lineageTag: b8585b81-5bc3-4fe2-8d97-7190fe5e7a91
+		summarizeBy: none
+		sourceColumn: cbr_sub_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column cbr_category_group
+		dataType: string
+		lineageTag: 2b44abd9-3a23-4d62-9050-acc22efc508c
+		summarizeBy: none
+		sourceColumn: cbr_category_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column cbr_category_group_sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 9cf201ef-09fc-4d96-88ce-27d1c215459f
+		summarizeBy: none
+		sourceColumn: cbr_category_group_sort
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CBR_Category_Groupings = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database),
+				    vw_Dim_CBR_Category = Source{[Schema="niqrmsv3",Item="vw_Dim_CBR_Category"]}[Data]
+				in
+				    vw_Dim_CBR_Category
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

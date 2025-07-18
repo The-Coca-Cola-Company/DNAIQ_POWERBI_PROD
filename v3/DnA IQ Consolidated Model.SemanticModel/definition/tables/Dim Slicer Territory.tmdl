@@ -1,0 +1,50 @@
+table 'Dim Slicer Territory'
+	lineageTag: 5aa007db-4939-4629-956f-e7f1f8fb10ac
+
+	column 'Dim Slicer Territory'
+		lineageTag: bac2a7e6-ff30-43f2-b02b-3f08e1260229
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Dim Slicer Territory Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Dim Slicer Territory Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dim Slicer Territory Fields'
+		isHidden
+		lineageTag: ab345169-0c61-447a-a1cf-71d925caa5c7
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Dim Slicer Territory Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "kind": 2,
+				  "version": 3
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dim Slicer Territory Order'
+		isHidden
+		formatString: 0
+		lineageTag: fef991f5-26f5-4bd7-bb7f-fbbb36b536a6
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim Slicer Territory' = calculated
+		mode: import
+		source =
+				{
+				    ("Bottler", NAMEOF('Territory Bottlers'[display_bottler_name_tier1]), 0),
+				    ("Category", NAMEOF('Product'[display_category]), 1),
+				    ("Channel", NAMEOF('Channel'[display_channel]), 2),
+				    ("Customer", NAMEOF('Customer'[display_customer_name]), 3)
+				}
+
+	annotation PBI_Id = f9faf9a67f3d4a0bb84b0f1680e0f90a
+

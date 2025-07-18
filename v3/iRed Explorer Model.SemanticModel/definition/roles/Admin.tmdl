@@ -1,0 +1,7 @@
+role Admin
+	modelPermission: read
+
+	tablePermission Calendar = [sovi_wave_ending_date] >= dt"2022-01-01"
+
+	annotation PBI_Id = 89691b6ba6884863a89303d33ed1f92b
+

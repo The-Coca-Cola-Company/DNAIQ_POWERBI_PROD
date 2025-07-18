@@ -1,0 +1,57 @@
+table 'CBR Category'
+	isHidden
+	lineageTag: 444b3909-ed76-4de3-a3ef-6877dd459495
+
+	column 'CBR Category'
+		dataType: string
+		isHidden
+		lineageTag: 39547d90-0aa2-44e2-ad89-7390c182c622
+		summarizeBy: none
+		sourceColumn: CBR Category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CBR Category Grouped'
+		dataType: string
+		isHidden
+		lineageTag: 5a50ee79-334e-4ce9-b74f-23c805a8d957
+		summarizeBy: none
+		sourceColumn: CBR Category Grouped
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CBR Category Grouped Sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4aaee9ee-4645-4c4e-94d9-27aa32d67b66
+		summarizeBy: none
+		sourceColumn: CBR Category Grouped Sort
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'CBR Category' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://groups.coca-cola.com/sites/DnAIQ/Shared%20Documents/General/Power%20BI%20Manual%20Files/Nielsen%20Explorer%20Model/CBR%20Category%20Groupings.xlsx"), null, false),
+				    Sheet1_sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    FilterNullAndWhitespace = each List.Select(_, each _ <> null and (not (_ is text) or Text.Trim(_) <> "")),
+				    #"Removed Bottom Rows" = Table.RemoveLastN(Sheet1_sheet, each try List.IsEmpty(List.Skip(FilterNullAndWhitespace(Record.FieldValues(_)), 1)) otherwise false),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Bottom Rows", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CBR Category", type text}, {"CBR Category Grouped", type text}, {"CBR Category Grouped Sort", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

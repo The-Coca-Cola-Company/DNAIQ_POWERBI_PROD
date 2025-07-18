@@ -1,0 +1,91 @@
+table 'Measure Reference'
+	lineageTag: 52251029-f681-467b-aff4-bd5d53291e2d
+	sourceLineageTag: 02a4445b-ff2e-48f1-9e6f-34ea38fa2017
+
+	column Product
+		dataType: string
+		isHidden
+		lineageTag: bfce6725-af84-4172-8e69-3d62fb6885de
+		sourceLineageTag: f057c0c3-b303-4fcf-8a16-b71c0e2d30d1
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Product
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	/// LCW, LCM, MTD, QTD, YTD, R4W, R13W, R52W
+	column Time_Period
+		dataType: string
+		isHidden
+		lineageTag: 0eb11fbe-2470-41fa-9b15-ad6e51c298f4
+		sourceLineageTag: 58bdfe47-bd1c-43dd-9587-592162c7da6c
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Time_Period
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Metric
+		dataType: string
+		isHidden
+		lineageTag: ab43c7fe-1abc-4c27-b6f1-9de7650f9b54
+		sourceLineageTag: 39deb197-b51f-4f4b-8242-eec50fc349ee
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Metric
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Labels
+		dataType: string
+		isHidden
+		lineageTag: dc6e58b5-6188-4361-ab72-e2d39dac074a
+		sourceLineageTag: d9a998b7-3106-4f24-b0d5-5c6d4972f247
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Labels
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Sort_Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 289ed525-e285-4715-b584-367d61a21f95
+		sourceLineageTag: dfbacf47-f06d-48b9-a418-0f68999ebcd3
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Sort_Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Rolling_Wks
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 730fcc2d-2e1a-488a-8755-c062b4e5007f
+		sourceLineageTag: 27b9ac88-99f8-411f-ba45-d14ed5006ef0
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Rolling_Wks
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition 'Measure Reference' = entity
+		mode: directQuery
+		source
+			entityName: Measure Reference
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

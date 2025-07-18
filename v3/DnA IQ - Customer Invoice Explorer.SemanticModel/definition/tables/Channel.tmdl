@@ -1,0 +1,95 @@
+table Channel
+	lineageTag: 54802edf-f1e1-4190-af0f-6ecfff0b8d11
+	sourceLineageTag: 37b4aad1-ab91-42cd-bd8e-19ec14a284f3
+
+	column 'Display Channel'
+		dataType: string
+		isHidden
+		lineageTag: cab96bab-5996-477d-85a4-8da4986ad8d1
+		sourceLineageTag: 80cb788a-6e3d-4d68-8c9d-e1d36871d292
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: display_channel
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column dim_channel_key
+		dataType: int64
+		isHidden
+		isNullable: false
+		formatString: 0
+		lineageTag: 0f660395-2b02-4ebc-9f5c-e26856c21b64
+		sourceLineageTag: 0fa57f6d-cf1f-4b4d-a46d-bac00d44bf94
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		annotation SummarizationSetBy = User
+
+	column dim_source_key
+		dataType: string
+		isHidden
+		lineageTag: 26d16cc2-879e-4e71-bf95-0769c1523164
+		sourceLineageTag: 37208ded-3ceb-499f-b43b-e3d9a453953e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		annotation SummarizationSetBy = User
+
+	column src_sub_trade_channel_cd
+		dataType: string
+		isHidden
+		lineageTag: 63dff21b-ca23-4859-893b-19e0477111f6
+		sourceLineageTag: 85d84c08-b150-43c0-9b1b-6aff497bfc8d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_sub_trade_channel_cd
+
+		annotation SummarizationSetBy = User
+
+	column src_sub_trade_channel_desc
+		dataType: string
+		isHidden
+		lineageTag: 7bdd3d26-efe2-4941-b10d-78c16318b3a6
+		sourceLineageTag: 38edf0fe-564f-4c44-9a9d-2c597bed03a1
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: src_sub_trade_channel_desc
+
+		annotation SummarizationSetBy = User
+
+	column created_date
+		dataType: dateTime
+		isHidden
+		formatString: General Number
+		lineageTag: 6d51a44b-ad90-4f25-850d-a8c23519d0d4
+		sourceLineageTag: 88461191-f187-4370-8bee-93e9c3eb45fd
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: created_date
+
+		annotation SummarizationSetBy = User
+
+	column updated_date
+		dataType: dateTime
+		isHidden
+		formatString: General Number
+		lineageTag: 8c41c0de-186c-4dbf-a165-167d0c736076
+		sourceLineageTag: ca69b330-7213-4579-aa8f-06f62f5b74b1
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: updated_date
+
+		annotation SummarizationSetBy = User
+
+	partition Channel = entity
+		mode: directQuery
+		source
+			entityName: Channel
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

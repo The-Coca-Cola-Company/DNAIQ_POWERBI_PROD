@@ -1,0 +1,80 @@
+table 'Measures Slicer PRX'
+	lineageTag: 75b2964a-846e-43a7-8074-134003010468
+
+	column 'Measures Slicer PRX'
+		lineageTag: bba6ff69-346f-49f4-9574-9c85c0609faf
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Measures Slicer PRX Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Measures Slicer PRX Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measures Slicer PRX Fields'
+		isHidden
+		lineageTag: 43c99fd5-4321-4bb8-9398-3c5e32b35941
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Measures Slicer PRX Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "kind": 2,
+				  "version": 3
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measures Slicer PRX Order'
+		isHidden
+		formatString: 0
+		lineageTag: 67d18b97-e7c5-4a8a-9756-97751b9b3603
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Measures Slicer PRX' = calculated
+		mode: import
+		source =
+				{
+				    ("$ Share PY", NAMEOF('PRx Key Metrics'[$ Share PY]), 0),
+				    ("Vol Share PY", NAMEOF('PRx Key Metrics'[Vol Share PY]), 1),
+				    ("Unit Share PY", NAMEOF('PRx Key Metrics'[Unit Share PY]), 2),
+				    ("Gross Profit PY %", NAMEOF('PRx Key Metrics'[Gross Profit PY %]), 3),
+				    ("Revenue PY %", NAMEOF('PRx Key Metrics'[Revenue PY %]), 4),
+				    ("NSR/UC PY", NAMEOF('PRx Key Metrics'[NSR/UC PY]), 5),
+				    ("BDB Volume PY %", NAMEOF('PRx Key Metrics'[BDB Volume PY %]), 6),
+				    ("LMP Volume PY %", NAMEOF('PRx Key Metrics'[LMP Volume PY %]), 7),
+				    ("Consumptions Units PY %", NAMEOF('PRx Key Metrics'[Consumptions Units PY %]), 8),
+				    ("Transactions PY %", NAMEOF('PRx Key Metrics'[Transactions PY %]), 9),
+				    ("SOVI Total PY", NAMEOF('PRx Key Metrics'[SOVI Total PY]), 10),
+				    ("SOVI Display PY", NAMEOF('PRx Key Metrics'[SOVI Display PY]), 11),
+				    ("SOVI Cold PY", NAMEOF('PRx Key Metrics'[SOVI Cold PY]), 12),
+				    ("SOVI Aisle PY", NAMEOF('PRx Key Metrics'[SOVI Aisle PY]), 13),
+				    ("CDE Footprint PY %", NAMEOF('PRx Key Metrics'[CDE Footprint PY %]), 14),
+				    ("Net Coolers PY %", NAMEOF('PRx Key Metrics'[Net Coolers PY %]), 15),
+				    ("Net Outlets PY %", NAMEOF('PRx Key Metrics'[Net Outlets PY %]), 16),
+				    ("$ Share", NAMEOF('PRx Key Metrics'[$ Share]), 17),
+				    ("Vol Share", NAMEOF('PRx Key Metrics'[Vol Share]), 18),
+				    ("Unit Share", NAMEOF('PRx Key Metrics'[Unit Share]), 19),
+				    ("Gross Profit", NAMEOF('PRx Key Metrics'[Gross Profit]), 20),
+				    ("Revenue", NAMEOF('PRx Key Metrics'[Revenue]), 21),
+				    ("NSR/UC", NAMEOF('PRx Key Metrics'[NSR/UC]), 22),
+				    ("BDB Volume", NAMEOF('PRx Key Metrics'[BDB Volume]), 23),
+				    ("LMP Volume", NAMEOF('PRx Key Metrics'[LMP Volume]), 24),
+				    ("Consumptions Units", NAMEOF('PRx Key Metrics'[Consumptions Units]), 25),
+				    ("Transactions", NAMEOF('PRx Key Metrics'[Transactions]), 26),
+				    ("SOVI Total", NAMEOF('PRx Key Metrics'[SOVI Total]), 27),
+				    ("SOVI Display", NAMEOF('PRx Key Metrics'[SOVI Display]), 28),
+				    ("SOVI Cold", NAMEOF('PRx Key Metrics'[SOVI Cold]), 29),
+				    ("SOVI Aisle", NAMEOF('PRx Key Metrics'[SOVI Aisle]), 30),
+				    ("CDE Footprint", NAMEOF('PRx Key Metrics'[CDE Footprint]), 31),
+				    ("Net Coolers", NAMEOF('PRx Key Metrics'[Net Coolers]), 32),
+				    ("Net Outlets", NAMEOF('PRx Key Metrics'[Net Outlets - OS]), 33)
+				}
+
+	annotation PBI_Id = 2664cd46dfb6482fa0a957746bca9656
+

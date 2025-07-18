@@ -1,0 +1,136 @@
+table 'Bottler Financials'
+	lineageTag: 8022c960-2d42-4842-8fd4-c104fabbbf9a
+	sourceLineageTag: 0ca21b68-81eb-492c-8298-33348c3a07d8
+
+	measure 'NSR / UC' = EXTERNALMEASURE("NSR / UC", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		lineageTag: 461ecb72-960f-430d-87fd-abb908003972
+		sourceLineageTag: 796ff0f4-4a37-4976-9b0c-eff73630844d
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_NSR / UC FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure UCS/ADS = EXTERNALMEASURE("UCS/ADS", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: ca4ca4a1-2556-4b34-b111-873af7adb891
+		sourceLineageTag: 8d0118cb-4fbb-4744-8277-ee9ec654a3c1
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_UCS/ADS FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Bottler Gross Profit / EQ Unit Case' = EXTERNALMEASURE("Bottler Gross Profit / EQ Case", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 3bb2b00a-d83b-49da-95df-2850c91969a3
+		sourceLineageTag: c63e3ed8-6bfd-40eb-aa5f-ea8d0b8dbd4d
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Bottler Gross Profit / EQ Case FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Bottler Gross Profit / Standard Case' = EXTERNALMEASURE("Bottler Gross Profit / Standard Physical Case", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 14c860c1-71e0-43ce-b387-ebd29a03d1b0
+		sourceLineageTag: 4baab38d-468d-4ec1-b758-826a5a8e2c10
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Bottler Gross Profit / Standard Physical Case FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Bottler Revenue' = EXTERNALMEASURE("Bottler Revenue", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		lineageTag: 99dd4a39-34eb-4d98-be7a-0496389bb17d
+		sourceLineageTag: b0f764c9-bd3f-4fdb-b740-11899d3b7a35
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Bottler Revenue FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	/// Bottler Gross Profit
+	measure 'Bottler Gross Profit' = EXTERNALMEASURE("Bottler Gross Profit", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 34d9883e-3e3d-4975-b943-68dc88cdad7c
+		sourceLineageTag: 453142e2-cac5-49cf-a95b-67fe67afc8eb
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Bottler Gross Profit FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	/// Bottler Margin
+	measure 'Bottler Margin' = EXTERNALMEASURE("Bottler Margin", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		lineageTag: 98ed026c-f7f2-499f-aedc-a917ac1e4a53
+		sourceLineageTag: d5461d9d-d270-4598-a944-3e8a2f22781b
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Bottler Margin FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	/// Bottler Revenue (DNNSI)
+	measure 'Dead Net Net Sales Income' = EXTERNALMEASURE("Dead Net Net Sales Income", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		lineageTag: 280bb401-396f-4491-8129-5ae3b18d6a80
+		sourceLineageTag: a32242de-327b-40cb-8c54-fb3d871f00e6
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Dead Net Net Sales Income FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Dead Net Net Sales Income - Plan' = EXTERNALMEASURE("Dead Net Net Sales Income - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		lineageTag: 76f5b60c-c254-4ecf-8433-2e3926cd895b
+		sourceLineageTag: ce018cac-5860-4e81-a32e-5bbce05ea400
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Dead Net Net Sales Income - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Dead Net Net Sales Income - Forecast' = EXTERNALMEASURE("Dead Net Net Sales Income - Forecast", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		lineageTag: b88e7b40-0c5f-4166-ac24-f38cb3a97359
+		sourceLineageTag: 99f1429a-7a59-4353-bedd-abe373c64b72
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Dead Net Net Sales Income - Forecast FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Bottler Gross Profit / EQ Case - Plan' = EXTERNALMEASURE("Bottler Gross Profit / EQ Case - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		lineageTag: 468859fd-a7e4-4b80-9e72-bdd99aae6a07
+		sourceLineageTag: 3c10e14e-9934-4d11-b539-848029ed1fcb
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Bottler Gross Profit / EQ Case - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Bottler Gross Profit / EQ Case - PY' = EXTERNALMEASURE("Bottler Gross Profit / EQ Case - PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		lineageTag: 184859f1-90e4-4539-827e-6a6812888416
+		sourceLineageTag: 953d126f-ec4f-4ae8-9a67-356a6f7cdec0
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Bottler Gross Profit / EQ Case - PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Bottler Gross Profit / Standard Physical Case - Plan' = EXTERNALMEASURE("Bottler Gross Profit / Standard Physical Case - Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		lineageTag: 60f43be5-8d89-4853-b4c4-6e9a623120d2
+		sourceLineageTag: f68da0d8-d832-46e8-b04b-da38a66bd679
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Bottler Gross Profit / Standard Physical Case - Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	measure 'Bottler Gross Profit / Standard Physical Case - PY' = EXTERNALMEASURE("Bottler Gross Profit / Standard Physical Case - PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		lineageTag: 4b6d7b98-775f-4abe-9356-6c67f3d44e87
+		sourceLineageTag: f2c2defa-015a-4204-9c22-751df08b9a51
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Bottler Gross Profit / Standard Physical Case - PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+	column Column
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2933d570-fa1d-43f0-ad1c-821f07220211
+		sourceLineageTag: 9ceb7cee-39fc-4734-9dfc-5341afc2ed5f
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: Column
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition 'Bottler Financials' = entity
+		mode: directQuery
+		source
+			entityName: Bottler Financials
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+
+	changedProperty = Name
+

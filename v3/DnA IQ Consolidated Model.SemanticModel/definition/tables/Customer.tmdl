@@ -1,0 +1,99 @@
+table Customer
+	lineageTag: ce60f5f9-8f2b-4239-8b30-34925b62ab02
+
+	column dim_customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: df716c18-561f-4283-b6ad-38a26dbb86e7
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_source_key
+		dataType: string
+		lineageTag: 91255251-467e-4936-b10a-1063f5da0bd0
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_hierarchy_source
+		dataType: string
+		lineageTag: fd209df8-9a8f-4c9a-8f7e-f66312004f9d
+		summarizeBy: none
+		sourceColumn: src_hierarchy_source
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_node_id
+		dataType: string
+		lineageTag: 623204b8-961e-46c6-b7a2-fbbf9254535a
+		summarizeBy: none
+		sourceColumn: src_node_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_node_description
+		dataType: string
+		lineageTag: 22e1a556-cb16-465c-866b-8f6cf2ba6d7f
+		summarizeBy: none
+		sourceColumn: src_node_description
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column conformed_customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e7c2a29-2bc2-4666-851b-ff46063765bf
+		summarizeBy: sum
+		sourceColumn: conformed_customer_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_customer_name
+		dataType: string
+		lineageTag: 8c12c645-7958-4eed-bfad-e2bb6b374d1d
+		summarizeBy: none
+		sourceColumn: display_customer_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_customer_group_name
+		dataType: string
+		lineageTag: 9307f26f-d285-4251-b9b6-d2e4fe7749d7
+		summarizeBy: none
+		sourceColumn: display_customer_group_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customer = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database),
+				    vw_Dim_Bottler = Source{[Schema="dbov3",Item="vw_Dim_Customer"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(vw_Dim_Bottler,{"created_date", "updated_date"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

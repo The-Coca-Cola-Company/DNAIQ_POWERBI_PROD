@@ -1,0 +1,7 @@
+role 'Hancock Bottling Company'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Hancock Bottling Company"
+
+	annotation PBI_Id = e9ef08f8501d4bba851ffbb02e55f017
+

@@ -1,0 +1,163 @@
+table Outlet
+	lineageTag: 3fb4fd70-6a95-4d6c-aa6f-87f231ef8026
+
+	column Channel
+		dataType: string
+		isHidden
+		lineageTag: c168bdc9-d015-423c-898b-88184bfcf4bc
+		summarizeBy: none
+		sourceColumn: Channel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bottler
+		dataType: string
+		isHidden
+		lineageTag: 321fa4c1-069c-4de9-aea6-6e09df6571fb
+		summarizeBy: none
+		sourceColumn: Bottler
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bottler MU'
+		dataType: string
+		isHidden
+		lineageTag: 2ce6cd97-2c76-4f95-952d-ff10f711a3bf
+		summarizeBy: none
+		sourceColumn: Bottler MU
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sales Center'
+		dataType: string
+		isHidden
+		lineageTag: 88daf9f8-69f1-43f7-b848-51962f7a4f72
+		summarizeBy: none
+		sourceColumn: Sales Center
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		isHidden
+		lineageTag: 8c144217-f82b-443f-9422-8a32be60b12a
+		summarizeBy: none
+		sourceColumn: Customer
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Banner'
+		dataType: string
+		isHidden
+		lineageTag: 30235b8c-819c-4931-a30d-6974021d3e83
+		summarizeBy: none
+		sourceColumn: Customer Banner
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bottler Tier'
+		dataType: string
+		isHidden
+		lineageTag: 26ecb1d9-dbb0-42b8-97e3-236e156207d4
+		summarizeBy: none
+		sourceColumn: Bottler Tier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_bottler_ownership_identifier
+		dataType: string
+		isHidden
+		lineageTag: 19d90c5f-fee5-41f3-a038-93219015064a
+		summarizeBy: none
+		sourceColumn: ko_bottler_ownership_identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_bottler_delivery_point_number
+		dataType: string
+		isHidden
+		lineageTag: 76e9889a-0201-4e47-ae7f-949fa22f811d
+		summarizeBy: none
+		sourceColumn: ko_bottler_delivery_point_number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_outlet_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 609420be-4431-4bb2-865b-a1fc571f3e57
+		summarizeBy: none
+		sourceColumn: dim_outlet_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Customer Hierarchy'
+		lineageTag: 1e7d15a7-b61c-4956-a0e7-b211293f2f65
+
+		level Channel
+			lineageTag: b721e7b5-543f-43d8-84de-adf835169c4b
+			column: Channel
+
+		level Customer
+			lineageTag: d6be2a94-3d56-4767-8e7f-cab0e3550e89
+			column: Customer
+
+		level 'Customer Banner'
+			lineageTag: 1b77adab-d22e-49e4-b6c4-5786290e8412
+			column: 'Customer Banner'
+
+	hierarchy 'Bottler Hierarchy'
+		lineageTag: 4ce8fda4-eade-45d6-9d64-49921e270418
+
+		level 'Bottler Tier'
+			lineageTag: bf589756-245a-419f-ae06-9c8093ec6089
+			column: 'Bottler Tier'
+
+		level Bottler
+			lineageTag: 945ec0e6-2304-4e68-b9e0-e8f0341cd0dc
+			column: Bottler
+
+		level 'Bottler MU'
+			lineageTag: 73c8bf31-4a62-463b-8e98-0429e61ef63f
+			column: 'Bottler MU'
+
+		level 'Sales Center'
+			lineageTag: 127b971f-951d-4d95-b090-3984a851911b
+			column: 'Sales Center'
+
+	partition Outlet = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, DataBase,[CommandTimeout=#duration(0,0,180,0)]),
+				    ired_mdl_vw_dim_outlet = Source{[Schema="ired",Item="vw_Dim_Outlet"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(ired_mdl_vw_dim_outlet,{{"ko_territory_bottler", "Bottler"}, {"ko_territory_bottler_market_unit", "Bottler MU"}, {"ko_territory_bottler_sales_branch", "Sales Center"}, {"ired_channel", "Channel"}, {"ko_cbs_managed_by_account_customer_name", "Customer"}, {"ko_cbs_managed_account_subsidiary_name", "Customer Banner"}}),
+				  #"Renamed Columns 1" = Table.RenameColumns(#"Renamed Columns", {{"ired_bottler_tier", "Bottler Tier"}})
+				in
+				    #"Renamed Columns 1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

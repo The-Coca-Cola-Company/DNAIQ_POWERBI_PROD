@@ -1,0 +1,16 @@
+relationship 2550cb04-4e2c-485c-a1b5-42feb47cb350
+	fromColumn: 'Share of Market'.'Market Key'
+	toColumn: Market.market_key
+
+relationship 95950bd8-00f2-4fda-bf68-a6777408f256
+	fromColumn: 'Share of Market'.'Date Key'
+	toColumn: Calendar.dim_date_key
+
+relationship d3cf037a-c018-437f-96a6-45e5a9f39c19
+	fromColumn: 'Share of Market'.'Product Key'
+	toColumn: Product.'Product Key'
+
+relationship 63c38b0b-b0f7-4e2e-b563-95acf02fda6f
+	fromColumn: Product.'CBR Sub Category'
+	toColumn: CBR_Category_Groupings.cbr_sub_category
+

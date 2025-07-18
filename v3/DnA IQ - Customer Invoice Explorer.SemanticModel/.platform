@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "DnA IQ - Customer Invoice Explorer"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9d7b038a-5f11-946b-4c65-cab0901b57f3"
+  }
+}

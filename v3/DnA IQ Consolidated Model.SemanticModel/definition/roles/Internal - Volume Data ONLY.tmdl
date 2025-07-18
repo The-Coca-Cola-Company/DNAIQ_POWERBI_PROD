@@ -1,0 +1,71 @@
+role 'Internal - Volume Data ONLY'
+	modelPermission: read
+
+	tablePermission 'Bottler Financials'
+
+	tablePermission 'Territory Bottlers'
+
+	tablePermission _PreselectedSlicer
+
+	tablePermission 'ACV TDP'
+		metadataPermission: none
+
+	tablePermission Beach
+		metadataPermission: none
+
+	tablePermission CBR_Category_Groupings
+		metadataPermission: none
+
+	tablePermission 'Business Drivers'
+		metadataPermission: none
+
+	tablePermission 'Dim Slicer'
+		metadataPermission: none
+
+	tablePermission 'Dim Slicer Territory'
+
+	tablePermission Forecast
+		metadataPermission: none
+
+	tablePermission 'iRED Measures'
+		metadataPermission: none
+
+	tablePermission Market
+		metadataPermission: none
+
+	tablePermission 'Measures Slicer'
+		metadataPermission: none
+
+	tablePermission 'Performance Other'
+
+	tablePermission 'PRx Key Metrics'
+		metadataPermission: none
+
+	tablePermission 'Share of Market'
+		metadataPermission: none
+
+	tablePermission 'Store Area'
+		metadataPermission: none
+
+	tablePermission 'Week Parameter'
+		metadataPermission: none
+
+	tablePermission 'Customer Invoice Measures'
+
+		columnPermission bottler_dead_net_net_sales_income = none
+
+		columnPermission bottler_dead_net_net_sales_income_with_proxy = none
+
+	tablePermission 'Overall Performance Plan'
+
+		columnPermission revenue_py = none
+
+		columnPermission revenue_plan = none
+
+		columnPermission revenue = none
+
+	tablePermission 'Bottlers & Distributors'
+		metadataPermission: none
+
+	annotation PBI_Id = 934f944356d64b5a8a5b8d5cda505fa2
+

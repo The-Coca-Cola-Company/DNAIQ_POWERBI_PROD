@@ -1,0 +1,7 @@
+role 'Liberty Coca-Cola Beverages'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Liberty Coca-Cola Beverages"
+
+	annotation PBI_Id = 8acc4b38556a4d62834eb65a70ecd1b9
+

@@ -1,0 +1,7 @@
+role 'PUERTO RICO'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "PUERTO RICO"
+
+	annotation PBI_Id = c34f1d6d25994ac5a462ee3cef30ffe8
+

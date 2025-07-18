@@ -1,0 +1,107 @@
+/// rms_mdl vw_Dim_Customers
+table Market
+	lineageTag: 0a4ebbe8-b9f2-4d80-b672-e550b8156683
+	sourceLineageTag: 9396649e-5f6d-44b3-918f-c9ca1688bc20
+
+	column 'Market Description'
+		dataType: string
+		lineageTag: 8bdc5f07-d410-4d7a-970a-a9f234d51bfb
+		sourceLineageTag: 1a291f16-35ee-4fc2-ae3e-0ba7ac05b496
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Market Description
+
+		annotation SummarizationSetBy = User
+
+	column 'Market Division'
+		dataType: string
+		lineageTag: 07316f4b-100b-47e1-8532-2cc9c9778280
+		sourceLineageTag: 15abd55f-ed67-49e4-a435-4141057c4630
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Division
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column 'Market Total'
+		dataType: string
+		lineageTag: 7ba81db2-a27d-48e1-8f25-0c9325ae7384
+		sourceLineageTag: 59862cfb-adca-4f4b-bb65-4e24aabe2fe4
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Total
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column Channel
+		dataType: string
+		lineageTag: 612bf942-7fac-449f-9515-81d0fc4df7ce
+		sourceLineageTag: a9e4443c-a52b-4b07-8214-cac4866a7358
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = User
+
+	column 'Market Set'
+		dataType: string
+		lineageTag: edc66f62-6d5b-4210-8666-f35072c722ba
+		sourceLineageTag: 53f91336-d4de-45cb-aeac-de3bf7e66ab9
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Market Set
+
+		annotation SummarizationSetBy = User
+
+	column market_key
+		dataType: string
+		isHidden
+		isNullable: false
+		displayFolder: Hidden
+		lineageTag: c2a8521e-ee92-4b39-829b-2337f31c9633
+		sourceLineageTag: 7672cac5-d481-40e5-aa2f-6e2925595c7c
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: market_key
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	hierarchy 'Customer Hierarchy'
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 4f133f13-0c99-4eb0-a8a6-83afe4ef10b9
+		sourceLineageTag: ba645e35-bf3f-4b27-a245-d99337c10ce9
+
+		level 'Corporation Total'
+			lineageTag: 84e1839c-c3b9-4f84-b21f-6b5aeb767e96
+			sourceLineageTag: ca54cd01-c7a2-4b07-beb7-d2762536ed6b
+			column: 'Market Total'
+
+		level 'Market Division'
+			lineageTag: 489dfd43-2f2c-4cb2-84ba-32ab5828cfc7
+			sourceLineageTag: 5fafe8ca-3a77-4285-9e67-06f7c02a005a
+			column: 'Market Division'
+
+		level 'Market Description'
+			lineageTag: 3dca5fd7-e616-4110-b3e8-b736cd43d2d9
+			sourceLineageTag: e84d6cdf-166c-4d67-88a3-54c021fe214f
+			column: 'Market Description'
+
+		changedProperty = DisplayFolder
+
+	partition Market = entity
+		mode: directQuery
+		source
+			entityName: Market
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

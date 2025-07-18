@@ -1,0 +1,16 @@
+relationship AutoDetected_ea7b584d-f0f7-4bc6-9af8-f91fc4131c65
+	fromColumn: 'Share of Market'.'Market Key'
+	toColumn: Market.market_key
+
+relationship f48d3b08-3030-342e-1ea7-ccd9f5e1747c
+	fromColumn: 'Share of Market'.'Date Key'
+	toColumn: Calendar.'Date Key'
+
+relationship 3ea4d241-fe5a-6fa9-4f8f-2d6bd8a75658
+	fromColumn: 'Share of Market'.'Product Key'
+	toColumn: Product.'Product Key'
+
+relationship 44cfbe5d-e485-7e40-ed36-7f4484814b5e
+	fromColumn: Product.'CBR Category'
+	toColumn: 'CBR Category'.'CBR Category'
+

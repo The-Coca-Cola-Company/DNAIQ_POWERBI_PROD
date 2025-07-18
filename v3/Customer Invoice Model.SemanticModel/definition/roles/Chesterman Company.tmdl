@@ -1,0 +1,7 @@
+role 'Chesterman Company'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Chesterman Company"
+
+	annotation PBI_Id = 00b35e33dbd84786973f0f21c74f0987
+

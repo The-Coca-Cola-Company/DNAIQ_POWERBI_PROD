@@ -1,0 +1,776 @@
+/// dbov3.vw_Fact_Overall_Performance_Plan
+/// Group By: Bottler, Calendar, Channel, Customer, Product
+table 'Overall Performance Plan'
+	lineageTag: d8a48b27-a920-487f-8513-9a480e3e154c
+	sourceLineageTag: 3f65ac3f-070f-4634-86fb-caaf7036a7f0
+
+	/// Mix is the impact of the shift from higher and lower revenue generating components based on changes in volume for brands, packages, channels, and/or customers. Mix is calculated on the absolute change in volume and revenue vs PY.
+	measure 'Rate Mix Cases' = EXTERNALMEASURE("Rate Mix Cases", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 43046c3f-5dcc-4570-93c2-3fe2c29e418c
+		sourceLineageTag: ac0f7aa7-fc9a-46d5-b9e3-173109b599a6
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Rate Mix Cases FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'Rate Mix Gallons' = EXTERNALMEASURE("Rate Mix Gallons", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f709defb-1ef7-443d-b981-e562b73103b1
+		sourceLineageTag: 4d92a906-c108-40eb-99b9-e92b6a7572dd
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_Rate Mix Gallons FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'True Rate (month)' = EXTERNALMEASURE("True Rate (month)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: aefbfb73-9e4c-420c-93ea-95851252602e
+		sourceLineageTag: 1e301beb-c8a2-45f4-a500-1da97d8c48c6
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate (month) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate % vs PY (month)' = EXTERNALMEASURE("True Rate % vs PY (month)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: daa2c325-8463-4ebd-830f-c65587b0af44
+		sourceLineageTag: 02735148-d25e-4819-99b8-4a814016e5cf
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate % vs PY (month) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate - Plan (month)' = EXTERNALMEASURE("True Rate - Plan (month)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: da812730-c1c5-4287-b9ff-025fda8fdcda
+		sourceLineageTag: 7f4c5ed1-b484-402a-a2b1-5a779cb76d30
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate - Plan (month) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate - PY (month)' = EXTERNALMEASURE("True Rate - PY (month)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 82798a84-555a-4de9-839c-d4cd4d60ada9
+		sourceLineageTag: 95b23b16-f610-47c5-b786-ee14c52d2aed
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate - PY (month) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate - Plan PY (month)' = EXTERNALMEASURE("True Rate - Plan PY (month)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 1f27fdfd-333c-4a89-b414-5ba47e72118a
+		sourceLineageTag: 154d763a-7665-4206-94dd-aa11bf12e7f7
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate - Plan PY (month) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate % vs Plan (month)' = EXTERNALMEASURE("True Rate % vs Plan (month)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 6ab2be55-7dc6-4d25-afda-4714fcd104a0
+		sourceLineageTag: 5ce9a3e3-5887-4094-8516-a5b4a0cf959d
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate % vs Plan (month) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate - Plan (week)' = EXTERNALMEASURE("True Rate - Plan (week)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: c3861e50-2f8f-4250-bcb2-ffed6f319a04
+		sourceLineageTag: ecc31e55-f16f-4895-8dc6-b1848db939e2
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate - Plan (week) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate - Plan PY (week)' = EXTERNALMEASURE("True Rate - Plan PY (week)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: e19e3011-d5a7-4edc-a5c9-2b58e486b36c
+		sourceLineageTag: 7b609346-3db7-43af-b268-4fc94f526a62
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate - Plan PY (week) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate - PY (week)' = EXTERNALMEASURE("True Rate - PY (week)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 75546398-88e6-4c16-9519-1a5a02805a24
+		sourceLineageTag: e54584e3-4c25-473c-b068-22b067aaf49d
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate - PY (week) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate % vs Plan (week)' = EXTERNALMEASURE("True Rate % vs Plan (week)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 51f9aa0d-d609-4389-830e-8519f735ed9e
+		sourceLineageTag: 4654f205-f6be-4803-a5da-e3ffc3571261
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate % vs Plan (week) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate % vs PY (week)' = EXTERNALMEASURE("True Rate % vs PY (week)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 3a3a9478-b57a-439c-9ddc-70d77198acf9
+		sourceLineageTag: 69ec6d42-3b98-421a-a9eb-0aa5f17a6b6f
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate % vs PY (week) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate (week)' = EXTERNALMEASURE("True Rate (week)", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f9d68376-32e9-46e5-900c-b340a25f5d6b
+		sourceLineageTag: c6ae42e3-8945-42af-9119-8743697f95c4
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate (week) FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+	measure 'True Rate % vs Plan' = EXTERNALMEASURE("True Rate % vs Plan", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: d52210f6-d9e7-4f85-8e44-c5eead2d97df
+		sourceLineageTag: 1013ce18-c77f-4e4b-8caf-c064b5096c51
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate % vs Plan FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	measure 'True Rate % vs PY' = EXTERNALMEASURE("True Rate % vs PY", DOUBLE, "DirectQuery to AS - DnA IQ Consolidated Model")
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ff309b9f-e32c-48c4-afab-6e1d05d68d3c
+		sourceLineageTag: 96968d90-87c7-454b-97d4-e1ee774f9de0
+		dataCategory: Uncategorized
+
+		formatStringDefinition = EXTERNALMEASURE("_True Rate % vs PY FormatString", STRING, "DirectQuery to AS - DnA IQ Consolidated Model")
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+	column 'Dim Date Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 52fd007e-8db6-4c8f-b33d-ab6f8a17766c
+		sourceLineageTag: 79702ef9-82d3-4ec7-aa02-46f7931bd4c7
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_date_key
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Dim Source Key'
+		dataType: string
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 3c624f1e-7f6c-45c1-80d9-c6a9309921a5
+		sourceLineageTag: 1356fceb-79dd-4198-b08c-8a001db5ca13
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Dim Customer Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: dfbb3816-d568-40ff-913c-b7f90102f774
+		sourceLineageTag: 699645ea-ed71-4275-9f2f-a5c827d37bd2
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Dim Product Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 59a5b690-9341-4e1f-a466-20bf47801a7a
+		sourceLineageTag: 2d2326a6-aa42-42fb-888a-49dc87b7954b
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_product_key
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Dim Bottler Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 96e5264f-8f4e-4925-b704-048b38513d3e
+		sourceLineageTag: d8d75cfa-d25e-4d43-b68e-54308a6e33f7
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Dim Channel Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 1a43e95f-ce51-46b5-9d8d-3a6405dac510
+		sourceLineageTag: 7ab433ac-796d-4a10-8ddf-b59a689ee22e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Standard Physical Cases Plan'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: b546c51c-db87-47f0-915e-0571951c71d8
+		sourceLineageTag: 1adac54e-07ef-4877-b51a-affd774ce136
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: standard_physical_cases_plan
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Unit Cases Plan'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ceb218c8-7f55-4938-b4ce-3e92757e2e47
+		sourceLineageTag: 6a6b35b8-4e1e-485f-b5e3-93f1385b1914
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: unit_cases_plan
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Physical Cases Plan'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a862ee7e-bcae-415c-8e70-b14401e43ce4
+		sourceLineageTag: de0cf3c8-4b0e-457b-b5b2-7a27baff598b
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: physical_cases_plan
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Purchase Transactions Plan'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f1f2b41a-ee0a-4d88-8f75-7120dd40e2fe
+		sourceLineageTag: 935332d0-b740-4b94-97c9-6d3b1e858e60
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: purchase_transactions_plan
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gallons Plan'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 526f130b-c229-4154-b646-92abf2eb6ce3
+		sourceLineageTag: 2f6505a8-3900-45da-bbce-08c66db5fc14
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: gallons_plan
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Consumption Transactions Plan'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 8be1c9be-e535-42aa-b029-595b54ee5280
+		sourceLineageTag: 5f300083-ad27-4318-a6ec-4a040037a6ed
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: consumption_transactions_plan
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Revenue
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: a346c29f-6d85-4d94-9070-37d75ea707d8
+		sourceLineageTag: 82cbb830-5def-4603-a964-cbf3f12cbca0
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: revenue
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Revenue Plan'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 53518c41-d9d5-4336-b52e-50a0154c2d0d
+		sourceLineageTag: a5da12f6-f657-44bf-a829-6d0d9c6a547a
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: revenue_plan
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COGS
+		dataType: double
+		isHidden
+		lineageTag: dbd7f675-98fe-4c6e-99b4-f283da8f6150
+		sourceLineageTag: b14fa111-efa0-491a-a0f5-274eb1212acd
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: cogs
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Revenue PY'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 4372fa13-41c4-4011-98f1-277469a2f30a
+		sourceLineageTag: 34f06eea-1a47-4e61-859e-bf8703076b71
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: revenue_py
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'True Rate DNNSI CY KA WK PY Act'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ce6c63d7-aa5c-4a00-9af0-0bb4f4f25b01
+		sourceLineageTag: 7e227b9e-0e5c-4514-b455-f914e6f4811b
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_ka_wk_py_act
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ADJ Factor CY KA WK PY Act'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 5c1a8728-f675-4958-9c18-78b23a604bd5
+		sourceLineageTag: 5aabb914-68cd-4fcd-9387-8f914ca5caa7
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: adj_factor_cy_ka_wk_py_act
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ADJ Factor CY KA WK CY Plan'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 4d781af3-7ccd-489e-a530-40cc398c8461
+		sourceLineageTag: 0016a749-f1d1-4eb2-9131-cb934633146d
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: adj_factor_cy_ka_wk_cy_plan
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'True Rate DNNSI CY KA Month PY Act'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 92278055-8b5e-4853-90ac-12dd1841fef4
+		sourceLineageTag: b34620b2-6bf3-4418-9e48-f103a99bf2c4
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_ka_mnth_py_act
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ADJ Factor CY KA Month CY Plan'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 21fb5f00-fc11-487e-b8ed-b0aa464b0057
+		sourceLineageTag: 439e2764-5c26-4fec-99e3-9c2c7b69f94e
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: adj_factor_cy_ka_mnth_cy_plan
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'COGS Plan'
+		dataType: double
+		isHidden
+		lineageTag: 7f6d6947-05b6-4e7d-9809-00c602123487
+		sourceLineageTag: 722148eb-9cd6-4acd-a9dc-64011d710a9c
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: cogs_plan
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_cy_ka_wk_cy_plan
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 6978d137-989c-45ca-949e-a7e9f1b5b7f4
+		sourceLineageTag: 173b333e-6a3c-40cf-9547-018decbe97fc
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_ka_wk_cy_plan
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_cy_plan_wk_cy_plan
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 52a18313-3581-4e51-ae66-829b14a226d0
+		sourceLineageTag: e0bf7f48-3783-4977-adac-0c1e511e7354
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_plan_wk_cy_plan
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_py_act_wk_py_act
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 864d944a-50f8-4b15-988c-62b4f776029b
+		sourceLineageTag: fc9c664a-e835-4c7f-80df-050143e01a02
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_py_act_wk_py_act
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ADJ Factor CY KA Month CY Act'
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: c98a9b57-24be-409b-8c2a-66319e3bbfb1
+		sourceLineageTag: d4dce579-cd02-4ae8-aa76-6f5bb4afd7df
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: adj_factor_cy_ka_mnth_py_act
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_cy_ka_mnth_cy_plan
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: ae194538-3442-4652-a261-b820f6b78531
+		sourceLineageTag: f41c2bd6-64e1-4390-a8de-abd9e62565ae
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_ka_mnth_cy_plan
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_cy_plan_mnth_cy_plan
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: 29ae109c-accb-4b2a-bae2-3ccca0e34cd1
+		sourceLineageTag: 464d8f23-5f8c-46e5-9c07-4675ee5755fe
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_cy_plan_mnth_cy_plan
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column true_rate_dnnsi_py_act_mnth_py_act
+		dataType: double
+		isHidden
+		displayFolder: Hidden
+		lineageTag: f4bc8797-9883-489b-b44c-5aff90e474de
+		sourceLineageTag: b1256689-0f69-4f06-bcc1-3ce9b312f7ed
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: true_rate_dnnsi_py_act_mnth_py_act
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column curio_flag
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 341e0e62-21b2-4776-bd7c-6b9a43425735
+		sourceLineageTag: ab49e62a-dc6f-4999-9e46-b1b2a71dfcd7
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: curio_flag
+
+		changedProperty = IsHidden
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	column dim_outlet_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Hidden
+		lineageTag: 35ce5d0a-3d46-478d-bb21-dc32da35c4f0
+		sourceLineageTag: d0ba7449-a1c8-47d0-9882-65abcb4f0e71
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: dim_outlet_key
+
+		changedProperty = DisplayFolder
+
+		annotation SummarizationSetBy = User
+
+	partition 'Overall Performance Plan' = entity
+		mode: directQuery
+		source
+			entityName: Overall Performance Plan
+			expressionSource: 'DirectQuery to AS - DnA IQ Consolidated Model'
+

@@ -1,0 +1,227 @@
+table Product
+	lineageTag: 1352c485-0f1c-4403-bba4-2738b0444eff
+
+	column productid
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8d3204c6-d066-40df-b62f-73ebeb107d9f
+		summarizeBy: none
+		sourceColumn: productid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column RTM
+		dataType: string
+		lineageTag: 03e8643e-4a03-4deb-87f3-a860f33c544e
+		summarizeBy: none
+		sourceColumn: RTM
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_elt_category
+		dataType: string
+		isHidden
+		lineageTag: 155f027d-c7c8-4784-bea5-263277b40754
+		summarizeBy: none
+		sourceColumn: ko_elt_category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_perf_mgmt_sub_category
+		dataType: string
+		isHidden
+		lineageTag: 0d579183-25b5-4698-bca5-46f4528fdb5f
+		summarizeBy: none
+		sourceColumn: ko_perf_mgmt_sub_category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_consumption
+		dataType: string
+		isHidden
+		lineageTag: 598f5a27-59b5-4e5a-94bc-621fddd76f6a
+		summarizeBy: none
+		sourceColumn: ko_consumption
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CBR Category'
+		dataType: string
+		lineageTag: 77b11180-9777-4e62-b58f-bbc156a60ea6
+		summarizeBy: none
+		sourceColumn: CBR Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_key_manufacturer
+		dataType: string
+		isHidden
+		lineageTag: eb9a47bd-3485-432f-a931-2dbdadddf195
+		summarizeBy: none
+		sourceColumn: ko_key_manufacturer
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_key_trademark
+		dataType: string
+		isHidden
+		lineageTag: ac9e4783-29f2-4d63-ab17-4fa3e56b682f
+		summarizeBy: none
+		sourceColumn: ko_key_trademark
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_key_brand
+		dataType: string
+		isHidden
+		lineageTag: f4bcdb73-9e7a-4ca7-9b57-165f112f3368
+		summarizeBy: none
+		sourceColumn: ko_key_brand
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Package
+		dataType: string
+		lineageTag: 86afa388-4546-4dd7-b59c-b87eaf234e0a
+		summarizeBy: none
+		sourceColumn: Package
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_system_brands
+		dataType: string
+		isHidden
+		lineageTag: f106daff-0c96-4843-a03f-ec4220b1e638
+		summarizeBy: none
+		sourceColumn: ko_system_brands
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SSD/Still
+		dataType: string
+		lineageTag: 930db3c2-8f03-493e-9156-e2287433408f
+		summarizeBy: none
+		sourceColumn: SSD/Still
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'System Brands Groups'
+		dataType: string
+		isHidden
+		lineageTag: e27b2dab-5c53-4683-99d1-2b02786bb954
+		summarizeBy: none
+		sourceColumn: System Brands Groups
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'System Brands Sub-Groups'
+		dataType: string
+		isHidden
+		lineageTag: 23007260-3d5d-46f6-8897-581165d75665
+		summarizeBy: none
+		sourceColumn: System Brands Sub-Groups
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_ired_product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e1525e1c-ff2d-4b0d-8afa-e5464aa45998
+		summarizeBy: none
+		sourceColumn: dim_ired_product_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ko_key_flavor
+		dataType: string
+		isHidden
+		lineageTag: 713963ac-aba3-4abb-a773-26d59aa4a37b
+		summarizeBy: none
+		sourceColumn: ko_key_flavor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Product Hierarchy'
+		lineageTag: 0adff979-0bba-4562-a78c-13ae2e4fb823
+
+		level 'System Brands Groups'
+			lineageTag: d689517b-6081-467b-a3ee-d8f5dde43255
+			column: 'System Brands Groups'
+
+		level 'System Brands Sub-Groups'
+			lineageTag: e3c7fb83-4866-4296-98e9-24f2958fea14
+			column: 'System Brands Sub-Groups'
+
+		level 'Systems Brands'
+			lineageTag: ea97767e-eaad-4ca4-854f-b703a65a7f38
+			column: ko_system_brands
+
+		level Manufacturer
+			lineageTag: 0b8952e7-4309-4e91-890a-6bdb66ffe499
+			column: ko_key_manufacturer
+
+		level Trademark
+			lineageTag: 3e161b11-a9ad-40ad-94e5-2ab480fdae60
+			column: ko_key_trademark
+
+		level Brand
+			lineageTag: 749cd5e5-df17-4a8a-b4b3-9eab37f6447e
+			column: ko_key_brand
+
+	hierarchy 'Category Hierarchy'
+		lineageTag: 580a5fdc-1374-4486-aa04-0038f7f1f4f6
+
+		level Category
+			lineageTag: d0edb876-5abc-4d37-8177-e0bb15de65e1
+			column: ko_elt_category
+
+		level 'Sub Category'
+			lineageTag: 4989cb91-f571-48b2-8b8e-ab8266c1557a
+			column: ko_perf_mgmt_sub_category
+
+	partition Product = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, DataBase,[CommandTimeout=#duration(0,0,180,0)]),
+				    ired_mdl_vw_dim_product = Source{[Schema="ired",Item="vw_Dim_Ired_Product"]}[Data],
+				    #"Added Conditional Column" = Table.AddColumn(ired_mdl_vw_dim_product, "Custom", each if [ko_system_brands] = "DR PEPPER SNAPPLE GRP" then "DR PEPPER SNAPPLE GRP" else if [ko_system_brands] = "CCNA SYSTEM BRANDS" then "CCNA SYSTEM BRANDS" else if [ko_system_brands] = "PBNA SYSTEM BRANDS" then "PBNA SYSTEM BRANDS" else "AO", type text),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Conditional Column",{{"Custom", "System Brands Groups"}}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Renamed Columns1", "System Brands Sub-Groups", each if [ko_system_brands] = "DR PEPPER SNAPPLE GRP" then "DR PEPPER SNAPPLE GRP" else if [ko_system_brands] = "CCNA SYSTEM BRANDS" then "CCNA SYSTEM BRANDS" else if [ko_system_brands] = "PBNA SYSTEM BRANDS" then "PBNA SYSTEM BRANDS" else if [ko_system_brands] = "PRIVATE LABEL" then "PRIVATE LABEL" else "AO"),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column1",{"ired_id", "upc", "nielsen_upc", "ired_SKU", "ired_ProductName", "ired_ShortName", "ired_Manufacturer", "ired_BrandName", "ired_PackagingType", "ired_ProductCategory", "ired_BeverageType", "ired_PackageType", "ired_FlavourName", "ired_LocalProductCategoryName", "ired_CountryCode", "ired_ProductLocalSubCategoryName", "ired_ProductLocalSubCategoryCode", "ired_ProductGroup", "ired_MeasurementUnit", "ired_SubBrandName", "ired_Barcode", "ired_ServingType", "ired_SellingPackType", "ired_SellingPackSize", "ired_Price", "ired_IsActive", "ired_IsForeign", "ired_IsCompetitor", "ired_Type", "ired_SweetnerType", "ired_NormalizePackagingSize", "ired_SellingPackFrontFacings", "ired_SellingPackSideFacings", "ired_PackageSize", "ired_ProductDistributionIdentifier", "ired_ProductUID", "ired_ThumbnailUrl", "ired_Width", "ired_Depth", "ired_Height"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each [dim_ired_product_key] <> -1),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each [ko_route_to_market] <> "Unknown"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows1",{{"ko_route_to_market", "RTM"}, {"sparkling_still", "SSD/Still"}, {"ko_business_review_category", "CBR Category"}, {"ko_key_package", "Package"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

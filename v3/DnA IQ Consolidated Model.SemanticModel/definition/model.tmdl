@@ -1,0 +1,129 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBIDesktopVersion = 2.144.878.0 (25.06)+9cca29236de5114792f4d7188221f91ad4a5cc50
+
+annotation PBI_QueryOrder = ["Customer Invoice Measures","iRED Measures","Share of Market","Calendar","Outlet","Territory Bottlers","Server","Database","Invoice","Week Parameter","Market","Store Area","ACV TDP","Product","Start_Date","Start_Date_Num","Bottlers & Distributors","Customer","Channel","Overall Performance Plan","Performance Other","Beach","RangeStart","RangeEnd","DateKey","PRx Key Metrics","Outlet Status","Measure Reference","Forecast","Business Drivers","CBR_Category_Groupings"]
+
+annotation PBI_ProTooling = ["DevMode","CalcGroup"]
+
+annotation __BNorm = 1
+
+annotation __TEdtr = 1
+
+ref table 'Customer Invoice Measures'
+ref table Calendar
+ref table Outlet
+ref table 'Territory Bottlers'
+ref table Invoice
+ref table 'Time Calculation'
+ref table 'Week Parameter'
+ref table 'Bottler Financials'
+ref table Market
+ref table 'Share of Market'
+ref table 'iRED Measures'
+ref table 'Store Area'
+ref table 'ACV TDP'
+ref table Product
+ref table 'Bottlers & Distributors'
+ref table Customer
+ref table Channel
+ref table 'Overall Performance Plan'
+ref table 'Performance Other'
+ref table Beach
+ref table 'Measures Slicer'
+ref table 'Dim Slicer'
+ref table 'PRx Key Metrics'
+ref table 'Outlet Status'
+ref table 'Measure Reference'
+ref table Forecast
+ref table 'Business Drivers'
+ref table CBR_Category_Groupings
+ref table 'Dim Slicer Territory'
+ref table _PreselectedSlicer
+ref table 'Measures Slicer PRX'
+
+ref role 'Internal - All Data'
+ref role 'Internal - Volume Data ONLY'
+ref role 'ABARTA Coca-Cola Beverages'
+ref role 'Aberdeen Coca-Cola Bottling Company'
+ref role 'Ada Coca-Cola Bottling Company'
+ref role 'Atlantic Bottling Company'
+ref role 'Coca-Cola Bottling Company of Bemidji'
+ref role 'Binks Coca-Cola Bottling Company'
+ref role 'Coca-Cola Beverages Northeast Inc'
+ref role 'Canyon City Coca-Cola Bottling Company'
+ref role 'Coca-Cola Southwest Beverages'
+ref role 'Cedar City Coca-Cola Bottling Company'
+ref role 'Chesterman Company'
+ref role 'Clark Beverage Group'
+ref role 'Coca-Cola Bottling Company of Columbus'
+ref role 'Coca-Cola Consolidated Inc'
+ref role 'Corinth Coca-Cola Bottling Works'
+ref role 'Decatur Coca-Cola Bottling Company'
+ref role 'Deming Coca-Cola Bottling Company'
+ref role 'Coca-Cola Bottling Company of Dickinson'
+ref role 'Durango Coca-Cola Bottling Company'
+ref role 'Coca-Cola Bottling of Emporia'
+ref role 'Coca-Cola Bottling Company of Fort Smith'
+ref role 'Coca-Cola Bottling Company of Glasgow'
+ref role 'Hancock Bottling Company'
+ref role 'Heartland Coca-Cola Bottling Company'
+ref role 'Coca-Cola Bottling Company High Country'
+ref role 'CCBC of Hot Springs'
+ref role 'Huntsville Coca-Cola Bottling Company'
+ref role 'Idabel Coca-Cola Bottling Company'
+ref role 'CCBC of International Falls'
+ref role 'Jefferson City CCBC'
+ref role 'Ketchikan Soda Works'
+ref role 'Coca-Cola Bottling Company of Kokomo'
+ref role 'Lufkin Coca-Cola Bottling Company'
+ref role 'Macon Coca-Cola Bottling Company'
+ref role 'Magnolia Coca-Cola Bottling Company'
+ref role 'Maui Soda & Ice Works'
+ref role 'Middlesboro Coca-Cola Bottling Works'
+ref role 'Coca-Cola Bottling of Minden'
+ref role 'Coca-Cola Bottling Company of Nashville'
+ref role 'The Odom Corporation'
+ref role 'Orangeburg Coca-Cola Bottling Company'
+ref role 'Meridian Coca-Cola Bottling Company'
+ref role 'PUERTO RICO'
+ref role 'Coca-Cola Bottling Works of Pulaski'
+ref role 'Ozarks Coca-Cola Bottling Company'
+ref role 'Rock Hill Coca-Cola Bottling Company'
+ref role 'Timber Country Coca-Cola'
+ref role 'Coca-Cola Bottling Company of Santa Fe'
+ref role 'Sitka Bottling Company'
+ref role 'Swire Coca-Cola USA'
+ref role 'Trenton Coca-Cola Bottling Company'
+ref role 'Union City Coca-Cola Bottling Company'
+ref role 'Coca-Cola Bottling Company United'
+ref role 'Viking Coca-Cola Bottling Company'
+ref role 'Coca-Cola Bottling Company of Washington'
+ref role 'Coca-Cola Bottling Company of Williston'
+ref role 'Coca-Cola Bottling Company of Winona'
+ref role 'Coca-Cola Bottling Company of Winfield'
+ref role 'CCBC of Yakima & Tri-Cities'
+ref role 'Durham Coca-Cola Bottling Company'
+ref role 'Coca-Cola Beverages Florida'
+ref role 'Love Bottling Company'
+ref role 'Reyes Beverage Group'
+ref role 'Glendive Coca-Cola Bottling Company'
+ref role 'Lehrkinds Coca-Cola'
+ref role 'Mile High Beverages'
+ref role 'Coca-Cola Canada Bottling Limited'
+ref role 'Liberty Coca-Cola Beverages'
+ref role 'All TCCC FTE'
+ref role 'Bottlers and External Guests'
+ref role 'All TCCC Contractors'
+
+ref cultureInfo en-US
+

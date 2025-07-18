@@ -1,0 +1,7 @@
+role 'Swire Coca-Cola USA'
+	modelPermission: read
+
+	tablePermission 'Bottlers & Distributors' = [Bottler Distributor Name] == "Swire Coca-Cola, USA"
+
+	annotation PBI_Id = 51bd42139e794e78b77ebf8d326c9dc3
+

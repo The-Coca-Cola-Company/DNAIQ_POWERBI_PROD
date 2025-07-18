@@ -1,0 +1,96 @@
+/// rms_mdl vw_Dim_Customers
+table Market
+	lineageTag: 9396649e-5f6d-44b3-918f-c9ca1688bc20
+
+	column market_key
+		dataType: string
+		lineageTag: 7672cac5-d481-40e5-aa2f-6e2925595c7c
+		summarizeBy: none
+		sourceColumn: market_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Market Description'
+		dataType: string
+		lineageTag: 1a291f16-35ee-4fc2-ae3e-0ba7ac05b496
+		summarizeBy: none
+		sourceColumn: Market Description
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division
+		dataType: string
+		lineageTag: 15abd55f-ed67-49e4-a435-4141057c4630
+		summarizeBy: none
+		sourceColumn: Division
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total
+		dataType: string
+		lineageTag: 59862cfb-adca-4f4b-bb65-4e24aabe2fe4
+		summarizeBy: none
+		sourceColumn: Total
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		lineageTag: a9e4443c-a52b-4b07-8214-cac4866a7358
+		summarizeBy: none
+		sourceColumn: Channel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Market Set'
+		dataType: string
+		lineageTag: 53f91336-d4de-45cb-aeac-de3bf7e66ab9
+		summarizeBy: none
+		sourceColumn: Market Set
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Customer Hierarchy'
+		lineageTag: ba645e35-bf3f-4b27-a245-d99337c10ce9
+
+		level 'Corporation Total'
+			lineageTag: ca54cd01-c7a2-4b07-beb7-d2762536ed6b
+			column: Total
+
+		level Division
+			lineageTag: 5fafe8ca-3a77-4285-9e67-06f7c02a005a
+			column: Division
+
+		level 'Market Description'
+			lineageTag: e84d6cdf-166c-4d67-88a3-54c021fe214f
+			column: 'Market Description'
+
+		changedProperty = IsHidden
+
+	partition Market = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(#"Server", #"Database"),
+				    DnAIQDb_PreProd = Source{[Name="DnAIQDb_PreProd"]}[Data],
+				    rms_mdl_vw_Dim_Customers = Source{[Schema="niqrmsv3",Item="vw_Dim_Market"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(rms_mdl_vw_Dim_Customers,{{"market_description", "Market Description"}, {"division", "Division"}, {"corporation_total", "Total"}, {"channel", "Channel"}, {"market_set", "Market Set"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,499 @@
+table 'PRx Key Metrics'
+	lineageTag: 58f44fd6-23c8-4143-9e1f-3d36bd133617
+
+	measure 'Key metrics values' =
+			SWITCH(
+			                        SELECTEDVALUE('PRx Key Metrics'[Measure name]),
+			                        "Avg EQ Price",[Avg EQ Price],
+			                        "ACV",[ACV],
+			                        "TDP",[TDP],
+			                        "Avg # of Items",[Avg # of Items],
+			                        "Weekly + Consumption",[Weekly + Consumption]
+			)
+		lineageTag: ba156eda-1060-4e98-ae5c-849f0b242b2b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'New Dim T' =
+			
+			VAR __SelectedValueT =
+			    SELECTCOLUMNS (
+			        SUMMARIZE ( 'Dim Slicer Territory', 'Dim Slicer Territory'[Dim Slicer Territory],'Dim Slicer Territory'[Dim Slicer Territory Fields]),
+			        'Dim Slicer Territory'[Dim Slicer Territory]
+			    )
+			
+			
+			
+			VAR __SelectedValue =
+			    SELECTCOLUMNS (
+			        SUMMARIZE ( 'Dim Slicer', 'Dim Slicer'[Dim Slicer], 'Dim Slicer'[Dim Slicer Fields] ),
+			        'Dim Slicer'[Dim Slicer]
+			    )
+			
+			RETURN
+			
+			__SelectedValueT = __SelectedValue
+		lineageTag: d06d64cf-5c2e-4685-bb6e-2585dc7664fb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '$ Share PY' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([Share of Dollars],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Actual)",'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS")
+			```
+		displayFolder: PRX Slicer Measures
+		lineageTag: 6b5253f2-1c6a-4343-a5b8-a59ab3a8a6ff
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'BDB Volume PY %' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        
+			            CALCULATE([Standard Cases],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Percent)",'Customer Invoice Measures'[curio_flag]=1)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: 7e1cd737-4d42-4991-a67c-36676dc277d0
+
+	measure 'CDE Footprint PY %' =
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			var _Result =  CALCULATE([Total CDE],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Percent)")
+			
+			     return _Result
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: 57e1f8a3-20b1-4252-b5fe-63592de651da
+
+	measure 'Consumptions Units PY %' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			   
+			            CALCULATE([Consumption Transactions],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Percent)")
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: aa050fff-8369-4717-acf1-6fa7123ce1fd
+
+	measure 'Gross Profit PY %' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        
+			            CALCULATE([Bottler Gross Profit],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Percent)",'Customer Invoice Measures'[curio_flag]=1)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: 3f338aeb-2b0a-4049-9d19-7954f4f2252c
+
+	measure 'LMP Volume PY %' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        
+			            CALCULATE([Gallons],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Percent)",Invoice[lmp_indicator]="LMP")
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: 2026c07a-f508-42aa-b3e9-0d7e4b47c7b0
+
+	measure 'Net Coolers PY %' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([Net Cooler Placement],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Percent)")
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: ac51162c-6641-4186-8040-5cc8d5e65a81
+
+	measure 'Net Outlets PY %' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([Net Outlets Count - OS],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Percent)")
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: b5cb750e-0ab7-4b60-beef-6b7976e2e2c5
+
+	measure 'NSR/UC PY' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        
+			            CALCULATE([NSR / UC],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Actual)",'Customer Invoice Measures'[curio_flag]=1)
+			```
+		displayFolder: PRX Slicer Measures
+		lineageTag: d7930763-e78b-4098-ac36-b20d789e3e98
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue PY %' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        
+			            CALCULATE([Bottler Revenue],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Percent)",'Customer Invoice Measures'[curio_flag]=1)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: 63ac1525-427c-4551-8064-8b76bb0b1d2a
+
+	measure 'SOVI Aisle PY' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([SOVI]*100,
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Actual)",'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS",'Store Area'[Location]="Beverage Aisle")
+			```
+		displayFolder: PRX Slicer Measures
+		lineageTag: 22e1a00c-e256-4a61-960e-4d5023721ab7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SOVI Cold PY' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([SOVI]*100,
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Actual)",'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS",'Store Area'[Location]="Cold")
+			```
+		displayFolder: PRX Slicer Measures
+		lineageTag: 6b2e9e37-1030-44b5-b9f0-53717141346b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SOVI Display PY' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([SOVI]*100,
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Actual)",'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS",'Store Area'[Location]="Display") 
+			```
+		displayFolder: PRX Slicer Measures
+		lineageTag: 0fa1cc11-b67c-4378-a773-cd648a39100f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SOVI Total PY' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([SOVI]*100,
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Actual)",'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS")
+			```
+		displayFolder: PRX Slicer Measures
+		lineageTag: fe0667c4-2bc4-4e3a-a826-9c28e59934e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Transactions PY %' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			
+			            CALCULATE([Purchase Transactions],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Percent)")
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: 65b8e44e-27c1-4cfa-a85e-4c48c9f4922d
+
+	measure 'Unit Share PY' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([Share of Units],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Actual)",'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS")
+			```
+		displayFolder: PRX Slicer Measures
+		lineageTag: 8bda17ac-a71f-4f7b-b265-7839e8fd6739
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Vol Share PY' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([Share of EQs],
+			        'Time Calculation'[Time Calculation] = TimePeriod &" vs. PY (Actual)",'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS")
+			```
+		displayFolder: PRX Slicer Measures
+		lineageTag: 46a8fbbd-aac2-47a9-b115-4897aceec8ca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '$ Share' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([Share of Dollars],
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS")
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: 7422e63d-3922-495b-af21-af0d7cd23826
+
+	measure 'BDB Volume' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        
+			            CALCULATE([Standard Cases],
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Customer Invoice Measures'[curio_flag]=1,not('Outlet'[ko_cnode3cbpid]) IN {"NA","2760002"} ,'Product'[NABDB Funding Group]<>"DSP",'Product'[nabdb_promoted_group_identifier]<>"L5000044")
+			```
+		formatString: 0.0
+		displayFolder: PRX Slicer Measures
+		lineageTag: bbff9c09-8ed3-4abf-a4aa-8790051bf7ae
+
+	measure 'CDE Footprint' =
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			var _Result =  CALCULATE([Total CDE],
+			        'Time Calculation'[Time Calculation] = TimePeriod)
+			
+			     return _Result
+		displayFolder: PRX Slicer Measures
+		lineageTag: 88326862-fc06-4c6e-8906-d99707fd5317
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Consumptions Units' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			   
+			            CALCULATE([Consumption Transactions],
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Customer Invoice Measures'[curio_flag]=1,not('Outlet'[ko_cnode3cbpid]) IN {"NA","2760002"} ,'Product'[NABDB Funding Group]<>"DSP",'Product'[nabdb_promoted_group_identifier]<>"L5000044")
+			```
+		formatString: 0.0
+		displayFolder: PRX Slicer Measures
+		lineageTag: 251a2b40-264d-41c9-9249-16dd913e17ea
+
+	measure 'Gross Profit' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        
+			            CALCULATE([Bottler Gross Profit],
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Customer Invoice Measures'[curio_flag]=1,not('Outlet'[ko_cnode3cbpid]) IN {"NA","2760002"} ,'Product'[NABDB Funding Group]<>"DSP",'Product'[nabdb_promoted_group_identifier]<>"L5000044")
+			```
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: PRX Slicer Measures
+		lineageTag: 7ab6108e-4b35-4bca-b2f9-aa114385771f
+
+	measure 'LMP Volume' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        
+			            CALCULATE([Gallons],
+			        'Time Calculation'[Time Calculation] = TimePeriod ,Invoice[lmp_indicator]="LMP")
+			```
+		formatString: 0.0
+		displayFolder: PRX Slicer Measures
+		lineageTag: 3d0994be-b7eb-44b2-b871-0c04465565cf
+
+	measure 'Net Coolers' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([Net Cooler Placement],
+			        'Time Calculation'[Time Calculation] = TimePeriod)
+			```
+		displayFolder: PRX Slicer Measures
+		lineageTag: 1e8937cf-e263-4abe-835e-a4f79935b18c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Net Outlets - OS' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([Net Outlets Count - OS],
+			        'Time Calculation'[Time Calculation] = TimePeriod)
+			```
+		displayFolder: PRX Slicer Measures
+		lineageTag: e69546ca-f22c-4800-9905-f7bcd0eb4122
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure NSR/UC = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        
+			            CALCULATE([NSR / UC],
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Customer Invoice Measures'[curio_flag]=1,not('Outlet'[ko_cnode3cbpid]) IN {"NA","2760002"} ,'Product'[NABDB Funding Group]<>"DSP",'Product'[nabdb_promoted_group_identifier]<>"L5000044")
+			```
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: PRX Slicer Measures
+		lineageTag: 36eb2bb0-8798-4d83-adf3-05cc66378d9e
+
+	measure Revenue = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        
+			            CALCULATE([Bottler Revenue],
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Customer Invoice Measures'[curio_flag]=1,not('Outlet'[ko_cnode3cbpid]) IN {"NA","2760002"} ,'Product'[NABDB Funding Group]<>"DSP",'Product'[nabdb_promoted_group_identifier]<>"L5000044")
+			```
+		displayFolder: PRX Slicer Measures
+		lineageTag: 1431e112-8fac-47f2-b6cf-7dadbe25d06c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SOVI Aisle' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([SOVI]*100,
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS",'Store Area'[Location]="Beverage Aisle")
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: b16e413e-4ca5-4ec2-8863-1eb9388e3bc6
+
+	measure 'SOVI Cold' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([SOVI]*100,
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS",'Store Area'[Location]="Cold")
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: e2406b9e-9295-4be4-ab07-079f1e5247bf
+
+	measure 'SOVI Display' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([SOVI]*100,
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS",'Store Area'[Location]="Display") 
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: 9f47ab94-81a0-4ff7-8f29-07212f91bd32
+
+	measure 'SOVI Total' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([SOVI]*100,
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS")
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: 7e443559-49b3-47ee-982b-d5808e946be6
+
+	measure Transactions = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			
+			            CALCULATE([Purchase Transactions],
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Customer Invoice Measures'[curio_flag]=1,not('Outlet'[ko_cnode3cbpid]) IN {"NA","2760002"} ,'Product'[NABDB Funding Group]<>"DSP",'Product'[nabdb_promoted_group_identifier]<>"L5000044")
+			```
+		formatString: 0.0
+		displayFolder: PRX Slicer Measures
+		lineageTag: 0045abb7-5d11-49bd-add0-5cacfaf130e8
+
+	measure 'Unit Share' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([Share of Units],
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS")
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: fe5d9494-292d-4ef3-b196-1bbd77db45dc
+
+	measure 'Vol Share' = ```
+			
+			var TimePeriod = SELECTEDVALUE('Time Calculation'[Time Calc Parent])
+			 
+			Return
+			        CALCULATE([Share of EQs],
+			        'Time Calculation'[Time Calculation] = TimePeriod,'Product'[KO CCNA Selected Beverage Category]="CCNA COMP SET",'Product'[Route-to-Market]="BOTTLER COMP SET",'Product'[System Brands]="CCNA SYSTEM BRANDS")
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRX Slicer Measures
+		lineageTag: afc4f2b2-5994-46d0-a7a6-7465c389fc44
+
+	column 'Measure name'
+		dataType: string
+		lineageTag: 35c9e4f0-3285-4b93-b422-f2dfea0fbd9a
+		summarizeBy: none
+		sourceColumn: Measure name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		dataType: int64
+		formatString: 0
+		lineageTag: 919b2727-b7fd-4a17-a7c6-da935c7f5adf
+		summarizeBy: sum
+		sourceColumn: Order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PRx Key Metrics' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WcixLV3ANVAgoykxOVdJRMlSK1QEKOocB2UZgdohLAJBtDBEHKlZWyE9T8CxJzS0GCpuAhcNTU7NzKhW0FZzz84pLcwtKMvPzgJKmSrGxAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Measure name" = _t, Order = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Measure name", type text}, {"Order", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

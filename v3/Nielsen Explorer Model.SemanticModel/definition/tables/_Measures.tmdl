@@ -1,0 +1,48 @@
+table _Measures
+	isHidden
+	lineageTag: 96a67b01-e1b3-4631-883c-411ba29b508b
+
+	column 'Time Series'
+		dataType: string
+		isHidden
+		lineageTag: 6544c33e-8c2f-4289-bf33-c0167cd3fcc4
+		summarizeBy: none
+		sourceColumn: Time Series
+
+		annotation SummarizationSetBy = Automatic
+
+	column Metric
+		dataType: string
+		isHidden
+		lineageTag: 23f65381-cb9c-4f66-abaf-e28537e5a392
+		summarizeBy: none
+		sourceColumn: Metric
+
+		annotation SummarizationSetBy = Automatic
+
+	column Labels
+		dataType: string
+		isHidden
+		lineageTag: 307c6e3c-3804-4979-9130-9c2e7a624f12
+		summarizeBy: none
+		sourceColumn: Labels
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://groups.coca-cola.com/sites/DnAIQ/Shared%20Documents/General/Power%20BI%20Manual%20Files/Nielsen%20Explorer%20Model/_Measures.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Time Series", type text}, {"Metric", type text}, {"Labels", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

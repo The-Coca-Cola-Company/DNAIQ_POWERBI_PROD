@@ -1,0 +1,224 @@
+relationship AutoDetected_e9a57f4c-627d-4136-84d6-d52a1488666b
+	fromColumn: 'Customer Invoice Measures'.dim_outlet_key
+	toColumn: Outlet.dim_outlet_key
+
+relationship 1079a1e8-1df7-2697-fd08-64a0f555c014
+	fromColumn: 'Customer Invoice Measures'.dim_invoice_key
+	toColumn: Invoice.dim_invoice_key
+
+relationship AutoDetected_252723b4-293a-452c-9fd5-d2ee97a3dce3
+	fromColumn: 'Share of Market'.'Market Key'
+	toColumn: Market.market_key
+
+relationship 46d54b08-fdf4-db35-31b5-257428c4ab71
+	fromColumn: 'Share of Market'.'Date Key'
+	toColumn: Calendar.dim_date_key
+
+relationship AutoDetected_21e9b0e8-64ee-432a-b8e6-4cb4e60dda88
+	fromColumn: 'iRED Measures'.dim_date_key
+	toColumn: Calendar.dim_date_key
+
+relationship AutoDetected_72d257f6-f33f-4edd-afd1-c5d3752cd87b
+	fromColumn: 'iRED Measures'.dim_location_key
+	toColumn: 'Store Area'.dim_location_key
+
+relationship 5066eb45-ca08-3564-f525-019b35f40d2b
+	fromColumn: 'iRED Measures'.dim_product_key
+	toColumn: Product.'Product Key'
+
+relationship 34ea7a43-2b6d-0105-8f21-23ad5abdd2e0
+	fromColumn: 'Customer Invoice Measures'.dim_date_key
+	toColumn: Calendar.dim_date_key
+
+relationship c627dca9-2873-453c-7f60-2dcaa78be23e
+	fromColumn: 'Customer Invoice Measures'.dim_territory_bottler_key
+	toColumn: 'Territory Bottlers'.dim_territory_bottler_key
+
+relationship b7a704f3-b36b-c42e-600a-e020626a0d29
+	fromColumn: 'ACV TDP'.dim_date_key
+	toColumn: Calendar.dim_date_key
+
+relationship 91f47388-80b8-570e-bf6b-997d05b0f475
+	fromColumn: 'ACV TDP'.dim_product_key
+	toColumn: Product.'Product Key'
+
+relationship 431ef757-6ac2-7c59-4fa0-57175d724138
+	fromColumn: 'iRED Measures'.dim_outlet_key
+	toColumn: Outlet.dim_outlet_key
+
+relationship AutoDetected_4e4f0f32-a15d-40fd-b91e-f4f2da00321c
+	fromColumn: 'iRED Measures'.dim_bottler_key
+	toColumn: 'Bottlers & Distributors'.dim_bottler_key
+
+relationship AutoDetected_04764428-3609-40eb-af5d-b9454878c1cc
+	fromColumn: 'ACV TDP'.dim_bottler_key
+	toColumn: 'Bottlers & Distributors'.dim_bottler_key
+
+relationship AutoDetected_ba4e343e-97fb-475f-bd16-2107b9881f80
+	fromColumn: 'iRED Measures'.dim_customer_key
+	toColumn: Customer.dim_customer_key
+
+relationship AutoDetected_f9966397-2cd8-499d-b240-1f56e80b2f5a
+	fromColumn: 'ACV TDP'.dim_customer_key
+	toColumn: Customer.dim_customer_key
+
+relationship AutoDetected_8d8b8f08-8189-4752-845d-da3552ae0be9
+	fromColumn: 'iRED Measures'.dim_channel_key
+	toColumn: Channel.dim_channel_key
+
+relationship AutoDetected_bce278a3-f32e-44c1-b3ce-88f328c98bbd
+	fromColumn: 'ACV TDP'.dim_channel_key
+	toColumn: Channel.dim_channel_key
+
+relationship e57eeb62-ff21-cfbe-1fea-523d664b1b6f
+	fromColumn: 'Customer Invoice Measures'.dim_bottler_key
+	toColumn: 'Bottlers & Distributors'.dim_bottler_key
+
+relationship ccc25618-625f-a6bb-f2bb-746d3788c244
+	fromColumn: 'Customer Invoice Measures'.dim_channel_key
+	toColumn: Channel.dim_channel_key
+
+relationship 4d45dcda-e39b-1ee4-ad3f-433c5f03e241
+	fromColumn: 'Customer Invoice Measures'.dim_customer_key
+	toColumn: Customer.dim_customer_key
+
+relationship 53baaf5b-7479-7fd7-897c-672cd93dc257
+	fromColumn: 'Overall Performance Plan'.dim_channel_key
+	toColumn: Channel.dim_channel_key
+
+relationship ed18556d-36c5-6fe5-a3ce-2ad954a9bf40
+	fromColumn: 'Overall Performance Plan'.dim_date_key
+	toColumn: Calendar.dim_date_key
+
+relationship 6dc95533-7375-2b6f-4f58-ffafad368f37
+	fromColumn: 'Overall Performance Plan'.dim_bottler_key
+	toColumn: 'Bottlers & Distributors'.dim_bottler_key
+
+relationship f30a73d9-5821-541e-a7b8-62819dca31d0
+	fromColumn: 'Overall Performance Plan'.dim_product_key
+	toColumn: Product.'Product Key'
+
+relationship 06053907-1a48-e8f4-84b0-af283171247e
+	fromColumn: 'Overall Performance Plan'.dim_customer_key
+	toColumn: Customer.dim_customer_key
+
+relationship cba762a9-553a-554b-62a5-56e18b639f37
+	fromColumn: 'Customer Invoice Measures'.dim_product_key
+	toColumn: Product.'Product Key'
+
+relationship b416e56d-b002-384a-7699-9d6474a24e34
+	fromColumn: 'Performance Other'.dim_channel_key
+	toColumn: Channel.dim_channel_key
+
+relationship fad27b0c-11e0-f909-0693-479ba057dd6a
+	fromColumn: 'Performance Other'.dim_customer_key
+	toColumn: Customer.dim_customer_key
+
+relationship 44be8096-31f7-b345-4719-7f9e1ca319a9
+	fromColumn: 'Performance Other'.dim_date_key
+	toColumn: Calendar.dim_date_key
+
+relationship d575e667-7e2d-9566-0713-13c6c989812b
+	fromColumn: 'Performance Other'.dim_product_key
+	toColumn: Product.'Product Key'
+
+relationship 1961fd15-2ea8-2142-276d-b14da48b143d
+	fromColumn: 'Share of Market'.dim_channel_key
+	toColumn: Channel.dim_channel_key
+
+relationship d3e2b4c5-f805-d103-815b-9e6de5a7af8d
+	fromColumn: 'Performance Other'.dim_bottler_key
+	toColumn: 'Bottlers & Distributors'.dim_bottler_key
+
+relationship 7d8a10ad-c0ab-ac3b-907f-9c9e9201126f
+	fromColumn: 'Share of Market'.dim_bottler_key
+	toColumn: 'Bottlers & Distributors'.dim_bottler_key
+
+relationship 708ed362-2dde-8eb8-1a78-883c8f203d83
+	fromColumn: 'Share of Market'.dim_customer_key
+	toColumn: Customer.dim_customer_key
+
+relationship 68bc357e-d345-0cd7-257d-ab32209f72b3
+	fromColumn: 'Share of Market'.'Product Key'
+	toColumn: Product.'Product Key'
+
+relationship 2766abf8-15f4-0832-8daf-01199002122d
+	fromColumn: Beach.dim_date_key
+	toColumn: Calendar.dim_date_key
+
+relationship 2e4e8138-6cc3-d5fb-eb27-bc545db2e434
+	fromColumn: Beach.dim_bottler_key
+	toColumn: 'Bottlers & Distributors'.dim_bottler_key
+
+relationship 445c2999-92e6-2798-3592-367fd9e47ad3
+	fromColumn: Beach.dim_product_key
+	toColumn: Product.'Product Key'
+
+relationship eb6916ea-41dd-8eeb-07ca-1b7465c2903e
+	fromColumn: 'Business Drivers'.dim_bottler_key
+	toColumn: 'Bottlers & Distributors'.dim_bottler_key
+
+relationship 2cf9eb84-2367-3aba-8406-425440f1f25c
+	fromColumn: 'Business Drivers'.dim_channel_key
+	toColumn: Channel.dim_channel_key
+
+relationship 15824b36-d48d-c793-3ffc-f20d3b739115
+	fromColumn: 'Business Drivers'.dim_customer_key
+	toColumn: Customer.dim_customer_key
+
+relationship 7a209a5c-243d-3c99-1454-d5ab24131c2e
+	fromColumn: 'Business Drivers'.dim_date_key
+	toColumn: Calendar.dim_date_key
+
+relationship 19934b2d-86d3-984c-aa38-d7f1bbcd143c
+	fromColumn: 'Business Drivers'.dim_product_key
+	toColumn: Product.'Product Key'
+
+relationship 31acd494-f623-692a-dad9-cd64f56930ac
+	fromColumn: Forecast.dim_bottler_key
+	toColumn: 'Bottlers & Distributors'.dim_bottler_key
+
+relationship 0e584afa-9509-830a-3c69-a8fbef52c748
+	fromColumn: Forecast.dim_channel_key
+	toColumn: Channel.dim_channel_key
+
+relationship 9e2cee95-2b56-6467-1e84-62ac8ade347f
+	fromColumn: Forecast.dim_customer_key
+	toColumn: Customer.dim_customer_key
+
+relationship 40aa0f7c-ad77-0e0c-2a91-d9980eb8a6f2
+	fromColumn: Forecast.dim_date_key
+	toColumn: Calendar.dim_date_key
+
+relationship becf89c6-55ce-6016-88fd-328b24e9f6fc
+	fromColumn: Forecast.dim_product_key
+	toColumn: Product.'Product Key'
+
+relationship f44054d3-c3b4-f116-1d14-22bb64e624db
+	fromColumn: Product.src_cbr_sub_category
+	toColumn: CBR_Category_Groupings.cbr_sub_category
+
+relationship b3f6df20-5af8-92df-c6c4-da26180f91be
+	fromColumn: Forecast.dim_outlet_key
+	toColumn: Outlet.dim_outlet_key
+
+relationship da654c47-f7f8-4bfa-d1fd-65c0a8b76b35
+	fromColumn: 'Overall Performance Plan'.dim_outlet_key
+	toColumn: Outlet.dim_outlet_key
+
+relationship be4a53a3-51c3-a937-eb5b-b7c53b6bbc4a
+	fromColumn: Beach.dim_territory_bottler_key
+	toColumn: 'Territory Bottlers'.dim_territory_bottler_key
+
+relationship ca46ebe6-8167-8a0a-ae00-9f614c3ccd5b
+	fromColumn: 'Overall Performance Plan'.dim_territory_bottler_key
+	toColumn: 'Territory Bottlers'.dim_territory_bottler_key
+
+relationship 2f94755a-c482-7a4c-65d2-5a0b8a2b588f
+	fromColumn: 'Performance Other'.dim_territory_bottler_key
+	toColumn: 'Territory Bottlers'.dim_territory_bottler_key
+
+relationship 2492ad94-03c6-5dbe-ef12-11ce34f87129
+	fromColumn: Forecast.dim_territory_bottler_key
+	toColumn: 'Territory Bottlers'.dim_territory_bottler_key
+

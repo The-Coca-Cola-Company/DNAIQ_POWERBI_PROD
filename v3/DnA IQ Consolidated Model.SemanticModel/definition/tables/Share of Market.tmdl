@@ -1,0 +1,1287 @@
+/// rms_mdl vw_fact_customerweekly
+table 'Share of Market'
+	lineageTag: a9692d19-fc76-4008-b20c-15d0e3865b1d
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 2
+		incrementalGranularity: month
+		incrementalPeriods: 24
+		sourceExpression =
+			let
+			    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+			    rms_mdl_vw_fact_customerweekly = Source{[Schema="niqrmsv3",Item="vw_Fact_Market_Share_Weekly"]}[Data],
+			    #"Filtered Rows" = Table.SelectRows(rms_mdl_vw_fact_customerweekly, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+			    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"dim_date_key", Int64.Type}}),
+			    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"market_key", "Market Key"}, {"dim_date_key", "Date Key"}, {"dim_product_key", "Product Key"}, {"dollars", "dollars_"}, {"eq", "eq_"}, {"units", "units_"}}),
+			    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Market Key", "Date Key", "Product Key", "dim_channel_key", "dim_bottler_key", "dim_customer_key", "dollars_", "eq_", "units_", "base_dollars", "base_eq", "any_promo_dollars", "no_promo_dollars", "any_display_dollars", "any_feature_dollars", "price_decr_only_dollars", "feature_without_display_dollars", "any_promo_eq", "no_promo_eq", "feat_and_display_dollars"})
+			in
+			    #"Removed Other Columns"
+
+	measure 'Any Display Dollars' = SUM('Share of Market'[any_display_dollars])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 737beb6c-ccdd-4da0-88d8-1f15979d1ba3
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Any Feature Dollars' = SUM('Share of Market'[any_feature_dollars])
+		formatString: $ #,##0.00
+		lineageTag: 4b008533-3422-404e-9b78-f30965247023
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Any Promo Dollars' = SUM('Share of Market'[any_promo_dollars])
+		formatString: $ #,##0.00
+		lineageTag: 89b1e382-7536-467d-a7d3-28f129570103
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Any Promo EQs' = SUM('Share of Market'[any_promo_eq])
+		formatString: #,0
+		lineageTag: f8da2ec0-f43e-46bc-8a78-d4bcf6ed4acb
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Retail price for a 192oz equivalized volume unit
+	measure 'Avg EQ Price' = DIVIDE([Dollars],[EQs])
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: PRx SOM Measures
+		lineageTag: 83428654-91e4-4b59-bd45-50bb1de508c3
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Base Dollars' = SUM('Share of Market'[base_dollars])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: dbea2408-c687-47f2-bcb5-81bbc8890362
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Base EQs' = SUM('Share of Market'[base_eq])
+		formatString: #,0
+		lineageTag: 74602d83-3e15-4b4c-9f20-0b7e0b9dfecf
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Contribution %' =
+			
+			DIVIDE([Dollars],
+			CALCULATE(
+			    [Dollars],
+			    ALLSELECTED()
+			))
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Contribution
+		lineageTag: 2e4d9e5a-2764-47b4-a67d-8342f7b08428
+
+		changedProperty = IsHidden
+
+	measure Dollars = SUM('Share of Market'[dollars_])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 1382b58c-42ed-4851-869f-e9ea27ff92c5
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure EQs = SUM('Share of Market'[eq_])
+		formatString: #,0
+		lineageTag: 16ba4355-d334-4ec9-848b-5a87ac580849
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Feature Without Display Dollars' = SUM('Share of Market'[feature_without_display_dollars])
+		formatString: $ #,##0.00
+		lineageTag: ce609fc5-e8ca-4763-8d6c-40f453633a0c
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Incremental Dollars' = [Dollars] - [Base Dollars]
+		formatString: $ #,##0.00
+		lineageTag: 8f622068-79e8-48ad-a40a-761ab60ae060
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Incremental EQs' = [EQs] - [Base EQs]
+		formatString: #,0
+		lineageTag: ed0b5d10-dfc4-425d-b629-c4e6529976c9
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Index of Avg EQ Pricing vs Competition (i.e., 100 means our pricing is at par with comp)
+	measure 'LCE Price Index Tier' = ```
+			
+			VAR selected_total = [Avg EQ Price]
+			
+			VAR category_total =
+			    CALCULATE (
+			        [Avg EQ Price],
+			        VALUES ( 'Product'[ELT Category] ),
+			        ALLEXCEPT('Product','Product'[ELT Category])
+			    )
+			
+			VAR total_beverage =
+			    CALCULATE (
+			        [Avg EQ Price],
+			        ALLEXCEPT('Product','Product'[ELT Category])
+			    )
+			
+			VAR category_share =
+			    DIVIDE ( selected_total, category_total )
+			    
+			VAR total_beverage_share =
+			    DIVIDE ( selected_total, total_beverage )
+			
+			VAR results =
+			    SWITCH (
+			        TRUE (),
+			        HASONEFILTER ( 'Product'[Brand] ), category_share,
+			        HASONEFILTER ( 'Product'[Trademark] ), category_share,
+			        HASONEFILTER ( 'Product'[Manufacturer] ), total_beverage_share,
+			        HASONEFILTER ( 'Product'[System Brands] ), total_beverage_share,
+			        1
+			    )
+			    
+			RETURN
+			    results * 100
+			```
+		formatString: #,0
+		displayFolder: PRx SOM Measures
+		lineageTag: 5899eb01-a21e-4932-8503-251fa8c70b81
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'No Promo Dollars' = SUM('Share of Market'[no_promo_dollars])
+		formatString: $ #,##0.00
+		lineageTag: 53d91d3b-2093-4f14-8dae-672bb5d54cb2
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'No Promo Eqs' = SUM('Share of Market'[no_promo_eq])
+		formatString: #,0
+		lineageTag: 9f42a792-cd90-4264-81b2-e7eabf6fd261
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Price Decrease Only Dollars' = SUM('Share of Market'[price_decr_only_dollars])
+		formatString: $ #,##0.00
+		lineageTag: c2a66a92-cf0b-469a-9d74-bc9cb2af772e
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// % of Retail $ Sales on Any Promo
+	measure 'Promo Mix' = DIVIDE([Any Promo Dollars],[Dollars])
+		formatString: #,0%;-#,0%;#,0%
+		displayFolder: PRx SOM Measures
+		lineageTag: dc8bab3e-8ccf-429e-a9ba-1db1e1ed93f8
+
+		changedProperty = IsHidden
+
+	/// Share is calculated against Total Beverage when viewing by 'System Brands' or 'Manufacturer', and is calculated against ELT Category when viewing by 'Trademark' or 'Brand'
+	measure 'Share of Dollars' = ```
+			// Start by checking if Brand and/or Trademark are being used in the report or visual. 
+			// If not used, the variables are calculated to bypass for total share.
+			
+			// Store the total dollars in the current filter context
+			VAR selected_total = [Dollars]
+			
+			// Calculate the total dollars for the current CBR category, removing filters on non-essential columns
+			VAR CBR_category_total =
+			    CALCULATE(
+			        [Dollars],
+			        VALUES('Product'[CBR Category]), // Keep the filter context for CBR Category
+			        ALL( // Remove filters on the specified Product-level columns
+			            'Product'[System Brands], 
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Trademark],
+			            'Product'[src_trademark_name],
+			            'Product'[src_brand_name],
+			            'Product'[Brand]
+			        )
+			    )
+			
+			// Calculate the total dollars for all beverages, removing unnecessary filters across the Product and Market dimensions
+			VAR total_beverage =
+			   CALCULATE(
+			        [Dollars], 
+			        ALL( // Remove filters for the broader beverage context
+			            'Product'[System Brands],
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Manufacturer]
+			          
+			        )
+			    )
+			
+			// Calculate the share of category dollars relative to the CBR category total
+			VAR category_share =
+			    DIVIDE(selected_total, CBR_category_total) // Return a ratio of selected to total CBR category dollars
+			
+			// Calculate the share of beverage dollars relative to the total beverage dollars
+			VAR total_beverage_share =
+			    DIVIDE(selected_total, total_beverage) // Return a ratio of selected to total beverage dollars
+			
+			// Determine which share to return based on existing filters
+			VAR results =
+			    SWITCH(
+			        TRUE(),
+			        ISFILTERED('Product'[Brand]), category_share, // If the Brand filter is active, return category share
+			        ISFILTERED('Product'[Trademark]), category_share, // If the Trademark filter is active, return category share
+			        ISFILTERED('Product'[Manufacturer]), total_beverage_share, // If the Manufacturer filter is active, return total beverage share
+			        ISFILTERED('Product'[display_manufacturer]), total_beverage_share, // If the Manufacturer filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands Sub-Groups]), total_beverage_share, // If System Brands Sub-Groups filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands Groups]), total_beverage_share, // If System Brands Groups filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands]), total_beverage_share, // If System Brands filter is active, return total beverage share
+			        1 // Default case, possibly returns a placeholder value
+			    )
+			
+			// Return the calculated result based on filters
+			RETURN
+			    results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 85312950-f855-4079-896c-d6876490573c
+
+		changedProperty = IsHidden
+
+	/// Share is calculated against Total Beverage when viewing by 'System Brands' or 'Manufacturer', and is calculated against ELT Category when viewing by 'Trademark' or 'Brand'
+	measure 'Share of EQs' = ```
+			// Start by checking if Brand and/or Trademark are being used in the report or visual. 
+			// If not used, the variables are calculated to bypass for total share.
+			
+			// Store the total EQs in the current filter context
+			VAR selected_total = [EQs]
+			
+			// Calculate the total EQs for the current CBR category, removing filters on non-essential columns
+			VAR CBR_category_total =
+			    CALCULATE(
+			        [EQs],
+			        VALUES('Product'[CBR Category]), // Keep the filter context for CBR Category
+			        ALL( // Remove filters on the specified Product-level columns
+			            'Product'[System Brands], 
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Trademark],
+			            'Product'[src_trademark_name],
+			            'Product'[src_brand_name],
+			            'Product'[Brand]
+			        )
+			    )
+			
+			// Calculate the total EQs for all beverages, removing unnecessary filters across the Product and Market dimensions
+			VAR total_beverage =
+			   CALCULATE(
+			        [EQs], 
+			        ALL( // Remove filters for the broader beverage context
+			            'Product'[System Brands],
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Manufacturer]
+			        )
+			    )
+			
+			// Calculate the share of category EQs relative to the CBR category total
+			VAR category_share =
+			    DIVIDE(selected_total, CBR_category_total) // Return a ratio of selected to total CBR category EQs
+			
+			// Calculate the share of beverage EQs relative to the total beverage EQs
+			VAR total_beverage_share =
+			    DIVIDE(selected_total, total_beverage) // Return a ratio of selected to total beverage EQs
+			
+			// Determine which share to return based on existing filters
+			VAR results =
+			    SWITCH(
+			        TRUE(),
+			        ISFILTERED('Product'[Brand]), category_share, // If the Brand filter is active, return category share
+			        ISFILTERED('Product'[Trademark]), category_share, // If the Trademark filter is active, return category share
+			        ISFILTERED('Product'[Manufacturer]), total_beverage_share, // If the Manufacturer filter is active, return total beverage share
+			        ISFILTERED('Product'[display_manufacturer]), total_beverage_share, // If the Manufacturer filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands Sub-Groups]), total_beverage_share, // If System Brands Sub-Groups filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands Groups]), total_beverage_share, // If System Brands Groups filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands]), total_beverage_share, // If System Brands filter is active, return total beverage share
+			        1 // Default case, possibly returns a placeholder value
+			    )
+			
+			// Return the calculated result based on filters
+			RETURN
+			    results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 985e4cba-9fc5-417f-900e-aa6661138f6f
+
+		changedProperty = IsHidden
+
+	/// Share is calculated against Total Beverage when viewing by 'System Brands' or 'Manufacturer', and is calculated against ELT Category when viewing by 'Trademark' or 'Brand'
+	measure 'Share of Units' = ```
+			// Start by checking if Brand and/or Trademark are being used in the report or visual. 
+			// If not used, the variables are calculated to bypass for total share.
+			
+			// Store the total Units in the current filter context
+			VAR selected_total = [Units]
+			
+			// Calculate the total Units for the current CBR category, removing filters on non-essential columns
+			VAR CBR_category_total =
+			    CALCULATE(
+			        [Units],
+			        VALUES('Product'[CBR Category]), // Keep the filter context for CBR Category
+			        ALL( // Remove filters on the specified Product-level columns
+			            'Product'[System Brands], 
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Trademark],
+			            'Product'[src_trademark_name],
+			            'Product'[src_brand_name],
+			            'Product'[Brand]
+			        )
+			    )
+			
+			// Calculate the total Units for all beverages, removing unnecessary filters across the Product and Market dimensions
+			VAR total_beverage =
+			   CALCULATE(
+			        [Units], 
+			        ALL( // Remove filters for the broader beverage context
+			            'Product'[System Brands],
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Manufacturer]
+			        )
+			    )
+			
+			// Calculate the share of category Units relative to the CBR category total
+			VAR category_share =
+			    DIVIDE(selected_total, CBR_category_total) // Return a ratio of selected to total CBR category Units
+			
+			// Calculate the share of beverage Units relative to the total beverage Units
+			VAR total_beverage_share =
+			    DIVIDE(selected_total, total_beverage) // Return a ratio of selected to total beverage Units
+			
+			// Determine which share to return based on existing filters
+			VAR results =
+			    SWITCH(
+			        TRUE(),
+			        ISFILTERED('Product'[Brand]), category_share, // If the Brand filter is active, return category share
+			        ISFILTERED('Product'[Trademark]), category_share, // If the Trademark filter is active, return category share
+			        ISFILTERED('Product'[Manufacturer]), total_beverage_share, // If the Manufacturer filter is active, return total beverage share
+			        ISFILTERED('Product'[display_manufacturer]), total_beverage_share, // If the Manufacturer filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands Sub-Groups]), total_beverage_share, // If System Brands Sub-Groups filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands Groups]), total_beverage_share, // If System Brands Groups filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands]), total_beverage_share, // If System Brands filter is active, return total beverage share
+			        1 // Default case, possibly returns a placeholder value
+			    )
+			
+			// Return the calculated result based on filters
+			RETURN
+			    results
+			```
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 1cd784e2-efd5-4cc5-af5e-76f2afd0bff8
+
+		changedProperty = IsHidden
+
+	measure 'Subsidized Dollars' = [Any Promo Dollars] - [Incremental Dollars]
+		formatString: $ #,##0.00
+		lineageTag: 4765d38b-2c58-49b5-adf5-9d187c75c17b
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Subsidized EQs' = [Any Promo EQs] - [Incremental EQs]
+		formatString: #,0
+		lineageTag: df793018-0986-4790-83ad-295ec611dc7e
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure Units = SUM('Share of Market'[units_])
+		formatString: #,0
+		lineageTag: 72b63072-7797-4623-b70c-bf93ee7e7c0e
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// % of retail $ sales on Any Display
+	measure '% Dollars Any Display' = DIVIDE([Any Display Dollars], [Dollars])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRx SOM Measures
+		lineageTag: 6de3bd34-1fae-425e-bf96-80ecd872c5ae
+
+		changedProperty = IsHidden
+
+	/// % of retail $ sales on Any Promo
+	measure '% Dollars Any Promo' = DIVIDE([Any Promo Dollars] , [Dollars])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRx SOM Measures
+		lineageTag: c7761929-905d-4498-a6e2-3954a90cbe49
+
+		changedProperty = IsHidden
+
+	/// % of retail $ sales on Feature & Display
+	measure '% Dollars Feature & Display' = DIVIDE([Feature and Display Dollars],[Dollars])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRx SOM Measures
+		lineageTag: 6a1694a2-5e15-487c-a904-f39bea4ddc60
+
+		changedProperty = IsHidden
+
+	/// % of retail $ sales on Feature Only
+	measure '% Dollars Feature Only' = DIVIDE([Feature Without Display Dollars],[Dollars])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRx SOM Measures
+		lineageTag: 1dc9477e-f2e0-49b8-9ad0-531fe6636e5f
+
+		changedProperty = IsHidden
+
+	/// % of retail $ sales on Price Reduction Only
+	measure '% Dollars Price Reduction Only' = DIVIDE( [Price Decrease Only Dollars], [Dollars])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRx SOM Measures
+		lineageTag: c790c97e-ba07-494c-bac2-cf7c138699e7
+
+		changedProperty = IsHidden
+
+	/// % of EQ volume on Any Promo
+	measure '% EQ Any Promo' = DIVIDE([Any Promo EQs], [EQs])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRx SOM Measures
+		lineageTag: d3165c81-3f45-49cd-92e0-42dee4cc5b27
+
+		changedProperty = IsHidden
+
+	/// A measure of elasticity. EQ Volume % Change divided by % Avg EQ Price Change
+	measure 'EQ Price Elasticity' = DIVIDE([EQ Volume % Chg vs PY], [Avg EQ Price % Chg PY])
+		formatString: #,0
+		displayFolder: PRx SOM Measures
+		lineageTag: 700e81ef-f14c-4df5-8c39-eeffec996a8c
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// % of total category 192oz equivalized volume sales
+	measure 'EQ Share' = ```
+			
+			VAR selected_total = [EQs]
+			
+			VAR category_total =
+			    CALCULATE (
+			        [EQs],
+			        VALUES ( 'Product'[CBR Category] ),
+			        ALLEXCEPT('Product','Product'[CBR Category])
+			    )
+			
+			VAR total_beverage =
+			    CALCULATE (
+			        [EQs],
+			        ALLEXCEPT('Product','Product'[CBR Category])
+			    )
+			
+			VAR category_share =
+			    DIVIDE ( selected_total, category_total )
+			    
+			VAR total_beverage_share =
+			    DIVIDE ( selected_total, total_beverage )
+			
+			VAR results =
+			    SWITCH (
+			        TRUE (),
+			        HASONEFILTER ( 'Product'[Brand] ), category_share,
+			        HASONEFILTER ( 'Product'[Trademark] ), category_share,
+			        HASONEFILTER ( 'Product'[Manufacturer] ), total_beverage_share,
+			        HASONEFILTER ( 'Product'[System Brands] ), total_beverage_share,
+			        1
+			    )
+			    
+			RETURN
+			    results
+			```
+		formatString: #,0
+		displayFolder: PRx SOM Measures
+		lineageTag: 056dc605-11b6-4924-8e3c-c4e2d7deca6b
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// % growth vs PY in 192oz equivalized shipment volume
+	measure 'EQ Volume % Chg vs PY' = CALCULATE([EQs], 'Time Calculation'[Time Calculation] = "YTD vs. PY (Percent)")
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRx SOM Measures
+		lineageTag: 0681ba73-b974-44e7-9f9c-76c5e6b3b1e7
+
+		changedProperty = IsHidden
+
+	/// % of total category unit sales
+	measure 'Transaction Share' = ```
+			
+			VAR selected_total = [Units]
+			
+			VAR category_total =
+			    CALCULATE (
+			        [Units],
+			        VALUES ( 'Product'[CBR Category] ),
+			        ALLEXCEPT('Product','Product'[CBR Category])
+			    )
+			
+			VAR total_beverage =
+			    CALCULATE (
+			        [Units],
+			        ALLEXCEPT('Product','Product'[CBR Category])
+			    )
+			
+			VAR category_share =
+			    DIVIDE ( selected_total, category_total )
+			    
+			VAR total_beverage_share =
+			    DIVIDE ( selected_total, total_beverage )
+			
+			VAR results =
+			    SWITCH (
+			        TRUE (),
+			        HASONEFILTER ( 'Product'[Brand] ), category_share,
+			        HASONEFILTER ( 'Product'[Trademark] ), category_share,
+			        HASONEFILTER ( 'Product'[Manufacturer] ), total_beverage_share,
+			        HASONEFILTER ( 'Product'[System Brands] ), total_beverage_share,
+			        1
+			    )
+			    
+			RETURN
+			    results
+			```
+		formatString: #,0
+		displayFolder: PRx SOM Measures
+		lineageTag: aa7ccb48-bd4f-48ef-ab3d-c1f6680b05e1
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Absolute growth vs PY in 192oz equivalized shipment volume
+	measure 'EQ Volume Chg vs PY' = CALCULATE([EQs], 'Time Calculation'[Time Calculation] = "YTD vs. PY")
+		formatString: #,0
+		displayFolder: PRx SOM Measures
+		lineageTag: 0f776cd3-19bc-43a8-a330-3568f59344f4
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Ratio of Share of Visual Inventory (SOVI) to Share of Market (SOM: Retail $ Sales)
+	measure 'SOVI:SOM Ratio' = DIVIDE([SOVI], [Share of Dollars]) * 100
+		formatString: #,0
+		lineageTag: 17a52129-d097-42f2-848a-00478fdb5ff2
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Share of Dollars Drains vs PY' = IF(CALCULATE([Share of Dollars], 'Time Calculation'[Time Calculation] = "YTD vs. PY") < 0 , CALCULATE([Share of Dollars], 'Time Calculation'[Time Calculation] = "YTD vs. PY"))
+		formatString: #,0
+		lineageTag: 0f6304e9-1ec6-4760-a2de-bb4d0cb656eb
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Share of Dollars Gains vs PY' = IF(CALCULATE([Share of Dollars], 'Time Calculation'[Time Calculation] = "YTD vs. PY") > 0 , CALCULATE([Share of Dollars], 'Time Calculation'[Time Calculation] = "YTD vs. PY"))
+		formatString: #,0
+		lineageTag: 71330309-89bc-46d2-b795-64ce82713d13
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Feature and Display Dollars' = SUM('Share of Market'[feat_and_display_dollars])
+		formatString: #,0
+		lineageTag: 039f4f22-7b74-46c1-9ca5-d0e8f2487bb0
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Share of Dollars - ELT' = ```
+			
+			//Start with checking if Brand and/or Trademark are being used in the report or visual. If not used, the variables are not calculated and bypassed for total share.
+			
+			// Store the total dollars in the current filter context
+			VAR selected_total = [Dollars]
+			
+			// Calculate the total dollars for the current CBR category, removing filters on other columns
+			VAR CBR_category_total =
+			    CALCULATE (
+			        [Dollars],
+			        VALUES('Product'[ELT Category]), // Maintain the current filter context for CBR Category
+			        ALL( // Clear all filters on other specified columns
+			            'Product'[System Brands], 
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Trademark],
+			            'Product'[src_trademark_name],
+			            'Product'[src_brand_name],
+			            'Product'[Brand]
+			        )
+			    )
+			
+			// Calculate the total dollars for beverages, maintaining the filter context for CBR Category only
+			VAR total_beverage =
+			    CALCULATE (
+			        [Dollars],
+			        ALLEXCEPT('Product', 'Product'[ELT Category]) // Remove filters except for CBR Category
+			    )
+			
+			// Calculate the share of category dollars relative to the CBR category total
+			VAR category_share =
+			    DIVIDE(selected_total, CBR_category_total)
+			
+			// Calculate the share of beverage dollars relative to the total beverage dollars
+			VAR total_beverage_share =
+			    DIVIDE(selected_total, total_beverage)
+			
+			// Determine which share to return based on existing filters
+			VAR results =
+			    SWITCH(
+			        TRUE(),
+			        ISFILTERED('Product'[Brand]), category_share, // If filtered by Brand, return category share
+			        ISFILTERED('Product'[Trademark]), category_share, // If filtered by Trademark, return category share
+			        ISFILTERED('Product'[Manufacturer]), total_beverage_share, // If filtered by Manufacturer, return total beverage share
+			        ISFILTERED('Product'[display_manufacturer]), total_beverage_share, // If the Manufacturer filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands Sub-Groups]), total_beverage_share, // If System Brands Sub-Groups filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands Groups]), total_beverage_share, // If System Brands Groups filter is active, return total beverage share
+			        ISFILTERED('Product'[Manufacturer]), total_beverage_share, // Redundant line; Manufacturer already checked above
+			        ISFILTERED('Product'[System Brands]), total_beverage_share, // If System Brands filter is active, return total beverage share
+			        1 // Default case, return nothing
+			    )
+			
+			// Return the calculated result based on filters
+			RETURN
+			    results
+			```
+		formatString: #,0
+		lineageTag: e8439b08-0ead-4a7c-89d8-1b1cfa704bee
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Share of EQs - ELT' = ```
+			
+			//Start with checking if Brand and/or Trademark are being used in the report or visual. If not used, the variables are not calculated and bypassed for total share.
+			
+			// Store the total EQs in the current filter context
+			VAR selected_total = [EQs]
+			
+			// Calculate the total EQs for the specific CBR category, removing other column filters
+			VAR CBR_category_total =
+			    CALCULATE(
+			        [EQs], // Calculate EQs measure
+			        VALUES('Product'[ELT Category]), // Maintain filter context for CBR Category
+			        ALL( // Remove filters on specified columns
+			            'Product'[System Brands], 
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Trademark],
+			            'Product'[src_trademark_name],
+			            'Product'[src_brand_name],
+			            'Product'[Brand]
+			        )
+			    )
+			
+			// Calculate the total EQs for beverages, keeping the CBR Category filter context
+			VAR total_beverage =
+			    CALCULATE(
+			        [EQs], // Total EQs for all beverages
+			        ALLEXCEPT('Product', 'Product'[ELT Category]) // Retain only CBR Category filter
+			    )
+			
+			// Calculate the proportion of selected EQs relative to the total for the CBR category
+			VAR category_share =
+			    DIVIDE(selected_total, CBR_category_total) // Proportionate EQs share in the CBR category
+			
+			// Calculate the proportion of selected EQs relative to the entire beverage total
+			VAR total_beverage_share =
+			    DIVIDE(selected_total, total_beverage) // Proportionate EQs share in the total beverage category
+			
+			// Determine the result share based on active filters
+			VAR results =
+			    SWITCH(
+			        TRUE(),
+			        ISFILTERED('Product'[Brand]), category_share, // Return category share if filtered by Brand
+			        ISFILTERED('Product'[Trademark]), category_share, // Return category share if filtered by Trademark
+			        ISFILTERED('Product'[Manufacturer]), total_beverage_share, // Return beverage share if filtered by Manufacturer
+			        ISFILTERED('Product'[display_manufacturer]), total_beverage_share, // If the Manufacturer filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands Sub-Groups]), total_beverage_share, // Return beverage share if filtered by System Brands Sub-Groups
+			        ISFILTERED('Product'[System Brands Groups]), total_beverage_share, // Return beverage share if filtered by System Brands Groups
+			        ISFILTERED('Product'[System Brands]), total_beverage_share, // Return beverage share if filtered by System Brands
+			        1 // Default return (may require adjustment based on expected usage)
+			    )
+			
+			// Return the calculated result based on filter context conditions
+			RETURN
+			    results
+			```
+		formatString: #,0
+		lineageTag: 1b4816a2-7047-415d-a491-a609a194706e
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Share of Units - ELT' = ```
+			
+			//Start with checking if Brand and/or Trademark are being used in the report or visual. If not used, the variables are not calculated and bypassed for total share.
+			
+			// Store the total units in the current filter context
+			VAR selected_total = [Units]
+			
+			// Calculate the total units for the current CBR category by clearing filters on other specific columns
+			VAR CBR_category_total =
+			    CALCULATE(
+			        [Units], // Calculate units measure
+			        VALUES('Product'[ELT Category]), // Preserve the filter context for CBR Category
+			        ALL( // Clear filters on the specified columns
+			            'Product'[System Brands], 
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Trademark],
+			            'Product'[src_trademark_name],
+			            'Product'[src_brand_name],
+			            'Product'[Brand]
+			        )
+			    )
+			
+			// Calculate the total units across beverages while retaining the filter on CBR Category
+			VAR total_beverage =
+			    CALCULATE(
+			        [Units], // Compute total units for all beverages
+			        ALLEXCEPT('Product', 'Product'[ELT Category]) // Keep only the CBR Category filter
+			    )
+			
+			// Compute the share of units within the specified CBR category
+			VAR category_share =
+			    DIVIDE(selected_total, CBR_category_total) // Calculate the proportion of units in the CBR category
+			
+			// Compute the share of units within the total beverage category
+			VAR total_beverage_share =
+			    DIVIDE(selected_total, total_beverage) // Calculate the proportion of units in the total beverage category
+			
+			// Determine which share to return based on active filters
+			VAR results =
+			    SWITCH(
+			        TRUE(),
+			        ISFILTERED('Product'[Brand]), category_share, // Return category share if filtered by Brand
+			        ISFILTERED('Product'[Trademark]), category_share, // Return category share if filtered by Trademark
+			        ISFILTERED('Product'[Manufacturer]), total_beverage_share, // Return beverage share if filtered by Manufacturer
+			        ISFILTERED('Product'[display_manufacturer]), total_beverage_share, // If the Manufacturer filter is active, return total beverage share
+			        ISFILTERED('Product'[System Brands Sub-Groups]), total_beverage_share, // Return beverage share if filtered by System Brands Sub-Groups
+			        ISFILTERED('Product'[System Brands Groups]), total_beverage_share, // Return beverage share if filtered by System Brands Groups
+			        ISFILTERED('Product'[Manufacturer]), total_beverage_share, // Duplicate check for Manufacturer, possibly redundant
+			        ISFILTERED('Product'[System Brands]), total_beverage_share, // Return beverage share if filtered by System Brands
+			        
+			        1 // Default fallback condition (may need review for appropriateness)
+			    )
+			
+			// Return the calculated result based on filter context conditions
+			RETURN
+			    results
+			```
+		formatString: #,0
+		lineageTag: 38ab67bf-e55c-495c-a86c-bb066eb97db2
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// % Change in Retail price for a 192oz equivalized volume unit
+	measure 'Avg EQ Price % Chg PY' = CALCULATE([Avg EQ Price], 'Time Calculation'[Time Calculation] = "YTD vs. PY (Percent)")
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: PRx SOM Measures
+		lineageTag: cd9fc3b4-7f77-47aa-82e4-d1e495f64215
+
+	measure 'Share of EQs PRX TTL' = ```
+			
+			//Start with checking if Brand and/or Trademark are being used in the report or visual. If not used, the variables are not calculated and bypassed for total share.
+			
+			// Store the total EQS in the current filter context
+			VAR Selected_Total = [EQs]
+			
+			// Calculate the total EQS for the current Total Category  by clearing filters on other specific columns
+			VAR TTL_Category_Total =
+			    CALCULATE (
+			        [EQs],
+			        VALUES ( 'Product'[Total Category] ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			     
+			        )
+			    )
+			// Calculate the total EQS across beverages while retaining the filter on Total Category    
+			VAR Total_Beverage =
+			    CALCULATE(
+			        [EQs],ALL( // Remove filters for the broader beverage context
+			            'Product'[System Brands],
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Manufacturer]
+			         
+			        )
+			    )
+			// Compute the share of EQS within the specified Total Category
+			VAR Category_Share =
+			    DIVIDE ( Selected_Total, TTL_Category_Total )
+			
+			// Compute the share of EQS within the total beverage category
+			VAR Total_Beverage_Share =
+			    DIVIDE ( Selected_Total, Total_Beverage )
+			VAR Results =
+			    SWITCH (TRUE(),
+			    ISFILTERED('Product'[Brand]), Category_Share, 
+			    ISFILTERED('Product'[Trademark]), Category_Share,
+			    ISFILTERED('Product'[display_manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[Manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[display_manufacturer]), total_beverage_share, // If the Manufacturer filter is active, return total beverage share
+			    ISFILTERED('Product'[System Brands Sub-Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands]), Total_Beverage_Share, 1
+			    )
+			RETURN
+			    Results
+			```
+		formatString: #,0
+		lineageTag: 2e08d4fc-3a70-426d-abce-7f1b8286ba57
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Share of Dollars PRX TTL' = ```
+			//Start with checking if Brand and/or Trademark are being used in the report or visual. If not used, the variables are not calculated and bypassed for total share.
+			
+			// Store the total Dollars in the current filter context
+			VAR Selected_Total = [Dollars]
+			
+			// Calculate the total Dollars for the current Total Category  by clearing filters on other specific columns
+			VAR TTL_Category_Total =
+			    CALCULATE (
+			      [Dollars],
+			        VALUES ( 'Product'[Total Category] ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			     
+			        )
+			    )
+			// Calculate the total Dollars across beverages while retaining the filter on Total Category    
+			VAR Total_Beverage =
+			    CALCULATE(
+			        [Dollars], 
+			        ALL( // Remove filters for the broader beverage context
+			            'Product'[System Brands],
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Manufacturer]
+			         
+			        )
+			    )
+			// Compute the share of Dollars within the specified Total Category
+			VAR Category_Share =
+			    DIVIDE ( Selected_Total, TTL_Category_Total )
+			
+			// Compute the share of Dollars within the total beverage category
+			VAR Total_Beverage_Share =
+			    DIVIDE ( Selected_Total, Total_Beverage )
+			VAR Results =
+			    SWITCH (TRUE(),
+			    ISFILTERED('Product'[Brand]), Category_Share, 
+			    ISFILTERED('Product'[Trademark]), Category_Share,
+			    ISFILTERED('Product'[display_manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[Manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands Sub-Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands]), Total_Beverage_Share, 1
+			    )
+			RETURN
+			    Results
+			```
+		formatString: #,0
+		lineageTag: 81bb3889-eeaf-4a83-8838-19de531b2987
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Share of Units PRX TTL' = ```
+			//Start with checking if Brand and/or Trademark are being used in the report or visual. If not used, the variables are not calculated and bypassed for total share.
+			
+			// Store the total units in the current filter context
+			VAR Selected_Total = [Units]
+			
+			// Calculate the total units for the current Total Category  by clearing filters on other specific columns
+			VAR TTL_Category_Total =
+			    CALCULATE (
+			        [Units],
+			        VALUES ( 'Product'[Total Category] ),
+			        ALL (
+			            'Product'[System Brands],
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Manufacturer],
+			            'Product'[Trademark],
+			            'Product'[Brand]
+			     
+			        )
+			    )
+			// Calculate the total units across beverages while retaining the filter on Total Category    
+			VAR Total_Beverage =
+			    CALCULATE(
+			        [Units], 
+			        ALL( // Remove filters for the broader beverage context
+			            'Product'[System Brands],
+			            'Product'[System Brands Groups],
+			            'Product'[System Brands Sub-Groups],
+			            'Product'[display_manufacturer],
+			            'Product'[Manufacturer]
+			        )
+			    )
+			// Compute the share of units within the specified Total Category
+			VAR Category_Share =
+			    DIVIDE ( Selected_Total, TTL_Category_Total )
+			
+			// Compute the share of units within the total beverage category
+			VAR Total_Beverage_Share =
+			    DIVIDE ( Selected_Total, Total_Beverage )
+			VAR Results =
+			    SWITCH (TRUE(),
+			    ISFILTERED('Product'[Brand]), Category_Share, 
+			    ISFILTERED('Product'[Trademark]), Category_Share,
+			    ISFILTERED('Product'[display_manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[Manufacturer]), Total_Beverage_Share,
+			    ISFILTERED('Product'[display_manufacturer]), total_beverage_share, // If the Manufacturer filter is active, return total beverage share
+			    ISFILTERED('Product'[System Brands Sub-Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands Groups]), Total_Beverage_Share,
+			    ISFILTERED('Product'[System Brands]), Total_Beverage_Share, 1
+			    )
+			RETURN
+			    Results
+			
+			```
+		formatString: #,0
+		lineageTag: 5bf0c4bd-0d60-44bf-9d10-f3931368727a
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Market Key'
+		dataType: string
+		isHidden
+		lineageTag: d8179cf7-d27c-4fc8-8bd2-9e51402c4253
+		summarizeBy: none
+		sourceColumn: Market Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5bd35a73-c066-4484-8d12-68c7fba96f1a
+		summarizeBy: none
+		sourceColumn: Date Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8738579b-20db-4e75-bb53-93d1344e3c9b
+		summarizeBy: none
+		sourceColumn: Product Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dollars_
+		dataType: decimal
+		isHidden
+		lineageTag: c14472f3-8aa3-46ba-9297-13ebd2aab37a
+		summarizeBy: sum
+		sourceColumn: dollars_
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column eq_
+		dataType: decimal
+		isHidden
+		lineageTag: 9912f314-70b8-43d7-9df2-105591fdc123
+		summarizeBy: sum
+		sourceColumn: eq_
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column units_
+		dataType: decimal
+		isHidden
+		lineageTag: 998392a2-bc33-41ce-beb5-778b38200560
+		summarizeBy: sum
+		sourceColumn: units_
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column base_dollars
+		dataType: decimal
+		isHidden
+		lineageTag: abf16979-1cc5-403c-bd98-a7a1c477d99d
+		summarizeBy: sum
+		sourceColumn: base_dollars
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column base_eq
+		dataType: decimal
+		isHidden
+		lineageTag: 2578b1bb-d9ba-4c92-b769-102baa97a3ae
+		summarizeBy: sum
+		sourceColumn: base_eq
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column any_promo_dollars
+		dataType: decimal
+		isHidden
+		lineageTag: f509a4b1-339c-409c-b4d7-0e80ae098ce5
+		summarizeBy: sum
+		sourceColumn: any_promo_dollars
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column no_promo_dollars
+		dataType: decimal
+		isHidden
+		lineageTag: 32533327-8de8-4ce0-90bd-c3e7bc72415e
+		summarizeBy: sum
+		sourceColumn: no_promo_dollars
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column any_display_dollars
+		dataType: decimal
+		isHidden
+		lineageTag: 62203d62-d065-46ae-b07e-4ec61cb3e81d
+		summarizeBy: sum
+		sourceColumn: any_display_dollars
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column any_feature_dollars
+		dataType: decimal
+		isHidden
+		lineageTag: aee29ed3-f65c-44b3-9c6f-a741d3f33c97
+		summarizeBy: sum
+		sourceColumn: any_feature_dollars
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column price_decr_only_dollars
+		dataType: decimal
+		isHidden
+		lineageTag: 1a2eaa00-e6f9-4134-9bbf-c0c38b906c48
+		summarizeBy: sum
+		sourceColumn: price_decr_only_dollars
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column feature_without_display_dollars
+		dataType: decimal
+		isHidden
+		lineageTag: bef76bfc-48c9-4bee-aaef-d325737cb48d
+		summarizeBy: sum
+		sourceColumn: feature_without_display_dollars
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column any_promo_eq
+		dataType: decimal
+		isHidden
+		lineageTag: 8c5f7dbe-bab0-44e5-98f5-8531c202f2e3
+		summarizeBy: sum
+		sourceColumn: any_promo_eq
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column no_promo_eq
+		dataType: decimal
+		isHidden
+		lineageTag: acfbf7b9-ba9c-4ff8-8ae6-d3ef9395ec8b
+		summarizeBy: sum
+		sourceColumn: no_promo_eq
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dim_channel_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 428cbd9f-9b7a-44f9-aedb-e6f8bf14b813
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_bottler_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 12232251-85bb-4b8f-ac44-3b99e8a242c8
+		summarizeBy: none
+		sourceColumn: dim_bottler_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0e1ddd43-60a0-4436-a234-aa6df75d33b4
+		summarizeBy: none
+		sourceColumn: dim_customer_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column feat_and_display_dollars
+		dataType: decimal
+		isHidden
+		lineageTag: 822093b2-fc5a-47d3-932e-0ca144015009
+		summarizeBy: sum
+		sourceColumn: feat_and_display_dollars
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Share of Market' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database,[CommandTimeout=#duration(0,0,180,0)]),
+				    rms_mdl_vw_fact_customerweekly = Source{[Schema="niqrmsv3",Item="vw_Fact_Market_Share_Weekly"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(rms_mdl_vw_fact_customerweekly, each [dim_date_key] > DateKey(RangeStart) and [dim_date_key] <= DateKey(RangeEnd)),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"dim_date_key", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"market_key", "Market Key"}, {"dim_date_key", "Date Key"}, {"dim_product_key", "Product Key"}, {"dollars", "dollars_"}, {"eq", "eq_"}, {"units", "units_"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Market Key", "Date Key", "Product Key", "dim_channel_key", "dim_bottler_key", "dim_customer_key", "dollars_", "eq_", "units_", "base_dollars", "base_eq", "any_promo_dollars", "no_promo_dollars", "any_display_dollars", "any_feature_dollars", "price_decr_only_dollars", "feature_without_display_dollars", "any_promo_eq", "no_promo_eq", "feat_and_display_dollars"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

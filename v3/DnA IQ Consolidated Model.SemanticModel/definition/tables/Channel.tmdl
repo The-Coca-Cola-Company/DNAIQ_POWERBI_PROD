@@ -1,0 +1,70 @@
+table Channel
+	lineageTag: 37b4aad1-ab91-42cd-bd8e-19ec14a284f3
+
+	column dim_channel_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 0fa57f6d-cf1f-4b4d-a46d-bac00d44bf94
+		summarizeBy: none
+		sourceColumn: dim_channel_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_source_key
+		dataType: string
+		lineageTag: 37208ded-3ceb-499f-b43b-e3d9a453953e
+		summarizeBy: none
+		sourceColumn: dim_source_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_sub_trade_channel_cd
+		dataType: string
+		lineageTag: 85d84c08-b150-43c0-9b1b-6aff497bfc8d
+		summarizeBy: none
+		sourceColumn: src_sub_trade_channel_cd
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_sub_trade_channel_desc
+		dataType: string
+		lineageTag: 38edf0fe-564f-4c44-9a9d-2c597bed03a1
+		summarizeBy: none
+		sourceColumn: src_sub_trade_channel_desc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_channel
+		dataType: string
+		lineageTag: 80cb788a-6e3d-4d68-8c9d-e1d36871d292
+		summarizeBy: none
+		sourceColumn: display_channel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Channel = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Server, Database),
+				    vw_Dim_Bottler = Source{[Schema="dbov3",Item="vw_Dim_Channel"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(vw_Dim_Bottler,{"created_date", "updated_date"})
+				in
+				    #"Removed Columns"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
